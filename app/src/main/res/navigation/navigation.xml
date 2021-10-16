@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/stasticFragment"
+        android:name="com.weiting.tohealth.stasticpage.StasticFragment"
+        android:label="fragment_stastic"
+        tools:layout="@layout/fragment_stastic" />
+    <fragment
+        android:id="@+id/groupFragment"
+        android:name="com.weiting.tohealth.grouppage.GroupFragment"
+        android:label="fragment_group"
+        tools:layout="@layout/fragment_group" />
+    <fragment
+        android:id="@+id/manageFragment"
+        android:name="com.weiting.tohealth.managepage.ManageFragment"
+        android:label="fragment_manage"
+        tools:layout="@layout/fragment_manage" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.weiting.tohealth.homepage.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+</navigation>
