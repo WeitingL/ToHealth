@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.weiting.tohealth.R
 import com.weiting.tohealth.databinding.FragmentGroupBinding
 
 class GroupFragment : Fragment() {
@@ -18,9 +17,13 @@ class GroupFragment : Fragment() {
     ): View? {
         val binding = FragmentGroupBinding.inflate(layoutInflater, container, false)
         val viewModel = ViewModelProvider(this).get(GroupViewModel::class.java)
+        val adapter = GroupAdapter()
 
+        viewModel.groupItemList.observe(viewLifecycleOwner){
+            adapter.submitList(it)
+        }
 
-
+        binding.rvGroupList.adapter = adapter
         return binding.root
     }
 

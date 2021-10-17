@@ -50,6 +50,7 @@
             tools:listitem="@layout/group_row_member" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_group_noteList"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"

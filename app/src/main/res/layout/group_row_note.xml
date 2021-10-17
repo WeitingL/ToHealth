@@ -3,14 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/row_line">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/tv_note_Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="項目名稱"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,7 +19,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
         android:text="本文內容，這可以寫好多好多呢!"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
