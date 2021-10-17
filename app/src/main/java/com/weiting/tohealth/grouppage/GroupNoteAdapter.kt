@@ -5,9 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.weiting.tohealth.data.Member
 import com.weiting.tohealth.data.Note
-import com.weiting.tohealth.databinding.GroupRowMemberBinding
 import com.weiting.tohealth.databinding.GroupRowNoteBinding
 import com.weiting.tohealth.grouppage.GroupNoteAdapter.NoteViewHolder
 
@@ -44,6 +42,5 @@ class GroupNoteAdapter() : ListAdapter<Note, NoteViewHolder>(DiffCallback) {
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         return holder.bind(getItem(position))
     }
-
 
 }

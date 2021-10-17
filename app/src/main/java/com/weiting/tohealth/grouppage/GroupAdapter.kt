@@ -13,7 +13,7 @@ import java.lang.ClassCastException
 const val GROUP_VIEWTYPE_GROUP = 0
 const val GROUP_VIEWTYPE_ADDGROUP = 1
 
-class GroupAdapter : ListAdapter<GroupPageItem, RecyclerView.ViewHolder>(DiffCallback) {
+class GroupAdapter (val onClickListener: OnclickListener) : ListAdapter<GroupPageItem, RecyclerView.ViewHolder>(DiffCallback) {
 
     object DiffCallback : DiffUtil.ItemCallback<GroupPageItem>() {
         override fun areItemsTheSame(oldItem: GroupPageItem, newItem: GroupPageItem): Boolean =
@@ -77,15 +77,24 @@ class GroupAdapter : ListAdapter<GroupPageItem, RecyclerView.ViewHolder>(DiffCal
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
+
             is GroupCardViewHolder -> {
                 holder.bind(getItem(position) as GroupPageItem.MyGroups)
+                holder.itemView.setOnClickListener {
+                    onClickListener.onClick(getItem(position))
+                }
             }
 
             is AddNewGroupViewHolder -> {
-
+                holder.itemView.setOnClickListener {
+                    onClickListener.onClick(getItem(position))
+                }
             }
         }
     }
 
+    class OnclickListener(val clickListener: (groupPageItem:GroupPageItem) -> Unit) {
+        fun onClick(groupPageItem:GroupPageItem) = clickListener(groupPageItem)
+    }
 
 }

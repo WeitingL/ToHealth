@@ -77,6 +77,7 @@ class GroupViewModel : ViewModel() {
     init {
         _groupItemList.value = list
     }
+
 }
 
 sealed class GroupPageItem {

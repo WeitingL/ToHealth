@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -66,5 +68,7 @@ dependencies {
 
     //CardView
     implementation 'androidx.cardview:cardview:1.0.0'
+
+
 
 }

@@ -25,4 +25,19 @@
         android:name="com.weiting.tohealth.homepage.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
+    <dialog
+        android:id="@+id/addNewGroupFragment"
+        android:name="com.weiting.tohealth.grouppage.dialogs.AddNewGroupFragment"
+        android:label="dialog_add_group"
+        tools:layout="@layout/dialog_add_group" /><action android:id="@+id/action_global_addNewGroupFragment" app:destination="@id/addNewGroupFragment"/><action android:id="@+id/action_global_stasticFragment" app:destination="@id/stasticFragment"/><action android:id="@+id/action_global_groupFragment" app:destination="@id/groupFragment"/><action android:id="@+id/action_global_manageFragment" app:destination="@id/manageFragment"/><action android:id="@+id/action_global_homeFragment" app:destination="@id/homeFragment"/>
+    <dialog
+        android:id="@+id/newGroupFragment"
+        android:name="com.weiting.tohealth.grouppage.dialogs.NewGroupFragment"
+        android:label="dialog_new_group"
+        tools:layout="@layout/dialog_new_group" /><action android:id="@+id/action_global_newGroupFragment" app:destination="@id/newGroupFragment"/>
+    <dialog
+        android:id="@+id/addExistGroupFragment"
+        android:name="com.weiting.tohealth.grouppage.dialogs.AddExistGroupFragment"
+        android:label="dialog_add_exist_group"
+        tools:layout="@layout/dialog_add_exist_group" /><action android:id="@+id/action_global_addExistGroupFragment" app:destination="@id/addExistGroupFragment"/>
 </navigation>
