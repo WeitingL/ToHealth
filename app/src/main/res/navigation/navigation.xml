@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/stasticFragment"
-        android:name="com.weiting.tohealth.stasticpage.StasticFragment"
+        android:name="com.weiting.tohealth.statisticpage.StatisticFragment"
         android:label="fragment_stastic"
-        tools:layout="@layout/fragment_stastic" />
+        tools:layout="@layout/fragment_statistic" />
     <fragment
         android:id="@+id/groupFragment"
         android:name="com.weiting.tohealth.grouppage.GroupFragment"

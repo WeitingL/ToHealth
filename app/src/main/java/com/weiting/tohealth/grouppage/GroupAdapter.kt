@@ -5,8 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.weiting.tohealth.data.Group
-import com.weiting.tohealth.databinding.GroupRowAddgroupBinding
+import com.weiting.tohealth.databinding.CardviewRowBottombuttonBinding
 import com.weiting.tohealth.databinding.GroupRowGroupBinding
 import java.lang.ClassCastException
 
@@ -43,7 +42,7 @@ class GroupAdapter (val onClickListener: OnclickListener) : ListAdapter<GroupPag
         }
     }
 
-    inner class AddNewGroupViewHolder(private val binding: GroupRowAddgroupBinding) :
+    inner class AddNewGroupViewHolder(private val binding: CardviewRowBottombuttonBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
     }
@@ -66,7 +65,7 @@ class GroupAdapter (val onClickListener: OnclickListener) : ListAdapter<GroupPag
             )
 
             GROUP_VIEWTYPE_ADDGROUP -> AddNewGroupViewHolder(
-                GroupRowAddgroupBinding.inflate(
+                CardviewRowBottombuttonBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
                 )
             )

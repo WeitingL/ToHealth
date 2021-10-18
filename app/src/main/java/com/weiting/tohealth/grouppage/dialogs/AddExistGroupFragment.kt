@@ -27,5 +27,5 @@ class AddExistGroupFragment: DialogFragment() {
         dialog!!.window?.setLayout(width * 2, width)
 
     }
-    
+
 }
