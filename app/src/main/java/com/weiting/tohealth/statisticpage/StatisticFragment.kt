@@ -19,9 +19,7 @@ class StatisticFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentStatisticBinding.inflate(
-            LayoutInflater.from(inflater.context),
-            container,
-            false
+            inflater, container, false
         )
 
         val viewPager = binding.vpStatistic
@@ -29,8 +27,8 @@ class StatisticFragment : Fragment() {
 
         viewPager.adapter = StatisticAdapter(this)
 
-        TabLayoutMediator(tabLayout, viewPager){ tab, position ->
-            when(position){
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            when (position) {
                 0 -> tab.text = "藥物紀錄"
                 1 -> tab.text = "測量記錄"
                 2 -> tab.text = "活動項目"

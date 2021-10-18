@@ -11,56 +11,7 @@ class HomeViewModel : ViewModel() {
     val nextTaskList: LiveData<List<HomePageItem>>
         get() = _nextTaskList
 
-    private val list = listOf<Drug>(
-        Drug(
-            drug = "Aspirin",
-            unit = "一顆",
-            time = "08:00",
-            stock = "剩餘30顆"
-        ),
-        Drug(
-            drug = "Aspirin",
-            unit = "一顆",
-            time = "08:00",
-            stock = "剩餘30顆"
-        ),
-        Drug(
-            drug = "Aspirin",
-            unit = "一顆",
-            time = "08:00",
-            stock = "剩餘30顆"
-        ),
-        Drug(
-            drug = "Aspirin",
-            unit = "一顆",
-            time = "08:00",
-            stock = "剩餘30顆"
-        ),
-        Drug(
-            drug = "Aspirin",
-            unit = "一顆",
-            time = "08:00",
-            stock = "剩餘30顆"
-        ),
-        Drug(
-            drug = "Aspirin",
-            unit = "一顆",
-            time = "08:00",
-            stock = "剩餘30顆"
-        ),
-        Drug(
-            drug = "Aspirin",
-            unit = "一顆",
-            time = "08:00",
-            stock = "剩餘30顆"
-        ),
-        Drug(
-            drug = "Aspirin",
-            unit = "一顆",
-            time = "08:00",
-            stock = "剩餘30顆"
-        )
-    )
+    private val list = listOf<Drug>()
 
     init {
         _nextTaskList.value = listOf(
@@ -72,7 +23,7 @@ class HomeViewModel : ViewModel() {
     }
 }
 
-sealed class HomePageItem {
+sealed class HomePageItem() {
 
     object AddNewItem : HomePageItem()
 
@@ -82,5 +33,4 @@ sealed class HomePageItem {
     object MyGroupNews : HomePageItem()
 
     data class NextTask(val list: List<Drug>) : HomePageItem()
-
 }

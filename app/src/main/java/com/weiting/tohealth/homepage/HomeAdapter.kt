@@ -16,7 +16,7 @@ const val HOME_VIEWTYPE_DAILYINFO = 1
 const val HOME_VIEWTYPE_TODAYTASK = 2
 const val HOME_VIEWTYPE_MYGROUP = 3
 
-class HomeAdapter() : ListAdapter<HomePageItem, RecyclerView.ViewHolder>(DiffCallback) {
+class HomeAdapter(val onClickListener: OnclickListener) : ListAdapter<HomePageItem, RecyclerView.ViewHolder>(DiffCallback) {
 
     object DiffCallback : DiffUtil.ItemCallback<HomePageItem>() {
         override fun areItemsTheSame(oldItem: HomePageItem, newItem: HomePageItem): Boolean =
@@ -47,10 +47,11 @@ class HomeAdapter() : ListAdapter<HomePageItem, RecyclerView.ViewHolder>(DiffCal
             binding.apply {
                 tvNextTime.text = time
                 rvGroupInfo.adapter = adapter
+                tvMoreTodoList.setOnClickListener {
+                    onClickListener.onClick(nextTask)
+                }
             }
-
         }
-
     }
 
     inner class MyGroupsNewsViewHolder(private val binding: HomeRowMygroupBinding) :
@@ -101,22 +102,24 @@ class HomeAdapter() : ListAdapter<HomePageItem, RecyclerView.ViewHolder>(DiffCal
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is AddNewTaskViewHolder -> {
-
+                holder.itemView.setOnClickListener {
+                    onClickListener.onClick(getItem(position))
+                }
             }
 
-            is DailyInfoViewHolder -> {
-
-            }
+            is DailyInfoViewHolder -> { }
 
             is TodayTaskViewHolder -> {
                 holder.bind(getItem(position) as HomePageItem.NextTask)
             }
 
-            is MyGroupsNewsViewHolder -> {
-
-            }
+            is MyGroupsNewsViewHolder -> { }
 
         }
+    }
+
+    class OnclickListener(val clickListener: (homePageItem: HomePageItem) -> Unit) {
+        fun onClick(homePageItem: HomePageItem) = clickListener(homePageItem)
     }
 
 }

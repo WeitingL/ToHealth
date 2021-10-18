@@ -13,66 +13,7 @@ class GroupViewModel : ViewModel() {
     val groupItemList: LiveData<List<GroupPageItem>>
         get() = _groupItemList
 
-    private val list = listOf<GroupPageItem>(
-        GroupPageItem.MyGroups(
-            Group(
-                name = "最愛家人",
-                code = "MYFAMILY",
-                member = listOf(
-                    Member(
-                        name = "MOM"
-                    ),
-                    Member(
-                        "DAD"
-                    ),
-                    Member(
-                        "DAD"
-                    ),
-                    Member(
-                        "DAD"
-                    ),
-                    Member(
-                        "DAD"
-                    )
-                ),
-                note = listOf(
-                    Note(
-                        title = "測試資訊",
-                        content = "讚讚讚"
-                    ),
-                    Note(
-                        title = "測試資訊",
-                        content = "讚讚讚"
-                    )
-                )
-            )
-        ),
-        GroupPageItem.MyGroups(
-            Group(
-                name = "最愛家人",
-                code = "MYFAMILY",
-                member = listOf(
-                    Member(
-                        name = "MOM"
-                    ),
-                    Member(
-                        "DAD"
-                    )
-                ),
-                note = listOf(
-                    Note(
-                        title = "測試資訊",
-                        content = "讚讚讚"
-                    ),
-                    Note(
-                        title = "測試資訊",
-                        content = "讚讚讚"
-                    )
-                )
-            )
-        ),
-        GroupPageItem.AddGroups
-    )
+    private val list = listOf<GroupPageItem>()
 
     init {
         _groupItemList.value = list

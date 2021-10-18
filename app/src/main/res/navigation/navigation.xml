@@ -40,4 +40,10 @@
         android:name="com.weiting.tohealth.grouppage.dialogs.AddExistGroupFragment"
         android:label="dialog_add_exist_group"
         tools:layout="@layout/dialog_add_exist_group" /><action android:id="@+id/action_global_addExistGroupFragment" app:destination="@id/addExistGroupFragment"/>
+    <fragment
+        android:id="@+id/todoListFragment"
+        android:name="com.weiting.tohealth.homepage.carddetail.TodoListFragment"
+        android:label="todolist_fragment"
+        tools:layout="@layout/todolist_fragment" />
+    <action android:id="@+id/action_global_todoListFragment" app:destination="@id/todoListFragment" />
 </navigation>
