@@ -31,11 +31,11 @@ class GroupAdapter (val onClickListener: OnclickListener) : ListAdapter<GroupPag
             val noteAdapter = GroupNoteAdapter()
 
             memberAdapter.submitList(group.member)
-            noteAdapter.submitList(group.note)
+            noteAdapter.submitList(group.notes)
 
             binding.apply {
-                tvGroupCode.text = group.code
-                tvGroupName.text = group.name
+                tvGroupCode.text = group.id
+                tvGroupName.text = group.groupName
                 rvGroupMemberList.adapter = memberAdapter
                 rvGroupNoteList.adapter = noteAdapter
             }

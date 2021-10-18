@@ -40,7 +40,7 @@ class HomeAdapter(val onClickListener: OnclickListener) : ListAdapter<HomePageIt
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(nextTask: HomePageItem.NextTask) {
-            val time = nextTask.list.first().time
+            val time = nextTask.list.first().firstTimePerDay.toString()
             val adapter = DailyItemsAdapter()
             adapter.submitList(nextTask.list)
 

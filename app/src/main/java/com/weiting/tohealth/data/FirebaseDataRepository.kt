@@ -2,7 +2,7 @@ package com.weiting.tohealth.data
 
 class FirebaseDataRepository(private val firebaseSource: FirebaseSource): FirebaseRepository {
 
-    override fun getAllDrugs(): List<Drug> {
+    override suspend fun getAllDrugs(): List<Drug> {
         return firebaseSource.getAllDrugs()
     }
 

@@ -9,8 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.weiting.tohealth.NavigationDirections
-import com.weiting.tohealth.R
+import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.databinding.FragmentHomeBinding
+import com.weiting.tohealth.factory.HomeViewModelFactory
 
 class HomeFragment : Fragment() {
 
@@ -22,7 +23,6 @@ class HomeFragment : Fragment() {
         val binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
         val homeAdapter = HomeAdapter(HomeAdapter.OnclickListener {
             when(it){
-
                 is HomePageItem.NextTask ->{
                     findNavController().navigate(NavigationDirections.actionGlobalTodoListFragment())
                 }
@@ -35,7 +35,8 @@ class HomeFragment : Fragment() {
             }
         })
 
-        val viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        val factory = HomeViewModelFactory(PublicApplication.application.firebaseDataRepository)
+        val viewModel = ViewModelProvider(this, factory).get(HomeViewModel::class.java)
 
         viewModel.nextTaskList.observe(viewLifecycleOwner){
             homeAdapter.submitList(it)

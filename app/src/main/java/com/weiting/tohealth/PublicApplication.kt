@@ -4,8 +4,8 @@ import android.app.Application
 import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.weiting.tohealth.data.FirebaseRepository
+import kotlin.properties.Delegates
 
-lateinit var application: PublicApplication
 
 class PublicApplication: Application() {
 
@@ -13,6 +13,11 @@ class PublicApplication: Application() {
 
     val firebaseDataRepository: FirebaseRepository
         get() = FirebaseLocator.provideRepository(this)
+
+
+    companion object{
+        var application: PublicApplication by Delegates.notNull()
+    }
 
     override fun onCreate() {
         super.onCreate()

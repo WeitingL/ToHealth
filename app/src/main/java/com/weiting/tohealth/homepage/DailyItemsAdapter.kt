@@ -22,9 +22,9 @@ class DailyItemsAdapter() : ListAdapter<Drug, DailyItemsAdapter.ItemListViewHold
         RecyclerView.ViewHolder(binding.root) {
         fun bind(drug: Drug) {
             binding.apply {
-                tvName.text = drug.drug
-                tvUnit.text = drug.unit
-                tvStock.text = drug.stock
+                tvName.text = drug.drugName
+                tvUnit.text = drug.unit.toString()
+                tvStock.text = drug.stock.toString()
             }
         }
 

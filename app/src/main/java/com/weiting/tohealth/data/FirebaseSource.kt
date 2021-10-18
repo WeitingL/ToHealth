@@ -2,7 +2,7 @@ package com.weiting.tohealth.data
 
 interface FirebaseSource {
 
-    fun getAllDrugs(): List<Drug>
+    suspend fun getAllDrugs(): List<Drug>
 
 //    fun getAllMeasures(): List<Measure>
 //
