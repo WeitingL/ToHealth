@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs.kotlin'
     id 'com.google.gms.google-services'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -68,10 +69,10 @@ dependencies {
     def version_lifecycle_extensions = "2.2.0"
     implementation "androidx.lifecycle:lifecycle-extensions:$version_lifecycle_extensions"
 
-    //CardView
+    // CardView
     implementation 'androidx.cardview:cardview:1.0.0'
 
-    //ViewPager2
+    // ViewPager2
     implementation "androidx.viewpager2:viewpager2:1.0.0"
 
     // Coroutines
@@ -79,4 +80,6 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version_kotlin_coroutines"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_kotlin_coroutines"
 
+    // Firebase
+    implementation "io.grpc:grpc-okhttp:1.32.2"
 }

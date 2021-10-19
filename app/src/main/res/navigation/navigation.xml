@@ -5,45 +5,52 @@
     android:id="@+id/navigation"
     app:startDestination="@id/homeFragment">
 
-    <fragment
-        android:id="@+id/stasticFragment"
-        android:name="com.weiting.tohealth.statisticpage.StatisticFragment"
-        android:label="fragment_stastic"
-        tools:layout="@layout/fragment_statistic" />
-    <fragment
-        android:id="@+id/groupFragment"
-        android:name="com.weiting.tohealth.grouppage.GroupFragment"
-        android:label="fragment_group"
-        tools:layout="@layout/fragment_group" />
-    <fragment
-        android:id="@+id/manageFragment"
-        android:name="com.weiting.tohealth.managepage.ManageFragment"
-        android:label="fragment_manage"
-        tools:layout="@layout/fragment_manage" />
+    <dialog
+        android:id="@+id/addGroupDialog"
+        android:name="com.weiting.tohealth.mygrouppage.dialogs.AddGroupDialog"
+        android:label="dialog_add_group"
+        tools:layout="@layout/dialog_add_group" />
+    <dialog
+        android:id="@+id/createGroupDialog"
+        android:name="com.weiting.tohealth.mygrouppage.dialogs.CreateGroupDialog"
+        android:label="dialog_create_group"
+        tools:layout="@layout/dialog_create_group" />
+    <dialog
+        android:id="@+id/joinGroupDialog"
+        android:name="com.weiting.tohealth.mygrouppage.dialogs.JoinGroupDialog"
+        android:label="dialog_join_group"
+        tools:layout="@layout/dialog_join_group" />
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.weiting.tohealth.homepage.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
-    <dialog
-        android:id="@+id/addNewGroupFragment"
-        android:name="com.weiting.tohealth.grouppage.dialogs.AddNewGroupFragment"
-        android:label="dialog_add_group"
-        tools:layout="@layout/dialog_add_group" /><action android:id="@+id/action_global_addNewGroupFragment" app:destination="@id/addNewGroupFragment"/><action android:id="@+id/action_global_stasticFragment" app:destination="@id/stasticFragment"/><action android:id="@+id/action_global_groupFragment" app:destination="@id/groupFragment"/><action android:id="@+id/action_global_manageFragment" app:destination="@id/manageFragment"/><action android:id="@+id/action_global_homeFragment" app:destination="@id/homeFragment"/>
-    <dialog
-        android:id="@+id/newGroupFragment"
-        android:name="com.weiting.tohealth.grouppage.dialogs.NewGroupFragment"
-        android:label="dialog_new_group"
-        tools:layout="@layout/dialog_new_group" /><action android:id="@+id/action_global_newGroupFragment" app:destination="@id/newGroupFragment"/>
-    <dialog
-        android:id="@+id/addExistGroupFragment"
-        android:name="com.weiting.tohealth.grouppage.dialogs.AddExistGroupFragment"
-        android:label="dialog_add_exist_group"
-        tools:layout="@layout/dialog_add_exist_group" /><action android:id="@+id/action_global_addExistGroupFragment" app:destination="@id/addExistGroupFragment"/>
+    <fragment
+        android:id="@+id/myGroupFragment"
+        android:name="com.weiting.tohealth.mygrouppage.MyGroupFragment"
+        android:label="fragment_mygroup"
+        tools:layout="@layout/fragment_mygroup" />
+    <fragment
+        android:id="@+id/myManageFragment"
+        android:name="com.weiting.tohealth.mymanagepage.MyManageFragment"
+        android:label="fragment_mymanage"
+        tools:layout="@layout/fragment_mymanage" />
+    <fragment
+        android:id="@+id/myStatisticFragment"
+        android:name="com.weiting.tohealth.mystatisticpage.MyStatisticFragment"
+        android:label="fragment_mystatistic"
+        tools:layout="@layout/fragment_mystatistic" />
     <fragment
         android:id="@+id/todoListFragment"
         android:name="com.weiting.tohealth.homepage.carddetail.TodoListFragment"
         android:label="todolist_fragment"
         tools:layout="@layout/todolist_fragment" />
+    <action android:id="@+id/action_global_addGroupDialog" app:destination="@id/addGroupDialog" />
+    <action android:id="@+id/action_global_createGroupDialog" app:destination="@id/createGroupDialog" />
+    <action android:id="@+id/action_global_joinGroupDialog" app:destination="@id/joinGroupDialog" />
+    <action android:id="@+id/action_global_myManageFragment" app:destination="@id/myManageFragment" />
+    <action android:id="@+id/action_global_myGroupFragment" app:destination="@id/myGroupFragment" />
+    <action android:id="@+id/action_global_homeFragment" app:destination="@id/homeFragment" />
     <action android:id="@+id/action_global_todoListFragment" app:destination="@id/todoListFragment" />
+    <action android:id="@+id/action_global_myStatisticFragment" app:destination="@id/myStatisticFragment" />
 </navigation>

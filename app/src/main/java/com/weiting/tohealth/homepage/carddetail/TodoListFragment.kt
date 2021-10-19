@@ -15,6 +15,8 @@ class TodoListFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = TodolistFragmentBinding.inflate(inflater, container, false)
+//        val list = TodoListFragmentArgs.fromBundle(requireArguments()).drugdata
+
 
 
         return binding.root

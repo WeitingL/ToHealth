@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.weiting.tohealth.NavigationDirections
 import com.weiting.tohealth.PublicApplication
+import com.weiting.tohealth.data.ItemData
 import com.weiting.tohealth.databinding.FragmentHomeBinding
 import com.weiting.tohealth.factory.HomeViewModelFactory
 
@@ -24,7 +25,9 @@ class HomeFragment : Fragment() {
         val homeAdapter = HomeAdapter(HomeAdapter.OnclickListener {
             when(it){
                 is HomePageItem.NextTask ->{
-                    findNavController().navigate(NavigationDirections.actionGlobalTodoListFragment())
+//                    findNavController().navigate(NavigationDirections.actionGlobalTodoListFragment(
+//                        ItemData(DrugData = it.list)
+//                    ))
                 }
 
                 is HomePageItem.AddNewItem -> {

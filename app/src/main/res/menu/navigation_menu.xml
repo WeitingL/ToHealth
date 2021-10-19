@@ -6,15 +6,15 @@
         android:icon="@drawable/home"
         android:title="首頁" />
     <item
-        android:id="@+id/groupFragment"
+        android:id="@+id/myGroupFragment"
         android:icon="@drawable/users"
         android:title="群組" />
     <item
-        android:id="@+id/stasticFragment"
+        android:id="@+id/myStatisticFragment"
         android:icon="@drawable/bar_chart"
         android:title="統計資料" />
     <item
-        android:id="@+id/manageFragment"
+        android:id="@+id/myManageFragment"
         android:icon="@drawable/edit"
         android:title="項目管理" />
 </menu>

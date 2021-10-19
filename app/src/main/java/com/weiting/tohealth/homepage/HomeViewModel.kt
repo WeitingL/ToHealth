@@ -8,8 +8,6 @@ import com.google.firebase.Timestamp
 import com.weiting.tohealth.data.Drug
 import com.weiting.tohealth.data.FirebaseRepository
 import kotlinx.coroutines.*
-import java.text.SimpleDateFormat
-import java.util.*
 
 class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : ViewModel() {
 
@@ -26,16 +24,37 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
         )
 
         getAllDrugs()
+//        postDrug()
     }
 
     private fun getAllDrugs() {
-         viewModelScope.launch{
+        viewModelScope.launch {
             list += firebaseDataRepository.getAllDrugs()
 
             if (list.isNotEmpty()) {
                 _nextTaskList.value = _nextTaskList.value?.plus(HomePageItem.NextTask(list))
             }
         }
+    }
+
+    private fun postDrug() {
+        firebaseDataRepository.postDrug(
+            Drug(
+                id = null,
+                userId = "test",
+                drugName = "Aspirin",
+                dose = 1,
+                unit = 1,
+                endDate = mapOf("type" to 1, "day" to 1),
+                period = mapOf("type" to 1, "N" to 3, "X" to null, "Y" to null),
+                firstTimePerDay = 900,
+                stock = 30,
+                editor = "myTest",
+                createTime = Timestamp.now(),
+                status = 1,
+                drugLogs = listOf()
+            )
+        )
     }
 }
 
@@ -50,24 +69,3 @@ sealed class HomePageItem() {
 
     data class NextTask(val list: List<Drug>) : HomePageItem()
 }
-
-
-//private fun postDrug() {
-//        firebaseDataRepository.postDrug(
-//            Drug(
-//                id = null,
-//                userId = "test",
-//                drugName = "Aspirin",
-//                dose = 1,
-//                unit = 1,
-//                endDate = mapOf("type" to 1, "day" to 1),
-//                period = mapOf("type" to 1, "N" to 3, "X" to null, "Y" to null),
-//                firstTimePerDay = 800,
-//                stock = 30,
-//                editor = "myTest",
-//                createTime = Timestamp.now(),
-//                status = 1,
-//                drugLogs = listOf()
-//            )
-//        )
-//    }
