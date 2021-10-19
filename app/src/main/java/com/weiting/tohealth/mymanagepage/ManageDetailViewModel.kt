@@ -1,6 +1,5 @@
 package com.weiting.tohealth.mymanagepage
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -25,11 +24,26 @@ class ManageDetailViewModel(
 
     private fun getAllOngoingAndSuspendItems() {
         viewModelScope.launch {
-            val drugList = firebaseDataRepository.getAllDrugs()
-            for (i in drugList.indices) {
-                _manageDetailList.value =
-                    _manageDetailList.value?.plus(ItemData(DrugData = drugList[i]))
+            when (manageType) {
+                ManageType.DRUG -> {
+                    val drugList = firebaseDataRepository.getAllDrugs()
+                    for (i in drugList.indices) {
+                        _manageDetailList.value =
+                            _manageDetailList.value?.plus(ItemData(DrugData = drugList[i]))
+                    }
+                }
+                ManageType.MEASURE -> {
+
+                }
+
+                ManageType.ACTIVITY -> {
+
+                }
+                ManageType.CARE -> {
+
+                }
             }
+
         }
     }
 }

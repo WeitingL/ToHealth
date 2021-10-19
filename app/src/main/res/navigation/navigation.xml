@@ -53,4 +53,9 @@
     <action android:id="@+id/action_global_homeFragment" app:destination="@id/homeFragment" />
     <action android:id="@+id/action_global_todoListFragment" app:destination="@id/todoListFragment" />
     <action android:id="@+id/action_global_myStatisticFragment" app:destination="@id/myStatisticFragment" />
+    <fragment
+        android:id="@+id/itemEditFragment"
+        android:name="com.weiting.tohealth.itemeditpage.ItemEditFragment"
+        android:label="item_edit_fragment"
+        tools:layout="@layout/item_edit_fragment" /><action android:id="@+id/action_global_itemEditFragment" app:destination="@id/itemEditFragment"/>
 </navigation>

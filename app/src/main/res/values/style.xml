@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="EditLayoutColorTheme" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/gray_bark</item>
+        <item name="colorControlActivated">@color/brown_black</item>
+        <item name="android:colorControlHighlight">@color/brown_black</item>
+    </style>
+</resources>
