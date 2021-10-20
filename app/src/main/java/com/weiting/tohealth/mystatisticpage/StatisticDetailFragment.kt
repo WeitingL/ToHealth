@@ -1,6 +1,7 @@
 package com.weiting.tohealth.mystatisticpage
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.weiting.tohealth.databinding.MystatisticItemFagmentBinding
 
-class StatisticDetailFragment(type: StatisticType) : Fragment() {
+class StatisticDetailFragment() : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -19,6 +20,10 @@ class StatisticDetailFragment(type: StatisticType) : Fragment() {
         val viewModel = ViewModelProvider(this).get(StatisticDetailViewModel::class.java)
         val adapter = StatisticDetailAdapter()
 
+        //Get the type from MyStatisticAdapter.
+        val statisticType = arguments?.get("type")
+
+        Log.i("What?", "$statisticType")
         viewModel.logList.observe(viewLifecycleOwner){
             adapter.submitList(it)
         }

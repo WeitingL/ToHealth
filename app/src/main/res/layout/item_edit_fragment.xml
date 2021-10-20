@@ -93,19 +93,18 @@
             app:layout_constraintStart_toEndOf="@+id/tv_itemName_edit"
             app:layout_constraintTop_toBottomOf="@+id/til_drugName" />
 
-        <EditText
-            android:id="@+id/etv_time_set"
+        <TextView
+            android:id="@+id/tv_time_set"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:ems="10"
-            android:textCursorDrawable="@drawable/cursor_brown"
-            android:inputType="date|time"
             android:minHeight="48dp"
-            android:background="@null"
-            android:drawableBottom="@drawable/editext_bottomline"
+            android:gravity="center"
+            android:textSize="30dp"
+            android:text="12:33"
+            android:background="@drawable/row_block"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_time_edit"
             app:layout_constraintTop_toBottomOf="@+id/cl_Period" />
@@ -115,10 +114,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="初次執行時間/上次服藥時間"
-            app:layout_constraintBottom_toBottomOf="@+id/etv_time_set"
+            android:text="執行當日初次提醒時間"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_time_set"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/etv_time_set" />
+            app:layout_constraintTop_toTopOf="@+id/tv_time_set" />
 
         <CheckBox
             android:id="@+id/cb_suspendUptake"
@@ -307,7 +306,7 @@
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etv_time_set">
+            app:layout_constraintTop_toBottomOf="@+id/tv_time_set">
 
             <EditText
                 android:id="@+id/etv_stock"

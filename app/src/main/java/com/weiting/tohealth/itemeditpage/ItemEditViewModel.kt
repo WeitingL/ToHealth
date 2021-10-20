@@ -32,6 +32,10 @@ class ItemEditViewModel(
     val currentPeriodType: LiveData<Int>
         get() = _currentPeriodType
 
+    private val _timeSet = MutableLiveData<String>()
+    val timeSet: LiveData<String>
+        get() = _timeSet
+
     fun getSelectedItemType(int: Int) {
         when (int) {
             0 -> _editItemType.value = ItemType.DRUG
@@ -45,8 +49,12 @@ class ItemEditViewModel(
         _endDateSelected.value = int
     }
 
-    fun getCurrentPeriodType(int: Int){
+    fun getCurrentPeriodType(int: Int) {
         _currentPeriodType.value = int
+    }
+
+    fun getTimeSet(string: String?) {
+        _timeSet.value = string ?: ""
     }
 
 

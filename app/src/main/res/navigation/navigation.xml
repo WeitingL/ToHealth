@@ -72,4 +72,19 @@
             app:argType="com.weiting.tohealth.data.Group" />
     </fragment>
     <action android:id="@+id/action_global_groupFragment" app:destination="@id/groupFragment" />
+    <fragment
+        android:id="@+id/editNoteAndCalenderItemFragment"
+        android:name="com.weiting.tohealth.mygrouppage.grouproom.board.editpage.EditNoteAndCalenderItemFragment"
+        android:label="edit_noteandcalenderitem_fragment"
+        tools:layout="@layout/edit_noteandcalenderitem_fragment" />
+    <action android:id="@+id/action_global_editNoteAndCalenderItemFragment" app:destination="@id/editNoteAndCalenderItemFragment" />
+    <dialog
+        android:id="@+id/calenderTimeDialog"
+        android:name="com.weiting.tohealth.timeset.CalenderTimeDialog"
+        android:label="dialog_calendertime"
+        tools:layout="@layout/dialog_calendertime" >
+        <argument android:name="timeEditType"
+            app:argType="com.weiting.tohealth.timeset.EditTimeType" />
+    </dialog>
+    <action android:id="@+id/action_global_calenderTimeDialog" app:destination="@id/calenderTimeDialog" />
 </navigation>

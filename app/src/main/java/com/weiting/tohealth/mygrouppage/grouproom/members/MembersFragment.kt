@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import com.weiting.tohealth.data.Member
 import com.weiting.tohealth.databinding.MembersFragmentBinding
 
-class MembersFragment(private val list: List<Member>) : Fragment() {
+class MembersFragment() : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -17,6 +17,7 @@ class MembersFragment(private val list: List<Member>) : Fragment() {
     ): View? {
         val binding = MembersFragmentBinding.inflate(inflater, container, false)
         val adapter = MembersAdapter()
+        val list = arguments?.get("member") as List<Member>
 
         adapter.submitList(list)
 

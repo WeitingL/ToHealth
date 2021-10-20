@@ -139,4 +139,19 @@
         <item>6次</item>
     </string-array>
 
+    <string-array name="editNoteOrCalenderNote">
+        <item>備忘錄</item>
+        <item>行事曆</item>
+    </string-array>
+
+    <string-array name="footer">
+        <item>留</item>
+        <item>關心您</item>
+        <item>紀錄</item>
+        <item>通知</item>
+        <item>祝福</item>
+        <item>改</item>
+    </string-array>
+
+
 </resources>

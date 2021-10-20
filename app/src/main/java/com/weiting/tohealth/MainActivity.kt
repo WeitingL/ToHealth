@@ -24,6 +24,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.itemEditFragment -> {
                     binding.bottomNavigationView.visibility = View.GONE
                 }
+                R.id.editNoteAndCalenderItemFragment -> {
+                    binding.bottomNavigationView.visibility = View.GONE
+                }
                 else -> {
                     binding.bottomNavigationView.visibility = View.VISIBLE
                 }

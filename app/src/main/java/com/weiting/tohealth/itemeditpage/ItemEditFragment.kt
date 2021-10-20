@@ -8,12 +8,16 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.weiting.tohealth.NavigationDirections
 import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.R
 import com.weiting.tohealth.data.ItemType
 import com.weiting.tohealth.databinding.ItemEditFragmentBinding
 import com.weiting.tohealth.factory.ItemEditViewModelFactory
+import com.weiting.tohealth.timeset.EditTimeType
 
 class ItemEditFragment : Fragment() {
 
@@ -78,12 +82,10 @@ class ItemEditFragment : Fragment() {
                             R.array.Measure_Item,
                             android.R.layout.simple_spinner_dropdown_item
                         )
-
                         clUnit.visibility = View.GONE
                         clEndDate.visibility = View.GONE
                         clPeriod.visibility = View.GONE
                         clStock.visibility = View.GONE
-
                     }
 
                     ItemType.ACTIVITY -> {
@@ -96,7 +98,6 @@ class ItemEditFragment : Fragment() {
                             R.array.Activity_Item,
                             android.R.layout.simple_spinner_dropdown_item
                         )
-
                         clUnit.visibility = View.GONE
                         clEndDate.visibility = View.VISIBLE
                         clPeriod.visibility = View.VISIBLE
@@ -114,13 +115,10 @@ class ItemEditFragment : Fragment() {
                             R.array.Care_Item,
                             android.R.layout.simple_spinner_dropdown_item
                         )
-
                         clUnit.visibility = View.GONE
                         clEndDate.visibility = View.VISIBLE
                         clPeriod.visibility = View.VISIBLE
                         clStock.visibility = View.GONE
-
-
                     }
                     else -> {
                     }
@@ -243,6 +241,18 @@ class ItemEditFragment : Fragment() {
                     }
                 }
             }
+        }
+
+        viewModel.timeSet.observe(viewLifecycleOwner){
+            binding.tvTimeSet.text = it
+        }
+
+        setFragmentResultListener("GetTimeAndDate"){ requestKey, bundle ->
+            viewModel.getTimeSet(bundle.getString("TimeAndDate"))
+        }
+
+        binding.tvTimeSet.setOnClickListener {
+            findNavController().navigate(NavigationDirections.actionGlobalCalenderTimeDialog(EditTimeType.TIME))
         }
 
         return binding.root
