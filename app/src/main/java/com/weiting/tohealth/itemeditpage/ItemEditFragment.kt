@@ -248,7 +248,7 @@ class ItemEditFragment : Fragment() {
         }
 
         setFragmentResultListener("GetTimeAndDate"){ requestKey, bundle ->
-            viewModel.getTimeSet(bundle.getString("TimeAndDate"))
+            viewModel.getTimeSet(bundle.getLong("TimeAndDate"))
         }
 
         binding.tvTimeSet.setOnClickListener {

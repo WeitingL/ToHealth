@@ -234,7 +234,7 @@
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:text="執行日"
+                android:text="執行幾天"
                 app:layout_constraintBottom_toBottomOf="@+id/sp_ongoingDay"
                 app:layout_constraintEnd_toStartOf="@+id/sp_ongoingDay"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -289,12 +289,13 @@
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:text="暫停日"
+                android:text="暫停幾天"
                 app:layout_constraintBottom_toBottomOf="@+id/sp_suspendDay"
                 app:layout_constraintEnd_toStartOf="@+id/sp_suspendDay"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/tv_cycle"
                 app:layout_constraintTop_toTopOf="@+id/sp_suspendDay" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout

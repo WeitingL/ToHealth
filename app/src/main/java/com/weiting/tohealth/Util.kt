@@ -53,5 +53,21 @@ fun toFooter(int: Int?): String{
 
 fun toStringFromTimeStamp(timestamp: Timestamp?):String{
     return SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.TAIWAN).format(timestamp!!.toDate()).toString()
+}
 
+fun toStringFromCalender(y:Int, M: Int, d: Int, h:Int, m:Int):Long{
+    val time = Calendar.getInstance(Locale.TAIWAN)
+    time.set(Calendar.YEAR, y)
+    time.set(Calendar.MONTH, M)
+    time.set(Calendar.DAY_OF_MONTH, d)
+    time.set(Calendar.HOUR_OF_DAY, h)
+    time.set(Calendar.MINUTE, m)
+//    Log.i("Time?", "${Timestamp(Date(time.timeInMillis)).toDate()}")
+    return time.timeInMillis
+}
+
+fun toStringFromMilliTime(millis: Long):String{
+    val Format = SimpleDateFormat("yyyy/MM/dd hh:mm", Locale.TAIWAN)
+//    Log.i("date", "${Formate.format(Date(millis))}")
+    return Format.format(Date(millis))
 }

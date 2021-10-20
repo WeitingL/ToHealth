@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.weiting.tohealth.data.FirebaseRepository
 import com.weiting.tohealth.data.ItemType
 import com.weiting.tohealth.mymanagepage.ManageType
+import com.weiting.tohealth.toStringFromMilliTime
 
 enum class EditType {
     CREATE, UPDATE, FINISHED
@@ -53,8 +54,8 @@ class ItemEditViewModel(
         _currentPeriodType.value = int
     }
 
-    fun getTimeSet(string: String?) {
-        _timeSet.value = string ?: ""
+    fun getTimeSet(time: Long?) {
+        _timeSet.value = toStringFromMilliTime(time?:0)
     }
 
 
