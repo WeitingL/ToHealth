@@ -22,7 +22,6 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
             HomePageItem.AddNewItem,
             HomePageItem.TodayAbstract
         )
-
         getAllDrugs()
 //        postDrug()
     }

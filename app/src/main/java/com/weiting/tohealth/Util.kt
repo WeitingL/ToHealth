@@ -1,5 +1,9 @@
 package com.weiting.tohealth
 
+import com.google.firebase.Timestamp
+import java.text.SimpleDateFormat
+import java.util.*
+
 fun toUnit(int: Int?): String{
     return when(int){
         0 -> "毫克"
@@ -33,4 +37,21 @@ fun toStatus(int: Int?):String {
         2 -> "暫停執行"
         else -> "未知狀態"
     }
+}
+
+fun toFooter(int: Int?): String{
+    return when(int){
+        0 -> "留"
+        1 -> "關心您"
+        2 -> "紀錄"
+        3 -> "通知"
+        4 -> "祝福"
+        5 -> "改"
+        else -> "What?"
+    }
+}
+
+fun toStringFromTimeStamp(timestamp: Timestamp?):String{
+    return SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.TAIWAN).format(timestamp!!.toDate()).toString()
+
 }

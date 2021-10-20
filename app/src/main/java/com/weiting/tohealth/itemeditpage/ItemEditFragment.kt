@@ -13,6 +13,7 @@ import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.R
 import com.weiting.tohealth.data.ItemType
 import com.weiting.tohealth.databinding.ItemEditFragmentBinding
+import com.weiting.tohealth.factory.ItemEditViewModelFactory
 
 class ItemEditFragment : Fragment() {
 
@@ -22,7 +23,9 @@ class ItemEditFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = ItemEditFragmentBinding.inflate(inflater, container, false)
-        val viewModel = ViewModelProvider(this).get(ItemEditViewModel::class.java)
+        val editType = ItemEditFragmentArgs.fromBundle(requireArguments()).editType
+        val factory = ItemEditViewModelFactory(PublicApplication.application.firebaseDataRepository, editType)
+        val viewModel = ViewModelProvider(this, factory).get(ItemEditViewModel::class.java)
 
         binding.spItemType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {

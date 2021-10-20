@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.weiting.tohealth.data.Drug
 import com.weiting.tohealth.databinding.*
 import java.lang.ClassCastException
 
@@ -66,7 +67,6 @@ class HomeAdapter(val onClickListener: OnclickListener) :
         }
     }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             HOME_VIEWTYPE_ADDTASK -> FastAddTaskViewHolder(
@@ -123,3 +123,4 @@ class HomeAdapter(val onClickListener: OnclickListener) :
     }
 
 }
+

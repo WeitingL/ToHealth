@@ -27,11 +27,12 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_groupCode"
+            android:id="@+id/tv_enterGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:text="AWSGOOD"
+            android:drawableRight="@drawable/ic_baseline_navigate_next_24"
+            android:text="進入群組"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_groupName"
             app:layout_constraintEnd_toEndOf="parent"
@@ -41,12 +42,13 @@
             android:id="@+id/rv_group_memberList"
             android:layout_width="0dp"
             android:layout_height="80dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="@+id/tv_groupCode"
+            app:layout_constraintEnd_toEndOf="@+id/tv_enterGroup"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/tv_groupName"
-            app:layout_constraintTop_toBottomOf="@+id/tv_groupName"
+            app:layout_constraintTop_toBottomOf="@+id/tv_groupCode"
             tools:listitem="@layout/mygroup_row_member" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -60,6 +62,15 @@
             app:layout_constraintStart_toStartOf="@+id/rv_group_memberList"
             app:layout_constraintTop_toBottomOf="@+id/rv_group_memberList"
             tools:listitem="@layout/mygroup_row_note" />
+
+        <TextView
+            android:id="@+id/tv_groupCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="AWSGOOD"
+            app:layout_constraintStart_toStartOf="@+id/tv_groupName"
+            app:layout_constraintTop_toBottomOf="@+id/tv_groupName" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

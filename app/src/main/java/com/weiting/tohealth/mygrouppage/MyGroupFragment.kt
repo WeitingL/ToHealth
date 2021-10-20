@@ -23,7 +23,7 @@ class MyGroupFragment : Fragment() {
         val adapter = GroupAdapter(GroupAdapter.OnclickListener {
             when(it){
                 is GroupPageItem.MyGroups ->{
-                    Toast.makeText(context, "WOW", Toast.LENGTH_LONG).show()
+                    findNavController().navigate(NavigationDirections.actionGlobalGroupFragment(it.group))
                 }
 
                 is GroupPageItem.AddGroups ->{

@@ -14,6 +14,7 @@ import com.weiting.tohealth.R
 import com.weiting.tohealth.data.ItemData
 import com.weiting.tohealth.databinding.FragmentHomeBinding
 import com.weiting.tohealth.factory.HomeViewModelFactory
+import com.weiting.tohealth.itemeditpage.EditType
 import com.weiting.tohealth.itemeditpage.ItemEditFragment
 
 class HomeFragment : Fragment() {
@@ -31,7 +32,7 @@ class HomeFragment : Fragment() {
                 }
 
                 is HomePageItem.AddNewItem -> {
-                    findNavController().navigate(NavigationDirections.actionGlobalItemEditFragment())
+                    findNavController().navigate(NavigationDirections.actionGlobalItemEditFragment(EditType.FINISHED))
                 }
 
                 else -> { }

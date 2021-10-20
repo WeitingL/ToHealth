@@ -57,5 +57,19 @@
         android:id="@+id/itemEditFragment"
         android:name="com.weiting.tohealth.itemeditpage.ItemEditFragment"
         android:label="item_edit_fragment"
-        tools:layout="@layout/item_edit_fragment" /><action android:id="@+id/action_global_itemEditFragment" app:destination="@id/itemEditFragment"/>
+        tools:layout="@layout/item_edit_fragment" >
+        <argument
+            android:name="editType"
+            app:argType="com.weiting.tohealth.itemeditpage.EditType" />
+    </fragment><action android:id="@+id/action_global_itemEditFragment" app:destination="@id/itemEditFragment"/>
+    <fragment
+        android:id="@+id/groupFragment"
+        android:name="com.weiting.tohealth.mygrouppage.grouproom.GroupRoomFragment"
+        android:label="group_fragment"
+        tools:layout="@layout/group_fragment" >
+        <argument
+            android:name="group"
+            app:argType="com.weiting.tohealth.data.Group" />
+    </fragment>
+    <action android:id="@+id/action_global_groupFragment" app:destination="@id/groupFragment" />
 </navigation>

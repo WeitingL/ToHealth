@@ -1,18 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+<!--  purple  -->
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
+
+<!--  teal  -->
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
+
+<!-- black   -->
     <color name="black">#FF000000</color>
+    <color name="gray_bark">#7A7979</color>
+    <color name="brown_black">#403E3B</color>
+
+<!--  white  -->
     <color name="white">#FFFFFFFF</color>
     <color name="gray_light">#DADADA</color>
     <color name="gray_lightF4">#F4F4F4</color>
     <color name="gray">#E7E7E7</color>
-    <color name="gray_bark">#7A7979</color>
-    <color name="brown_black">#403E3B</color>
+
+<!--  green  -->
     <color name="light_green">#53CF58</color>
+    <color name="green">#337C36</color>
+
+<!-- yellow  -->
     <color name="yellow">#FFEB3B</color>
+    <color name="sticky_yellow">#FFF8B7</color>
+
+<!--  reb  -->
     <color name="red">#FF3B3B</color>
+    <color name="reb_brown">#634444</color>
+
 </resources>

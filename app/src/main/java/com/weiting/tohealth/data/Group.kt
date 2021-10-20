@@ -17,7 +17,7 @@ data class Group(
 data class Member(
     val id: String? = null,
     val userId: String? = null,
-    val name: String? = null,
+    val nickName: String? = null,
     val private: Int? = null
 ) : Parcelable
 
@@ -27,6 +27,7 @@ data class Note(
     val title: String? = null,
     val content: String? = null,
     val editor: String? = null,
+    val footer: Int? = null,
     val createTimestamp: Timestamp? = null
 ) : Parcelable
 

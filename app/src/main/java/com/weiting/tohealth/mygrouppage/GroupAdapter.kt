@@ -38,6 +38,9 @@ class GroupAdapter (val onClickListener: OnclickListener) : ListAdapter<GroupPag
                 tvGroupName.text = group.groupName
                 rvGroupMemberList.adapter = memberAdapter
                 rvGroupNoteList.adapter = noteAdapter
+                tvEnterGroup.setOnClickListener {
+                    onClickListener.onClick(myGroup)
+                }
             }
         }
     }
@@ -79,9 +82,6 @@ class GroupAdapter (val onClickListener: OnclickListener) : ListAdapter<GroupPag
 
             is MyGroupCardViewHolder -> {
                 holder.bind(getItem(position) as GroupPageItem.MyGroups)
-                holder.itemView.setOnClickListener {
-                    onClickListener.onClick(getItem(position))
-                }
             }
 
             is AddGroupViewHolder -> {

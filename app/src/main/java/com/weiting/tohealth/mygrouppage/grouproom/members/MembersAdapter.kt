@@ -1,4 +1,4 @@
-package com.weiting.tohealth.mygrouppage
+package com.weiting.tohealth.mygrouppage.grouproom.members
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,10 +6,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.data.Member
-import com.weiting.tohealth.databinding.MygroupRowMemberBinding
-import com.weiting.tohealth.mygrouppage.GroupMemberAdapter.GroupMemberViewHolder
+import com.weiting.tohealth.databinding.MemberRowBinding
 
-class GroupMemberAdapter() : ListAdapter<Member, GroupMemberViewHolder>(DiffCallback) {
+class MembersAdapter : ListAdapter<Member, MembersAdapter.MemberViewHolder>(DiffCallback) {
 
     object DiffCallback : DiffUtil.ItemCallback<Member>() {
         override fun areItemsTheSame(oldItem: Member, newItem: Member): Boolean =
@@ -17,18 +16,23 @@ class GroupMemberAdapter() : ListAdapter<Member, GroupMemberViewHolder>(DiffCall
 
         override fun areContentsTheSame(oldItem: Member, newItem: Member): Boolean =
             oldItem == newItem
+
     }
 
-    inner class GroupMemberViewHolder(private val binding: MygroupRowMemberBinding) :
+    inner class MemberViewHolder(private val binding: MemberRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         fun bind(member: Member) {
-            binding.tvMemberName.text = member.nickName
+            binding.apply {
+                tvMemberName.text = member.id //TODO
+                tvNickName.text = member.nickName
+            }
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupMemberViewHolder {
-        return GroupMemberViewHolder(
-            MygroupRowMemberBinding.inflate(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MemberViewHolder {
+        return MemberViewHolder(
+            MemberRowBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -36,7 +40,7 @@ class GroupMemberAdapter() : ListAdapter<Member, GroupMemberViewHolder>(DiffCall
         )
     }
 
-    override fun onBindViewHolder(holder: GroupMemberViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MemberViewHolder, position: Int) {
         return holder.bind(getItem(position))
     }
 

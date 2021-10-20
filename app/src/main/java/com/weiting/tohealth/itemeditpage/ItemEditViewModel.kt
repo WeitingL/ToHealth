@@ -3,13 +3,18 @@ package com.weiting.tohealth.itemeditpage
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.weiting.tohealth.data.FirebaseRepository
 import com.weiting.tohealth.data.ItemType
+import com.weiting.tohealth.mymanagepage.ManageType
 
 enum class EditType {
     CREATE, UPDATE, FINISHED
 }
 
-class ItemEditViewModel : ViewModel() {
+class ItemEditViewModel(
+    private val firebaseDataRepository: FirebaseRepository,
+    private val editType: EditType
+) : ViewModel() {
 
     private val _editItemType = MutableLiveData<ItemType>()
     val editItemType: LiveData<ItemType>
