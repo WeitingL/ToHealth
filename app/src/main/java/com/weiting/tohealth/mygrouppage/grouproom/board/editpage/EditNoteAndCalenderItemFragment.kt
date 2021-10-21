@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -23,35 +24,47 @@ class EditNoteAndCalenderItemFragment : Fragment() {
         val binding = EditNoteandcalenderitemFragmentBinding.inflate(inflater, container, false)
         val viewModel = ViewModelProvider(this).get(EditNoteAndCalenderItemViewModel::class.java)
 
-        binding.spEditNoteOrNot.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                viewModel.getEditBoardType(p2)
+        binding.spEditNoteOrNot.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                    viewModel.getEditBoardType(p2)
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {}
             }
 
-            override fun onNothingSelected(p0: AdapterView<*>?) { }
-        }
-
         binding.tvEditDate.setOnClickListener {
-            findNavController().navigate(NavigationDirections.actionGlobalCalenderTimeDialog(EditTimeType.DATEANDTIME))
+            findNavController().navigate(
+                NavigationDirections.actionGlobalCalenderTimeDialog(
+                    EditTimeType.DATEANDTIME
+                )
+            )
         }
 
-        viewModel.editBoardType.observe(viewLifecycleOwner){
+        viewModel.timeSet.observe(viewLifecycleOwner) {
+            binding.tvEditDate.text = it
+        }
+
+        viewModel.editBoardType.observe(viewLifecycleOwner) {
             binding.apply {
-                when(it){
-                    EditBoardType.NOTE ->{
+                when (it) {
+                    EditBoardType.NOTE -> {
                         clCalenderItem.visibility = View.GONE
                         clSticky.visibility = View.VISIBLE
                     }
 
-                    EditBoardType.REMINDER ->{
+                    EditBoardType.REMINDER -> {
                         clCalenderItem.visibility = View.VISIBLE
                         clSticky.visibility = View.GONE
                     }
 
                     else -> { }
                 }
-
             }
+        }
+
+        setFragmentResultListener("GetTimeAndDate") { requestKey, bundle ->
+            viewModel.getTimeSet(bundle.getLong("TimeAndDate"))
         }
 
 

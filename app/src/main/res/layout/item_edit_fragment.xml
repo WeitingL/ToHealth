@@ -11,6 +11,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <TextView
+            android:id="@+id/tv_firstDateTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="療程初始日"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_firstDate"
+            app:layout_constraintEnd_toEndOf="@+id/tv_time_edit"
+            app:layout_constraintStart_toStartOf="@+id/cl_Period"
+            app:layout_constraintTop_toTopOf="@+id/tv_firstDate" />
+
+        <TextView
+            android:id="@+id/tv_firstDate"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/row_block"
+            android:gravity="center"
+            android:textSize="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_firstDateTitle"
+            app:layout_constraintTop_toBottomOf="@+id/cl_Period" />
+
         <Spinner
             android:id="@+id/sp_ItemType"
             android:layout_width="0dp"
@@ -100,21 +124,21 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:minHeight="48dp"
-            android:gravity="center"
-            android:textSize="30dp"
-            android:text="12:33"
             android:background="@drawable/row_block"
+            android:gravity="center"
+            android:minHeight="48dp"
+            android:textSize="30dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/tv_time_edit"
-            app:layout_constraintTop_toBottomOf="@+id/cl_Period" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_firstDate" />
 
         <TextView
             android:id="@+id/tv_time_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="執行當日初次提醒時間"
+            android:text="執行日初次提醒時間"
             app:layout_constraintBottom_toBottomOf="@+id/tv_time_set"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_time_set" />
@@ -279,10 +303,30 @@
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tv_ongoingDay"
                 app:layout_constraintTop_toBottomOf="@+id/sp_suspendDay" />
+
+            <TextView
+                android:id="@+id/tv_subtype"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="-9dp"
+                android:text="次執行週期"
+                app:layout_constraintBottom_toBottomOf="@id/sp_subtype"
+                app:layout_constraintStart_toStartOf="@id/tv_ongoingDay"
+                app:layout_constraintTop_toTopOf="@id/sp_subtype" />
+
+            <Spinner
+                android:id="@+id/sp_subtype"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:entries="@array/Sub_Period"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_subtype"
+                app:layout_constraintTop_toBottomOf="@+id/sp_ongoingDay" />
 
             <TextView
                 android:id="@+id/tv_suspendDay"
@@ -295,6 +339,29 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/tv_cycle"
                 app:layout_constraintTop_toTopOf="@+id/sp_suspendDay" />
+
+            <TextView
+                android:id="@+id/tv_subtypevalue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="天"
+                app:layout_constraintBottom_toBottomOf="@+id/sp_subtypevalue"
+                app:layout_constraintEnd_toEndOf="@+id/tv_subtype"
+                app:layout_constraintStart_toStartOf="@+id/tv_ongoingDay"
+                app:layout_constraintTop_toTopOf="@+id/sp_subtypevalue" />
+
+            <Spinner
+                android:id="@+id/sp_subtypevalue"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/tv_subtypevalue"
+                app:layout_constraintTop_toBottomOf="@+id/sp_subtype"
+                app:layout_constraintVertical_bias="0.513" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -315,11 +382,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
+                android:background="@null"
+                android:drawableBottom="@drawable/editext_bottomline"
                 android:ems="10"
                 android:inputType="number"
                 android:minHeight="48dp"
-                android:background="@null"
-                android:drawableBottom="@drawable/editext_bottomline"
                 android:textCursorDrawable="@drawable/cursor_brown"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/tv_unit_stock"

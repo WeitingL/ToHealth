@@ -31,6 +31,7 @@ class ItemEditFragment : Fragment() {
         val factory = ItemEditViewModelFactory(PublicApplication.application.firebaseDataRepository, editType)
         val viewModel = ViewModelProvider(this, factory).get(ItemEditViewModel::class.java)
 
+        //Listen the spinner item selected
         binding.spItemType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 viewModel.getSelectedItemType(p2)
@@ -57,6 +58,16 @@ class ItemEditFragment : Fragment() {
 
         }
 
+        binding.spSubtype.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                viewModel.getcurrentPeriodSubType(p2)
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
+
+        }
+
+        //Get editType spinner selected to change views
         viewModel.editItemType.observe(viewLifecycleOwner) {
             binding.apply {
                 when (it) {
@@ -126,6 +137,7 @@ class ItemEditFragment : Fragment() {
             }
         }
 
+        //Get endDate spinner selected to change views
         viewModel.endDateSelected.observe(viewLifecycleOwner){
 
             binding.apply {
@@ -148,6 +160,7 @@ class ItemEditFragment : Fragment() {
             }
         }
 
+        //Get periodType spinner selected to change views
         viewModel.currentPeriodType.observe(viewLifecycleOwner){
             binding.apply {
                 when(it){
@@ -164,6 +177,10 @@ class ItemEditFragment : Fragment() {
                             R.array.Number,
                             android.R.layout.simple_spinner_dropdown_item
                         )
+                        tvSubtype.visibility = View.GONE
+                        spSubtype.visibility = View.GONE
+                        tvSubtypevalue.visibility = View.GONE
+                        spSubtypevalue.visibility = View.GONE
                     }
                     1 ->{
                         tvOngoingDay.visibility = View.GONE
@@ -178,6 +195,10 @@ class ItemEditFragment : Fragment() {
                             R.array.hour,
                             android.R.layout.simple_spinner_dropdown_item
                         )
+                        tvSubtype.visibility = View.GONE
+                        spSubtype.visibility = View.GONE
+                        tvSubtypevalue.visibility = View.GONE
+                        spSubtypevalue.visibility = View.GONE
                     }
                     2 ->{
                         tvOngoingDay.visibility = View.GONE
@@ -192,6 +213,10 @@ class ItemEditFragment : Fragment() {
                             R.array.day,
                             android.R.layout.simple_spinner_dropdown_item
                         )
+                        tvSubtype.visibility = View.GONE
+                        spSubtype.visibility = View.GONE
+                        tvSubtypevalue.visibility = View.GONE
+                        spSubtypevalue.visibility = View.GONE
                     }
                     3 ->{
                         tvOngoingDay.visibility = View.GONE
@@ -206,6 +231,10 @@ class ItemEditFragment : Fragment() {
                             R.array.week,
                             android.R.layout.simple_spinner_dropdown_item
                         )
+                        tvSubtype.visibility = View.GONE
+                        spSubtype.visibility = View.GONE
+                        tvSubtypevalue.visibility = View.GONE
+                        spSubtypevalue.visibility = View.GONE
                     }
                     4 ->{
                         tvOngoingDay.visibility = View.VISIBLE
@@ -230,6 +259,17 @@ class ItemEditFragment : Fragment() {
                             R.array.Number,
                             android.R.layout.simple_spinner_dropdown_item
                         )
+                        tvSubtype.visibility = View.VISIBLE
+                        spSubtype.visibility = View.VISIBLE
+                        spSubtype.adapter = ArrayAdapter.createFromResource(
+                            PublicApplication.application.applicationContext,
+                            R.array.Sub_Period,
+                            android.R.layout.simple_spinner_dropdown_item
+                        )
+                        tvSubtypevalue.visibility = View.VISIBLE
+                        spSubtypevalue.visibility = View.VISIBLE
+
+                        tvTimeEdit.text = "執行日提醒時間"
                     }
                     5 ->{
                         tvOngoingDay.visibility = View.GONE
@@ -238,21 +278,78 @@ class ItemEditFragment : Fragment() {
                         spSuspendDay.visibility = View.GONE
                         tvCycle.visibility = View.GONE
                         spCycle.visibility = View.GONE
+                        tvSubtype.visibility = View.GONE
+                        spSubtype.visibility = View.GONE
+                        tvSubtypevalue.visibility = View.GONE
+                        spSubtypevalue.visibility = View.GONE
                     }
                 }
             }
         }
 
+        //Get PeriodSubType spinner selected to change views
+        viewModel.currentPeriodSubType.observe(viewLifecycleOwner){
+            binding.apply {
+                when(it){
+                    0 -> {
+                        spSubtypevalue.adapter = ArrayAdapter.createFromResource(
+                            PublicApplication.application.applicationContext,
+                            R.array.Number,
+                            android.R.layout.simple_spinner_dropdown_item
+                        )
+                    }
+
+                    1 ->{
+                        spSubtypevalue.adapter = ArrayAdapter.createFromResource(
+                            PublicApplication.application.applicationContext,
+                            R.array.hour,
+                            android.R.layout.simple_spinner_dropdown_item
+                        )
+                    }
+
+                    2 ->{
+                        spSubtypevalue.adapter = ArrayAdapter.createFromResource(
+                            PublicApplication.application.applicationContext,
+                            R.array.day,
+                            android.R.layout.simple_spinner_dropdown_item
+                        )
+                    }
+
+                    3 ->{
+                        spSubtypevalue.adapter = ArrayAdapter.createFromResource(
+                            PublicApplication.application.applicationContext,
+                            R.array.week,
+                            android.R.layout.simple_spinner_dropdown_item
+                        )
+                    }
+                }
+            }
+        }
+
+
+        //Get timeSet spinner selected to change views
         viewModel.timeSet.observe(viewLifecycleOwner){
             binding.tvTimeSet.text = it
         }
 
-        setFragmentResultListener("GetTimeAndDate"){ requestKey, bundle ->
-            viewModel.getTimeSet(bundle.getLong("TimeAndDate"))
+        viewModel.dateSet.observe(viewLifecycleOwner){
+            binding.tvFirstDate.text = it
+        }
+
+        setFragmentResultListener("GetTime"){ requestKey, bundle ->
+            viewModel.getTimeSet(bundle.getLong("Time"))
+        }
+
+        setFragmentResultListener("GetDate"){ requestKey, bundle ->
+            viewModel.getDateSet(bundle.getLong("Date"))
         }
 
         binding.tvTimeSet.setOnClickListener {
             findNavController().navigate(NavigationDirections.actionGlobalCalenderTimeDialog(EditTimeType.TIME))
+        }
+
+        binding.tvFirstDate.setOnClickListener {
+            findNavController().navigate(NavigationDirections.actionGlobalCalenderTimeDialog(EditTimeType.DATE))
         }
 
         return binding.root

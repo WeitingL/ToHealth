@@ -6,7 +6,8 @@ import androidx.lifecycle.ViewModel
 import com.weiting.tohealth.data.FirebaseRepository
 import com.weiting.tohealth.data.ItemType
 import com.weiting.tohealth.mymanagepage.ManageType
-import com.weiting.tohealth.toStringFromMilliTime
+import com.weiting.tohealth.toDateFromMilliTime
+import com.weiting.tohealth.toTimeFromMilliTime
 
 enum class EditType {
     CREATE, UPDATE, FINISHED
@@ -33,9 +34,17 @@ class ItemEditViewModel(
     val currentPeriodType: LiveData<Int>
         get() = _currentPeriodType
 
+    private val _currentPeriodSubType = MutableLiveData<Int>()
+    val currentPeriodSubType: LiveData<Int>
+        get() = _currentPeriodSubType
+
     private val _timeSet = MutableLiveData<String>()
     val timeSet: LiveData<String>
         get() = _timeSet
+
+    private val _dateSet = MutableLiveData<String>()
+    val dateSet : LiveData<String>
+        get() = _dateSet
 
     fun getSelectedItemType(int: Int) {
         when (int) {
@@ -54,9 +63,16 @@ class ItemEditViewModel(
         _currentPeriodType.value = int
     }
 
-    fun getTimeSet(time: Long?) {
-        _timeSet.value = toStringFromMilliTime(time?:0)
+    fun getcurrentPeriodSubType(int: Int){
+        _currentPeriodSubType.value = int
     }
 
+    fun getTimeSet(time: Long?) {
+        _timeSet.value = toTimeFromMilliTime(time ?: 0)
+    }
+
+    fun getDateSet(time: Long?) {
+        _dateSet .value = toDateFromMilliTime(time ?: 0)
+    }
 
 }
