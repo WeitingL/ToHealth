@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.weiting.tohealth.data.Drug
 import com.weiting.tohealth.databinding.*
 import java.lang.ClassCastException
 
@@ -39,12 +38,10 @@ class HomeAdapter(val onClickListener: OnclickListener) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(nextTask: HomePageItem.NextTask) {
-            val time = nextTask.list.first().firstTimePerDay.toString()
-            val adapter = NextTaskCardAdapter()
+            val adapter = TodayItemAdapter()
             adapter.submitList(nextTask.list)
 
             binding.apply {
-                tvNextTime.text = time
                 rvGroupInfo.adapter = adapter
                 tvMoreTodoList.setOnClickListener {
                     onClickListener.onClick(nextTask)

@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.datepicker.MaterialDatePicker
 import com.weiting.tohealth.NavigationDirections
 import com.weiting.tohealth.databinding.EditNoteandcalenderitemFragmentBinding
 import com.weiting.tohealth.timeset.EditTimeType

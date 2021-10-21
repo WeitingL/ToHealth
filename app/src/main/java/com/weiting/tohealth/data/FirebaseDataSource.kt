@@ -13,13 +13,74 @@ object FirebaseDataSource: FirebaseSource {
         val database = application.database
 
         database.collection("drugs")
+            .whereEqualTo("userId", "Weiting")
             .get()
             .addOnSuccessListener { result ->
 
                 val dataList = result.toObjects(Drug::class.java)
                 list += dataList
 
-                Log.i("Data?", list.toString())
+//                Log.i("drugsList", list.toString())
+                continuation.resume(list)
+            }
+            .addOnFailureListener { e ->
+                Log.w("Error to get data", e)
+            }
+    }
+
+    override suspend fun getAllMeasures(): List<Measure> = suspendCoroutine { continuation ->
+        val list = mutableListOf<Measure>()
+        val database = application.database
+
+        database.collection("measures")
+            .whereEqualTo("userId", "Weiting")
+            .get()
+            .addOnSuccessListener { result ->
+
+                val dataList = result.toObjects(Measure::class.java)
+                list += dataList
+
+//                Log.i("measuresList", list.toString())
+                continuation.resume(list)
+            }
+            .addOnFailureListener { e ->
+                Log.w("Error to get data", e)
+            }
+    }
+
+    override suspend fun getAllActivities(): List<Activity> = suspendCoroutine { continuation ->
+        val list = mutableListOf<Activity>()
+        val database = application.database
+
+        database.collection("activity")
+            .whereEqualTo("userId", "Weiting")
+            .get()
+            .addOnSuccessListener { result ->
+
+                val dataList = result.toObjects(Activity::class.java)
+                list += dataList
+
+//                Log.i("activityList", list.toString())
+                continuation.resume(list)
+            }
+            .addOnFailureListener { e ->
+                Log.w("Error to get data", e)
+            }
+    }
+
+    override suspend fun getAllCares(): List<Care> = suspendCoroutine { continuation ->
+        val list = mutableListOf<Care>()
+        val database = application.database
+
+        database.collection("cares")
+            .whereEqualTo("userId", "Weiting")
+            .get()
+            .addOnSuccessListener { result ->
+
+                val dataList = result.toObjects(Care::class.java)
+                list += dataList
+
+//                Log.i("caresList", list.toString())
                 continuation.resume(list)
             }
             .addOnFailureListener { e ->
@@ -41,4 +102,48 @@ object FirebaseDataSource: FirebaseSource {
                 Log.w("store failure", "Error adding document", e)
             }
     }
+
+    override fun postMeasure(measure: Measure) {
+        val database = application.database
+
+        measure.id = database.collection("measures").document().id
+        database.collection("measures").document(measure.id!!)
+            .set(measure)
+            .addOnSuccessListener { documentReference ->
+                Log.d("store success", "DocumentSnapshot added with ID: ${measure.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("store failure", "Error adding document", e)
+            }
+    }
+
+    override fun postActivity(activity: Activity) {
+        val database = application.database
+
+        activity.id = database.collection("activity").document().id
+        database.collection("activity").document(activity.id!!)
+            .set(activity)
+            .addOnSuccessListener { documentReference ->
+                Log.d("store success", "DocumentSnapshot added with ID: ${activity.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("store failure", "Error adding document", e)
+            }
+    }
+
+    override fun postCare(care: Care) {
+        val database = application.database
+
+        care.id = database.collection("cares").document().id
+        database.collection("cares").document(care.id!!)
+            .set(care)
+            .addOnSuccessListener { documentReference ->
+                Log.d("store success", "DocumentSnapshot added with ID: ${care.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("store failure", "Error adding document", e)
+            }
+    }
+
+
 }

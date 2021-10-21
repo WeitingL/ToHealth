@@ -1,6 +1,7 @@
 package com.weiting.tohealth.homepage
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +29,7 @@ class HomeFragment : Fragment() {
         val homeAdapter = HomeAdapter(HomeAdapter.OnclickListener {
             when(it){
                 is HomePageItem.NextTask ->{
-                    findNavController().navigate(NavigationDirections.actionGlobalTodoListFragment())
+//                    findNavController().navigate(NavigationDirections.actionGlobalTodoListFragment())
                 }
 
                 is HomePageItem.AddNewItem -> {
@@ -44,6 +45,10 @@ class HomeFragment : Fragment() {
 
         viewModel.nextTaskList.observe(viewLifecycleOwner){
             homeAdapter.submitList(it)
+        }
+
+        viewModel.List.observe(viewLifecycleOwner){
+            Log.i("List", it.toString())
         }
 
         binding.apply {

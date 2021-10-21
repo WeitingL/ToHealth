@@ -56,6 +56,10 @@ fun toStringFromTimeStamp(timestamp: Timestamp?):String{
     return SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.TAIWAN).format(timestamp!!.toDate()).toString()
 }
 
+fun toTimeFromTimeStamp(timestamp: Timestamp?):String{
+    return SimpleDateFormat("HH:mm", Locale.TAIWAN).format(timestamp!!.toDate()).toString()
+}
+
 fun toTimeInMilliFromPicker(y:Int, M: Int, d: Int, h:Int, m:Int):Long{
     val time = Calendar.getInstance()
     time.set(Calendar.YEAR, y)

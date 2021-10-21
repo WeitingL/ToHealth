@@ -3,11 +3,12 @@ package com.weiting.tohealth.itemeditpage
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.weiting.tohealth.data.FirebaseRepository
-import com.weiting.tohealth.data.ItemType
-import com.weiting.tohealth.mymanagepage.ManageType
+import com.google.firebase.Timestamp
+import com.weiting.tohealth.data.*
+import com.weiting.tohealth.databinding.ItemEditFragmentBinding
 import com.weiting.tohealth.toDateFromMilliTime
 import com.weiting.tohealth.toTimeFromMilliTime
+import java.util.*
 
 enum class EditType {
     CREATE, UPDATE, FINISHED
@@ -42,9 +43,17 @@ class ItemEditViewModel(
     val timeSet: LiveData<String>
         get() = _timeSet
 
+    private val _timeSetInLong = MutableLiveData<Long>()
+    val timeSetInLong: LiveData<Long>
+        get() = _timeSetInLong
+
     private val _dateSet = MutableLiveData<String>()
-    val dateSet : LiveData<String>
+    val dateSet: LiveData<String>
         get() = _dateSet
+
+    private val _dateSetInLong = MutableLiveData<Long>()
+    val dateSetInLong: LiveData<Long>
+        get() = _dateSetInLong
 
     fun getSelectedItemType(int: Int) {
         when (int) {
@@ -63,16 +72,114 @@ class ItemEditViewModel(
         _currentPeriodType.value = int
     }
 
-    fun getcurrentPeriodSubType(int: Int){
+    fun getcurrentPeriodSubType(int: Int) {
         _currentPeriodSubType.value = int
     }
 
     fun getTimeSet(time: Long?) {
+        _timeSetInLong.value = time ?: 0
         _timeSet.value = toTimeFromMilliTime(time ?: 0)
     }
 
     fun getDateSet(time: Long?) {
-        _dateSet .value = toDateFromMilliTime(time ?: 0)
+        _dateSetInLong.value = time ?: 0
+        _dateSet.value = toDateFromMilliTime(time ?: 0)
+    }
+
+    fun postData(binding: ItemEditFragmentBinding) {
+        when (editItemType.value) {
+            ItemType.DRUG -> {
+                val data = Drug(
+                    userId = "Weiting",
+                    drugName = binding.tilDrugName.editText?.text.toString(),
+                    dose = Integer.parseInt(binding.etvStock.text.toString()),
+                    unit = binding.spUnit.selectedItemPosition,
+                    endDate = mapOf(
+                        "type" to endDateSelected.value,
+                        "day" to binding.spEndDate.selectedItemPosition
+                    ),
+                    startDate = Timestamp(Date(timeSetInLong.value!!)),
+                    period = mapOf(
+                        "type" to binding.spPeriod.selectedItemPosition,
+                        "N" to binding.spOngoingUnit.selectedItemPosition,
+                        "X" to binding.spSuspendDay.selectedItemPosition,
+                        "Y" to binding.spCycle.selectedItemPosition,
+                        "subType" to binding.spSubtype.selectedItemPosition,
+                        "Z" to binding.spSubOngoningUnit.selectedItemPosition
+                    ),
+                    firstTimePerDay = Timestamp(Date(timeSetInLong.value!!)),
+                    stock = Integer.parseInt(binding.etvStock.text.toString()),
+                    editor ="Test",
+                    createTime = Timestamp.now(),
+                    status = 1
+                )
+                firebaseDataRepository.postDrug(data)
+            }
+            ItemType.MEASURE -> {
+                val data = Measure(
+                    userId = "Weiting",
+                    type = binding.spItemType.selectedItemPosition,
+                    firstTimePerDay = Timestamp(Date(timeSetInLong.value!!)),
+                    editor ="Test",
+                    createTime = Timestamp.now(),
+                    status = 1
+                )
+
+                firebaseDataRepository.postMeasure(data)
+            }
+            ItemType.ACTIVITY -> {
+                val data = Activity(
+                    userId = "Weiting",
+                    type = binding.spItemType.selectedItemPosition,
+                    endDate = mapOf(
+                        "type" to endDateSelected.value,
+                        "day" to binding.spEndDate.selectedItemPosition
+                    ),
+                    startDate = Timestamp(Date(timeSetInLong.value!!)),
+                    period = mapOf(
+                        "type" to binding.spPeriod.selectedItemPosition,
+                        "N" to binding.spOngoingUnit.selectedItemPosition,
+                        "X" to binding.spSuspendDay.selectedItemPosition,
+                        "Y" to binding.spCycle.selectedItemPosition,
+                        "subType" to binding.spSubtype.selectedItemPosition,
+                        "Z" to binding.spSubOngoningUnit.selectedItemPosition
+                    ),
+                    firstTimePerDay = Timestamp(Date(timeSetInLong.value!!)),
+                    editor ="Test",
+                    createTime = Timestamp.now(),
+                    status = 1
+                )
+
+                firebaseDataRepository.postActivity(data)
+            }
+            ItemType.CARE -> {
+                val data = Care(
+                    userId = "Weiting",
+                    type = binding.spItemType.selectedItemPosition,
+                    endDate = mapOf(
+                        "type" to endDateSelected.value,
+                        "day" to binding.spEndDate.selectedItemPosition
+                    ),
+                    startDate = Timestamp(Date(timeSetInLong.value!!)),
+                    period = mapOf(
+                        "type" to binding.spPeriod.selectedItemPosition,
+                        "N" to binding.spOngoingUnit.selectedItemPosition,
+                        "X" to binding.spSuspendDay.selectedItemPosition,
+                        "Y" to binding.spCycle.selectedItemPosition,
+                        "subType" to binding.spSubtype.selectedItemPosition,
+                        "Z" to binding.spSubOngoningUnit.selectedItemPosition
+                    ),
+                    firstTimePerDay = Timestamp(Date(timeSetInLong.value!!)),
+                    editor ="Test",
+                    createTime = Timestamp.now(),
+                    status = 1
+                )
+
+                firebaseDataRepository.postCare(data)
+            }
+            else -> {
+            }
+        }
     }
 
 }

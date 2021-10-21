@@ -29,7 +29,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tv_groupInfoTitle"
             app:layout_constraintTop_toBottomOf="@+id/tv_nextTime"
-            tools:listitem="@layout/homecard_nexttask_row_item" />
+            tools:listitem="@layout/item_row" />
 
         <TextView
             android:id="@+id/tv_groupInfoTitle"

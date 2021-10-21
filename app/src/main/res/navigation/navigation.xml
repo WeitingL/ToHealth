@@ -44,7 +44,11 @@
         android:id="@+id/todoListFragment"
         android:name="com.weiting.tohealth.homepage.carddetail.TodoListFragment"
         android:label="todolist_fragment"
-        tools:layout="@layout/todolist_fragment" />
+        tools:layout="@layout/todolist_fragment" >
+        <argument
+            android:name="dataList"
+            app:argType="com.weiting.tohealth.data.ItemDataList" />
+    </fragment>
     <action android:id="@+id/action_global_addGroupDialog" app:destination="@id/addGroupDialog" />
     <action android:id="@+id/action_global_createGroupDialog" app:destination="@id/createGroupDialog" />
     <action android:id="@+id/action_global_joinGroupDialog" app:destination="@id/joinGroupDialog" />

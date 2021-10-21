@@ -26,8 +26,9 @@ data class Drug(
     val dose: Int = 0,
     val unit: Int? = null,
     val endDate: Map<String, Int?> = mapOf("type" to null, "day" to null),
-    val period: Map<String, Int?> = mapOf("type" to null, "N" to null, "X" to null, "Y" to null),
-    val firstTimePerDay: Int? = null,
+    val startDate: Timestamp? = null,
+    val period: Map<String, Int?> = mapOf("type" to null, "N" to null, "X" to null, "Y" to null, "subtype" to null, "Z" to null),
+    val firstTimePerDay: Timestamp? = null,
     val stock: Int = 0,
     val editor: String? = null,
     val createTime: Timestamp? = null,
@@ -44,10 +45,10 @@ data class DrugLog(
 
 @Parcelize
 data class Measure(
-    val id: String? = null,
+    var id: String? = null,
     val userId : String? = null,
     val type: Int? = null,
-    val firstTimePerDay: Int,
+    val firstTimePerDay: Timestamp? = null,
     val editor: String? = null,
     val createTime: Timestamp? = null,
     val status: Int? = null,
@@ -64,12 +65,13 @@ data class MeasureLog(
 
 @Parcelize
 data class Activity(
-    val id: String? = null,
+    var id: String? = null,
     val userId : String? = null,
     val type: Int? = null,
     val endDate: Map<String, Int?> = mapOf("type" to null, "day" to null),
-    val period: Map<String, Int?> = mapOf("type" to null, "N" to null, "X" to null, "Y" to null),
-    val firstTimePerDay: Int,
+    val period: Map<String, Int?> = mapOf("type" to null, "N" to null, "X" to null, "Y" to null, "subtype" to null, "Z" to null),
+    val startDate: Timestamp? = null,
+    val firstTimePerDay: Timestamp? = null,
     val editor: String? = null,
     val createTime: Timestamp? = null,
     val status: Int? = null,
@@ -86,12 +88,13 @@ data class ActivityLog(
 
 @Parcelize
 data class Care(
-    val id: String? = null,
+    var id: String? = null,
     val userId : String? = null,
     val type: Int? = null,
     val endDate: Map<String, Int?> = mapOf("type" to null, "day" to null),
-    val period: Map<String, Int?> = mapOf("type" to null, "N" to null, "X" to null, "Y" to null),
-    val firstTimePerDay: Int,
+    val period: Map<String, Int?> = mapOf("type" to null, "N" to null, "X" to null, "Y" to null, "subtype" to null, "Z" to null),
+    val startDate: Timestamp? = null,
+    val firstTimePerDay: Timestamp? = null,
     val editor: String? = null,
     val createTime: Timestamp? = null,
     val status: Int? = null,
