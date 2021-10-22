@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/drawable/care_selector.xml" value="0.4661458333333333" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/drawable/cursor_brown.xml" value="0.12037037037037036" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/drawable/daliy_info_bar.xml" value="0.45897435897435895" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/drawable/editext_bottomline.xml" value="0.2851851851851852" />
@@ -22,11 +23,15 @@
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/cardview_bottombutton_row.xml" value="0.2359375" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/detail_todo_item_row.xml" value="0.4466666666666667" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/detail_todo_time_row.xml" value="0.3875" />
+        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/dialog_activity_record.xml" value="0.45" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/dialog_add_exist_group.xml" value="0.4466666666666667" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/dialog_add_group.xml" value="0.3875" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/dialog_calender.xml" value="0.45" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/dialog_calendertime.xml" value="0.5" />
+        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/dialog_care_record.xml" value="0.6666666666666666" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/dialog_create_group.xml" value="0.1" />
+        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/dialog_drug_record.xml" value="0.5" />
+        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/dialog_measure_record.xml" value="0.4466666666666667" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/dialog_new_group.xml" value="0.2609375" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/edit_noteandcalenderitem_fragment.xml" value="0.6500754147812972" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/fragment_group.xml" value="0.3333333333333333" />
@@ -48,6 +53,7 @@
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/home_row_dailyinfo.xml" value="0.4466666666666667" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/home_row_fastadd.xml" value="0.45" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/home_row_mygroup.xml" value="0.5" />
+        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/home_row_nexttask.xml" value="0.4630225080385852" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/home_row_today.xml" value="0.2677083333333333" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/home_row_today_items.xml" value="0.4466666666666667" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/homecard_nexttask_row.xml" value="0.2677083333333333" />
@@ -80,7 +86,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.5" />
+        <option name="scale" value="0.4466666666666667" />
       </ProjectState>
     </option>
   </component>

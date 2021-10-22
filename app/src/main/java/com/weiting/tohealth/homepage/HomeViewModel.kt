@@ -16,11 +16,12 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
     val nextTaskList: LiveData<List<HomePageItem>>
         get() = _nextTaskList
 
-    private val _List = MutableLiveData<List<ItemDataType>>()
-    val List: LiveData<List<ItemDataType>>
-        get() = _List
+    private val _itemDataTypeList = MutableLiveData<List<ItemDataType>>()
+    val itemDataTypeList: LiveData<List<ItemDataType>>
+        get() = _itemDataTypeList
 
-    private val list = mutableListOf<ItemDataType>()
+    private val timestampList = mutableListOf<Timestamp>()
+    private val itemList = mutableListOf<ItemDataType>()
 
     init {
         _nextTaskList.value = listOf(
@@ -28,7 +29,10 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
             HomePageItem.TodayAbstract
         )
         getAllItemsByUserId()
-//        Log.i("Desen", listOf<Int>(3,4,6,2,45,2,4).distinct().sorted().toString())
+    }
+
+    fun getItemDataIntoHomePageItem(list: List<ItemDataType>) {
+        _nextTaskList.value = _nextTaskList.value?.plus(HomePageItem.NextTask(list))
     }
 
     private fun getAllItemsByUserId() {
@@ -42,65 +46,71 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
         }
     }
 
+    private fun getTimeList(timestamp: Timestamp) {
+        when (timestamp in timestampList) {
+            true -> {
+            }
+            false -> {
+                timestampList.add(timestamp)
+            }
+        }
+//        Log.i("before sort", timestampList.toString())
+        timestampList.sort()
+//        Log.i("after sort", timestampList.toString())
+    }
+
+    private fun getItemData(itemDataType: ItemDataType) {
+        itemList.add(itemDataType)
+//        Log.i("?!", itemList.toString())
+    }
+
     private fun arrangeItemsByTime(
         drugList: List<Drug>,
         measureList: List<Measure>,
         activityList: List<Activity>,
         careList: List<Care>
     ) {
-        val timeList = mutableListOf<Timestamp>()
-
         drugList.forEach {
-            timeList + it.firstTimePerDay
+            getTimeList(it.firstTimePerDay!!)
         }
         measureList.forEach {
-            timeList + it.firstTimePerDay
+            getTimeList(it.firstTimePerDay!!)
         }
         activityList.forEach {
-            timeList + it.firstTimePerDay
+            getTimeList(it.firstTimePerDay!!)
         }
         careList.forEach {
-            timeList + it.firstTimePerDay
+            getTimeList(it.firstTimePerDay!!)
         }
-//        timeList.distinct().sorted()
 
-        timeList.forEach { time ->
-            list + ItemDataType.TimeType(toTimeFromTimeStamp(time))
+        timestampList.forEach { time ->
+            getItemData(ItemDataType.TimeType(toTimeFromTimeStamp(time)))
 
             drugList.forEach {
                 if (it.firstTimePerDay!! == time) {
-                    list + ItemDataType.DrugType(ItemData(DrugData = it))
+                    getItemData(ItemDataType.DrugType(ItemData(DrugData = it)))
                 }
             }
 
             measureList.forEach {
                 if (it.firstTimePerDay!! == time) {
-                    list + ItemDataType.MeasureType(ItemData(MeasureData = it))
+                    getItemData(ItemDataType.MeasureType(ItemData(MeasureData = it)))
                 }
             }
 
             activityList.forEach {
                 if (it.firstTimePerDay!! == time) {
-                    list + ItemDataType.ActivityType(ItemData(ActivityData = it))
+                    getItemData(ItemDataType.ActivityType(ItemData(ActivityData = it)))
                 }
             }
 
             careList.forEach {
                 if (it.firstTimePerDay!! == time) {
-                    list + ItemDataType.CareType(ItemData(CareData = it))
+                    getItemData(ItemDataType.CareType(ItemData(CareData = it)))
                 }
             }
         }
-    }
-
-    private fun getAllDrugs() {
-        viewModelScope.launch {
-            val list = firebaseDataRepository.getAllDrugs()
-
-            if (list.isNotEmpty()) {
-//                _nextTaskList.value = _nextTaskList.value?.plus(HomePageItem.NextTask(list))
-            }
-        }
+        _itemDataTypeList.value = itemList
     }
 }
 

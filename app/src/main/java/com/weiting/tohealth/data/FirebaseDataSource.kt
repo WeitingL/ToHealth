@@ -145,5 +145,62 @@ object FirebaseDataSource: FirebaseSource {
             }
     }
 
+    override fun postDrugRecord(id: String, drugLog: DrugLog) {
+
+        val database = application.database
+
+        drugLog.id = database.collection("drugs").document(id).collection("drugLogs").document().id
+        database.collection("drugs").document(id).collection("drugLogs").document(drugLog.id!!)
+            .set(drugLog)
+            .addOnSuccessListener { documentReference ->
+                Log.d("store success", "DocumentSnapshot added with ID: ${drugLog.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("store failure", "Error adding document", e)
+            }
+    }
+
+    override fun postMeasureRecord(id: String, measureLog: MeasureLog) {
+        val database = application.database
+
+        measureLog.id = database.collection("measures").document(id).collection("measuresLogs").document().id
+        database.collection("measures").document(id).collection("measuresLogs").document(measureLog.id!!)
+            .set(measureLog)
+            .addOnSuccessListener { documentReference ->
+                Log.d("store success", "DocumentSnapshot added with ID: ${measureLog.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("store failure", "Error adding document", e)
+            }
+    }
+
+    override fun postActivityRecord(id: String, activityLog: ActivityLog) {
+        val database = application.database
+
+        activityLog.id = database.collection("activity").document(id).collection("activityLogs").document().id
+        database.collection("activity").document(id).collection("activityLogs").document(activityLog.id!!)
+            .set(activityLog)
+            .addOnSuccessListener { documentReference ->
+                Log.d("store success", "DocumentSnapshot added with ID: ${activityLog.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("store failure", "Error adding document", e)
+            }
+    }
+
+    override fun postCareRecord(id: String, careLog: CareLog) {
+        val database = application.database
+
+        careLog.id = database.collection("cares").document(id).collection("careLogs").document().id
+        database.collection("cares").document(id).collection("careLogs").document(careLog.id!!)
+            .set(careLog)
+            .addOnSuccessListener { documentReference ->
+                Log.d("store success", "DocumentSnapshot added with ID: ${careLog.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("store failure", "Error adding document", e)
+            }
+    }
+
 
 }

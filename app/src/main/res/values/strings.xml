@@ -11,7 +11,8 @@
 
     <string-array name="Measure_Item">
         <item>血壓</item>
-        <item>血糖</item>
+        <item>飯前血糖</item>
+        <item>飯後血糖</item>
         <item>血氧</item>
         <item>體重</item>
         <item>體溫</item>

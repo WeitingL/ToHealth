@@ -18,6 +18,7 @@ import com.weiting.tohealth.R
 import com.weiting.tohealth.data.*
 import com.weiting.tohealth.databinding.ItemEditFragmentBinding
 import com.weiting.tohealth.factory.ItemEditViewModelFactory
+import com.weiting.tohealth.mymanagepage.ManageType
 import com.weiting.tohealth.timeset.EditTimeType
 
 class ItemEditFragment : Fragment() {
@@ -29,9 +30,19 @@ class ItemEditFragment : Fragment() {
     ): View? {
         val binding = ItemEditFragmentBinding.inflate(inflater, container, false)
         val editType = ItemEditFragmentArgs.fromBundle(requireArguments()).editType
+        val manageType = ItemEditFragmentArgs.fromBundle(requireArguments()).manageType
         val factory =
             ItemEditViewModelFactory(PublicApplication.application.firebaseDataRepository, editType)
         val viewModel = ViewModelProvider(this, factory).get(ItemEditViewModel::class.java)
+
+        val position = when(manageType){
+            ManageType.DRUG -> 0
+            ManageType.MEASURE -> 1
+            ManageType.ACTIVITY -> 2
+            ManageType.CARE -> 3
+        }
+
+        binding.spItemType.setSelection(position)
 
         //Listen the spinner item selected
         binding.spItemType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -373,7 +384,10 @@ class ItemEditFragment : Fragment() {
 
         binding.btEnterItem.setOnClickListener {
             when (checkInput(binding)) {
-                true -> viewModel.postData(binding)
+                true -> {
+                    viewModel.postData(binding)
+                    findNavController().popBackStack()
+                }
                 false -> Toast.makeText(context, "有東西還沒填喔!", Toast.LENGTH_LONG).show()
             }
         }

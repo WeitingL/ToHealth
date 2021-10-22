@@ -52,11 +52,96 @@ fun toFooter(int: Int?): String{
     }
 }
 
+fun toMeasureType(int: Int?): String{
+    return when(int){
+        0 -> "血壓"
+        1 -> "飯前血糖"
+        2 -> "飯後血糖"
+        3 -> "血氧"
+        4 -> "體重"
+        5 -> "體溫"
+        else -> "What?"
+    }
+}
+
+fun toActivityType(int: Int?): String{
+    return when (int){
+        0 -> "健身"
+        1 -> "走路(健走"
+        2 -> "物理治療"
+        3 -> "跑步"
+        4 -> "呼吸訓練"
+        5 -> "心理諮詢"
+        6 -> "冥想"
+        7 -> "瑜珈(伸展)"
+        8 -> "眼部運動"
+        9 -> "中醫治療"
+        10 -> "洗腎"
+        else -> "What?"
+    }
+}
+
+fun toCareType(int: Int?): String{
+    return when(int){
+        0 -> "心情關懷"
+        1 -> "疼痛關懷"
+        2 -> "症狀關懷"
+        3 -> "睡眠關懷"
+        else -> "What?"
+    }
+}
+
+fun setDrugDrawable(int: Int?): Int{
+    return when(int){
+        0 -> R.drawable.medicine
+        1 -> R.drawable.medicine
+        2 -> R.drawable.syringe
+        3 -> R.drawable.medicine
+        4 -> R.drawable.pipette
+        5 -> R.drawable.medicine
+        6 -> R.drawable.pills
+        7 -> R.drawable.medicine
+        8 -> R.drawable.medicine
+        9 -> R.drawable.pills
+        10 -> R.drawable.medicine
+        else -> R.drawable.medicine
+    }
+}
+
+fun setMeasureDrawable(int: Int?): Int{
+    return when(int){
+        0 -> R.drawable.blood_pressure
+        1 -> R.drawable.sugar_blood_level
+        2 -> R.drawable.loupe
+        3 -> R.drawable.body_scale
+        4 -> R.drawable.thermometer
+        else -> R.drawable.loupe
+    }
+}
+
+fun setActivityType(int: Int?): Int{
+    return when (int){
+        0 -> R.drawable.strength
+        1 -> R.drawable.running
+        2 -> R.drawable.doctor
+        3 -> R.drawable.running
+        4 -> R.drawable.exercise
+        5 -> R.drawable.hospital_sign
+        6 -> R.drawable.exercise
+        7 -> R.drawable.exercise
+        8 -> R.drawable.eye
+        9 -> R.drawable.doctor
+        10 -> R.drawable.hospital_sign
+        else -> R.drawable.hospital_sign
+    }
+}
+
 fun toStringFromTimeStamp(timestamp: Timestamp?):String{
     return SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.TAIWAN).format(timestamp!!.toDate()).toString()
 }
 
 fun toTimeFromTimeStamp(timestamp: Timestamp?):String{
+    Log.i("Time", timestamp.toString())
     return SimpleDateFormat("HH:mm", Locale.TAIWAN).format(timestamp!!.toDate()).toString()
 }
 
@@ -67,7 +152,7 @@ fun toTimeInMilliFromPicker(y:Int, M: Int, d: Int, h:Int, m:Int):Long{
     time.set(Calendar.DAY_OF_MONTH, d)
     time.set(Calendar.HOUR_OF_DAY, h)
     time.set(Calendar.MINUTE, m)
-    Log.i("Time? FromDateAndTime", "${Timestamp(Date(time.timeInMillis)).toDate()}")
+//    Log.i("Time? FromDateAndTime", "${Timestamp(Date(time.timeInMillis)).toDate()}")
     return time.timeInMillis
 }
 

@@ -18,4 +18,12 @@ interface FirebaseRepository {
 
     fun postCare(care: Care)
 
+    fun postDrugRecord(id:String, drugLog:DrugLog)
+
+    fun postMeasureRecord(id: String, measureLog: MeasureLog)
+
+    fun postActivityRecord(id:String, activityLog: ActivityLog)
+
+    fun postCareRecord(id:String, careLog: CareLog)
+
 }

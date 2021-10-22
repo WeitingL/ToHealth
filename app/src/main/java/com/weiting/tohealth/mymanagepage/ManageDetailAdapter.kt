@@ -1,18 +1,18 @@
 package com.weiting.tohealth.mymanagepage
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.weiting.tohealth.*
 import com.weiting.tohealth.data.ItemData
 import com.weiting.tohealth.databinding.ManageRowItemBinding
 import com.weiting.tohealth.mymanagepage.ManageDetailAdapter.ItemsListViewHolder
-import com.weiting.tohealth.toEndDate
-import com.weiting.tohealth.toStatus
-import com.weiting.tohealth.toUnit
 
-class ManageDetailAdapter : ListAdapter<ItemData, ItemsListViewHolder>(DiffCallBack) {
+class ManageDetailAdapter(private val dataType: ManageType) :
+    ListAdapter<ItemData, ItemsListViewHolder>(DiffCallBack) {
 
     object DiffCallBack : DiffUtil.ItemCallback<ItemData>() {
         override fun areItemsTheSame(
@@ -29,18 +29,67 @@ class ManageDetailAdapter : ListAdapter<ItemData, ItemsListViewHolder>(DiffCallB
 
     inner class ItemsListViewHolder(private val binding: ManageRowItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-            fun bind(item: ItemData){
-                val data = item.DrugData
-                binding.apply {
-                    tvItemNameManage.text = data?.drugName
-                    tvDose.text = data?.dose.toString()
-                    tvUnitManage.text = toUnit(data?.dose)
-                    tvStockManage.text = "剩餘" + data?.stock + toUnit(data?.dose)
-                    tvEndDate.text = toEndDate(data?.endDate)
-                    tvTime.text = data?.firstTimePerDay.toString()
-                    tvTagManage.text = toStatus(data?.status)
+        fun bind(item: ItemData) {
+            binding.apply {
+                when (dataType) {
+                    ManageType.DRUG -> {
+                        val data = item.DrugData
+
+                        tvItemNameManage.text = data?.drugName
+                        tvDose.text = data?.dose.toString()
+                        tvUnitManage.text = toUnit(data?.unit)
+                        tvStockManage.text = "剩餘" + data?.stock + toUnit(data?.dose)
+                        tvEndDate.text = toEndDate(data?.endDate)
+                        tvTime.text = toTimeFromTimeStamp(data?.firstTimePerDay)
+                        tvTagManage.text = toStatus(data?.status)
+                        tvCreatedTime.text = "創建時間: " + toStringFromTimeStamp(data?.createTime)
+                        tvEditorManage.text = "編輯者: " + data?.editor
+                    }
+
+                    ManageType.MEASURE -> {
+                        val data = item.MeasureData
+
+                        tvItemNameManage.text = toMeasureType(data?.type)
+                        tvDose.visibility = View.GONE
+                        tvUnitManage.visibility = View.GONE
+                        tvStockManage.visibility = View.GONE
+                        tvEndDate.visibility = View.GONE
+                        tvTime.text = toTimeFromTimeStamp(data?.firstTimePerDay)
+                        tvTagManage.text = toStatus(data?.status)
+                        tvCreatedTime.text = "創建時間: " + toStringFromTimeStamp(data?.createTime)
+                        tvEditorManage.text = "編輯者: " + data?.editor
+                    }
+
+                    ManageType.ACTIVITY -> {
+                        val data = item.ActivityData
+
+                        tvItemNameManage.text = toMeasureType(data?.type)
+                        tvDose.visibility = View.GONE
+                        tvUnitManage.visibility = View.GONE
+                        tvStockManage.visibility = View.GONE
+                        tvEndDate.text = toEndDate(data?.endDate)
+                        tvTime.text = toTimeFromTimeStamp(data?.firstTimePerDay)
+                        tvTagManage.text = toStatus(data?.status)
+                        tvCreatedTime.text = "創建時間: " + toStringFromTimeStamp(data?.createTime)
+                        tvEditorManage.text = "編輯者: " + data?.editor
+                    }
+
+                    ManageType.CARE -> {
+                        val data = item.CareData
+
+                        tvItemNameManage.text = toCareType(data?.type)
+                        tvDose.visibility = View.GONE
+                        tvUnitManage.visibility = View.GONE
+                        tvStockManage.visibility = View.GONE
+                        tvEndDate.text = toEndDate(data?.endDate)
+                        tvTime.text = toTimeFromTimeStamp(data?.firstTimePerDay)
+                        tvTagManage.text = toStatus(data?.status)
+                        tvCreatedTime.text = "創建時間: " + toStringFromTimeStamp(data?.createTime)
+                        tvEditorManage.text = "編輯者: " + data?.editor
+                    }
                 }
             }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemsListViewHolder {
@@ -56,6 +105,5 @@ class ManageDetailAdapter : ListAdapter<ItemData, ItemsListViewHolder>(DiffCallB
     override fun onBindViewHolder(holder: ItemsListViewHolder, position: Int) {
         return holder.bind(getItem(position))
     }
-
-
 }
+

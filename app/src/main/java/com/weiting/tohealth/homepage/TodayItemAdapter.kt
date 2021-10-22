@@ -1,14 +1,17 @@
 package com.weiting.tohealth.homepage
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.weiting.tohealth.*
 import com.weiting.tohealth.data.*
 import com.weiting.tohealth.databinding.ItemRowBinding
 import com.weiting.tohealth.databinding.TimeRowBinding
-import com.weiting.tohealth.toUnit
+import com.weiting.tohealth.mygrouppage.GroupAdapter
+import com.weiting.tohealth.mygrouppage.GroupPageItem
 import java.lang.ClassCastException
 
 const val ITEM_VIEWTYPE_TIME = 0
@@ -17,7 +20,8 @@ const val ITEM_VIEWTYPE_MEASURE = 2
 const val ITEM_VIEWTYPE_ACTIVITY = 3
 const val ITEM_VIEWTYPE_CARE = 4
 
-class TodayItemAdapter() : ListAdapter<ItemDataType, RecyclerView.ViewHolder>(DiffCallback) {
+class TodayItemAdapter(val onClickListener: OnclickListener) :
+    ListAdapter<ItemDataType, RecyclerView.ViewHolder>(DiffCallback) {
 
     object DiffCallback : DiffUtil.ItemCallback<ItemDataType>() {
         override fun areItemsTheSame(oldItem: ItemDataType, newItem: ItemDataType): Boolean =
@@ -39,9 +43,9 @@ class TodayItemAdapter() : ListAdapter<ItemDataType, RecyclerView.ViewHolder>(Di
 
     inner class TimeViewHolder(private val binding: TimeRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
-            fun bind(time:String){
-                binding.tvName.text = time
-            }
+        fun bind(time: String) {
+            binding.tvName.text = time
+        }
     }
 
     inner class DrugViewHolder(private val binding: ItemRowBinding) :
@@ -49,6 +53,7 @@ class TodayItemAdapter() : ListAdapter<ItemDataType, RecyclerView.ViewHolder>(Di
         fun bind(drug: Drug?) {
             binding.apply {
                 tvName.text = drug?.drugName
+                imageView.setImageResource(setDrugDrawable(drug?.unit))
                 tvUnit.text = drug?.dose.toString() + toUnit(drug?.unit)
                 tvStock.text = "剩餘" + drug?.stock.toString() + toUnit(drug?.unit)
             }
@@ -59,7 +64,10 @@ class TodayItemAdapter() : ListAdapter<ItemDataType, RecyclerView.ViewHolder>(Di
         RecyclerView.ViewHolder(binding.root) {
         fun bind(measure: Measure?) {
             binding.apply {
-
+                tvName.text = toMeasureType(measure?.type)
+                imageView.setImageResource(setMeasureDrawable(measure?.type))
+                tvUnit.visibility = View.GONE
+                tvStock.visibility = View.GONE
             }
         }
     }
@@ -68,6 +76,10 @@ class TodayItemAdapter() : ListAdapter<ItemDataType, RecyclerView.ViewHolder>(Di
         RecyclerView.ViewHolder(binding.root) {
         fun bind(activity: Activity?) {
             binding.apply {
+                tvName.text = toActivityType(activity?.type)
+                imageView.setImageResource(setActivityType(activity?.type))
+                tvUnit.visibility = View.GONE
+                tvStock.visibility = View.GONE
 
             }
         }
@@ -77,7 +89,10 @@ class TodayItemAdapter() : ListAdapter<ItemDataType, RecyclerView.ViewHolder>(Di
         RecyclerView.ViewHolder(binding.root) {
         fun bind(care: Care?) {
             binding.apply {
-
+                tvName.text = toCareType(care?.type)
+                imageView.setImageResource(R.drawable.stopwatch)
+                tvUnit.text = "發起人" + care?.editor
+                tvStock.visibility = View.GONE
             }
         }
     }
@@ -132,12 +147,39 @@ class TodayItemAdapter() : ListAdapter<ItemDataType, RecyclerView.ViewHolder>(Di
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (holder){
-            is TimeViewHolder -> holder.bind((getItem(position) as ItemDataType.TimeType).time)
-            is DrugViewHolder -> holder.bind((getItem(position) as ItemDataType.DrugType).drug.DrugData)
-            is MeasureViewHolder -> holder.bind((getItem(position) as ItemDataType.MeasureType).measure.MeasureData)
-            is ActivityViewHolder -> holder.bind((getItem(position) as ItemDataType.ActivityType).activity.ActivityData)
-            is CareViewHolder -> holder.bind((getItem(position) as ItemDataType.CareType).care.CareData)
+        when (holder) {
+            is TimeViewHolder -> {
+                holder.bind((getItem(position) as ItemDataType.TimeType).time)
+            }
+            is DrugViewHolder -> {
+                holder.bind((getItem(position) as ItemDataType.DrugType).drug.DrugData)
+                holder.itemView.setOnClickListener {
+                    onClickListener.onClick(getItem(position) as ItemDataType.DrugType)
+                }
+            }
+            is MeasureViewHolder -> {
+                holder.bind((getItem(position) as ItemDataType.MeasureType).measure.MeasureData)
+                holder.itemView.setOnClickListener {
+                    onClickListener.onClick(getItem(position) as ItemDataType.MeasureType)
+                }
+            }
+            is ActivityViewHolder -> {
+                holder.bind((getItem(position) as ItemDataType.ActivityType).activity.ActivityData)
+                holder.itemView.setOnClickListener {
+                    onClickListener.onClick(getItem(position) as ItemDataType.ActivityType)
+                }
+            }
+            is CareViewHolder -> {
+                holder.bind((getItem(position) as ItemDataType.CareType).care.CareData)
+                holder.itemView.setOnClickListener {
+                    onClickListener.onClick(getItem(position) as ItemDataType.CareType)
+                }
+            }
         }
     }
+
+    class OnclickListener(val clickListener: (itemDataType: ItemDataType) -> Unit) {
+        fun onClick(itemDataType: ItemDataType) = clickListener(itemDataType)
+    }
+
 }

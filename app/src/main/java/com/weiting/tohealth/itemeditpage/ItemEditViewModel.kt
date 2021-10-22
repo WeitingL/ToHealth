@@ -10,8 +10,8 @@ import com.weiting.tohealth.toDateFromMilliTime
 import com.weiting.tohealth.toTimeFromMilliTime
 import java.util.*
 
-enum class EditType {
-    CREATE, UPDATE, FINISHED
+enum class EditType(val value: Int) {
+    CREATE(0), UPDATE(1), FINISHED(2)
 }
 
 class ItemEditViewModel(
@@ -111,18 +111,18 @@ class ItemEditViewModel(
                     stock = Integer.parseInt(binding.etvStock.text.toString()),
                     editor ="Test",
                     createTime = Timestamp.now(),
-                    status = 1
+                    status = editType.value
                 )
                 firebaseDataRepository.postDrug(data)
             }
             ItemType.MEASURE -> {
                 val data = Measure(
                     userId = "Weiting",
-                    type = binding.spItemType.selectedItemPosition,
+                    type = binding.spItemName.selectedItemPosition,
                     firstTimePerDay = Timestamp(Date(timeSetInLong.value!!)),
                     editor ="Test",
                     createTime = Timestamp.now(),
-                    status = 1
+                    status = editType.value
                 )
 
                 firebaseDataRepository.postMeasure(data)
@@ -147,7 +147,7 @@ class ItemEditViewModel(
                     firstTimePerDay = Timestamp(Date(timeSetInLong.value!!)),
                     editor ="Test",
                     createTime = Timestamp.now(),
-                    status = 1
+                    status = editType.value
                 )
 
                 firebaseDataRepository.postActivity(data)
@@ -172,7 +172,7 @@ class ItemEditViewModel(
                     firstTimePerDay = Timestamp(Date(timeSetInLong.value!!)),
                     editor ="Test",
                     createTime = Timestamp.now(),
-                    status = 1
+                    status = editType.value
                 )
 
                 firebaseDataRepository.postCare(data)

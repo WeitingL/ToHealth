@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:text="快速添加完成項目"
+            android:text="快速添加項目"
             android:textSize="24sp"
             android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"

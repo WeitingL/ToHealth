@@ -13,7 +13,7 @@ const val HOME_VIEWTYPE_DAILYINFO = 1
 const val HOME_VIEWTYPE_TODAYTASK = 2
 const val HOME_VIEWTYPE_MYGROUP = 3
 
-class HomeAdapter(val onClickListener: OnclickListener) :
+class HomeAdapter(val onClickListener: OnclickListener, val onclickListenerItem: OnclickListenerItem) :
     ListAdapter<HomePageItem, RecyclerView.ViewHolder>(DiffCallback) {
 
     object DiffCallback : DiffUtil.ItemCallback<HomePageItem>() {
@@ -38,14 +38,13 @@ class HomeAdapter(val onClickListener: OnclickListener) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(nextTask: HomePageItem.NextTask) {
-            val adapter = TodayItemAdapter()
+            val adapter = TodayItemAdapter(TodayItemAdapter.OnclickListener {
+                onclickListenerItem.onClick(it)
+            })
             adapter.submitList(nextTask.list)
 
             binding.apply {
                 rvGroupInfo.adapter = adapter
-                tvMoreTodoList.setOnClickListener {
-                    onClickListener.onClick(nextTask)
-                }
             }
         }
     }
@@ -117,6 +116,10 @@ class HomeAdapter(val onClickListener: OnclickListener) :
 
     class OnclickListener(val clickListener: (homePageItem: HomePageItem) -> Unit) {
         fun onClick(homePageItem: HomePageItem) = clickListener(homePageItem)
+    }
+
+    class OnclickListenerItem(val clickListener: (itemDataType: ItemDataType) -> Unit) {
+        fun onClick(itemDataType: ItemDataType) = clickListener(itemDataType)
     }
 
 }

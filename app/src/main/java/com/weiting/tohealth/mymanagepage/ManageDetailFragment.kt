@@ -7,11 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.weiting.tohealth.NavigationDirections
 import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.databinding.MymanageItemFragmentBinding
 import com.weiting.tohealth.factory.ManageDetailViewModelFactory
+import com.weiting.tohealth.itemeditpage.EditType
 
-class ManageDetailFragment(private val manageType: ManageType) : Fragment() {
+class ManageDetailFragment() : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -19,19 +22,25 @@ class ManageDetailFragment(private val manageType: ManageType) : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = MymanageItemFragmentBinding.inflate(inflater, container, false)
+        val manageType = arguments?.get("type") as ManageType
         val factory = ManageDetailViewModelFactory(
             PublicApplication.application.firebaseDataRepository,
             manageType
         )
         val viewModel = ViewModelProvider(this, factory).get(ManageDetailViewModel::class.java)
-        val adapter = ManageDetailAdapter()
+        val adapter = ManageDetailAdapter(manageType)
 
         viewModel.manageDetailList.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
-            Log.i("work?", "$it")
+            if (it.isNotEmpty()) {
+                adapter.submitList(it)
+            }
+//            Log.i("work?", "$it")
         }
 
         binding.rvManageItems.adapter = adapter
+        binding.btAddItem.setOnClickListener {
+            findNavController().navigate(NavigationDirections.actionGlobalItemEditFragment(EditType.CREATE, manageType))
+        }
         return binding.root
     }
 

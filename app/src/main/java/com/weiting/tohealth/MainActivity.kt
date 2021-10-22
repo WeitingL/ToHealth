@@ -3,6 +3,7 @@ package com.weiting.tohealth
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.weiting.tohealth.databinding.ActivityMainBinding
@@ -32,8 +33,5 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
-
-
     }
 }

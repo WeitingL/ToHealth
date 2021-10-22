@@ -33,4 +33,20 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource): Fireba
     override fun postCare(care: Care) {
         return firebaseSource.postCare(care)
     }
+
+    override fun postDrugRecord(id: String, drugLog: DrugLog) {
+        return firebaseSource.postDrugRecord(id, drugLog)
+    }
+
+    override fun postMeasureRecord(id: String, measureLog: MeasureLog) {
+        return firebaseSource.postMeasureRecord(id, measureLog)
+    }
+
+    override fun postActivityRecord(id: String, activityLog: ActivityLog) {
+        return firebaseSource.postActivityRecord(id, activityLog)
+    }
+
+    override fun postCareRecord(id: String, careLog: CareLog) {
+        return firebaseSource.postCareRecord(id, careLog)
+    }
 }

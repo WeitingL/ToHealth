@@ -3,12 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/row_line">
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="8dp"
@@ -24,45 +25,45 @@
         android:id="@+id/tv_itemName_manage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="8dp"
         android:text="項目名稱"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_dose"
+        android:id="@+id/tv_dose_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="5"
+        android:text="每次服藥劑量"
         app:layout_constraintStart_toEndOf="@+id/imageView4"
         app:layout_constraintTop_toTopOf="@+id/imageView4" />
 
     <TextView
-        android:id="@+id/tv_unit_manage"
+        android:id="@+id/tv_dose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
-        android:text="顆"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_dose"
-        app:layout_constraintStart_toEndOf="@+id/tv_dose"
-        app:layout_constraintTop_toTopOf="@+id/tv_dose" />
+        android:text="5"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_dose_title"
+        app:layout_constraintStart_toEndOf="@+id/tv_dose_title"
+        app:layout_constraintTop_toTopOf="@+id/tv_dose_title" />
 
     <TextView
         android:id="@+id/tv_endDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="4dp"
         android:text="無限期"
-        app:layout_constraintStart_toStartOf="@+id/tv_dose"
-        app:layout_constraintTop_toBottomOf="@+id/tv_dose" />
+        app:layout_constraintStart_toStartOf="@+id/tv_dose_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_dose_title" />
 
     <TextView
         android:id="@+id/tv_period"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="4dp"
         android:text="每日3次"
         app:layout_constraintStart_toStartOf="@+id/tv_endDate"
         app:layout_constraintTop_toBottomOf="@+id/tv_endDate" />
@@ -72,7 +73,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="08:00"
-        app:layout_constraintBottom_toTopOf="@+id/tv_period"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_endDate"
         app:layout_constraintEnd_toEndOf="@+id/tv_tag_manage"
         app:layout_constraintTop_toTopOf="@+id/tv_endDate" />
 
@@ -109,5 +110,34 @@
         app:layout_constraintEnd_toEndOf="@+id/tv_time"
         app:layout_constraintTop_toTopOf="@+id/tv_period"
         app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/tv_unit_manage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:text="單位"
+        app:layout_constraintStart_toEndOf="@+id/tv_dose"
+        app:layout_constraintTop_toTopOf="@+id/tv_dose" />
+
+    <TextView
+        android:id="@+id/tv_editor_manage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="編輯者"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_createdTime"
+        app:layout_constraintEnd_toEndOf="@+id/tv_stock_manage"
+        app:layout_constraintTop_toTopOf="@+id/tv_createdTime" />
+
+    <TextView
+        android:id="@+id/tv_createdTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:text="創建時間"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/imageView4"
+        app:layout_constraintTop_toBottomOf="@+id/tv_period" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

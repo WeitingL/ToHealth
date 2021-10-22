@@ -38,7 +38,7 @@ data class Drug(
 
 @Parcelize
 data class DrugLog(
-    val id: String? = null,
+    var id: String? = null,
     val result: Int? = null,
     val createTime: Timestamp? = null
 ):Parcelable
@@ -57,9 +57,9 @@ data class Measure(
 
 @Parcelize
 data class MeasureLog(
-    val id: String? = null,
+    var id: String? = null,
     val result: Int? = null,
-    val record:Map<Int, Int?> = mapOf(0 to null, 1 to null, 2 to null),
+    val record:Map<String, Int?> = mapOf("X" to null, "Y" to null, "Z" to null),
     val createTime: Timestamp? = null
 ):Parcelable
 
@@ -80,9 +80,9 @@ data class Activity(
 
 @Parcelize
 data class ActivityLog(
-    val id: String? = null,
+    var id: String? = null,
     val result: Int? = null,
-    val record:Map<Int, Int?> = mapOf(0 to null, 1 to null, 2 to null),
+    val record:Map<String, Int?> = mapOf("X" to null, "Y" to null, "Z" to null),
     val createTime: Timestamp? = null
 ):Parcelable
 
@@ -103,7 +103,7 @@ data class Care(
 
 @Parcelize
 data class CareLog(
-    val id: String? = null,
+    var id: String? = null,
     val result: Int? = null,
     val record : Map<String, String?> = mapOf("emotion" to null, "note" to null),
     val createTime: Timestamp? = null

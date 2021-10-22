@@ -33,17 +33,28 @@ class ManageDetailViewModel(
                     }
                 }
                 ManageType.MEASURE -> {
-
+                    val measureList = firebaseDataRepository.getAllMeasures()
+                    for (i in measureList.indices) {
+                        _manageDetailList.value =
+                            _manageDetailList.value?.plus(ItemData(MeasureData = measureList[i]))
+                    }
                 }
 
                 ManageType.ACTIVITY -> {
-
+                    val activityList = firebaseDataRepository.getAllActivities()
+                    for (i in activityList.indices) {
+                        _manageDetailList.value =
+                            _manageDetailList.value?.plus(ItemData(ActivityData = activityList[i]))
+                    }
                 }
                 ManageType.CARE -> {
-
+                    val careList = firebaseDataRepository.getAllCares()
+                    for (i in careList.indices) {
+                        _manageDetailList.value =
+                            _manageDetailList.value?.plus(ItemData(CareData = careList[i]))
+                    }
                 }
             }
-
         }
     }
 }
