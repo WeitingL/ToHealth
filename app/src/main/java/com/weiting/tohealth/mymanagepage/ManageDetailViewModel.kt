@@ -32,6 +32,7 @@ class ManageDetailViewModel(
                             _manageDetailList.value?.plus(ItemData(DrugData = drugList[i]))
                     }
                 }
+
                 ManageType.MEASURE -> {
                     val measureList = firebaseDataRepository.getAllMeasures()
                     for (i in measureList.indices) {
@@ -47,6 +48,7 @@ class ManageDetailViewModel(
                             _manageDetailList.value?.plus(ItemData(ActivityData = activityList[i]))
                     }
                 }
+
                 ManageType.CARE -> {
                     val careList = firebaseDataRepository.getAllCares()
                     for (i in careList.indices) {

@@ -6,16 +6,15 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Group(
-    val id: String? = null,
+    var id: String? = null,
     val groupName: String? = null,
-    val member: List<Member> = listOf(),
-    val notes: List<Note> = listOf(),
-    val calenderItems: List<CalenderItem> = listOf()
+    var member: List<Member> = listOf(),
+    var notes: List<Note> = listOf(),
+    var calenderItems: List<CalenderItem> = listOf()
 ) : Parcelable
 
 @Parcelize
 data class Member(
-    val id: String? = null,
     val userId: String? = null,
     val nickName: String? = null,
     val private: Int? = null
@@ -40,4 +39,13 @@ data class CalenderItem(
     val createTime: Timestamp? = null,
     val result: Int? = null
 ):Parcelable
+
+//This is firebase form.
+data class Relationships(
+    var id: String? = null,
+    val userId: String? = null,
+    val groupId:String? = null,
+    val nickName: String? = null,
+    val private: Int? = null
+)
 

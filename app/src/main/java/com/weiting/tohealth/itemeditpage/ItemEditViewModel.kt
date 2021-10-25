@@ -90,7 +90,7 @@ class ItemEditViewModel(
         when (editItemType.value) {
             ItemType.DRUG -> {
                 val data = Drug(
-                    userId = "Weiting",
+                    userId = UserManager.userId,
                     drugName = binding.tilDrugName.editText?.text.toString(),
                     dose = Integer.parseInt(binding.etvStock.text.toString()),
                     unit = binding.spUnit.selectedItemPosition,
@@ -109,7 +109,7 @@ class ItemEditViewModel(
                     ),
                     firstTimePerDay = Timestamp(Date(timeSetInLong.value!!)),
                     stock = Integer.parseInt(binding.etvStock.text.toString()),
-                    editor ="Test",
+                    editor = "Test",
                     createTime = Timestamp.now(),
                     status = editType.value
                 )
@@ -117,10 +117,10 @@ class ItemEditViewModel(
             }
             ItemType.MEASURE -> {
                 val data = Measure(
-                    userId = "Weiting",
+                    userId = UserManager.userId,
                     type = binding.spItemName.selectedItemPosition,
                     firstTimePerDay = Timestamp(Date(timeSetInLong.value!!)),
-                    editor ="Test",
+                    editor = UserManager.userId,
                     createTime = Timestamp.now(),
                     status = editType.value
                 )
@@ -129,7 +129,7 @@ class ItemEditViewModel(
             }
             ItemType.ACTIVITY -> {
                 val data = Activity(
-                    userId = "Weiting",
+                    userId = UserManager.userId,
                     type = binding.spItemType.selectedItemPosition,
                     endDate = mapOf(
                         "type" to endDateSelected.value,
@@ -145,7 +145,7 @@ class ItemEditViewModel(
                         "Z" to binding.spSubOngoningUnit.selectedItemPosition
                     ),
                     firstTimePerDay = Timestamp(Date(timeSetInLong.value!!)),
-                    editor ="Test",
+                    editor = "Test",
                     createTime = Timestamp.now(),
                     status = editType.value
                 )
@@ -154,7 +154,7 @@ class ItemEditViewModel(
             }
             ItemType.CARE -> {
                 val data = Care(
-                    userId = "Weiting",
+                    userId = UserManager.userId,
                     type = binding.spItemType.selectedItemPosition,
                     endDate = mapOf(
                         "type" to endDateSelected.value,
@@ -170,7 +170,7 @@ class ItemEditViewModel(
                         "Z" to binding.spSubOngoningUnit.selectedItemPosition
                     ),
                     firstTimePerDay = Timestamp(Date(timeSetInLong.value!!)),
-                    editor ="Test",
+                    editor = UserManager.userId,
                     createTime = Timestamp.now(),
                     status = editType.value
                 )

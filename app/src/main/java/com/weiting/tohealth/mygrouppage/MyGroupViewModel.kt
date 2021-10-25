@@ -1,83 +1,47 @@
 package com.weiting.tohealth.mygrouppage
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.firebase.Timestamp
-import com.weiting.tohealth.data.CalenderItem
-import com.weiting.tohealth.data.Group
-import com.weiting.tohealth.data.Member
-import com.weiting.tohealth.data.Note
+import androidx.lifecycle.viewModelScope
+import com.weiting.tohealth.data.*
+import kotlinx.coroutines.launch
 
-class GroupViewModel : ViewModel() {
+class MyGroupViewModel(private val firebaseDataRepository: FirebaseRepository) : ViewModel() {
 
     private val _groupItemList = MutableLiveData<List<GroupPageItem>>()
     val groupItemList: LiveData<List<GroupPageItem>>
         get() = _groupItemList
 
-    private val list = listOf<GroupPageItem>(
-        GroupPageItem.MyGroups(
-            Group(
-                id = "WOW",
-                groupName = "GOOD",
-                member = listOf(
-                    Member(
-                        id = "wetiting",
-                        userId = "??!",
-                        nickName = "尉庭",
-                        private = 2
-                    ),
-                    Member(
-                        id = "wetiting",
-                        userId = "??!",
-                        nickName = "尉庭",
-                        private = 2
-                    )
-                ),
-                notes = listOf(
-                    Note(
-                        id = ">O<",
-                        title = "TEST!",
-                        content = "這裡要塞很多東西",
-                        editor = "Weiting",
-                        footer = 2,
-                        createTimestamp = Timestamp.now()
-                    ),
-                    Note(
-                        id = ">O<",
-                        title = "TEST!",
-                        content = "這裡要塞很多東西",
-                        editor = "Weiting",
-                        footer = 2,
-                        createTimestamp = Timestamp.now()
-                    )
-                ),
-                calenderItems = listOf(
-                    CalenderItem(
-                        id = "= =",
-                        editor = "Me",
-                        content = "Wow",
-                        date = Timestamp.now(),
-                        createTime = Timestamp.now(),
-                        result = 2
-                    ),
-                    CalenderItem(
-                        id = "= =",
-                        editor = "Me",
-                        content = "Wow",
-                        date = Timestamp.now(),
-                        createTime = Timestamp.now(),
-                        result = 2
-                    )
-                )
-            )
-        ), GroupPageItem.AddGroups
-    )
+    val userData = firebaseDataRepository.login(UserManager.name)
 
     init {
-        _groupItemList.value = list
+        _groupItemList.value = listOf(
+            GroupPageItem.AddGroups
+        )
     }
 
+    fun getGroup(idList: List<String>) {
+        viewModelScope.launch {
+            idList.forEach { id ->
+                val groupList = firebaseDataRepository.getGroups(id)
+
+                if (groupList.isNotEmpty()) {
+                    _groupItemList.value = listOf()
+                    groupList.forEach {
+                        it.member += firebaseDataRepository.getMember(it.id!!)
+                        it.notes += firebaseDataRepository.getNote(it.id!!)
+                        it.calenderItems += firebaseDataRepository.getCalenderItem(it.id!!)
+
+                        Log.i("GroupListVM", it.toString())
+                        _groupItemList.value = _groupItemList.value?.plus(GroupPageItem.MyGroups(it))
+                    }
+                    _groupItemList.value = _groupItemList.value?.plus(GroupPageItem.AddGroups)
+                }
+            }
+        }
+    }
 }
 
 sealed class GroupPageItem {

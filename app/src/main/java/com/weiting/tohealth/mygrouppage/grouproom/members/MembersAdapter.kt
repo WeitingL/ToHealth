@@ -24,7 +24,7 @@ class MembersAdapter : ListAdapter<Member, MembersAdapter.MemberViewHolder>(Diff
 
         fun bind(member: Member) {
             binding.apply {
-                tvMemberName.text = member.id //TODO
+                tvMemberName.text = member.userId //TODO
                 tvNickName.text = member.nickName
             }
         }

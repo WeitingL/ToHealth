@@ -66,7 +66,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginBottom="8dp"
         android:text="AWSGOOD"
-        android:textSize="34sp"
+        android:textSize="28sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/tv_codeInfo"
         app:layout_constraintStart_toStartOf="@+id/tv_codeInfo"

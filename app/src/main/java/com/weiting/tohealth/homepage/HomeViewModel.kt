@@ -10,6 +10,13 @@ import com.weiting.tohealth.data.*
 import com.weiting.tohealth.toTimeFromTimeStamp
 import kotlinx.coroutines.*
 
+enum class HomeItemDataType(dataType: ItemDataType){
+    DRUG(ItemDataType.DrugType(ItemData())),
+    MEASURE(ItemDataType.MeasureType(ItemData())),
+    ACTIVITY(ItemDataType.ActivityType(ItemData())),
+    CARE(ItemDataType.CareType(ItemData()))
+}
+
 class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : ViewModel() {
 
     private val _nextTaskList = MutableLiveData<List<HomePageItem>>()
@@ -23,27 +30,36 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
     private val timestampList = mutableListOf<Timestamp>()
     private val itemList = mutableListOf<ItemDataType>()
 
+    val drugList = firebaseDataRepository.getLiveDrugList(UserManager.userId)
+    val measureList = firebaseDataRepository.getLiveMeasureList(UserManager.userId)
+    val activityList = firebaseDataRepository.getLiveActivityList(UserManager.userId)
+    val careList = firebaseDataRepository.getLiveCareList(UserManager.userId)
+
     init {
         _nextTaskList.value = listOf(
             HomePageItem.AddNewItem,
             HomePageItem.TodayAbstract
         )
-        getAllItemsByUserId()
     }
 
     fun getItemDataIntoHomePageItem(list: List<ItemDataType>) {
-        _nextTaskList.value = _nextTaskList.value?.plus(HomePageItem.NextTask(list))
+        if(list.isNotEmpty()){
+            _nextTaskList.value = _nextTaskList.value?.plus(HomePageItem.NextTask(list))
+        }
+    }
+
+    fun addInItemDataTypeList(list: List<*>){
+
     }
 
     private fun getAllItemsByUserId() {
-        viewModelScope.launch {
-            arrangeItemsByTime(
-                firebaseDataRepository.getAllDrugs(),
-                firebaseDataRepository.getAllMeasures(),
-                firebaseDataRepository.getAllActivities(),
-                firebaseDataRepository.getAllCares(),
-            )
-        }
+
+        arrangeItemsByTime(
+            drugList.value ?: listOf(),
+            measureList.value ?: listOf(),
+            activityList.value ?: listOf(),
+            careList.value ?: listOf()
+        )
     }
 
     private fun getTimeList(timestamp: Timestamp) {

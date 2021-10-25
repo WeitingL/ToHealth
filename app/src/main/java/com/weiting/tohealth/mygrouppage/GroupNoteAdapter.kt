@@ -7,16 +7,17 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.data.Note
 import com.weiting.tohealth.databinding.MygroupRowNoteBinding
-import com.weiting.tohealth.mygrouppage.GroupNoteAdapter.NoteViewHolder
 
-class GroupNoteAdapter() : ListAdapter<Note, NoteViewHolder>(DiffCallback) {
+class GroupNoteAdapter() : ListAdapter<Note, GroupNoteAdapter.NoteViewHolder>(DiffCallback) {
 
     object DiffCallback : DiffUtil.ItemCallback<Note>() {
+
         override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean =
             oldItem === newItem
 
         override fun areContentsTheSame(oldItem: Note, newItem: Note): Boolean =
             oldItem == newItem
+
     }
 
     inner class NoteViewHolder(private val binding: MygroupRowNoteBinding) :

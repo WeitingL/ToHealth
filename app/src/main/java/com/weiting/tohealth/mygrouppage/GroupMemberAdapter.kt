@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.data.Member
 import com.weiting.tohealth.databinding.MygroupRowMemberBinding
-import com.weiting.tohealth.mygrouppage.GroupMemberAdapter.GroupMemberViewHolder
 
-class GroupMemberAdapter() : ListAdapter<Member, GroupMemberViewHolder>(DiffCallback) {
+
+class GroupMemberAdapter() : ListAdapter<Member, GroupMemberAdapter.GroupMemberViewHolder>(DiffCallback) {
 
     object DiffCallback : DiffUtil.ItemCallback<Member>() {
         override fun areItemsTheSame(oldItem: Member, newItem: Member): Boolean =
@@ -39,6 +39,4 @@ class GroupMemberAdapter() : ListAdapter<Member, GroupMemberViewHolder>(DiffCall
     override fun onBindViewHolder(holder: GroupMemberViewHolder, position: Int) {
         return holder.bind(getItem(position))
     }
-
-
 }

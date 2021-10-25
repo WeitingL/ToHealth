@@ -17,7 +17,7 @@ class GroupRoomAdapter(fragment: Fragment, private val group: Group): FragmentSt
         return when(position){
             0 -> getBoardFragment(bundleOf("group" to group))
             1 -> getChatFragment(bundleOf("group" to group))
-            2 -> getMembersFragment(bundleOf("member" to group.member))
+            2 -> getMembersFragment(bundleOf("group" to group))
             else -> throw Exception("Unknown position $position")
         }
     }

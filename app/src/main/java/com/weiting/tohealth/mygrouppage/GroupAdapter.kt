@@ -2,9 +2,13 @@ package com.weiting.tohealth.mygrouppage
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.databinding.CardviewBottombuttonRowBinding
 import com.weiting.tohealth.databinding.MygroupRowGroupBinding
 import java.lang.ClassCastException
