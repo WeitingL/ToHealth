@@ -1,6 +1,7 @@
 package com.weiting.tohealth.data
 
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.Timestamp
 
 class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : FirebaseRepository {
 
@@ -124,5 +125,25 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
     override fun getLiveCalenderItem(groupId: String): MutableLiveData<List<CalenderItem>> {
         return firebaseSource.getLiveCalenderItem(groupId)
     }
+
+    override fun postNote(note: Note, groupId: String) {
+        return firebaseSource.postNote(note, groupId)
+    }
+
+    override fun postCalenderItem(calenderItem: CalenderItem, groupId: String) {
+        return firebaseSource.postCalenderItem(calenderItem, groupId)
+    }
+
+    override fun getLiveChatMessage(
+        userId: String,
+        groupId: String
+    ): MutableLiveData<List<Chat>> {
+        return firebaseSource.getLiveChatMessage(userId, groupId)
+    }
+
+    override fun postChatMessage(chat: Chat) {
+        return firebaseSource.postChatMessage(chat)
+    }
+
 
 }

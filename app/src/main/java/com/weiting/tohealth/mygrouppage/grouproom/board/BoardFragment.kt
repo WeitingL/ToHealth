@@ -30,8 +30,16 @@ class BoardFragment (): Fragment() {
             adapter.submitList(it)
         }
 
+        viewModel.calenderItem.observe(viewLifecycleOwner){
+            viewModel.getCalenderList(it)
+        }
+
+        viewModel.notesList.observe(viewLifecycleOwner){
+            viewModel.getNotesList(it)
+        }
+
         binding.fbAddNewMessage.setOnClickListener {
-            findNavController().navigate(NavigationDirections.actionGlobalEditNoteAndCalenderItemFragment())
+            findNavController().navigate(NavigationDirections.actionGlobalEditNoteAndCalenderItemFragment(group))
         }
 
         binding.rvBoard.adapter = adapter

@@ -34,7 +34,7 @@ class MyGroupViewModel(private val firebaseDataRepository: FirebaseRepository) :
                         it.notes += firebaseDataRepository.getNote(it.id!!)
                         it.calenderItems += firebaseDataRepository.getCalenderItem(it.id!!)
 
-                        Log.i("GroupListVM", it.toString())
+//                        Log.i("GroupListVM", it.toString())
                         _groupItemList.value = _groupItemList.value?.plus(GroupPageItem.MyGroups(it))
                     }
                     _groupItemList.value = _groupItemList.value?.plus(GroupPageItem.AddGroups)

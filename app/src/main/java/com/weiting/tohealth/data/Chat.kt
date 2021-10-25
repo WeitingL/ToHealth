@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Chat(
-    val id: String? = null,
+    var id: String? = null,
     val groupId: String? = null,
     val context: String? = null,
     val creator: String? = null,

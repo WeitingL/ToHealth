@@ -73,7 +73,11 @@
         android:id="@+id/editNoteAndCalenderItemFragment"
         android:name="com.weiting.tohealth.mygrouppage.grouproom.board.editpage.EditNoteAndCalenderItemFragment"
         android:label="edit_noteandcalenderitem_fragment"
-        tools:layout="@layout/edit_noteandcalenderitem_fragment" />
+        tools:layout="@layout/edit_noteandcalenderitem_fragment" >
+        <argument
+            android:name="group"
+            app:argType="com.weiting.tohealth.data.Group" />
+    </fragment>
     <action android:id="@+id/action_global_editNoteAndCalenderItemFragment" app:destination="@id/editNoteAndCalenderItemFragment" />
     <dialog
         android:id="@+id/calenderTimeDialog"

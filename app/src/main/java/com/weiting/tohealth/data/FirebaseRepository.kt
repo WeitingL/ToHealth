@@ -1,6 +1,7 @@
 package com.weiting.tohealth.data
 
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.Timestamp
 
 interface FirebaseRepository {
 
@@ -82,5 +83,15 @@ interface FirebaseRepository {
 
     fun getLiveCalenderItem(groupId: String): MutableLiveData<List<CalenderItem>>
 
+    fun postNote(note: Note, groupId: String)
+
+    fun postCalenderItem(calenderItem: CalenderItem, groupId: String)
+
+    fun getLiveChatMessage(
+        userId: String,
+        groupId: String
+    ): MutableLiveData<List<Chat>>
+
+    fun postChatMessage(chat: Chat)
 
 }

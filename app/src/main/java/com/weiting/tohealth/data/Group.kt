@@ -22,7 +22,7 @@ data class Member(
 
 @Parcelize
 data class Note(
-    val id: String? = null,
+    var id: String? = null,
     val title: String? = null,
     val content: String? = null,
     val editor: String? = null,
@@ -32,7 +32,7 @@ data class Note(
 
 @Parcelize
 data class CalenderItem(
-    val id: String? = null,
+    var id: String? = null,
     val editor: String? = null,
     val content: String? = null,
     val date: Timestamp? = null,

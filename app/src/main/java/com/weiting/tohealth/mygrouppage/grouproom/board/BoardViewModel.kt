@@ -17,13 +17,33 @@ class BoardViewModel(
     val boardList: LiveData<List<BoardType>>
         get() = _boardList
 
-    val list = listOf<BoardType>(
-        BoardType.Notes(group.notes),
-        BoardType.CalenderItems(group.calenderItems)
-    )
+    val notesList = firebaseDataRepository.getLiveNote(group.id!!)
+    val calenderItem = firebaseDataRepository.getLiveCalenderItem(group.id!!)
 
-    init {
-        _boardList.value = list
+    fun getCalenderList(list: List<CalenderItem>){
+
+        _boardList.value = listOf()
+
+        if (list.isNotEmpty() && !notesList.value.isNullOrEmpty()){
+            val newList = listOf(BoardType.Notes(notesList.value!!),BoardType.CalenderItems(list) )
+            _boardList.value = _boardList.value?.plus(newList)
+        }else if (list.isNotEmpty() && notesList.value.isNullOrEmpty()){
+            val newList = listOf(BoardType.CalenderItems(list))
+            _boardList.value = _boardList.value?.plus(newList)
+        }
+    }
+
+    fun getNotesList(list: List<Note>){
+
+        _boardList.value = listOf()
+
+        if (list.isNotEmpty() && !calenderItem.value.isNullOrEmpty()){
+            val newList = listOf(BoardType.Notes(list),BoardType.CalenderItems(calenderItem.value!!) )
+            _boardList.value = _boardList.value?.plus(newList)
+        }else if (list.isNotEmpty() && calenderItem.value.isNullOrEmpty()){
+            val newList = listOf(BoardType.Notes(list))
+            _boardList.value = _boardList.value?.plus(newList)
+        }
     }
 
 }

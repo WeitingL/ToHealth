@@ -2,6 +2,7 @@ package com.weiting.tohealth.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.Timestamp
 
 interface FirebaseSource {
 
@@ -69,17 +70,28 @@ interface FirebaseSource {
 
     suspend fun getGroups(groupId: String): List<Group>
 
-    suspend fun getMember(groupId: String):List<Member>
+    suspend fun getMember(groupId: String): List<Member>
 
     suspend fun getNote(groupId: String): List<Note>
 
     suspend fun getCalenderItem(groupId: String): List<CalenderItem>
 
-    fun getLiveMember(groupId:String): MutableLiveData<List<Member>>
+    fun getLiveMember(groupId: String): MutableLiveData<List<Member>>
 
-    fun getLiveNote(groupId:String): MutableLiveData<List<Note>>
+    fun getLiveNote(groupId: String): MutableLiveData<List<Note>>
 
-    fun getLiveCalenderItem(groupId: String):  MutableLiveData<List<CalenderItem>>
+    fun getLiveCalenderItem(groupId: String): MutableLiveData<List<CalenderItem>>
+
+    fun postNote(note: Note, groupId: String)
+
+    fun postCalenderItem(calenderItem: CalenderItem, groupId: String)
+
+    fun getLiveChatMessage(
+        userId: String,
+        groupId: String
+    ): MutableLiveData<List<Chat>>
+
+    fun postChatMessage(chat: Chat)
 
 
 }

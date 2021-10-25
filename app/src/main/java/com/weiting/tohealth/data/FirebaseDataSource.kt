@@ -3,7 +3,9 @@ package com.weiting.tohealth.data
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObject
 import com.weiting.tohealth.PublicApplication.Companion.application
 import kotlin.coroutines.resume
@@ -497,7 +499,7 @@ object FirebaseDataSource : FirebaseSource {
                     val dataList = result.toObjects(CalenderItem::class.java)
                     list += dataList
 
-                    Log.i("CalenderItemList", list.toString())
+//                    Log.i("CalenderItemList", list.toString())
                     continuation.resume(list)
                 }
                 .addOnFailureListener { e ->
@@ -574,5 +576,82 @@ object FirebaseDataSource : FirebaseSource {
         return calenderItemsList
     }
 
+    override fun postNote(note: Note, groupId: String) {
+        val database = application.database
 
+        note.id = database.collection("groups").document(groupId)
+            .collection("notes").document().id
+
+        database.collection("groups").document(groupId)
+            .collection("notes").document(note.id!!)
+            .set(note)
+            .addOnSuccessListener { documentReference ->
+                Log.d("store success", "DocumentSnapshot added with ID: ${note.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("store failure", "Error adding document", e)
+            }
+    }
+
+    override fun postCalenderItem(calenderItem: CalenderItem, groupId: String) {
+        val database = application.database
+
+        calenderItem.id = database.collection("groups")
+            .document(groupId).collection("calenderItems").document().id
+
+        database.collection("groups").document(groupId)
+            .collection("calenderItems").document(calenderItem.id!!)
+            .set(calenderItem)
+            .addOnSuccessListener { documentReference ->
+                Log.d("store success", "DocumentSnapshot added with ID: ${calenderItem.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("store failure", "Error adding document", e)
+            }
+    }
+
+    override fun getLiveChatMessage(
+        userId: String,
+        groupId: String
+    ): MutableLiveData<List<Chat>> {
+        val chatItemsList = MutableLiveData<List<Chat>>()
+
+        application.database.collection("chats")
+            .whereEqualTo("groupId", groupId)
+            .orderBy("createTimestamp")
+            .addSnapshotListener { value, error ->
+                if (error != null) {
+                    Log.e("Listen failed.", error.toString())
+                    return@addSnapshotListener
+                }
+
+                val list = mutableListOf<Chat>()
+
+                for (document in value!!) {
+                    val data = document.toObject(Chat::class.java)
+                    Log.i("LiveChat", "$data")
+                    list.add(data)
+                }
+
+
+                chatItemsList.value = list
+            }
+        return chatItemsList
+
+    }
+
+    override fun postChatMessage(chat: Chat) {
+        val database = application.database
+
+        chat.id = database.collection("chats").document().id
+
+        database.collection("chats").document(chat.id!!)
+            .set(chat)
+            .addOnSuccessListener { documentReference ->
+                Log.d("store success", "DocumentSnapshot added with ID: ${chat.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("store failure", "Error adding document", e)
+            }
+    }
 }
