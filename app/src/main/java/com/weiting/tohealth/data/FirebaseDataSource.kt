@@ -138,7 +138,6 @@ object FirebaseDataSource : FirebaseSource {
 
         application.database.collection("drugs")
             .whereEqualTo("userId", userId)
-            //Member
             .addSnapshotListener { value, error ->
                 if (error != null) {
                     Log.e("Listen failed.", error.toString())
@@ -206,7 +205,7 @@ object FirebaseDataSource : FirebaseSource {
     override fun getLiveCareList(userId: String): MutableLiveData<List<Care>> {
         val careList = MutableLiveData<List<Care>>()
 
-        application.database.collection("drugs")
+        application.database.collection("cares")
             .whereEqualTo("userId", userId)
             .addSnapshotListener { value, error ->
                 if (error != null) {
