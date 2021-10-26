@@ -94,4 +94,6 @@ interface FirebaseRepository {
 
     fun postChatMessage(chat: Chat)
 
+    suspend fun getUserInfo (userId: String):User
+
 }

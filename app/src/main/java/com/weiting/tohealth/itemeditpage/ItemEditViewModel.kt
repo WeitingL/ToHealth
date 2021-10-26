@@ -92,7 +92,7 @@ class ItemEditViewModel(
                 val data = Drug(
                     userId = UserManager.userId,
                     drugName = binding.tilDrugName.editText?.text.toString(),
-                    dose = Integer.parseInt(binding.etvStock.text.toString()),
+                    dose = Integer.parseInt(binding.etvDrugDose.text.toString()),
                     unit = binding.spUnit.selectedItemPosition,
                     endDate = mapOf(
                         "type" to endDateSelected.value,

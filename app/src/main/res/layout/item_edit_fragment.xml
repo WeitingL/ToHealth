@@ -441,7 +441,6 @@
                 android:layout_height="48dp"
                 android:layout_marginStart="8dp"
                 android:entries="@array/ItemUnit"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tv_unit_edit"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -451,9 +450,32 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="藥品單位"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/sp_unit"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/sp_unit" />
+
+            <TextView
+                android:id="@+id/tv_dose_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="每次劑量"
+                app:layout_constraintBottom_toBottomOf="@+id/etv_drugDose"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/etv_drugDose" />
+
+            <EditText
+                android:id="@+id/etv_drugDose"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Name"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_dose_edit"
+                app:layout_constraintTop_toBottomOf="@+id/sp_unit" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

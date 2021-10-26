@@ -6,8 +6,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.data.Chat
+import com.weiting.tohealth.data.UserManager
 import com.weiting.tohealth.databinding.ChatroomRowMessageOthersBinding
 import com.weiting.tohealth.databinding.ChatroomRowMessageSelfBinding
+import com.weiting.tohealth.toStringFromTimeStamp
 import com.weiting.tohealth.toTimeFromTimeStamp
 import java.lang.ClassCastException
 
@@ -29,7 +31,9 @@ class ChatAdapter() : ListAdapter<WhoseMessage, RecyclerView.ViewHolder>(DiffCal
         RecyclerView.ViewHolder(binding.root) {
         fun bind(chat: Chat) {
             binding.apply {
-
+                tvSelfName.text = chat.creator
+                tvSelfCreatedTime.text = toStringFromTimeStamp(chat.createTimestamp)
+                tvSelfMessage.text = chat.context
             }
         }
     }
@@ -38,7 +42,9 @@ class ChatAdapter() : ListAdapter<WhoseMessage, RecyclerView.ViewHolder>(DiffCal
         RecyclerView.ViewHolder(binding.root) {
         fun bind(chat: Chat) {
             binding.apply {
-
+                tvOthersName.text = chat.creator
+                tvOthersCreatedTime.text = toStringFromTimeStamp(chat.createTimestamp)
+                tvOthersMessage.text = chat.context
             }
         }
     }
@@ -76,7 +82,7 @@ class ChatAdapter() : ListAdapter<WhoseMessage, RecyclerView.ViewHolder>(DiffCal
                 holder.bind(data.chat)
             }
 
-            is OthersMessageViewHolder ->{
+            is OthersMessageViewHolder -> {
                 val data = getItem(position) as WhoseMessage.OthersMessage
                 holder.bind(data.chat)
             }

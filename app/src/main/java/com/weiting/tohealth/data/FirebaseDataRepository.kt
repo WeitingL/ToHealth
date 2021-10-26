@@ -145,5 +145,9 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.postChatMessage(chat)
     }
 
+    override suspend fun getUserInfo(userId: String): User {
+        return firebaseSource.getUserInfo(userId)
+    }
+
 
 }

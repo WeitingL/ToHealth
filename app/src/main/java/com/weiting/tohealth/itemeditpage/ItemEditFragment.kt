@@ -402,6 +402,9 @@ class ItemEditFragment : Fragment() {
                     binding.tilDrugName.editText?.text.isNullOrEmpty() -> {
                         false
                     }
+                    binding.etvDrugDose.text.isNullOrEmpty()->{
+                        false
+                    }
                     binding.tvFirstDate.text.isNullOrEmpty() -> {
                         false
                     }

@@ -30,12 +30,14 @@ class ChatFragment() : Fragment() {
         val adapter = ChatAdapter()
 
         viewModel.chatList.observe(viewLifecycleOwner){
+            Log.i("chatListList", it.toString())
             viewModel.identifyUser(it)
         }
 
         viewModel.chatMessages.observe(viewLifecycleOwner){
-            Log.i("CalenderItemList", it.toString())
+            Log.i("CalenderItemList", it.size.toString())
             adapter.submitList(it)
+            binding.rvChats.smoothScrollToPosition(adapter.itemCount-1)
         }
 
         binding.ibSentMessage.setOnClickListener {
@@ -45,6 +47,7 @@ class ChatFragment() : Fragment() {
                 creator = UserManager.userId,
                 createTimestamp = Timestamp.now()
             ))
+            binding.etvMessage.text.clear()
         }
 
         binding.rvChats.adapter = adapter

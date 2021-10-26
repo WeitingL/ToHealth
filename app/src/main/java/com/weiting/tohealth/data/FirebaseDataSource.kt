@@ -618,7 +618,8 @@ object FirebaseDataSource : FirebaseSource {
 
         application.database.collection("chats")
             .whereEqualTo("groupId", groupId)
-            .orderBy("createTimestamp")
+            .orderBy("createTimestamp", Query.Direction.ASCENDING)
+            .limit(50)
             .addSnapshotListener { value, error ->
                 if (error != null) {
                     Log.e("Listen failed.", error.toString())
@@ -627,12 +628,13 @@ object FirebaseDataSource : FirebaseSource {
 
                 val list = mutableListOf<Chat>()
 
+                Log.i("LiveChatValue", "$value")
+
                 for (document in value!!) {
                     val data = document.toObject(Chat::class.java)
                     Log.i("LiveChat", "$data")
                     list.add(data)
                 }
-
 
                 chatItemsList.value = list
             }
@@ -652,6 +654,25 @@ object FirebaseDataSource : FirebaseSource {
             }
             .addOnFailureListener { e ->
                 Log.w("store failure", "Error adding document", e)
+            }
+    }
+
+    override suspend fun getUserInfo(userId: String): User = suspendCoroutine { continuation ->
+
+        application.database.collection("users").document(userId)
+            .get()
+            .addOnSuccessListener { result ->
+
+                val data = result.toObject(User::class.java)
+
+                if (data != null) {
+                    Log.i("CalenderItemList", data.toString())
+                    continuation.resume(data)
+                }
+
+            }
+            .addOnFailureListener { e ->
+                Log.w("Error to get data", e)
             }
     }
 }
