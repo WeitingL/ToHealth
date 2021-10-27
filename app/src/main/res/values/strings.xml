@@ -20,7 +20,7 @@
 
     <string-array name="End_Date">
         <item>無限期</item>
-        <item>共幾天(若小於執行週期則以執行週期計算)</item>
+        <item>共幾天(為短時間用藥使用)</item>
     </string-array>
 
     <string-array name="Activity_Item">
@@ -38,19 +38,11 @@
     </string-array>
 
     <string-array name="Period">
-        <item>每日幾次</item>
-        <item>每幾小時一次</item>
-        <item>每幾日一次</item>
-        <item>每個禮拜幾一次</item>
-        <item>連續幾天後，暫停幾天，共幾循環</item>
+        <item>每日數次</item>
+        <item>每幾日執行</item>
+        <item>每個禮拜幾執行</item>
+        <item>連續幾天執行後，再暫停幾天</item>
         <item>依需求執行</item>
-    </string-array>
-
-    <string-array name="Sub_Period">
-        <item>每日幾次</item>
-        <item>每幾小時一次</item>
-        <item>每幾日一次</item>
-        <item>每個禮拜幾一次</item>
     </string-array>
 
     <string-array name="Care_Item">

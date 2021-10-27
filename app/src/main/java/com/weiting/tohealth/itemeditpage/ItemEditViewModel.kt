@@ -1,13 +1,16 @@
 package com.weiting.tohealth.itemeditpage
 
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.Timestamp
+import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.data.*
 import com.weiting.tohealth.databinding.ItemEditFragmentBinding
 import com.weiting.tohealth.toDateFromMilliTime
 import com.weiting.tohealth.toTimeFromMilliTime
+import java.sql.Time
 import java.util.*
 
 enum class EditType(val value: Int) {
@@ -27,33 +30,25 @@ class ItemEditViewModel(
     val endDateSelected: LiveData<Int>
         get() = _endDateSelected
 
-    private val _currentEditType = MutableLiveData<EditType>()
-    val currentEditType: LiveData<EditType>
-        get() = _currentEditType
-
     private val _currentPeriodType = MutableLiveData<Int>()
     val currentPeriodType: LiveData<Int>
         get() = _currentPeriodType
-
-    private val _currentPeriodSubType = MutableLiveData<Int>()
-    val currentPeriodSubType: LiveData<Int>
-        get() = _currentPeriodSubType
-
-    private val _timeSet = MutableLiveData<String>()
-    val timeSet: LiveData<String>
-        get() = _timeSet
-
-    private val _timeSetInLong = MutableLiveData<Long>()
-    val timeSetInLong: LiveData<Long>
-        get() = _timeSetInLong
 
     private val _dateSet = MutableLiveData<String>()
     val dateSet: LiveData<String>
         get() = _dateSet
 
     private val _dateSetInLong = MutableLiveData<Long>()
-    val dateSetInLong: LiveData<Long>
-        get() = _dateSetInLong
+
+    private val _timePointSet = MutableLiveData<MutableList<Timestamp>>()
+    val timePointSet: LiveData<MutableList<Timestamp>>
+        get() = _timePointSet
+
+    private val timestampList = mutableListOf<Timestamp>()
+    //To check the double time set: 13:00 -> 1300
+    private val dateList = mutableListOf<Int>()
+
+    private var startDateInLong = 0L
 
     fun getSelectedItemType(int: Int) {
         when (int) {
@@ -72,17 +67,32 @@ class ItemEditViewModel(
         _currentPeriodType.value = int
     }
 
-    fun getcurrentPeriodSubType(int: Int) {
-        _currentPeriodSubType.value = int
+    fun getTimeSet(time: Long?) {
+        val c = Calendar.getInstance()
+        c.time = Date(time?:0)
+
+        if ((c.get(Calendar.HOUR_OF_DAY) * 100 + c.get(Calendar.MINUTE)) in dateList){
+            Toast.makeText(
+                PublicApplication.application.applicationContext,
+                "重複添加囉!",
+                Toast.LENGTH_LONG
+            ).show()
+        }else{
+            dateList.add(c.get(Calendar.HOUR_OF_DAY) * 100 + c.get(Calendar.MINUTE))
+            timestampList.add(Timestamp(Date(time ?: 0)))
+            _timePointSet.value = timestampList
+        }
+
     }
 
-    fun getTimeSet(time: Long?) {
-        _timeSetInLong.value = time ?: 0
-        _timeSet.value = toTimeFromMilliTime(time ?: 0)
+    fun removeTimeSet(position: Int){
+        dateList.removeAt(position)
+        timestampList.removeAt(position)
+        _timePointSet.value = timestampList
     }
 
     fun getDateSet(time: Long?) {
-        _dateSetInLong.value = time ?: 0
+        startDateInLong = time ?: 0
         _dateSet.value = toDateFromMilliTime(time ?: 0)
     }
 
@@ -98,18 +108,15 @@ class ItemEditViewModel(
                         "type" to endDateSelected.value,
                         "day" to binding.spEndDate.selectedItemPosition
                     ),
-                    startDate = Timestamp(Date(timeSetInLong.value!!)),
+                    startDate = Timestamp(Date(startDateInLong)),
                     period = mapOf(
                         "type" to binding.spPeriod.selectedItemPosition,
-                        "N" to binding.spOngoingUnit.selectedItemPosition,
-                        "X" to binding.spSuspendDay.selectedItemPosition,
-                        "Y" to binding.spCycle.selectedItemPosition,
-                        "subType" to binding.spSubtype.selectedItemPosition,
-                        "Z" to binding.spSubOngoningUnit.selectedItemPosition
+                        "N" to binding.spOngoingDay.selectedItemPosition,
+                        "X" to binding.spSuspendDay.selectedItemPosition
                     ),
-                    firstTimePerDay = Timestamp(Date(timeSetInLong.value!!)),
+                    executeTime = timePointSet.value!!,
                     stock = Integer.parseInt(binding.etvStock.text.toString()),
-                    editor = "Test",
+                    editor = UserManager.userId,
                     createTime = Timestamp.now(),
                     status = editType.value
                 )
@@ -119,7 +126,7 @@ class ItemEditViewModel(
                 val data = Measure(
                     userId = UserManager.userId,
                     type = binding.spItemName.selectedItemPosition,
-                    firstTimePerDay = Timestamp(Date(timeSetInLong.value!!)),
+                    executeTime = timePointSet.value!!,
                     editor = UserManager.userId,
                     createTime = Timestamp.now(),
                     status = editType.value
@@ -135,17 +142,14 @@ class ItemEditViewModel(
                         "type" to endDateSelected.value,
                         "day" to binding.spEndDate.selectedItemPosition
                     ),
-                    startDate = Timestamp(Date(timeSetInLong.value!!)),
+                    startDate = Timestamp(Date(startDateInLong)),
                     period = mapOf(
                         "type" to binding.spPeriod.selectedItemPosition,
-                        "N" to binding.spOngoingUnit.selectedItemPosition,
+                        "N" to binding.spOngoingDay.selectedItemPosition,
                         "X" to binding.spSuspendDay.selectedItemPosition,
-                        "Y" to binding.spCycle.selectedItemPosition,
-                        "subType" to binding.spSubtype.selectedItemPosition,
-                        "Z" to binding.spSubOngoningUnit.selectedItemPosition
                     ),
-                    firstTimePerDay = Timestamp(Date(timeSetInLong.value!!)),
-                    editor = "Test",
+                    executeTime = timePointSet.value!!,
+                    editor = UserManager.userId,
                     createTime = Timestamp.now(),
                     status = editType.value
                 )
@@ -160,16 +164,13 @@ class ItemEditViewModel(
                         "type" to endDateSelected.value,
                         "day" to binding.spEndDate.selectedItemPosition
                     ),
-                    startDate = Timestamp(Date(timeSetInLong.value!!)),
+                    startDate = Timestamp(Date(startDateInLong)),
                     period = mapOf(
                         "type" to binding.spPeriod.selectedItemPosition,
-                        "N" to binding.spOngoingUnit.selectedItemPosition,
+                        "N" to binding.spOngoingDay.selectedItemPosition,
                         "X" to binding.spSuspendDay.selectedItemPosition,
-                        "Y" to binding.spCycle.selectedItemPosition,
-                        "subType" to binding.spSubtype.selectedItemPosition,
-                        "Z" to binding.spSubOngoningUnit.selectedItemPosition
                     ),
-                    firstTimePerDay = Timestamp(Date(timeSetInLong.value!!)),
+                    executeTime = timePointSet.value!!,
                     editor = UserManager.userId,
                     createTime = Timestamp.now(),
                     status = editType.value

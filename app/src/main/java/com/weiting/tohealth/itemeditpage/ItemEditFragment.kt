@@ -2,6 +2,7 @@ package com.weiting.tohealth.itemeditpage
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,7 +36,13 @@ class ItemEditFragment : Fragment() {
             ItemEditViewModelFactory(PublicApplication.application.firebaseDataRepository, editType)
         val viewModel = ViewModelProvider(this, factory).get(ItemEditViewModel::class.java)
 
-        val position = when(manageType){
+
+
+
+
+
+        //User is navigated from which menagePage of Items.
+        val position = when (manageType) {
             ManageType.DRUG -> 0
             ManageType.MEASURE -> 1
             ManageType.ACTIVITY -> 2
@@ -43,6 +50,7 @@ class ItemEditFragment : Fragment() {
         }
 
         binding.spItemType.setSelection(position)
+
 
         //Listen the spinner item selected
         binding.spItemType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -71,15 +79,6 @@ class ItemEditFragment : Fragment() {
 
         }
 
-        binding.spSubtype.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                viewModel.getcurrentPeriodSubType(p2)
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {}
-
-        }
-
         //Get editType spinner selected to change views
         viewModel.editItemType.observe(viewLifecycleOwner) {
             binding.apply {
@@ -89,8 +88,6 @@ class ItemEditFragment : Fragment() {
                         tilDrugName.visibility = View.VISIBLE
                         tvItemNameEdit.visibility = View.GONE
                         spItemName.visibility = View.GONE
-                        tvFirstDate.visibility = View.VISIBLE
-                        tvFirstDateTitle.visibility = View.VISIBLE
                         clUnit.visibility = View.VISIBLE
                         clEndDate.visibility = View.VISIBLE
                         clPeriod.visibility = View.VISIBLE
@@ -107,8 +104,6 @@ class ItemEditFragment : Fragment() {
                             R.array.Measure_Item,
                             android.R.layout.simple_spinner_dropdown_item
                         )
-                        tvFirstDate.visibility = View.GONE
-                        tvFirstDateTitle.visibility = View.GONE
                         clUnit.visibility = View.GONE
                         clEndDate.visibility = View.GONE
                         clPeriod.visibility = View.GONE
@@ -125,9 +120,6 @@ class ItemEditFragment : Fragment() {
                             R.array.Activity_Item,
                             android.R.layout.simple_spinner_dropdown_item
                         )
-                        tvFirstDate.visibility = View.VISIBLE
-                        tvFirstDateTitle.visibility = View.VISIBLE
-
                         clUnit.visibility = View.GONE
                         clEndDate.visibility = View.VISIBLE
                         clPeriod.visibility = View.VISIBLE
@@ -145,9 +137,6 @@ class ItemEditFragment : Fragment() {
                             R.array.Care_Item,
                             android.R.layout.simple_spinner_dropdown_item
                         )
-                        tvFirstDate.visibility = View.VISIBLE
-                        tvFirstDateTitle.visibility = View.VISIBLE
-
                         clUnit.visibility = View.GONE
                         clEndDate.visibility = View.VISIBLE
                         clPeriod.visibility = View.VISIBLE
@@ -187,175 +176,79 @@ class ItemEditFragment : Fragment() {
             binding.apply {
                 when (it) {
                     0 -> {
-                        tvOngoingUnit.visibility = View.VISIBLE
-                        tvOngoingUnit.text = "次數"
-                        spOngoingUnit.visibility = View.VISIBLE
-                        spOngoingUnit.adapter = ArrayAdapter.createFromResource(
-                            PublicApplication.application.applicationContext,
-                            R.array.Number,
-                            android.R.layout.simple_spinner_dropdown_item
-                        )
+                        tvOngoingDay.visibility = View.GONE
+                        spOngoingDay.visibility = View.GONE
                         tvSuspendDay.visibility = View.GONE
                         spSuspendDay.visibility = View.GONE
-                        tvCycle.visibility = View.GONE
-                        spCycle.visibility = View.GONE
-                        tvSubtype.visibility = View.GONE
-                        spSubtype.visibility = View.GONE
-                        tvSubOngoningUnit.visibility = View.GONE
-                        spSubOngoningUnit.visibility = View.GONE
                     }
                     1 -> {
-                        tvOngoingUnit.visibility = View.VISIBLE
-                        tvOngoingUnit.text = "小時"
-                        spOngoingUnit.visibility = View.VISIBLE
-                        spOngoingUnit.adapter = ArrayAdapter.createFromResource(
-                            PublicApplication.application.applicationContext,
-                            R.array.hour,
-                            android.R.layout.simple_spinner_dropdown_item
-                        )
-                        tvSuspendDay.visibility = View.GONE
-                        spSuspendDay.visibility = View.GONE
-                        tvCycle.visibility = View.GONE
-                        spCycle.visibility = View.GONE
-                        tvSubtype.visibility = View.GONE
-                        spSubtype.visibility = View.GONE
-                        tvSubOngoningUnit.visibility = View.GONE
-                        spSubOngoningUnit.visibility = View.GONE
-                    }
-
-                    2 -> {
-                        tvOngoingUnit.visibility = View.VISIBLE
-                        tvOngoingUnit.text = "日"
-                        spOngoingUnit.visibility = View.VISIBLE
-                        spOngoingUnit.adapter = ArrayAdapter.createFromResource(
+                        tvOngoingDay.visibility = View.VISIBLE
+                        tvOngoingDay.text = "天"
+                        spOngoingDay.visibility = View.VISIBLE
+                        spOngoingDay.adapter = ArrayAdapter.createFromResource(
                             PublicApplication.application.applicationContext,
                             R.array.day,
                             android.R.layout.simple_spinner_dropdown_item
                         )
                         tvSuspendDay.visibility = View.GONE
                         spSuspendDay.visibility = View.GONE
-                        tvCycle.visibility = View.GONE
-                        spCycle.visibility = View.GONE
-                        tvSubtype.visibility = View.GONE
-                        spSubtype.visibility = View.GONE
-                        tvSubOngoningUnit.visibility = View.GONE
-                        spSubOngoningUnit.visibility = View.GONE
                     }
-                    3 -> {
-                        tvOngoingUnit.visibility = View.VISIBLE
-                        tvOngoingUnit.text = "星期"
-                        spOngoingUnit.visibility = View.VISIBLE
-                        spOngoingUnit.adapter = ArrayAdapter.createFromResource(
+
+                    2 -> {
+                        tvOngoingDay.visibility = View.VISIBLE
+                        tvOngoingDay.text = "禮拜"
+                        spOngoingDay.visibility = View.VISIBLE
+                        spOngoingDay.adapter = ArrayAdapter.createFromResource(
                             PublicApplication.application.applicationContext,
                             R.array.week,
                             android.R.layout.simple_spinner_dropdown_item
                         )
                         tvSuspendDay.visibility = View.GONE
                         spSuspendDay.visibility = View.GONE
-                        tvCycle.visibility = View.GONE
-                        spCycle.visibility = View.GONE
-                        tvSubtype.visibility = View.GONE
-                        spSubtype.visibility = View.GONE
-                        tvSubOngoningUnit.visibility = View.GONE
-                        spSubOngoningUnit.visibility = View.GONE
                     }
-                    4 -> {
-                        tvOngoingUnit.visibility = View.VISIBLE
-                        tvOngoingUnit.visibility = View.VISIBLE
-                        spOngoingUnit.adapter = ArrayAdapter.createFromResource(
+                    3 -> {
+                        tvOngoingDay.visibility = View.VISIBLE
+                        tvOngoingDay.text = "執行幾天"
+                        spOngoingDay.visibility = View.VISIBLE
+                        spOngoingDay.adapter = ArrayAdapter.createFromResource(
                             PublicApplication.application.applicationContext,
                             R.array.cycle_day,
                             android.R.layout.simple_spinner_dropdown_item
                         )
                         tvSuspendDay.visibility = View.VISIBLE
+                        tvSuspendDay.text = "暫停幾天"
                         spSuspendDay.visibility = View.VISIBLE
-                        spSuspendDay.adapter = ArrayAdapter.createFromResource(
+                        spOngoingDay.adapter = ArrayAdapter.createFromResource(
                             PublicApplication.application.applicationContext,
                             R.array.cycle_day,
                             android.R.layout.simple_spinner_dropdown_item
                         )
-
-                        tvCycle.visibility = View.VISIBLE
-                        tvCycle.text = "循環"
-                        spCycle.visibility = View.VISIBLE
-                        spCycle.adapter = ArrayAdapter.createFromResource(
-                            PublicApplication.application.applicationContext,
-                            R.array.Number,
-                            android.R.layout.simple_spinner_dropdown_item
-                        )
-
-                        tvSubtype.visibility = View.VISIBLE
-                        spSubtype.visibility = View.VISIBLE
-                        spSubtype.adapter = ArrayAdapter.createFromResource(
-                            PublicApplication.application.applicationContext,
-                            R.array.Sub_Period,
-                            android.R.layout.simple_spinner_dropdown_item
-                        )
-                        tvSubOngoningUnit.visibility = View.VISIBLE
-                        spSubOngoningUnit.visibility = View.VISIBLE
                     }
-                    5 -> {
-                        tvOngoingUnit.visibility = View.GONE
-                        spOngoingUnit.visibility = View.GONE
+                    4 -> {
+                        tvOngoingDay.visibility = View.GONE
+                        spOngoingDay.visibility = View.GONE
                         tvSuspendDay.visibility = View.GONE
                         spSuspendDay.visibility = View.GONE
-                        tvCycle.visibility = View.GONE
-                        spCycle.visibility = View.GONE
-                        tvSubtype.visibility = View.GONE
-                        spSubtype.visibility = View.GONE
-                        tvSubOngoningUnit.visibility = View.GONE
-                        spSubOngoningUnit.visibility = View.GONE
-                    }
-                }
-            }
-        }
-
-        //Get PeriodSubType spinner selected to change views
-        viewModel.currentPeriodSubType.observe(viewLifecycleOwner) {
-            binding.apply {
-                when (it) {
-                    0 -> {
-                        spSubOngoningUnit.adapter = ArrayAdapter.createFromResource(
-                            PublicApplication.application.applicationContext,
-                            R.array.Number,
-                            android.R.layout.simple_spinner_dropdown_item
-                        )
-                    }
-
-                    1 -> {
-                        spSubOngoningUnit.adapter = ArrayAdapter.createFromResource(
-                            PublicApplication.application.applicationContext,
-                            R.array.hour,
-                            android.R.layout.simple_spinner_dropdown_item
-                        )
-                    }
-
-                    2 -> {
-                        spSubOngoningUnit.adapter = ArrayAdapter.createFromResource(
-                            PublicApplication.application.applicationContext,
-                            R.array.day,
-                            android.R.layout.simple_spinner_dropdown_item
-                        )
-                    }
-
-                    3 -> {
-                        spSubOngoningUnit.adapter = ArrayAdapter.createFromResource(
-                            PublicApplication.application.applicationContext,
-                            R.array.week,
-                            android.R.layout.simple_spinner_dropdown_item
-                        )
                     }
                 }
             }
         }
 
         //Get timeSet spinner selected to change views
-        viewModel.timeSet.observe(viewLifecycleOwner) {
-            binding.tvTimeSet.text = it
+        viewModel.timePointSet.observe(viewLifecycleOwner) {
+            Log.i("Date", it.toString())
+            val adapter = TimeSetAdapter(
+                TimeSetAdapter.OnclickListener {
+                    viewModel.removeTimeSet(position)
+                }
+            )
+            it.sort()
+            adapter.submitList(it)
+            binding.rvTimeChose.adapter = adapter
         }
 
         viewModel.dateSet.observe(viewLifecycleOwner) {
-            binding.tvFirstDate.text = it
+            binding.tvFirstDateSelected.text = it
         }
 
         setFragmentResultListener("GetTime") { requestKey, bundle ->
@@ -366,7 +259,7 @@ class ItemEditFragment : Fragment() {
             viewModel.getDateSet(bundle.getLong("Date"))
         }
 
-        binding.tvTimeSet.setOnClickListener {
+        binding.btTimeSet.setOnClickListener {
             findNavController().navigate(
                 NavigationDirections.actionGlobalCalenderTimeDialog(
                     EditTimeType.TIME
@@ -374,7 +267,7 @@ class ItemEditFragment : Fragment() {
             )
         }
 
-        binding.tvFirstDate.setOnClickListener {
+        binding.tvFirstDateSelected.setOnClickListener {
             findNavController().navigate(
                 NavigationDirections.actionGlobalCalenderTimeDialog(
                     EditTimeType.DATE
@@ -391,24 +284,25 @@ class ItemEditFragment : Fragment() {
                 false -> Toast.makeText(context, "有東西還沒填喔!", Toast.LENGTH_LONG).show()
             }
         }
+
         return binding.root
     }
 
     private fun checkInput(binding: ItemEditFragmentBinding): Boolean {
 
-       return when(binding.spItemType.selectedItemPosition){
-            0 ->{
+        return when (binding.spItemType.selectedItemPosition) {
+            0 -> {
                 when {
                     binding.tilDrugName.editText?.text.isNullOrEmpty() -> {
                         false
                     }
-                    binding.etvDrugDose.text.isNullOrEmpty()->{
+                    binding.etvDrugDose.text.isNullOrEmpty() -> {
                         false
                     }
-                    binding.tvFirstDate.text.isNullOrEmpty() -> {
+                    binding.tvFirstDateSelected.text.isNullOrEmpty() -> {
                         false
                     }
-                    binding.tvTimeSet.text.isNullOrEmpty() -> {
+                    binding.rvTimeChose.adapter?.itemCount == 0 -> {
                         false
                     }
                     binding.etvStock.text.isNullOrEmpty() -> {
@@ -422,7 +316,7 @@ class ItemEditFragment : Fragment() {
 
             1 -> {
                 when {
-                    binding.tvTimeSet.text.isNullOrEmpty() -> {
+                    binding.tvFirstDateSelected.text.isNullOrEmpty() -> {
                         false
                     }
                     else -> {
@@ -433,10 +327,10 @@ class ItemEditFragment : Fragment() {
 
             2 -> {
                 when {
-                    binding.tvFirstDate.text.isNullOrEmpty() -> {
+                    binding.tvFirstDateSelected.text.isNullOrEmpty() -> {
                         false
                     }
-                    binding.tvTimeSet.text.isNullOrEmpty() -> {
+                    binding.rvTimeChose.adapter?.itemCount == 0 -> {
                         false
                     }
                     else -> {
@@ -447,10 +341,10 @@ class ItemEditFragment : Fragment() {
 
             3 -> {
                 when {
-                    binding.tvFirstDate.text.isNullOrEmpty() -> {
+                    binding.tvFirstDateSelected.text.isNullOrEmpty() -> {
                         false
                     }
-                    binding.tvTimeSet.text.isNullOrEmpty() -> {
+                    binding.rvTimeChose.adapter?.itemCount == 0 -> {
                         false
                     }
                     else -> {
@@ -458,9 +352,8 @@ class ItemEditFragment : Fragment() {
                     }
                 }
             }
-           else -> true
-       }
-
+            else -> true
+        }
 
 
     }

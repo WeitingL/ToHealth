@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,37 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tv_firstDateTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="療程初始日"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_firstDate"
-            app:layout_constraintEnd_toEndOf="@+id/tv_time_edit"
-            app:layout_constraintStart_toStartOf="@+id/cl_Period"
-            app:layout_constraintTop_toTopOf="@+id/tv_firstDate" />
-
-        <TextView
-            android:id="@+id/tv_firstDate"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/row_block"
-            android:gravity="center"
-            android:textSize="30dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tv_firstDateTitle"
-            app:layout_constraintTop_toBottomOf="@+id/cl_Period" />
-
         <Spinner
             android:id="@+id/sp_ItemType"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="24dp"
             android:entries="@array/ItemType"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_ItemType"
@@ -51,7 +27,7 @@
             android:id="@+id/tv_ItemType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="24dp"
             android:text="健康項目"
             app:layout_constraintBottom_toBottomOf="@+id/sp_ItemType"
             app:layout_constraintStart_toStartOf="parent"
@@ -61,7 +37,7 @@
             android:id="@+id/tv_drugname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="24dp"
             android:text="藥物名稱"
             app:layout_constraintBottom_toBottomOf="@+id/til_drugName"
             app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="24dp"
             android:background="@color/white"
             android:ems="10"
             android:gravity="center_vertical"
@@ -100,7 +76,7 @@
             android:id="@+id/tv_itemName_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="24dp"
             android:text="項目選單"
             app:layout_constraintBottom_toBottomOf="@+id/sp_itemName"
             app:layout_constraintStart_toStartOf="parent"
@@ -112,46 +88,21 @@
             android:layout_height="48dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_itemName_edit"
             app:layout_constraintTop_toBottomOf="@+id/til_drugName" />
-
-        <TextView
-            android:id="@+id/tv_time_set"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/row_block"
-            android:gravity="center"
-            android:minHeight="48dp"
-            android:textSize="30dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/tv_time_edit"
-            app:layout_constraintTop_toBottomOf="@+id/tv_firstDate" />
-
-        <TextView
-            android:id="@+id/tv_time_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="執行日初次提醒時間"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_time_set"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_time_set" />
 
         <CheckBox
             android:id="@+id/cb_suspendUptake"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
             android:text="暫停執行"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cl_stock" />
 
@@ -159,9 +110,9 @@
             android:id="@+id/cb_DeleteUptake"
             android:layout_width="0dp"
             android:layout_height="48dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
             android:text="終止執行 (將本項目移除於您的清單中)"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -171,9 +122,9 @@
             android:id="@+id/bt_enterItem"
             android:layout_width="0dp"
             android:layout_height="60dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:text="確認"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -185,9 +136,11 @@
             android:id="@+id/cl_EndDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/card_block"
+            android:paddingVertical="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cl_unit">
@@ -197,6 +150,7 @@
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
                 android:entries="@array/End_Date"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tv_endDate_edit"
@@ -206,6 +160,7 @@
                 android:id="@+id/tv_endDate_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:text="執行期限"
                 app:layout_constraintBottom_toBottomOf="@+id/sp_endDate"
                 app:layout_constraintStart_toStartOf="parent"
@@ -217,9 +172,7 @@
                 android:layout_height="wrap_content"
                 android:text="天數"
                 app:layout_constraintBottom_toBottomOf="@+id/sp_day_edit"
-                app:layout_constraintEnd_toStartOf="@+id/sp_day_edit"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@+id/sp_endDate"
+                app:layout_constraintEnd_toEndOf="@+id/tv_endDate_edit"
                 app:layout_constraintTop_toTopOf="@+id/sp_day_edit" />
 
             <Spinner
@@ -228,10 +181,36 @@
                 android:layout_height="48dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/tv_day_endDate"
                 app:layout_constraintTop_toBottomOf="@+id/sp_endDate" />
+
+            <TextView
+                android:id="@+id/tv_firstDateSelected"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/row_block"
+                android:gravity="center"
+                android:textSize="30dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_firstDateTitle"
+                app:layout_constraintTop_toBottomOf="@+id/sp_day_edit"
+                tools:layout_goneMarginTop="8dp" />
+
+            <TextView
+                android:id="@+id/tv_firstDateTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="初始日"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_firstDateSelected"
+                app:layout_constraintEnd_toEndOf="@+id/tv_day_endDate"
+                app:layout_constraintTop_toTopOf="@+id/tv_firstDateSelected" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -239,10 +218,13 @@
             android:id="@+id/cl_Period"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/card_block"
+            android:paddingVertical="16dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cl_EndDate">
 
@@ -251,6 +233,7 @@
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
                 android:entries="@array/Period"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tv_period_edit"
@@ -260,85 +243,46 @@
                 android:id="@+id/tv_period_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:text="執行週期"
                 app:layout_constraintBottom_toBottomOf="@+id/sp_period"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/sp_period" />
-
-            <TextView
-                android:id="@+id/tv_cycle"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:text="執行幾天"
-                app:layout_constraintBottom_toBottomOf="@+id/sp_cycle"
-                app:layout_constraintEnd_toStartOf="@+id/sp_cycle"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@+id/tv_suspendDay"
-                app:layout_constraintTop_toTopOf="@+id/sp_cycle" />
 
             <Spinner
                 android:id="@+id/sp_suspendDay"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="@+id/sp_ongoingUnit"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tv_suspendDay"
-                app:layout_constraintTop_toBottomOf="@+id/sp_ongoingUnit" />
+                app:layout_constraintTop_toBottomOf="@+id/sp_ongoingDay" />
 
             <TextView
-                android:id="@+id/tv_ongoingUnit"
+                android:id="@+id/tv_ongoingDay"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:text="天"
-                app:layout_constraintBottom_toBottomOf="@+id/sp_ongoingUnit"
-                app:layout_constraintEnd_toStartOf="@+id/sp_ongoingUnit"
+                app:layout_constraintBottom_toBottomOf="@+id/sp_ongoingDay"
+                app:layout_constraintEnd_toStartOf="@+id/sp_ongoingDay"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/sp_suspendDay"
                 app:layout_constraintStart_toStartOf="@+id/sp_period"
-                app:layout_constraintTop_toTopOf="@+id/sp_ongoingUnit"
+                app:layout_constraintTop_toTopOf="@+id/sp_ongoingDay"
                 app:layout_constraintVertical_bias="0.5" />
 
             <Spinner
-                android:id="@+id/sp_ongoingUnit"
+                android:id="@+id/sp_ongoingDay"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/tv_ongoingUnit"
+                app:layout_constraintStart_toEndOf="@+id/tv_ongoingDay"
                 app:layout_constraintTop_toBottomOf="@+id/sp_period" />
-
-            <Spinner
-                android:id="@+id/sp_cycle"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tv_cycle"
-                app:layout_constraintTop_toBottomOf="@+id/sp_suspendDay" />
-
-            <TextView
-                android:id="@+id/tv_subtype"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="-9dp"
-                android:text="次執行週期"
-                app:layout_constraintBottom_toBottomOf="@id/sp_subtype"
-                app:layout_constraintStart_toStartOf="@id/tv_cycle"
-                app:layout_constraintTop_toTopOf="@id/sp_subtype" />
-
-            <Spinner
-                android:id="@+id/sp_subtype"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:entries="@array/Sub_Period"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/tv_subtype"
-                app:layout_constraintTop_toBottomOf="@+id/sp_cycle" />
 
             <TextView
                 android:id="@+id/tv_suspendDay"
@@ -349,51 +293,137 @@
                 app:layout_constraintBottom_toBottomOf="@+id/sp_suspendDay"
                 app:layout_constraintEnd_toStartOf="@+id/sp_suspendDay"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@+id/tv_ongoingUnit"
+                app:layout_constraintStart_toStartOf="@+id/tv_ongoingDay"
                 app:layout_constraintTop_toTopOf="@+id/sp_suspendDay" />
 
-            <TextView
-                android:id="@+id/tv_subOngoningUnit"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="天"
-                app:layout_constraintBottom_toBottomOf="@+id/sp_subOngoningUnit"
-                app:layout_constraintEnd_toEndOf="@+id/tv_subtype"
-                app:layout_constraintStart_toStartOf="@+id/tv_cycle"
-                app:layout_constraintTop_toTopOf="@+id/sp_subOngoningUnit" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_unit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/card_block"
+            android:paddingVertical="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sp_itemName">
 
             <Spinner
-                android:id="@+id/sp_subOngoningUnit"
+                android:id="@+id/sp_unit"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:entries="@array/ItemUnit"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_unit_edit"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_unit_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="藥品單位"
+                app:layout_constraintBottom_toBottomOf="@+id/sp_unit"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/sp_unit" />
+
+            <TextView
+                android:id="@+id/tv_dose_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="每次劑量"
+                app:layout_constraintBottom_toBottomOf="@+id/etv_drugDose"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/etv_drugDose" />
+
+            <EditText
+                android:id="@+id/etv_drugDose"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:ems="10"
+                android:hint="每次劑量 (如 : 1)"
+                android:inputType="textPersonName"
+                android:minHeight="48dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/tv_subOngoningUnit"
-                app:layout_constraintTop_toBottomOf="@+id/sp_subtype"
-                app:layout_constraintVertical_bias="0.513" />
+                app:layout_constraintStart_toEndOf="@+id/tv_dose_edit"
+                app:layout_constraintTop_toBottomOf="@+id/sp_unit" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/card_block"
+            android:paddingVertical="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cl_Period">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bt_time_set"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:drawableStart="@drawable/ic_baseline_add_40"
+                android:minHeight="48dp"
+                android:text="新增提醒時間"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rv_timeChose" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_timeChose"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:listitem="@layout/edit_time_row" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_stock"
             android:layout_width="0dp"
-            android:layout_height="42dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/card_block"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_time_set">
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
 
             <EditText
                 android:id="@+id/etv_stock"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
                 android:background="@null"
                 android:drawableBottom="@drawable/editext_bottomline"
                 android:ems="10"
@@ -409,6 +439,7 @@
                 android:id="@+id/tv_stock_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:text="藥物庫存"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -418,64 +449,12 @@
                 android:id="@+id/tv_unit_stock"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
                 android:text="單位"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_unit"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sp_itemName">
-
-            <Spinner
-                android:id="@+id/sp_unit"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="8dp"
-                android:entries="@array/ItemUnit"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tv_unit_edit"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_unit_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="藥品單位"
-                app:layout_constraintBottom_toBottomOf="@+id/sp_unit"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/sp_unit" />
-
-            <TextView
-                android:id="@+id/tv_dose_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="每次劑量"
-                app:layout_constraintBottom_toBottomOf="@+id/etv_drugDose"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/etv_drugDose" />
-
-            <EditText
-                android:id="@+id/etv_drugDose"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:ems="10"
-                android:hint="每次劑量 (如 : 1)"
-                android:inputType="textPersonName"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tv_dose_edit"
-                app:layout_constraintTop_toBottomOf="@+id/sp_unit" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

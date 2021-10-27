@@ -11,7 +11,6 @@ import java.lang.ClassCastException
 const val HOME_VIEWTYPE_ADDTASK = 0
 const val HOME_VIEWTYPE_DAILYINFO = 1
 const val HOME_VIEWTYPE_TODAYTASK = 2
-const val HOME_VIEWTYPE_MYGROUP = 3
 
 class HomeAdapter(val onClickListener: OnclickListener, val onclickListenerItem: OnclickListenerItem) :
     ListAdapter<HomePageItem, RecyclerView.ViewHolder>(DiffCallback) {
@@ -56,10 +55,9 @@ class HomeAdapter(val onClickListener: OnclickListener, val onclickListenerItem:
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
-            is HomePageItem.AddNewItem -> HOME_VIEWTYPE_ADDTASK
             is HomePageItem.TodayAbstract -> HOME_VIEWTYPE_DAILYINFO
             is HomePageItem.NextTask -> HOME_VIEWTYPE_TODAYTASK
-            is HomePageItem.MyGroupNews -> HOME_VIEWTYPE_MYGROUP
+            is HomePageItem.AddNewItem -> HOME_VIEWTYPE_ADDTASK
         }
     }
 
@@ -83,12 +81,6 @@ class HomeAdapter(val onClickListener: OnclickListener, val onclickListenerItem:
                 )
             )
 
-            HOME_VIEWTYPE_MYGROUP -> MyGroupsNewsViewHolder(
-                HomeRowMygroupBinding.inflate(
-                    LayoutInflater.from(parent.context), parent, false
-                )
-            )
-
             else -> throw ClassCastException("Unknown view type $viewType")
         }
     }
@@ -107,10 +99,6 @@ class HomeAdapter(val onClickListener: OnclickListener, val onclickListenerItem:
             is NextTaskViewHolder -> {
                 holder.bind(getItem(position) as HomePageItem.NextTask)
             }
-
-            is MyGroupsNewsViewHolder -> {
-            }
-
         }
     }
 

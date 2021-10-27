@@ -30,12 +30,9 @@ data class Drug(
     val period: Map<String, Int?> = mapOf(
         "type" to null,
         "N" to null,
-        "X" to null,
-        "Y" to null,
-        "subtype" to null,
-        "Z" to null
+        "X" to null
     ),
-    val firstTimePerDay: Timestamp? = null,
+    val executeTime: List<Timestamp> = listOf(),
     val stock: Int = 0,
     val editor: String? = null,
     val createTime: Timestamp? = null,
@@ -55,7 +52,7 @@ data class Measure(
     var id: String? = null,
     val userId: String? = null,
     val type: Int? = null,
-    val firstTimePerDay: Timestamp? = null,
+    val executeTime: List<Timestamp> = listOf(),
     val editor: String? = null,
     val createTime: Timestamp? = null,
     val status: Int? = null,
@@ -79,13 +76,10 @@ data class Activity(
     val period: Map<String, Int?> = mapOf(
         "type" to null,
         "N" to null,
-        "X" to null,
-        "Y" to null,
-        "subtype" to null,
-        "Z" to null
+        "X" to null
     ),
     val startDate: Timestamp? = null,
-    val firstTimePerDay: Timestamp? = null,
+    val executeTime: List<Timestamp> = listOf(),
     val editor: String? = null,
     val createTime: Timestamp? = null,
     val status: Int? = null,
@@ -109,13 +103,10 @@ data class Care(
     val period: Map<String, Int?> = mapOf(
         "type" to null,
         "N" to null,
-        "X" to null,
-        "Y" to null,
-        "subtype" to null,
-        "Z" to null
+        "X" to null
     ),
     val startDate: Timestamp? = null,
-    val firstTimePerDay: Timestamp? = null,
+    val executeTime: List<Timestamp> = listOf(),
     val editor: String? = null,
     val createTime: Timestamp? = null,
     val status: Int? = null,

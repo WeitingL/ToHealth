@@ -40,7 +40,6 @@ class ManageDetailAdapter(private val dataType: ManageType) :
                         tvUnitManage.text = toUnit(data?.unit)
                         tvStockManage.text = "剩餘" + data?.stock + toUnit(data?.dose)
                         tvEndDate.text = toEndDate(data?.endDate)
-                        tvTime.text = toTimeFromTimeStamp(data?.firstTimePerDay)
                         tvTagManage.text = toStatus(data?.status)
                         tvCreatedTime.text = "創建時間: " + toStringFromTimeStamp(data?.createTime)
                         tvEditorManage.text = "編輯者: " + data?.editor
@@ -54,7 +53,6 @@ class ManageDetailAdapter(private val dataType: ManageType) :
                         tvUnitManage.visibility = View.GONE
                         tvStockManage.visibility = View.GONE
                         tvEndDate.visibility = View.GONE
-                        tvTime.text = toTimeFromTimeStamp(data?.firstTimePerDay)
                         tvTagManage.text = toStatus(data?.status)
                         tvCreatedTime.text = "創建時間: " + toStringFromTimeStamp(data?.createTime)
                         tvEditorManage.text = "編輯者: " + data?.editor
@@ -68,7 +66,6 @@ class ManageDetailAdapter(private val dataType: ManageType) :
                         tvUnitManage.visibility = View.GONE
                         tvStockManage.visibility = View.GONE
                         tvEndDate.text = toEndDate(data?.endDate)
-                        tvTime.text = toTimeFromTimeStamp(data?.firstTimePerDay)
                         tvTagManage.text = toStatus(data?.status)
                         tvCreatedTime.text = "創建時間: " + toStringFromTimeStamp(data?.createTime)
                         tvEditorManage.text = "編輯者: " + data?.editor
@@ -82,7 +79,6 @@ class ManageDetailAdapter(private val dataType: ManageType) :
                         tvUnitManage.visibility = View.GONE
                         tvStockManage.visibility = View.GONE
                         tvEndDate.text = toEndDate(data?.endDate)
-                        tvTime.text = toTimeFromTimeStamp(data?.firstTimePerDay)
                         tvTagManage.text = toStatus(data?.status)
                         tvCreatedTime.text = "創建時間: " + toStringFromTimeStamp(data?.createTime)
                         tvEditorManage.text = "編輯者: " + data?.editor

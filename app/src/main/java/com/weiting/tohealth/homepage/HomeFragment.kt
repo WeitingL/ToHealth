@@ -26,7 +26,9 @@ class HomeFragment : Fragment() {
         val homeAdapter = HomeAdapter(HomeAdapter.OnclickListener {
             when (it) {
                 is HomePageItem.NextTask -> {
+                    //TODO 快速吃藥<依需求>
                 }
+
                 is HomePageItem.AddNewItem -> {
                     findNavController().navigate(
                         NavigationDirections.actionGlobalItemEditFragment(
@@ -74,21 +76,21 @@ class HomeFragment : Fragment() {
 //            Log.i("List", it.toString())
         }
 
-        viewModel.drugList.observe(viewLifecycleOwner){
-            Log.i("drugList", it.toString())
-        }
-
-        viewModel.measureList.observe(viewLifecycleOwner){
-            Log.i("measureList", it.toString())
-        }
-
-        viewModel.activityList.observe(viewLifecycleOwner){
-            Log.i("activityList", it.toString())
-        }
-
-        viewModel.careList.observe(viewLifecycleOwner){
-            Log.i("careList", it.toString())
-        }
+//        viewModel.drugList.observe(viewLifecycleOwner){
+//            Log.i("drugList", it.toString())
+//        }
+//
+//        viewModel.measureList.observe(viewLifecycleOwner){
+//            Log.i("measureList", it.toString())
+//        }
+//
+//        viewModel.activityList.observe(viewLifecycleOwner){
+//            Log.i("activityList", it.toString())
+//        }
+//
+//        viewModel.careList.observe(viewLifecycleOwner){
+//            Log.i("careList", it.toString())
+//        }
 
         binding.apply {
             rvHomeCardView.adapter = homeAdapter
