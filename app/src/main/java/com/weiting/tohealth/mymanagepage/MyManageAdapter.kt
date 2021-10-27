@@ -15,7 +15,7 @@ class MyManageAdapter(fragment: Fragment): FragmentStateAdapter(fragment) {
             0 -> getManageDetailFragment(bundleOf("type" to ManageType.DRUG))
             1 -> getManageDetailFragment(bundleOf("type" to ManageType.MEASURE))
             2 -> getManageDetailFragment(bundleOf("type" to ManageType.ACTIVITY))
-            3 -> getManageDetailFragment(bundleOf("type" to ManageType.MEASURE))
+            3 -> getManageDetailFragment(bundleOf("type" to ManageType.CARE))
             else -> throw Exception("Unknown position $position")
         }
     }

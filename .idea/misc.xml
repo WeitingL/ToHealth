@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/drawable/card_block.xml" value="0.4661458333333333" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/drawable/care_selector.xml" value="0.4661458333333333" />
+        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/drawable/circle_for_manage.xml" value="0.3296296296296296" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/drawable/cursor_brown.xml" value="0.12037037037037036" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/drawable/daliy_info_bar.xml" value="0.45897435897435895" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/drawable/editext_bottomline.xml" value="0.2851851851851852" />
@@ -66,7 +67,7 @@
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/item_edit_fragment.xml" value="0.25668835864063627" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/item_row.xml" value="0.6" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/manage_detail_fragment.xml" value="0.31614583333333335" />
-        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/manage_row_item.xml" value="0.6666666666666666" />
+        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/manage_row_item.xml" value="0.5" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/member_row.xml" value="0.5" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/members_fragment.xml" value="0.45" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/mygroup_row_group.xml" value="0.45" />
@@ -74,6 +75,7 @@
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/mymanage_item_fragment.xml" value="0.2359375" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/mystatistic_item_fagment.xml" value="0.2359375" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/note_row.xml" value="0.6666666666666666" />
+        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/row_manage_time.xml" value="0.8333333333333334" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/stastic_detail_fagment.xml" value="0.3875" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/statistic_detail_fagment.xml" value="0.31614583333333335" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/statistic_row_detail.xml" value="0.5" />
@@ -93,7 +95,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.4466666666666667" />
+        <option name="scale" value="0.3333333333333333" />
       </ProjectState>
     </option>
   </component>

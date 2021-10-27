@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.*
 import com.weiting.tohealth.data.ItemData
+import com.weiting.tohealth.data.UserManager
 import com.weiting.tohealth.databinding.ManageRowItemBinding
 import com.weiting.tohealth.mymanagepage.ManageDetailAdapter.ItemsListViewHolder
 
@@ -31,57 +32,108 @@ class ManageDetailAdapter(private val dataType: ManageType) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ItemData) {
             binding.apply {
+
+                val adapter = ManageDetailTimeAdapter()
+
                 when (dataType) {
                     ManageType.DRUG -> {
                         val data = item.DrugData
+                        adapter.submitList(data?.executeTime)
 
+                        rvTimeList.adapter = adapter
                         tvItemNameManage.text = data?.drugName
-                        tvDose.text = data?.dose.toString()
+                        imItemIcon.setImageResource(setDrugDrawable(data?.unit))
+                        tvPeriod.text = toStringFromPeriod(data?.period!!)
+
+                        tvPerTimeTitle.visibility = View.VISIBLE
+                        tvDose.visibility = View.VISIBLE
+                        tvDose.text = data?.dose?.toString()
+                        tvUnitManage.visibility = View.VISIBLE
                         tvUnitManage.text = toUnit(data?.unit)
-                        tvStockManage.text = "剩餘" + data?.stock + toUnit(data?.dose)
-                        tvEndDate.text = toEndDate(data?.endDate)
-                        tvTagManage.text = toStatus(data?.status)
-                        tvCreatedTime.text = "創建時間: " + toStringFromTimeStamp(data?.createTime)
-                        tvEditorManage.text = "編輯者: " + data?.editor
+                        tvRatioTitle.text = "剩餘藥量"
+                        tvRatioNum.text = "${data.stock}${toUnit(data?.unit)}"
+
+                        tvCreatedTime.text = toStringFromTimeStamp(data?.createTime)
+
+                        tvEditorManage.text = if (data?.editor == UserManager.userId) {
+                            UserManager.name
+                        } else {
+                            "others"
+                        }
+
                     }
 
                     ManageType.MEASURE -> {
                         val data = item.MeasureData
+                        adapter.submitList(data?.executeTime)
 
+                        rvTimeList.adapter = adapter
                         tvItemNameManage.text = toMeasureType(data?.type)
+                        imItemIcon.setImageResource(setMeasureDrawable(data?.type))
+                        tvPeriod.text = "每天執行"
+
+                        tvPerTimeTitle.visibility = View.GONE
                         tvDose.visibility = View.GONE
                         tvUnitManage.visibility = View.GONE
-                        tvStockManage.visibility = View.GONE
-                        tvEndDate.visibility = View.GONE
-                        tvTagManage.text = toStatus(data?.status)
-                        tvCreatedTime.text = "創建時間: " + toStringFromTimeStamp(data?.createTime)
-                        tvEditorManage.text = "編輯者: " + data?.editor
+                        tvCreatedTime.text = toStringFromTimeStamp(data?.createTime)
+                        tvRatioTitle.text = "剩餘天數"
+                        tvRatioNum.text = "無期限"
+
+                        tvEditorManage.text = if (data?.editor == UserManager.userId) {
+                            UserManager.name
+                        } else {
+                            "others"
+                        }
+
                     }
 
                     ManageType.ACTIVITY -> {
                         val data = item.ActivityData
+                        adapter.submitList(data?.executeTime)
 
-                        tvItemNameManage.text = toMeasureType(data?.type)
+                        rvTimeList.adapter = adapter
+                        tvItemNameManage.text = toActivityType(data?.type)
+                        imItemIcon.setImageResource(setActivityType(data?.type))
+                        tvPeriod.text = toStringFromPeriod(data?.period!!)
+
+                        tvPerTimeTitle.visibility = View.GONE
                         tvDose.visibility = View.GONE
                         tvUnitManage.visibility = View.GONE
-                        tvStockManage.visibility = View.GONE
-                        tvEndDate.text = toEndDate(data?.endDate)
-                        tvTagManage.text = toStatus(data?.status)
-                        tvCreatedTime.text = "創建時間: " + toStringFromTimeStamp(data?.createTime)
-                        tvEditorManage.text = "編輯者: " + data?.editor
+                        tvCreatedTime.text = toStringFromTimeStamp(data?.createTime)
+                        tvRatioTitle.text = "剩餘天數"
+                        tvRatioNum.text = "無期限"
+
+                        tvEditorManage.text = if (data?.editor == UserManager.userId) {
+                            UserManager.name
+                        } else {
+                            "others"
+                        }
+
                     }
 
                     ManageType.CARE -> {
                         val data = item.CareData
+                        adapter.submitList(data?.executeTime)
 
+                        rvTimeList.adapter = adapter
                         tvItemNameManage.text = toCareType(data?.type)
+                        imItemIcon.setImageResource(R.drawable.stopwatch)
+                        tvPeriod.text = toStringFromPeriod(data?.period!!)
+                        tvRatioTitle.text = "剩餘天數"
+                        tvRatioNum.text = "無期限"
+
+                        tvPerTimeTitle.visibility = View.GONE
                         tvDose.visibility = View.GONE
                         tvUnitManage.visibility = View.GONE
-                        tvStockManage.visibility = View.GONE
-                        tvEndDate.text = toEndDate(data?.endDate)
-                        tvTagManage.text = toStatus(data?.status)
-                        tvCreatedTime.text = "創建時間: " + toStringFromTimeStamp(data?.createTime)
-                        tvEditorManage.text = "編輯者: " + data?.editor
+
+                        tvCreatedTime.text = toStringFromTimeStamp(data?.createTime)
+
+                        tvEditorManage.text = if (data?.editor == UserManager.userId) {
+                            UserManager.name
+                        } else {
+                            "others"
+                        }
+
                     }
                 }
             }

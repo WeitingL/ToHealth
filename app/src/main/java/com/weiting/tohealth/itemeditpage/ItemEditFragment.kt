@@ -37,10 +37,6 @@ class ItemEditFragment : Fragment() {
         val viewModel = ViewModelProvider(this, factory).get(ItemEditViewModel::class.java)
 
 
-
-
-
-
         //User is navigated from which menagePage of Items.
         val position = when (manageType) {
             ManageType.DRUG -> 0
@@ -218,7 +214,7 @@ class ItemEditFragment : Fragment() {
                         tvSuspendDay.visibility = View.VISIBLE
                         tvSuspendDay.text = "暫停幾天"
                         spSuspendDay.visibility = View.VISIBLE
-                        spOngoingDay.adapter = ArrayAdapter.createFromResource(
+                        spSuspendDay.adapter = ArrayAdapter.createFromResource(
                             PublicApplication.application.applicationContext,
                             R.array.cycle_day,
                             android.R.layout.simple_spinner_dropdown_item
@@ -279,6 +275,7 @@ class ItemEditFragment : Fragment() {
             when (checkInput(binding)) {
                 true -> {
                     viewModel.postData(binding)
+                    Toast.makeText(context, "新增完成!", Toast.LENGTH_LONG).show()
                     findNavController().popBackStack()
                 }
                 false -> Toast.makeText(context, "有東西還沒填喔!", Toast.LENGTH_LONG).show()
@@ -315,14 +312,7 @@ class ItemEditFragment : Fragment() {
             }
 
             1 -> {
-                when {
-                    binding.tvFirstDateSelected.text.isNullOrEmpty() -> {
-                        false
-                    }
-                    else -> {
-                        true
-                    }
-                }
+               true
             }
 
             2 -> {
