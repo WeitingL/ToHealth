@@ -89,10 +89,17 @@ class TodayItemAdapter(val onClickListener: OnclickListener) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(care: Care?) {
             binding.apply {
+                val editor = if (care?.editor == UserManager.userId){
+                    "${UserManager.name}"
+                }else{
+                    "others"
+                }
+
                 tvName.text = toCareType(care?.type)
                 imageView.setImageResource(R.drawable.stopwatch)
-                tvUnit.text = "發起人" + care?.editor
+                tvUnit.text = "提出人$editor"
                 tvStock.visibility = View.GONE
+
             }
         }
     }

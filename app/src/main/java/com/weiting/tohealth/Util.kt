@@ -112,9 +112,10 @@ fun setMeasureDrawable(int: Int?): Int {
     return when (int) {
         0 -> R.drawable.blood_pressure
         1 -> R.drawable.sugar_blood_level
-        2 -> R.drawable.loupe
-        3 -> R.drawable.body_scale
-        4 -> R.drawable.thermometer
+        2 -> R.drawable.sugar_blood_level
+        3 -> R.drawable.loupe
+        4 -> R.drawable.body_scale
+        5 -> R.drawable.thermometer
         else -> R.drawable.loupe
     }
 }

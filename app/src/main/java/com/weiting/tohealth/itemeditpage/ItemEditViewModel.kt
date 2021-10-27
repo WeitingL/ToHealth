@@ -137,7 +137,7 @@ class ItemEditViewModel(
             ItemType.ACTIVITY -> {
                 val data = Activity(
                     userId = UserManager.userId,
-                    type = binding.spItemType.selectedItemPosition,
+                    type = binding.spItemName.selectedItemPosition,
                     endDate = mapOf(
                         "type" to endDateSelected.value,
                         "day" to binding.spEndDate.selectedItemPosition
@@ -159,7 +159,7 @@ class ItemEditViewModel(
             ItemType.CARE -> {
                 val data = Care(
                     userId = UserManager.userId,
-                    type = binding.spItemType.selectedItemPosition,
+                    type = binding.spItemName.selectedItemPosition,
                     endDate = mapOf(
                         "type" to endDateSelected.value,
                         "day" to binding.spEndDate.selectedItemPosition

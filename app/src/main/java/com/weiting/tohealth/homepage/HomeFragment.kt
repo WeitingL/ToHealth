@@ -23,6 +23,9 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
+
+        var count = 0
+
         val homeAdapter = HomeAdapter(HomeAdapter.OnclickListener {
             when (it) {
                 is HomePageItem.NextTask -> {
@@ -44,19 +47,35 @@ class HomeFragment : Fragment() {
             HomeAdapter.OnclickListenerItem {
                 when (it) {
                     is ItemDataType.DrugType -> {
-                        findNavController().navigate(NavigationDirections.actionGlobalDrugRecordDialog(it.drug.DrugData!!))
+                        findNavController().navigate(
+                            NavigationDirections.actionGlobalDrugRecordDialog(
+                                it.drug.DrugData!!
+                            )
+                        )
                     }
 
                     is ItemDataType.MeasureType -> {
-                        findNavController().navigate(NavigationDirections.actionGlobalMeasureRecordDialog(it.measure.MeasureData!!))
+                        findNavController().navigate(
+                            NavigationDirections.actionGlobalMeasureRecordDialog(
+                                it.measure.MeasureData!!
+                            )
+                        )
                     }
 
                     is ItemDataType.ActivityType -> {
-                        findNavController().navigate(NavigationDirections.actionGlobalActivityRecordDialog(it.activity.ActivityData!!))
+                        findNavController().navigate(
+                            NavigationDirections.actionGlobalActivityRecordDialog(
+                                it.activity.ActivityData!!
+                            )
+                        )
                     }
 
                     is ItemDataType.CareType -> {
-                        findNavController().navigate(NavigationDirections.actionGlobalCareRecordDialog(it.care.CareData!!))
+                        findNavController().navigate(
+                            NavigationDirections.actionGlobalCareRecordDialog(
+                                it.care.CareData!!
+                            )
+                        )
                     }
 
                 }
@@ -67,30 +86,34 @@ class HomeFragment : Fragment() {
 
         //Card
         viewModel.nextTaskList.observe(viewLifecycleOwner) {
+
             homeAdapter.submitList(it)
+
         }
+//
+//        viewModel.itemDataTypeList.observe(viewLifecycleOwner) {
+//            viewModel.getItemDataIntoHomePageItem(it)
+//        }
+
 
         //Get data from firebase
-        viewModel.itemDataTypeList.observe(viewLifecycleOwner) {
-            viewModel.getItemDataIntoHomePageItem(it)
-//            Log.i("List", it.toString())
+        viewModel.drugList.observe(viewLifecycleOwner) {
+            viewModel.getDrugs(it)
         }
 
-//        viewModel.drugList.observe(viewLifecycleOwner){
-//            Log.i("drugList", it.toString())
-//        }
-//
-//        viewModel.measureList.observe(viewLifecycleOwner){
-//            Log.i("measureList", it.toString())
-//        }
-//
-//        viewModel.activityList.observe(viewLifecycleOwner){
-//            Log.i("activityList", it.toString())
-//        }
-//
-//        viewModel.careList.observe(viewLifecycleOwner){
-//            Log.i("careList", it.toString())
-//        }
+        viewModel.measureList.observe(viewLifecycleOwner) {
+            viewModel.getMeasures(it)
+        }
+
+        viewModel.activityList.observe(viewLifecycleOwner) {
+            viewModel.getActivity(it)
+        }
+
+        viewModel.careList.observe(viewLifecycleOwner) {
+            viewModel.getCares(it)
+        }
+
+
 
         binding.apply {
             rvHomeCardView.adapter = homeAdapter
