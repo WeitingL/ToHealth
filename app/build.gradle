@@ -82,4 +82,7 @@ dependencies {
 
     // Firebase
     implementation "io.grpc:grpc-okhttp:1.32.2"
+
+    //RecyclerViewSwipeDecorator
+    implementation 'com.github.xabaras:RecyclerViewSwipeDecorator:1.3'
 }

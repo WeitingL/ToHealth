@@ -345,6 +345,110 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
+    override fun getLiveDrugRecord(
+        itemId: String,
+        createTime: Timestamp
+    ): MutableLiveData<List<DrugLog>> {
+        val drugLogsList = MutableLiveData<List<DrugLog>>()
+
+        application.database.collection("drugs").document(itemId)
+            .collection("drugLogs")
+            .addSnapshotListener { value, error ->
+                if (error != null) {
+                    Log.e("Listen failed.", error.toString())
+                    return@addSnapshotListener
+                }
+
+                val list = mutableListOf<DrugLog>()
+
+                for (document in value!!) {
+                    val data = document.toObject(DrugLog::class.java)
+                    list.add(data)
+                }
+
+                drugLogsList.value = list
+            }
+        return drugLogsList
+    }
+
+    override fun getLiveMeasureRecord(
+        itemId: String,
+        createTime: Timestamp
+    ): MutableLiveData<List<MeasureLog>> {
+        val measuresLogsList = MutableLiveData<List<MeasureLog>>()
+
+        application.database.collection("measures").document(itemId)
+            .collection("measuresLogs")
+            .addSnapshotListener { value, error ->
+                if (error != null) {
+                    Log.e("Listen failed.", error.toString())
+                    return@addSnapshotListener
+                }
+
+                val list = mutableListOf<MeasureLog>()
+
+                for (document in value!!) {
+                    val data = document.toObject(MeasureLog::class.java)
+                    list.add(data)
+                }
+
+                measuresLogsList.value = list
+            }
+        return measuresLogsList
+    }
+
+    override fun getLiveActivityRecord(
+        itemId: String,
+        createTime: Timestamp
+    ): MutableLiveData<List<ActivityLog>> {
+        val activityLogsList = MutableLiveData<List<ActivityLog>>()
+
+        application.database.collection("activity").document(itemId)
+            .collection("activityLogs")
+            .addSnapshotListener { value, error ->
+                if (error != null) {
+                    Log.e("Listen failed.", error.toString())
+                    return@addSnapshotListener
+                }
+
+                val list = mutableListOf<ActivityLog>()
+
+                for (document in value!!) {
+                    val data = document.toObject(ActivityLog::class.java)
+                    list.add(data)
+                }
+
+                activityLogsList.value = list
+            }
+        return activityLogsList
+    }
+
+    override fun getLiveCareRecord(
+        itemId: String,
+        createTime: Timestamp
+    ): MutableLiveData<List<CareLog>> {
+        val careLogsList = MutableLiveData<List<CareLog>>()
+
+        application.database.collection("cares").document(itemId)
+            .collection("careLogs")
+            .addSnapshotListener { value, error ->
+                if (error != null) {
+                    Log.e("Listen failed.", error.toString())
+                    return@addSnapshotListener
+                }
+
+                val list = mutableListOf<CareLog>()
+
+                for (document in value!!) {
+                    val data = document.toObject(CareLog::class.java)
+                    list.add(data)
+                }
+
+                careLogsList.value = list
+            }
+        return careLogsList
+    }
+
 
     override fun createGroup(group: Group) {
         val database = application.database

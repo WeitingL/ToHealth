@@ -23,6 +23,7 @@ class MyGroupFragment : Fragment() {
         val binding = FragmentMygroupBinding.inflate(layoutInflater, container, false)
         val factory = MyGroupViewModelFactory(PublicApplication.application.firebaseDataRepository)
         val viewModel = ViewModelProvider(this, factory).get(MyGroupViewModel::class.java)
+
         val adapter = GroupAdapter(GroupAdapter.OnclickListener {
             when(it){
                 is GroupPageItem.MyGroups ->{

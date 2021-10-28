@@ -13,6 +13,7 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.signIn(userName)
     }
 
+    //------------------OutDate.---------------------//
     override suspend fun getAllDrugs(): List<Drug> {
         return firebaseSource.getAllDrugs()
     }
@@ -28,8 +29,8 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
     override suspend fun getAllCares(): List<Care> {
         return firebaseSource.getAllCares()
     }
+    //-------------------------------------------------//
 
-    //TODO Need to transfer the get function from above to below.
     override fun getLiveDrugList(userId: String): MutableLiveData<List<Drug>> {
         return firebaseSource.getLiveDrugList(userId)
     }
@@ -76,6 +77,34 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
 
     override fun postCareRecord(id: String, careLog: CareLog) {
         return firebaseSource.postCareRecord(id, careLog)
+    }
+
+    override fun getLiveDrugRecord(
+        itemId: String,
+        createTime: Timestamp
+    ): MutableLiveData<List<DrugLog>> {
+        return  firebaseSource.getLiveDrugRecord(itemId, createTime)
+    }
+
+    override fun getLiveMeasureRecord(
+        itemId: String,
+        createTime: Timestamp
+    ): MutableLiveData<List<MeasureLog>> {
+        return firebaseSource.getLiveMeasureRecord(itemId, createTime)
+    }
+
+    override fun getLiveActivityRecord(
+        itemId: String,
+        createTime: Timestamp
+    ): MutableLiveData<List<ActivityLog>> {
+        return firebaseSource.getLiveActivityRecord(itemId, createTime)
+    }
+
+    override fun getLiveCareRecord(
+        itemId: String,
+        createTime: Timestamp
+    ): MutableLiveData<List<CareLog>> {
+        return firebaseSource.getLiveCareRecord(itemId, createTime)
     }
 
     override fun createGroup(group: Group) {

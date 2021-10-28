@@ -1,18 +1,28 @@
 package com.weiting.tohealth.homepage
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.weiting.tohealth.PublicApplication
+import com.weiting.tohealth.RecyclerViewSwipe
 import com.weiting.tohealth.databinding.*
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import java.lang.ClassCastException
 
 const val HOME_VIEWTYPE_ADDTASK = 0
 const val HOME_VIEWTYPE_DAILYINFO = 1
 const val HOME_VIEWTYPE_TODAYTASK = 2
 
-class HomeAdapter(val onClickListener: OnclickListener, val onclickListenerItem: OnclickListenerItem) :
+class HomeAdapter(
+    val onClickListener: OnclickListener,
+    val onclickListenerItem: OnclickListenerItem,
+    val viewModel: HomeViewModel
+) :
     ListAdapter<HomePageItem, RecyclerView.ViewHolder>(DiffCallback) {
 
     object DiffCallback : DiffUtil.ItemCallback<HomePageItem>() {
@@ -37,20 +47,65 @@ class HomeAdapter(val onClickListener: OnclickListener, val onclickListenerItem:
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(nextTask: HomePageItem.NextTask) {
+
+            val context = PublicApplication.application.applicationContext
+            val swipeSet =
+                object : RecyclerViewSwipe(context, viewModel) {
+                    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                        when (direction) {
+
+                            //Skip
+                            ItemTouchHelper.LEFT -> {
+                                when (viewHolder.itemViewType) {
+                                    ITEM_VIEWTYPE_DRUG -> {
+                                        //Get position to find out the data from list!!
+                                        viewModel.swipeToSkip(nextTask.list[viewHolder.bindingAdapterPosition])
+                                    }
+                                    ITEM_VIEWTYPE_MEASURE -> {
+                                        viewModel.swipeToSkip(nextTask.list[viewHolder.bindingAdapterPosition])
+                                    }
+                                    ITEM_VIEWTYPE_ACTIVITY -> {
+                                        viewModel.swipeToSkip(nextTask.list[viewHolder.bindingAdapterPosition])
+                                    }
+                                    ITEM_VIEWTYPE_CARE -> {
+                                        viewModel.swipeToSkip(nextTask.list[viewHolder.bindingAdapterPosition])
+                                    }
+                                }
+                            }
+
+                            //Entry data
+                            ItemTouchHelper.RIGHT -> {
+                                when (viewHolder.itemViewType) {
+                                    ITEM_VIEWTYPE_DRUG -> {
+                                        viewModel.swipeToNavigate(nextTask.list[viewHolder.bindingAdapterPosition])
+                                    }
+                                    ITEM_VIEWTYPE_MEASURE -> {
+                                        viewModel.swipeToNavigate(nextTask.list[viewHolder.bindingAdapterPosition])
+                                    }
+                                    ITEM_VIEWTYPE_ACTIVITY -> {
+                                        viewModel.swipeToNavigate(nextTask.list[viewHolder.bindingAdapterPosition])
+                                    }
+                                    ITEM_VIEWTYPE_CARE -> {
+                                        viewModel.swipeToNavigate(nextTask.list[viewHolder.bindingAdapterPosition])
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+            val touchHelper = ItemTouchHelper(swipeSet)
+            touchHelper.attachToRecyclerView(binding.rvGroupInfo)
+
             val adapter = TodayItemAdapter(TodayItemAdapter.OnclickListener {
                 onclickListenerItem.onClick(it)
-            })
+            }, viewModel)
             adapter.submitList(nextTask.list)
 
             binding.apply {
                 rvGroupInfo.adapter = adapter
             }
         }
-    }
-
-    inner class MyGroupsNewsViewHolder(private val binding: HomeRowMygroupBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
     }
 
     override fun getItemViewType(position: Int): Int {

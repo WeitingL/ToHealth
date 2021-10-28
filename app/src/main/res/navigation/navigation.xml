@@ -128,4 +128,14 @@
             app:argType="com.weiting.tohealth.data.Care" />
     </dialog>
     <action android:id="@+id/action_global_careRecordDialog" app:destination="@id/careRecordDialog" />
+    <dialog
+        android:id="@+id/skipRecordDialog"
+        android:name="com.weiting.tohealth.homepage.recorddialog.SkipRecordDialog"
+        android:label="dialog_skip_record"
+        tools:layout="@layout/dialog_skip_record" >
+        <argument
+            android:name="itemData"
+            app:argType="com.weiting.tohealth.data.ItemData" />
+    </dialog>
+    <action android:id="@+id/action_global_skipRecordDialog" app:destination="@id/skipRecordDialog" />
 </navigation>

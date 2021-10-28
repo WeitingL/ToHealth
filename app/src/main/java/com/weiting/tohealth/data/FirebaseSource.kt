@@ -2,6 +2,7 @@ package com.weiting.tohealth.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.common.io.LittleEndianDataInputStream
 import com.google.firebase.Timestamp
 
 interface FirebaseSource {
@@ -26,6 +27,7 @@ interface FirebaseSource {
     suspend fun getAllActivities(): List<Activity>
 
     suspend fun getAllCares(): List<Care>
+
 
     fun getLiveDrugList(userId: String): MutableLiveData<List<Drug>>
 
@@ -53,6 +55,21 @@ interface FirebaseSource {
 
     fun postCareRecord(id: String, careLog: CareLog)
 
+    //Get Item Log
+    fun getLiveDrugRecord(itemId: String, createTime: Timestamp): MutableLiveData<List<DrugLog>>
+
+    fun getLiveMeasureRecord(
+        itemId: String,
+        createTime: Timestamp
+    ): MutableLiveData<List<MeasureLog>>
+
+    fun getLiveActivityRecord(
+        itemId: String,
+        createTime: Timestamp
+    ): MutableLiveData<List<ActivityLog>>
+
+    fun getLiveCareRecord(itemId: String, createTime: Timestamp): MutableLiveData<List<CareLog>>
+
     /*
         Group operation
      */
@@ -63,6 +80,7 @@ interface FirebaseSource {
     fun getNewGroupId(): String
 
     fun joinGroup(member: Member, groupId: String)
+
 
     suspend fun checkIsRelationExist(userId: String, groupId: String): Boolean
 
@@ -75,6 +93,7 @@ interface FirebaseSource {
     suspend fun getNote(groupId: String): List<Note>
 
     suspend fun getCalenderItem(groupId: String): List<CalenderItem>
+
 
     fun getLiveMember(groupId: String): MutableLiveData<List<Member>>
 
@@ -93,6 +112,6 @@ interface FirebaseSource {
 
     fun postChatMessage(chat: Chat)
 
-    suspend fun getUserInfo (userId: String):User
+    suspend fun getUserInfo(userId: String): User
 
 }

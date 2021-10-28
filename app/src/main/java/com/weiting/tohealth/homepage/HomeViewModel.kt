@@ -1,5 +1,6 @@
 package com.weiting.tohealth.homepage
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,22 +16,21 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
     val nextTaskList: LiveData<List<HomePageItem>>
         get() = _nextTaskList
 
-//    private val _itemDataTypeList = MutableLiveData<List<ItemDataType>>()
-//    val itemDataTypeList: LiveData<List<ItemDataType>>
-//        get() = _itemDataTypeList
+    private val _navigateToDialog = MutableLiveData<ItemDataType>()
+    val navigateToDialog: LiveData<ItemDataType>
+        get() = _navigateToDialog
 
-
-
-    private val itemList = mutableListOf<ItemDataType>()
+    private val _navigateToSkip = MutableLiveData<ItemDataType>()
+    val navigateToSkip: LiveData<ItemDataType>
+        get() = _navigateToSkip
 
     private val timeIntList = mutableListOf<Int>()
     private val timeList = mutableListOf<ItemDataType>()
+
     private val drugItemList = mutableListOf<ItemDataType>()
     private val measureItemList = mutableListOf<ItemDataType>()
     private val activityItemList = mutableListOf<ItemDataType>()
     private val careItemList = mutableListOf<ItemDataType>()
-
-
 
     private val finalItemList = mutableListOf<ItemDataType>()
 
@@ -46,11 +46,21 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
         )
     }
 
-    fun getItemDataIntoHomePageItem(list: List<ItemDataType>) {
-        if (list.isNotEmpty()) {
-            _nextTaskList.value = _nextTaskList.value?.plus(HomePageItem.NextTask(list))
-        }
+
+    /*
+     Post the Log to change the ItemLog ->
+     ItemLog Snapchat get ->
+     Rebuild List
+     */
+
+    fun swipeToNavigate(itemDataType: ItemDataType){
+        _navigateToDialog.value = itemDataType
     }
+
+    fun swipeToSkip(itemDataType: ItemDataType){
+        _navigateToSkip.value = itemDataType
+    }
+
 
     fun getDrugs(list: List<Drug>) {
         drugItemList.clear()
@@ -82,7 +92,12 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                 c.time = it.toDate()
                 val timeInt = c.get(Calendar.HOUR_OF_DAY) * 100 + c.get(Calendar.MINUTE)
 
-                measureItemList.add(ItemDataType.MeasureType(ItemData(MeasureData = measure), timeInt))
+                measureItemList.add(
+                    ItemDataType.MeasureType(
+                        ItemData(MeasureData = measure),
+                        timeInt
+                    )
+                )
 
                 if (timeInt !in timeIntList) {
                     timeList.add(ItemDataType.TimeType(toTimeFromTimeStamp(it), timeInt))
@@ -103,7 +118,12 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                 c.time = it.toDate()
                 val timeInt = c.get(Calendar.HOUR_OF_DAY) * 100 + c.get(Calendar.MINUTE)
 
-                activityItemList.add(ItemDataType.ActivityType(ItemData(ActivityData = activity), timeInt))
+                activityItemList.add(
+                    ItemDataType.ActivityType(
+                        ItemData(ActivityData = activity),
+                        timeInt
+                    )
+                )
 
                 if (timeInt !in timeIntList) {
                     timeList.add(ItemDataType.TimeType(toTimeFromTimeStamp(it), timeInt))
@@ -144,7 +164,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                     finalItemList.add(timeItem)
 
                     drugItemList.forEach { durg ->
-                        if ((durg as ItemDataType.DrugType).timeInt == intTime){
+                        if ((durg as ItemDataType.DrugType).timeInt == intTime) {
                             if (durg.timeInt == intTime) {
                                 finalItemList.add(durg)
                             }
@@ -152,15 +172,15 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                     }
 
                     measureItemList.forEach { measure ->
-                        if ((measure as ItemDataType.MeasureType).timeInt == intTime){
+                        if ((measure as ItemDataType.MeasureType).timeInt == intTime) {
                             if (measure.timeInt == intTime) {
                                 finalItemList.add(measure)
                             }
                         }
                     }
 
-                    activityItemList.forEach {activity ->
-                        if ((activity as ItemDataType.ActivityType).timeInt == intTime){
+                    activityItemList.forEach { activity ->
+                        if ((activity as ItemDataType.ActivityType).timeInt == intTime) {
                             if (activity.timeInt == intTime) {
                                 finalItemList.add(activity)
                             }
@@ -168,7 +188,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                     }
 
                     careItemList.forEach { care ->
-                        if ((care as ItemDataType.CareType).timeInt == intTime){
+                        if ((care as ItemDataType.CareType).timeInt == intTime) {
                             if (care.timeInt == intTime) {
                                 finalItemList.add(care)
                             }
@@ -178,12 +198,12 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
             }
         }
 
-        if (finalItemList.isEmpty()){
+        if (finalItemList.isEmpty()) {
             _nextTaskList.value = listOf(
                 HomePageItem.AddNewItem,
                 HomePageItem.TodayAbstract
             )
-        }else{
+        } else {
             _nextTaskList.value = listOf(
                 HomePageItem.AddNewItem,
                 HomePageItem.TodayAbstract,
