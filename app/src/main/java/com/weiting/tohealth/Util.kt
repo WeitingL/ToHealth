@@ -143,7 +143,7 @@ fun toStringFromTimeStamp(timestamp: Timestamp?): String {
 }
 
 fun toTimeFromTimeStamp(timestamp: Timestamp?): String {
-    Log.i("Time", timestamp.toString())
+//    Log.i("Time", timestamp.toString())
     return SimpleDateFormat("HH:mm", Locale.TAIWAN).format(timestamp!!.toDate()).toString()
 }
 

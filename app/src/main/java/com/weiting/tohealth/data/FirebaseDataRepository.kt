@@ -79,32 +79,23 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.postCareRecord(id, careLog)
     }
 
-    override fun getLiveDrugRecord(
-        itemId: String,
-        createTime: Timestamp
-    ): MutableLiveData<List<DrugLog>> {
-        return  firebaseSource.getLiveDrugRecord(itemId, createTime)
+    override suspend fun getDrugRecord(itemId: String, createTime: Timestamp): List<DrugLog> {
+        return firebaseSource.getDrugRecord(itemId, createTime)
     }
 
-    override fun getLiveMeasureRecord(
-        itemId: String,
-        createTime: Timestamp
-    ): MutableLiveData<List<MeasureLog>> {
-        return firebaseSource.getLiveMeasureRecord(itemId, createTime)
+    override suspend fun getMeasureRecord(itemId: String, createTime: Timestamp): List<MeasureLog> {
+        return firebaseSource.getMeasureRecord(itemId, createTime)
     }
 
-    override fun getLiveActivityRecord(
+    override suspend fun getActivityRecord(
         itemId: String,
         createTime: Timestamp
-    ): MutableLiveData<List<ActivityLog>> {
-        return firebaseSource.getLiveActivityRecord(itemId, createTime)
+    ): List<ActivityLog> {
+        return firebaseSource.getActivityRecord(itemId, createTime)
     }
 
-    override fun getLiveCareRecord(
-        itemId: String,
-        createTime: Timestamp
-    ): MutableLiveData<List<CareLog>> {
-        return firebaseSource.getLiveCareRecord(itemId, createTime)
+    override suspend fun getCareRecord(itemId: String, createTime: Timestamp): List<CareLog> {
+        return firebaseSource.getCareRecord(itemId, createTime)
     }
 
     override fun createGroup(group: Group) {

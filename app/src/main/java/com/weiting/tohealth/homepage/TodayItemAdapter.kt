@@ -10,8 +10,6 @@ import com.weiting.tohealth.*
 import com.weiting.tohealth.data.*
 import com.weiting.tohealth.databinding.ItemRowBinding
 import com.weiting.tohealth.databinding.TimeRowBinding
-import com.weiting.tohealth.mygrouppage.GroupAdapter
-import com.weiting.tohealth.mygrouppage.GroupPageItem
 import java.lang.ClassCastException
 
 const val ITEM_VIEWTYPE_TIME = 0
@@ -20,7 +18,7 @@ const val ITEM_VIEWTYPE_MEASURE = 2
 const val ITEM_VIEWTYPE_ACTIVITY = 3
 const val ITEM_VIEWTYPE_CARE = 4
 
-class TodayItemAdapter(val onClickListener: OnclickListener, val viewModel: HomeViewModel) :
+class TodayItemAdapter(val viewModel: HomeViewModel) :
     ListAdapter<ItemDataType, RecyclerView.ViewHolder>(DiffCallback) {
 
     object DiffCallback : DiffUtil.ItemCallback<ItemDataType>() {
@@ -160,33 +158,16 @@ class TodayItemAdapter(val onClickListener: OnclickListener, val viewModel: Home
             }
             is DrugViewHolder -> {
                 holder.bind((getItem(position) as ItemDataType.DrugType).drug.DrugData)
-                holder.itemView.setOnClickListener {
-                    onClickListener.onClick(getItem(position) as ItemDataType.DrugType)
-                }
             }
             is MeasureViewHolder -> {
                 holder.bind((getItem(position) as ItemDataType.MeasureType).measure.MeasureData)
-                holder.itemView.setOnClickListener {
-                    onClickListener.onClick(getItem(position) as ItemDataType.MeasureType)
-                }
             }
             is ActivityViewHolder -> {
                 holder.bind((getItem(position) as ItemDataType.ActivityType).activity.ActivityData)
-                holder.itemView.setOnClickListener {
-                    onClickListener.onClick(getItem(position) as ItemDataType.ActivityType)
-                }
             }
             is CareViewHolder -> {
                 holder.bind((getItem(position) as ItemDataType.CareType).care.CareData)
-                holder.itemView.setOnClickListener {
-                    onClickListener.onClick(getItem(position) as ItemDataType.CareType)
-                }
             }
         }
     }
-
-    class OnclickListener(val clickListener: (itemDataType: ItemDataType) -> Unit) {
-        fun onClick(itemDataType: ItemDataType) = clickListener(itemDataType)
-    }
-
 }

@@ -1,14 +1,15 @@
 package com.weiting.tohealth.homepage
 
+import android.os.Parcelable
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.Timestamp
 import com.weiting.tohealth.data.*
-import com.weiting.tohealth.toTimeFromTimeStamp
 import kotlinx.coroutines.*
-import java.util.*
+import kotlinx.parcelize.Parcelize
 
 class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : ViewModel() {
 
@@ -16,28 +17,24 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
     val nextTaskList: LiveData<List<HomePageItem>>
         get() = _nextTaskList
 
-    private val _navigateToDialog = MutableLiveData<ItemDataType>()
-    val navigateToDialog: LiveData<ItemDataType>
+    private val _navigateToDialog = MutableLiveData<SwipeInfo>()
+    val navigateToDialog: LiveData<SwipeInfo>
         get() = _navigateToDialog
 
-    private val _navigateToSkip = MutableLiveData<ItemDataType>()
-    val navigateToSkip: LiveData<ItemDataType>
+    private val _navigateToSkip = MutableLiveData<SwipeInfo>()
+    val navigateToSkip: LiveData<SwipeInfo>
         get() = _navigateToSkip
 
-    private val timeIntList = mutableListOf<Int>()
-    private val timeList = mutableListOf<ItemDataType>()
-
-    private val drugItemList = mutableListOf<ItemDataType>()
-    private val measureItemList = mutableListOf<ItemDataType>()
-    private val activityItemList = mutableListOf<ItemDataType>()
-    private val careItemList = mutableListOf<ItemDataType>()
-
-    private val finalItemList = mutableListOf<ItemDataType>()
+    private val todoListGenerator = TodoListGenerator()
 
     val drugList = firebaseDataRepository.getLiveDrugList(UserManager.userId)
     val measureList = firebaseDataRepository.getLiveMeasureList(UserManager.userId)
     val activityList = firebaseDataRepository.getLiveActivityList(UserManager.userId)
     val careList = firebaseDataRepository.getLiveCareList(UserManager.userId)
+
+    val careScore = MutableLiveData<Int>()
+    val careInfo = MutableLiveData<String>()
+
 
     init {
         _nextTaskList.value = listOf(
@@ -48,157 +45,130 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
 
 
     /*
-     Post the Log to change the ItemLog ->
-     ItemLog Snapchat get ->
-     Rebuild List
+        Temporary storage ItemLog in VM (for undo) ->
+        Remove the item from final list ->
+        when home fragment onDestroy, the ItemLog will post to firebase.
      */
 
-    fun swipeToNavigate(itemDataType: ItemDataType){
-        _navigateToDialog.value = itemDataType
+    fun swipeToNavigate(itemDataType: ItemDataType, positionOfItem: Int) {
+        _navigateToDialog.value = SwipeInfo(itemDataType, positionOfItem)
     }
 
-    fun swipeToSkip(itemDataType: ItemDataType){
-        _navigateToSkip.value = itemDataType
+    fun swipeToSkip(itemDataType: ItemDataType, positionOfItem: Int) {
+        _navigateToSkip.value = SwipeInfo(itemDataType, positionOfItem)
     }
 
 
     fun getDrugs(list: List<Drug>) {
-        drugItemList.clear()
-        list.forEach { drug ->
+        viewModelScope.launch {
 
-            drug.executeTime.forEach {
-                val c = Calendar.getInstance()
-                c.time = it.toDate()
-                val timeInt = c.get(Calendar.HOUR_OF_DAY) * 100 + c.get(Calendar.MINUTE)
+            // Get the itemLog
+            list.forEach {
+                val drugLog = firebaseDataRepository.getDrugRecord(it.id!!, Timestamp.now())
+                it.drugLogs = drugLog
+            }
 
-                drugItemList.add(ItemDataType.DrugType(ItemData(DrugData = drug), timeInt))
-
-                if (timeInt !in timeIntList) {
-                    timeList.add(ItemDataType.TimeType(toTimeFromTimeStamp(it), timeInt))
-                    timeIntList.add(timeInt)
-                    timeIntList.sort()
-                }
+            todoListGenerator.getDrugs(list)
+            if (todoListGenerator.finalItemList.isEmpty()) {
+                _nextTaskList.value = listOf(
+                    HomePageItem.AddNewItem,
+                    HomePageItem.TodayAbstract
+                )
+            } else {
+                _nextTaskList.value = listOf(
+                    HomePageItem.AddNewItem,
+                    HomePageItem.TodayAbstract,
+                    HomePageItem.NextTask(todoListGenerator.finalItemList)
+                )
             }
         }
-        reArrangeItemDataType()
     }
 
     fun getMeasures(list: List<Measure>) {
-        measureItemList.clear()
-        list.forEach { measure ->
+        viewModelScope.launch {
+            // Get the itemLog
+            list.forEach {
+                val measureLog = firebaseDataRepository.getMeasureRecord(it.id!!, Timestamp.now())
+                it.measureLogs = measureLog
+            }
 
-            measure.executeTime.forEach {
-                val c = Calendar.getInstance()
-                c.time = it.toDate()
-                val timeInt = c.get(Calendar.HOUR_OF_DAY) * 100 + c.get(Calendar.MINUTE)
-
-                measureItemList.add(
-                    ItemDataType.MeasureType(
-                        ItemData(MeasureData = measure),
-                        timeInt
-                    )
+            todoListGenerator.getMeasures(list)
+            if (todoListGenerator.finalItemList.isEmpty()) {
+                _nextTaskList.value = listOf(
+                    HomePageItem.AddNewItem,
+                    HomePageItem.TodayAbstract
                 )
-
-                if (timeInt !in timeIntList) {
-                    timeList.add(ItemDataType.TimeType(toTimeFromTimeStamp(it), timeInt))
-                    timeIntList.add(timeInt)
-                    timeIntList.sort()
-                }
+            } else {
+                _nextTaskList.value = listOf(
+                    HomePageItem.AddNewItem,
+                    HomePageItem.TodayAbstract,
+                    HomePageItem.NextTask(todoListGenerator.finalItemList)
+                )
             }
         }
-        reArrangeItemDataType()
     }
 
     fun getActivity(list: List<Activity>) {
-        activityItemList.clear()
-        list.forEach { activity ->
+        viewModelScope.launch {
 
-            activity.executeTime.forEach {
-                val c = Calendar.getInstance()
-                c.time = it.toDate()
-                val timeInt = c.get(Calendar.HOUR_OF_DAY) * 100 + c.get(Calendar.MINUTE)
+            // Get the itemLog
+            list.forEach {
+                val activityLog = firebaseDataRepository.getActivityRecord(it.id!!, Timestamp.now())
+                it.activityLogs = activityLog
+            }
 
-                activityItemList.add(
-                    ItemDataType.ActivityType(
-                        ItemData(ActivityData = activity),
-                        timeInt
-                    )
+            todoListGenerator.getActivity(list)
+            if (todoListGenerator.finalItemList.isEmpty()) {
+                _nextTaskList.value = listOf(
+                    HomePageItem.AddNewItem,
+                    HomePageItem.TodayAbstract
                 )
-
-                if (timeInt !in timeIntList) {
-                    timeList.add(ItemDataType.TimeType(toTimeFromTimeStamp(it), timeInt))
-                    timeIntList.add(timeInt)
-                    timeIntList.sort()
-                }
+            } else {
+                _nextTaskList.value = listOf(
+                    HomePageItem.AddNewItem,
+                    HomePageItem.TodayAbstract,
+                    HomePageItem.NextTask(todoListGenerator.finalItemList)
+                )
             }
         }
-        reArrangeItemDataType()
     }
 
     fun getCares(list: List<Care>) {
-        careItemList.clear()
-        list.forEach { care ->
-            care.executeTime.forEach {
-                val c = Calendar.getInstance()
-                c.time = it.toDate()
-                val timeInt = c.get(Calendar.HOUR_OF_DAY) * 100 + c.get(Calendar.MINUTE)
+        viewModelScope.launch {
 
-                careItemList.add(ItemDataType.CareType(ItemData(CareData = care), timeInt))
+            // Get the itemLog
+            list.forEach {
+                val careLog = firebaseDataRepository.getCareRecord(it.id!!, Timestamp.now())
+                it.careLogs = careLog
+            }
 
-                if (timeInt !in timeIntList) {
-                    timeList.add(ItemDataType.TimeType(toTimeFromTimeStamp(it), timeInt))
-                    timeIntList.add(timeInt)
-                    timeIntList.sort()
-                }
+            todoListGenerator.getCares(list)
+            if (todoListGenerator.finalItemList.isEmpty()) {
+                _nextTaskList.value = listOf(
+                    HomePageItem.AddNewItem,
+                    HomePageItem.TodayAbstract
+                )
+            } else {
+                _nextTaskList.value = listOf(
+                    HomePageItem.AddNewItem,
+                    HomePageItem.TodayAbstract,
+                    HomePageItem.NextTask(todoListGenerator.finalItemList)
+                )
             }
         }
-        reArrangeItemDataType()
     }
 
-    private fun reArrangeItemDataType() {
-        finalItemList.clear()
+    fun getCareScore(int: Int) {
+        careScore.value = int
+    }
 
-        timeIntList.forEach { intTime ->
-            timeList.forEach { timeItem ->
-                if ((timeItem as ItemDataType.TimeType).timeInt == intTime) {
-                    finalItemList.add(timeItem)
+    fun getInfo(note: String) {
+        careInfo.value = note
+    }
 
-                    drugItemList.forEach { durg ->
-                        if ((durg as ItemDataType.DrugType).timeInt == intTime) {
-                            if (durg.timeInt == intTime) {
-                                finalItemList.add(durg)
-                            }
-                        }
-                    }
-
-                    measureItemList.forEach { measure ->
-                        if ((measure as ItemDataType.MeasureType).timeInt == intTime) {
-                            if (measure.timeInt == intTime) {
-                                finalItemList.add(measure)
-                            }
-                        }
-                    }
-
-                    activityItemList.forEach { activity ->
-                        if ((activity as ItemDataType.ActivityType).timeInt == intTime) {
-                            if (activity.timeInt == intTime) {
-                                finalItemList.add(activity)
-                            }
-                        }
-                    }
-
-                    careItemList.forEach { care ->
-                        if ((care as ItemDataType.CareType).timeInt == intTime) {
-                            if (care.timeInt == intTime) {
-                                finalItemList.add(care)
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        if (finalItemList.isEmpty()) {
+    fun getItemLog(itemLogData: ItemLogData, positionOfItem: Int) {
+        todoListGenerator.getLog(itemLogData, positionOfItem)
+        if (todoListGenerator.finalItemList.isEmpty()) {
             _nextTaskList.value = listOf(
                 HomePageItem.AddNewItem,
                 HomePageItem.TodayAbstract
@@ -207,11 +177,58 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
             _nextTaskList.value = listOf(
                 HomePageItem.AddNewItem,
                 HomePageItem.TodayAbstract,
-                HomePageItem.NextTask(finalItemList)
+                HomePageItem.NextTask(todoListGenerator.finalItemList)
             )
         }
     }
 
+    fun removeLast() {
+        todoListGenerator.removeLastLog()
+        if (todoListGenerator.finalItemList.isEmpty()) {
+            _nextTaskList.value = listOf(
+                HomePageItem.AddNewItem,
+                HomePageItem.TodayAbstract
+            )
+        } else {
+            _nextTaskList.value = listOf(
+                HomePageItem.AddNewItem,
+                HomePageItem.TodayAbstract,
+                HomePageItem.NextTask(todoListGenerator.finalItemList)
+            )
+        }
+    }
+
+    //Post Done Record to firebase
+    fun postRecord() {
+        todoListGenerator.logList.forEach {
+            when (it.ItemType) {
+                ItemType.DRUG -> {
+                    firebaseDataRepository.postDrugRecord(
+                        it.ItemId!!, it.DrugLog!!
+                    )
+                }
+                ItemType.MEASURE -> {
+                    firebaseDataRepository.postMeasureRecord(
+                        it.ItemId!!, it.MeasureLog!!
+                    )
+                }
+                ItemType.ACTIVITY -> {
+                    firebaseDataRepository.postActivityRecord(
+                        it.ItemId!!, it.ActivityLog!!
+                    )
+                }
+                ItemType.CARE -> {
+                    firebaseDataRepository.postCareRecord(
+                        it.ItemId!!, it.CareLog!!
+                    )
+                }
+            }
+        }
+    }
+
+    fun getOutDateTimeHeader(itemDataType: ItemDataType, positionOfItem: Int) {
+        todoListGenerator.getOutTimeHeader(itemDataType, positionOfItem)
+    }
 
 }
 
@@ -230,3 +247,8 @@ sealed class ItemDataType() {
     data class ActivityType(val activity: ItemData, val timeInt: Int) : ItemDataType()
     data class CareType(val care: ItemData, val timeInt: Int) : ItemDataType()
 }
+
+data class SwipeInfo(
+    val itemDataType: ItemDataType,
+    val positionOfItem: Int
+)

@@ -3,7 +3,6 @@ package com.weiting.tohealth.factory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.weiting.tohealth.data.FirebaseRepository
-import com.weiting.tohealth.homepage.recorddialog.RecordViewModel
 import com.weiting.tohealth.mygrouppage.dialogs.AddGroupViewModel
 import com.weiting.tohealth.mygrouppage.dialogs.HowToAddGroup
 

@@ -50,7 +50,6 @@ object FirebaseDataSource : FirebaseSource {
 
     }
 
-
     override suspend fun getAllDrugs(): List<Drug> = suspendCoroutine { continuation ->
         val list = mutableListOf<Drug>()
         val database = application.database
@@ -130,7 +129,6 @@ object FirebaseDataSource : FirebaseSource {
                 Log.w("Error to get data", e)
             }
     }
-
 
     override fun getLiveDrugList(userId: String): MutableLiveData<List<Drug>> {
 
@@ -345,110 +343,89 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
-    override fun getLiveDrugRecord(
+    override suspend fun getDrugRecord(itemId: String, createTime: Timestamp): List<DrugLog> =
+        suspendCoroutine { continuation ->
+            val list = mutableListOf<DrugLog>()
+            val database = application.database
+
+            database.collection("drugs").document(itemId).collection("drugLogs")
+                .limit(100)
+                .get()
+                .addOnSuccessListener { result ->
+
+                    val dataList = result.toObjects(DrugLog::class.java)
+                    list += dataList
+
+                    continuation.resume(list)
+                }
+                .addOnFailureListener { e ->
+                    Log.w("Error to get data", e)
+                }
+        }
+
+    override suspend fun getMeasureRecord(itemId: String, createTime: Timestamp): List<MeasureLog> =
+        suspendCoroutine { continuation ->
+            val list = mutableListOf<MeasureLog>()
+            val database = application.database
+
+            database.collection("measures").document(itemId).collection("measuresLogs")
+                .limit(100)
+                .get()
+                .addOnSuccessListener { result ->
+
+                    val dataList = result.toObjects(MeasureLog::class.java)
+                    list += dataList
+
+                    continuation.resume(list)
+                }
+                .addOnFailureListener { e ->
+                    Log.w("Error to get data", e)
+                }
+        }
+
+    override suspend fun getActivityRecord(
         itemId: String,
         createTime: Timestamp
-    ): MutableLiveData<List<DrugLog>> {
-        val drugLogsList = MutableLiveData<List<DrugLog>>()
+    ): List<ActivityLog> =
+        suspendCoroutine { continuation ->
+            val list = mutableListOf<ActivityLog>()
+            val database = application.database
 
-        application.database.collection("drugs").document(itemId)
-            .collection("drugLogs")
-            .addSnapshotListener { value, error ->
-                if (error != null) {
-                    Log.e("Listen failed.", error.toString())
-                    return@addSnapshotListener
+            database.collection("activity").document(itemId).collection("activityLogs")
+                .limit(100)
+                .get()
+                .addOnSuccessListener { result ->
+
+                    val dataList = result.toObjects(ActivityLog::class.java)
+                    list += dataList
+
+                    continuation.resume(list)
                 }
-
-                val list = mutableListOf<DrugLog>()
-
-                for (document in value!!) {
-                    val data = document.toObject(DrugLog::class.java)
-                    list.add(data)
+                .addOnFailureListener { e ->
+                    Log.w("Error to get data", e)
                 }
+        }
 
-                drugLogsList.value = list
-            }
-        return drugLogsList
-    }
 
-    override fun getLiveMeasureRecord(
-        itemId: String,
-        createTime: Timestamp
-    ): MutableLiveData<List<MeasureLog>> {
-        val measuresLogsList = MutableLiveData<List<MeasureLog>>()
+    override suspend fun getCareRecord(itemId: String, createTime: Timestamp): List<CareLog> =
+        suspendCoroutine { continuation ->
+            val list = mutableListOf<CareLog>()
+            val database = application.database
 
-        application.database.collection("measures").document(itemId)
-            .collection("measuresLogs")
-            .addSnapshotListener { value, error ->
-                if (error != null) {
-                    Log.e("Listen failed.", error.toString())
-                    return@addSnapshotListener
+            database.collection("cares").document(itemId).collection("careLogs")
+                .limit(100)
+                .get()
+                .addOnSuccessListener { result ->
+
+                    val dataList = result.toObjects(CareLog::class.java)
+                    list += dataList
+
+                    continuation.resume(list)
                 }
-
-                val list = mutableListOf<MeasureLog>()
-
-                for (document in value!!) {
-                    val data = document.toObject(MeasureLog::class.java)
-                    list.add(data)
+                .addOnFailureListener { e ->
+                    Log.w("Error to get data", e)
                 }
-
-                measuresLogsList.value = list
-            }
-        return measuresLogsList
-    }
-
-    override fun getLiveActivityRecord(
-        itemId: String,
-        createTime: Timestamp
-    ): MutableLiveData<List<ActivityLog>> {
-        val activityLogsList = MutableLiveData<List<ActivityLog>>()
-
-        application.database.collection("activity").document(itemId)
-            .collection("activityLogs")
-            .addSnapshotListener { value, error ->
-                if (error != null) {
-                    Log.e("Listen failed.", error.toString())
-                    return@addSnapshotListener
-                }
-
-                val list = mutableListOf<ActivityLog>()
-
-                for (document in value!!) {
-                    val data = document.toObject(ActivityLog::class.java)
-                    list.add(data)
-                }
-
-                activityLogsList.value = list
-            }
-        return activityLogsList
-    }
-
-    override fun getLiveCareRecord(
-        itemId: String,
-        createTime: Timestamp
-    ): MutableLiveData<List<CareLog>> {
-        val careLogsList = MutableLiveData<List<CareLog>>()
-
-        application.database.collection("cares").document(itemId)
-            .collection("careLogs")
-            .addSnapshotListener { value, error ->
-                if (error != null) {
-                    Log.e("Listen failed.", error.toString())
-                    return@addSnapshotListener
-                }
-
-                val list = mutableListOf<CareLog>()
-
-                for (document in value!!) {
-                    val data = document.toObject(CareLog::class.java)
-                    list.add(data)
-                }
-
-                careLogsList.value = list
-            }
-        return careLogsList
-    }
-
+        }
 
     override fun createGroup(group: Group) {
         val database = application.database

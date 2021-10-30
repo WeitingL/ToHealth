@@ -5,17 +5,27 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.Timestamp
 import com.weiting.tohealth.NavigationDirections
 import com.weiting.tohealth.PublicApplication
+import com.weiting.tohealth.data.*
 import com.weiting.tohealth.databinding.FragmentHomeBinding
 import com.weiting.tohealth.factory.HomeViewModelFactory
+import com.weiting.tohealth.getVmFactory
+import com.weiting.tohealth.homepage.HomeViewModel.*
 import com.weiting.tohealth.itemeditpage.EditType
 import com.weiting.tohealth.mymanagepage.ManageType
 
 class HomeFragment : Fragment() {
+
+    private val viewModel by viewModels<HomeViewModel> { getVmFactory() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -23,67 +33,22 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
-        val factory = HomeViewModelFactory(PublicApplication.application.firebaseDataRepository)
-        val viewModel = ViewModelProvider(this, factory).get(HomeViewModel::class.java)
-
         val homeAdapter = HomeAdapter(
             HomeAdapter.OnclickListener {
-                when (it) {
-                    is HomePageItem.AddNewItem -> {
-                        findNavController().navigate(
-                            NavigationDirections.actionGlobalItemEditFragment(
-                                EditType.CREATE, ManageType.DRUG
-                            )
+                if (it == HomePageItem.AddNewItem) {
+                    findNavController().navigate(
+                        NavigationDirections.actionGlobalItemEditFragment(
+                            EditType.CREATE, ManageType.DRUG
                         )
-                    }
-
-                    else -> {
-
-                    }
-                }
-            },
-            HomeAdapter.OnclickListenerItem {
-                when (it) {
-                    is ItemDataType.DrugType -> {
-                        findNavController().navigate(
-                            NavigationDirections.actionGlobalDrugRecordDialog(
-                                it.drug.DrugData!!
-                            )
-                        )
-                    }
-
-                    is ItemDataType.MeasureType -> {
-                        findNavController().navigate(
-                            NavigationDirections.actionGlobalMeasureRecordDialog(
-                                it.measure.MeasureData!!
-                            )
-                        )
-                    }
-
-                    is ItemDataType.ActivityType -> {
-                        findNavController().navigate(
-                            NavigationDirections.actionGlobalActivityRecordDialog(
-                                it.activity.ActivityData!!
-                            )
-                        )
-                    }
-
-                    is ItemDataType.CareType -> {
-                        findNavController().navigate(
-                            NavigationDirections.actionGlobalCareRecordDialog(
-                                it.care.CareData!!
-                            )
-                        )
-                    }
+                    )
                 }
             }, viewModel
         )
 
         //Card
         viewModel.nextTaskList.observe(viewLifecycleOwner) {
-
             homeAdapter.submitList(it)
-
+            Toast.makeText(context, "取得最新資訊", Toast.LENGTH_LONG).show()
         }
 
         //Get data from firebase
@@ -103,37 +68,55 @@ class HomeFragment : Fragment() {
             viewModel.getCares(it)
         }
 
-        //Navigation to Dialog
+        //Navigation to PostLog or skip.
         viewModel.navigateToDialog.observe(viewLifecycleOwner) {
-            when (it) {
+            when (it.itemDataType) {
                 is ItemDataType.DrugType -> {
-                    findNavController().navigate(
-                        NavigationDirections.actionGlobalDrugRecordDialog(
-                            it.drug.DrugData!!
-                        )
+                    viewModel.getItemLog(
+                        ItemLogData(
+                            ItemId = it.itemDataType.drug.DrugData?.id,
+                            ItemType = ItemType.DRUG,
+                            DrugLog = DrugLog(
+                                result = 0,
+                                createTime = Timestamp.now()
+                            )
+                        ), it.positionOfItem
                     )
+                    Snackbar.make(requireView(), "已經完成紀錄", Snackbar.LENGTH_LONG)
+                        .setAction("回復") {
+                            viewModel.removeLast()
+                        }.show()
                 }
 
                 is ItemDataType.MeasureType -> {
                     findNavController().navigate(
-                        NavigationDirections.actionGlobalMeasureRecordDialog(
-                            it.measure.MeasureData!!
+                        NavigationDirections.actionGlobalMeasureRecordFragment(
+                            it.itemDataType.measure.MeasureData!!, it.positionOfItem
                         )
                     )
                 }
 
                 is ItemDataType.ActivityType -> {
-                    findNavController().navigate(
-                        NavigationDirections.actionGlobalActivityRecordDialog(
-                            it.activity.ActivityData!!
-                        )
+                    viewModel.getItemLog(
+                        ItemLogData(
+                            ItemId = it.itemDataType.activity.ActivityData?.id,
+                            ItemType = ItemType.ACTIVITY,
+                            ActivityLog = ActivityLog(
+                                result = 0,
+                                createTime = Timestamp.now()
+                            )
+                        ), it.positionOfItem
                     )
+                    Snackbar.make(requireView(), "已經完成紀錄", Snackbar.LENGTH_LONG)
+                        .setAction("回復") {
+                            viewModel.removeLast()
+                        }.show()
                 }
 
                 is ItemDataType.CareType -> {
                     findNavController().navigate(
-                        NavigationDirections.actionGlobalCareRecordDialog(
-                            it.care.CareData!!
+                        NavigationDirections.actionGlobalCareRecordFragment(
+                            it.itemDataType.care.CareData!!, it.positionOfItem
                         )
                     )
                 }
@@ -141,37 +124,63 @@ class HomeFragment : Fragment() {
         }
 
         viewModel.navigateToSkip.observe(viewLifecycleOwner) {
-            when (it) {
+            when (it.itemDataType) {
                 is ItemDataType.DrugType -> {
-                    findNavController().navigate(
-                        NavigationDirections.actionGlobalSkipRecordDialog(it.drug)
+                    viewModel.getItemLog(
+                        ItemLogData(
+                            ItemId = it.itemDataType.drug.DrugData?.id,
+                            ItemType.DRUG,
+                            DrugLog(
+                                result = 1,
+                                createTime = Timestamp.now()
+                            )
+                        ), it.positionOfItem
                     )
                 }
 
                 is ItemDataType.MeasureType -> {
-                    findNavController().navigate(
-                        NavigationDirections.actionGlobalSkipRecordDialog(
-                            it.measure
-                        )
+                    viewModel.getItemLog(
+                        ItemLogData(
+                            ItemId = it.itemDataType.measure.MeasureData?.id,
+                            ItemType = ItemType.MEASURE,
+                            MeasureLog = MeasureLog(
+                                result = 1,
+                                createTime = Timestamp.now()
+                            )
+                        ), it.positionOfItem
                     )
                 }
 
                 is ItemDataType.ActivityType -> {
-                    findNavController().navigate(
-                        NavigationDirections.actionGlobalSkipRecordDialog(
-                            it.activity
-                        )
+                    viewModel.getItemLog(
+                        ItemLogData(
+                            ItemId = it.itemDataType.activity.ActivityData?.id,
+                            ItemType = ItemType.ACTIVITY,
+                            ActivityLog = ActivityLog(
+                                result = 1,
+                                createTime = Timestamp.now()
+                            )
+                        ), it.positionOfItem
                     )
                 }
 
                 is ItemDataType.CareType -> {
-                    findNavController().navigate(
-                        NavigationDirections.actionGlobalSkipRecordDialog(
-                            it.care
-                        )
+                    viewModel.getItemLog(
+                        ItemLogData(
+                            ItemId = it.itemDataType.care.CareData?.id,
+                            ItemType = ItemType.CARE,
+                            CareLog = CareLog(
+                                result = 1,
+                                createTime = Timestamp.now()
+                            )
+                        ), it.positionOfItem
                     )
                 }
             }
+            Snackbar.make(requireView(), "跳過紀錄", Snackbar.LENGTH_LONG)
+                .setAction("回復"){
+                    viewModel.removeLast()
+                }.show()
         }
 
         binding.apply {
@@ -181,4 +190,8 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.postRecord()
+    }
 }

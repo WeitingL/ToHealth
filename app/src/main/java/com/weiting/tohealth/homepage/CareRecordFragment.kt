@@ -1,30 +1,36 @@
-package com.weiting.tohealth.homepage.recorddialog
+package com.weiting.tohealth.homepage
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.Timestamp
+import com.weiting.tohealth.NavigationDirections
 import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.R
+import com.weiting.tohealth.data.CareLog
+import com.weiting.tohealth.data.ItemData
+import com.weiting.tohealth.data.ItemLogData
 import com.weiting.tohealth.data.ItemType
-import com.weiting.tohealth.databinding.DialogCareRecordBinding
-import com.weiting.tohealth.factory.RecordViewModelFactory
+import com.weiting.tohealth.databinding.CareRecordFragmentBinding
+import com.weiting.tohealth.factory.HomeViewModelFactory
 
-class CareRecordDialog : DialogFragment() {
-
+class CareRecordFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = DialogCareRecordBinding.inflate(inflater, container, false)
-        val careData = CareRecordDialogArgs.fromBundle(requireArguments()).careData
-        val factory = RecordViewModelFactory(PublicApplication.application.firebaseDataRepository)
-        val viewModel = ViewModelProvider(this, factory).get(RecordViewModel::class.java)
+        val binding = CareRecordFragmentBinding.inflate(inflater, container, false)
+        val factory = HomeViewModelFactory(PublicApplication.application.firebaseDataRepository)
+        val viewModel = ViewModelProvider(this, factory).get(HomeViewModel::class.java)
+        val careData = CareRecordFragmentArgs.fromBundle(requireArguments()).careData
+        val itemPosition = CareRecordFragmentArgs.fromBundle(requireArguments()).itemPosition
 
         binding.apply {
 
@@ -126,12 +132,28 @@ class CareRecordDialog : DialogFragment() {
 
             btEnterCareLog.setOnClickListener {
                 viewModel.getInfo(binding.editTextTextPersonName.editableText.toString())
-                viewModel.postRecord(ItemType.CARE, careData.id!!)
-                findNavController().popBackStack()
+                viewModel.getItemLog(
+                    ItemLogData(
+                        ItemId = careData.id!!,
+                        ItemType.CARE,
+                        CareLog = CareLog(
+                            result = 0,
+                            record = mapOf(
+                                "emotion" to viewModel.careScore.value.toString(),
+                                "note" to viewModel.careInfo.value
+                            ),
+                            createTime = Timestamp.now()
+                        )
+                    ), itemPosition
+                )
+                Toast.makeText(context, "登錄完成", Toast.LENGTH_LONG).show()
+                findNavController().navigate(NavigationDirections.actionGlobalHomeFragment())
             }
 
+            btCancelCareLog.setOnClickListener {
+                findNavController().navigate(NavigationDirections.actionGlobalHomeFragment())
+            }
         }
-
         return binding.root
     }
 

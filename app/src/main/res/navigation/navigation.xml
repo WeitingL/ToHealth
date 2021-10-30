@@ -88,54 +88,30 @@
             app:argType="com.weiting.tohealth.timeset.EditTimeType" />
     </dialog>
     <action android:id="@+id/action_global_calenderTimeDialog" app:destination="@id/calenderTimeDialog" />
-    <dialog
-        android:id="@+id/drugRecordDialog"
-        android:name="com.weiting.tohealth.homepage.recorddialog.DrugRecordDialog"
-        android:label="dialog_drug_record"
-        tools:layout="@layout/dialog_drug_record" >
-        <argument
-            android:name="drugData"
-            app:argType="com.weiting.tohealth.data.Drug" />
-    </dialog>
-    <action android:id="@+id/action_global_drugRecordDialog" app:destination="@id/drugRecordDialog" />
-    <dialog
-        android:id="@+id/measureRecordDialog"
-        android:name="com.weiting.tohealth.homepage.recorddialog.MeasureRecordDialog"
-        android:label="dialog_measure_record"
-        tools:layout="@layout/dialog_measure_record" >
+    <fragment
+        android:id="@+id/measureRecordFragment"
+        android:name="com.weiting.tohealth.homepage.MeasureRecordFragment"
+        android:label="measure_record_fragment"
+        tools:layout="@layout/measure_record_fragment" >
         <argument
             android:name="measureData"
             app:argType="com.weiting.tohealth.data.Measure" />
-    </dialog>
-    <action android:id="@+id/action_global_measureRecordDialog" app:destination="@id/measureRecordDialog" />
-    <dialog
-        android:id="@+id/activityRecordDialog"
-        android:name="com.weiting.tohealth.homepage.recorddialog.ActivityRecordDialog"
-        android:label="dialog_activity_record"
-        tools:layout="@layout/dialog_activity_record" >
         <argument
-            android:name="activityData"
-            app:argType="com.weiting.tohealth.data.Activity" />
-    </dialog>
-    <action android:id="@+id/action_global_activityRecordDialog" app:destination="@id/activityRecordDialog" />
-    <dialog
-        android:id="@+id/careRecordDialog"
-        android:name="com.weiting.tohealth.homepage.recorddialog.CareRecordDialog"
-        android:label="dialog_care_record"
-        tools:layout="@layout/dialog_care_record" >
+            android:name="itemPosition"
+            app:argType="integer" />
+    </fragment>
+    <action android:id="@+id/action_global_measureRecordFragment" app:destination="@id/measureRecordFragment" />
+    <fragment
+        android:id="@+id/careRecordFragment"
+        android:name="com.weiting.tohealth.homepage.CareRecordFragment"
+        android:label="care_record_fragment"
+        tools:layout="@layout/care_record_fragment" >
         <argument
             android:name="careData"
             app:argType="com.weiting.tohealth.data.Care" />
-    </dialog>
-    <action android:id="@+id/action_global_careRecordDialog" app:destination="@id/careRecordDialog" />
-    <dialog
-        android:id="@+id/skipRecordDialog"
-        android:name="com.weiting.tohealth.homepage.recorddialog.SkipRecordDialog"
-        android:label="dialog_skip_record"
-        tools:layout="@layout/dialog_skip_record" >
         <argument
-            android:name="itemData"
-            app:argType="com.weiting.tohealth.data.ItemData" />
-    </dialog>
-    <action android:id="@+id/action_global_skipRecordDialog" app:destination="@id/skipRecordDialog" />
+            android:name="itemPosition"
+            app:argType="integer" />
+    </fragment>
+    <action android:id="@+id/action_global_careRecordFragment" app:destination="@id/careRecordFragment" />
 </navigation>

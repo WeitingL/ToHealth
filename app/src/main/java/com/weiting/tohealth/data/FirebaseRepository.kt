@@ -53,20 +53,19 @@ interface FirebaseRepository {
     fun postCareRecord(id: String, careLog: CareLog)
 
     //Get Item Log
-    fun getLiveDrugRecord(itemId: String, createTime: Timestamp): MutableLiveData<List<DrugLog>>
+    suspend fun getDrugRecord(itemId: String, createTime: Timestamp): List<DrugLog>
 
-    fun getLiveMeasureRecord(
+    suspend fun getMeasureRecord(
         itemId: String,
         createTime: Timestamp
-    ): MutableLiveData<List<MeasureLog>>
+    ): List<MeasureLog>
 
-    fun getLiveActivityRecord(
+    suspend fun getActivityRecord(
         itemId: String,
         createTime: Timestamp
-    ): MutableLiveData<List<ActivityLog>>
+    ): List<ActivityLog>
 
-    fun getLiveCareRecord(itemId: String, createTime: Timestamp): MutableLiveData<List<CareLog>>
-
+    suspend fun getCareRecord(itemId: String, createTime: Timestamp): List<CareLog>
     /*
        Group operation
      */

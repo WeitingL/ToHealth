@@ -2,6 +2,7 @@ package com.weiting.tohealth.data
 
 import android.os.Parcelable
 import com.google.firebase.Timestamp
+import io.grpc.internal.DnsNameResolver
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -17,6 +18,16 @@ data class ItemData(
     val ActivityData: Activity? = null,
     val CareData: Care? = null
 ) : Parcelable
+
+@Parcelize
+data class ItemLogData(
+    val ItemId: String? = null,
+    val ItemType: ItemType? = null,
+    val DrugLog: DrugLog? = null,
+    val MeasureLog: MeasureLog? = null,
+    val ActivityLog : ActivityLog? = null,
+    val CareLog: CareLog? = null
+):Parcelable
 
 @Parcelize
 data class Drug(
@@ -37,7 +48,7 @@ data class Drug(
     val editor: String? = null,
     val createTime: Timestamp? = null,
     val status: Int? = null,
-    val drugLogs: List<DrugLog> = listOf()
+    var drugLogs: List<DrugLog> = listOf()
 ) : Parcelable
 
 @Parcelize
@@ -56,7 +67,7 @@ data class Measure(
     val editor: String? = null,
     val createTime: Timestamp? = null,
     val status: Int? = null,
-    val measureLogs: List<MeasureLog> = listOf()
+    var measureLogs: List<MeasureLog> = listOf()
 ) : Parcelable
 
 @Parcelize
@@ -83,7 +94,7 @@ data class Activity(
     val editor: String? = null,
     val createTime: Timestamp? = null,
     val status: Int? = null,
-    val activityLogs: List<ActivityLog> = listOf()
+    var activityLogs: List<ActivityLog> = listOf()
 ) : Parcelable
 
 @Parcelize
@@ -110,7 +121,7 @@ data class Care(
     val editor: String? = null,
     val createTime: Timestamp? = null,
     val status: Int? = null,
-    val careLogs: List<CareLog> = listOf()
+    var careLogs: List<CareLog> = listOf()
 ) : Parcelable
 
 @Parcelize

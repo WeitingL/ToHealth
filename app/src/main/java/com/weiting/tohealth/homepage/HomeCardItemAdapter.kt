@@ -1,9 +1,10 @@
 package com.weiting.tohealth.homepage
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleRegistry
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ListAdapter
@@ -11,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.RecyclerViewSwipe
 import com.weiting.tohealth.databinding.*
-import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import java.lang.ClassCastException
 
 const val HOME_VIEWTYPE_ADDTASK = 0
@@ -20,7 +20,6 @@ const val HOME_VIEWTYPE_TODAYTASK = 2
 
 class HomeAdapter(
     val onClickListener: OnclickListener,
-    val onclickListenerItem: OnclickListenerItem,
     val viewModel: HomeViewModel
 ) :
     ListAdapter<HomePageItem, RecyclerView.ViewHolder>(DiffCallback) {
@@ -48,48 +47,59 @@ class HomeAdapter(
 
         fun bind(nextTask: HomePageItem.NextTask) {
 
+            val adapter = TodayItemAdapter(viewModel)
             val context = PublicApplication.application.applicationContext
             val swipeSet =
                 object : RecyclerViewSwipe(context, viewModel) {
                     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                        when (direction) {
+                        val adapterList = adapter.currentList
+                        val position = viewHolder.bindingAdapterPosition
 
+                        when (direction) {
                             //Skip
                             ItemTouchHelper.LEFT -> {
                                 when (viewHolder.itemViewType) {
                                     ITEM_VIEWTYPE_DRUG -> {
                                         //Get position to find out the data from list!!
-                                        viewModel.swipeToSkip(nextTask.list[viewHolder.bindingAdapterPosition])
+                                        viewModel.swipeToSkip(adapterList[position], position)
                                     }
                                     ITEM_VIEWTYPE_MEASURE -> {
-                                        viewModel.swipeToSkip(nextTask.list[viewHolder.bindingAdapterPosition])
+                                        viewModel.swipeToSkip(adapterList[position], position)
                                     }
                                     ITEM_VIEWTYPE_ACTIVITY -> {
-                                        viewModel.swipeToSkip(nextTask.list[viewHolder.bindingAdapterPosition])
+                                        viewModel.swipeToSkip(adapterList[position], position)
                                     }
                                     ITEM_VIEWTYPE_CARE -> {
-                                        viewModel.swipeToSkip(nextTask.list[viewHolder.bindingAdapterPosition])
+                                        viewModel.swipeToSkip(adapterList[position], position)
                                     }
                                 }
+
                             }
 
                             //Entry data
                             ItemTouchHelper.RIGHT -> {
                                 when (viewHolder.itemViewType) {
                                     ITEM_VIEWTYPE_DRUG -> {
-                                        viewModel.swipeToNavigate(nextTask.list[viewHolder.bindingAdapterPosition])
+                                        viewModel.swipeToNavigate(adapterList[position], position)
                                     }
                                     ITEM_VIEWTYPE_MEASURE -> {
-                                        viewModel.swipeToNavigate(nextTask.list[viewHolder.bindingAdapterPosition])
+                                        viewModel.swipeToNavigate(adapterList[position], position)
                                     }
                                     ITEM_VIEWTYPE_ACTIVITY -> {
-                                        viewModel.swipeToNavigate(nextTask.list[viewHolder.bindingAdapterPosition])
+                                        viewModel.swipeToNavigate(adapterList[position], position)
                                     }
                                     ITEM_VIEWTYPE_CARE -> {
-                                        viewModel.swipeToNavigate(nextTask.list[viewHolder.bindingAdapterPosition])
+                                        viewModel.swipeToNavigate(adapterList[position], position)
                                     }
                                 }
                             }
+                        }
+
+                        //Last item in this time point.
+                        if (getItemViewType(position - 1) == ITEM_VIEWTYPE_TIME &&
+                            getItemViewType(position + 1) == ITEM_VIEWTYPE_TIME
+                        ) {
+                            viewModel.getOutDateTimeHeader(adapterList[position - 1], position - 1)
                         }
                     }
                 }
@@ -97,13 +107,11 @@ class HomeAdapter(
             val touchHelper = ItemTouchHelper(swipeSet)
             touchHelper.attachToRecyclerView(binding.rvGroupInfo)
 
-            val adapter = TodayItemAdapter(TodayItemAdapter.OnclickListener {
-                onclickListenerItem.onClick(it)
-            }, viewModel)
             adapter.submitList(nextTask.list)
 
-            binding.apply {
-                rvGroupInfo.adapter = adapter
+            binding.rvGroupInfo.apply {
+                this.adapter = adapter
+                this.setHasFixedSize(true)
             }
         }
     }
@@ -117,12 +125,15 @@ class HomeAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+
         return when (viewType) {
-            HOME_VIEWTYPE_ADDTASK -> FastAddTaskViewHolder(
-                HomeRowFastaddBinding.inflate(
-                    LayoutInflater.from(parent.context), parent, false
+            HOME_VIEWTYPE_ADDTASK -> {
+                FastAddTaskViewHolder(
+                    HomeRowFastaddBinding.inflate(
+                        LayoutInflater.from(parent.context), parent, false
+                    )
                 )
-            )
+            }
 
             HOME_VIEWTYPE_DAILYINFO -> TodayViewHolder(
                 HomeRowTodayBinding.inflate(
@@ -159,10 +170,6 @@ class HomeAdapter(
 
     class OnclickListener(val clickListener: (homePageItem: HomePageItem) -> Unit) {
         fun onClick(homePageItem: HomePageItem) = clickListener(homePageItem)
-    }
-
-    class OnclickListenerItem(val clickListener: (itemDataType: ItemDataType) -> Unit) {
-        fun onClick(itemDataType: ItemDataType) = clickListener(itemDataType)
     }
 
 }
