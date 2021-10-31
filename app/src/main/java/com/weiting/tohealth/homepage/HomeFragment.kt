@@ -15,11 +15,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.weiting.tohealth.NavigationDirections
 import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.RecyclerViewSwipe
-import com.weiting.tohealth.data.*
 import com.weiting.tohealth.databinding.FragmentHomeBinding
 import com.weiting.tohealth.factory.RecordViewModelFactory
 import com.weiting.tohealth.getVmFactory
-import com.weiting.tohealth.itemeditpage.TimeSetAdapter
 
 class HomeFragment : Fragment() {
 
@@ -32,7 +30,6 @@ class HomeFragment : Fragment() {
     ): View? {
         val binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
         val factory = RecordViewModelFactory(PublicApplication.application.firebaseDataRepository)
-        val recordViewModel = ViewModelProvider(this, factory).get(RecordViewModel::class.java)
         val adapter = TodayItemAdapter()
         val swipeSet = object : RecyclerViewSwipe() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
@@ -140,7 +137,7 @@ class HomeFragment : Fragment() {
                                 findNavController().navigate(
                                     NavigationDirections.actionGlobalMeasureRecordFragment(
                                         (adapter.currentList[viewHolder.bindingAdapterPosition] as ItemDataType.MeasureType).measure.MeasureData!!,
-                                        viewHolder.bindingAdapterPosition
+                                        (adapter.currentList[viewHolder.bindingAdapterPosition] as ItemDataType.MeasureType).timeInt
                                     )
                                 )
                             }
@@ -167,7 +164,7 @@ class HomeFragment : Fragment() {
                                 findNavController().navigate(
                                     NavigationDirections.actionGlobalCareRecordFragment(
                                         (adapter.currentList[viewHolder.bindingAdapterPosition] as ItemDataType.CareType).care.CareData!!,
-                                        viewHolder.bindingAdapterPosition
+                                        (adapter.currentList[viewHolder.bindingAdapterPosition] as ItemDataType.CareType).timeInt
                                     )
                                 )
                             }
@@ -194,7 +191,7 @@ class HomeFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-//        viewModel.postSkipLog()
-//        viewModel.postFinishDrugAndActivityLog()
+        viewModel.postSkipLog()
+        viewModel.postFinishDrugAndActivityLog()
     }
 }

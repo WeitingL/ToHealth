@@ -50,58 +50,6 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                     todayLogCreateTimeIntList.sort()
                 }
 
-                /*
-                    There are three situation:
-                    LogList is empty -> all tasks create.
-                    ExecuteTime only one -> Just check the LogList.
-                    multiple execute time -> check is the logtime before the next execute time?
-                 */
-
-//                if (todayLogCreateTimeIntList.isEmpty()) {
-//                    drug.executeTime.forEach {
-//                        drugCurrentList.add(
-//                            ItemDataType.DrugType(
-//                                ItemData(DrugData = drug),
-//                                getTimeStampToTimeInt(it)
-//                            )
-//                        )
-//                        if (getTimeStampToTimeInt(it) !in timeIntList) {
-//                            timeIntList.add(getTimeStampToTimeInt(it))
-//                            timeCurrentList.add(
-//                                ItemDataType.TimeType(
-//                                    toTimeFromTimeStamp(it),
-//                                    getTimeStampToTimeInt(it)
-//                                )
-//                            )
-//                        }
-//                    }
-//                } else if (drug.executeTime.size == 1 && todayLogCreateTimeIntList.isEmpty()) {
-//
-//                    drugCurrentList.add(
-//                        ItemDataType.DrugType(
-//                            ItemData(DrugData = drug),
-//                            getTimeStampToTimeInt(drug.executeTime.first())
-//                        )
-//                    )
-//                    if (getTimeStampToTimeInt(drug.executeTime.first()) !in timeIntList) {
-//                        timeIntList.add(getTimeStampToTimeInt(drug.executeTime.first()))
-//                        timeCurrentList.add(
-//                            ItemDataType.TimeType(
-//                                toTimeFromTimeStamp(drug.executeTime.first()),
-//                                getTimeStampToTimeInt(drug.executeTime.first())
-//                            )
-//                        )
-//                    }
-//                } else {
-//
-//                    /*
-//                    There there situation:
-//                    execute time < Now ->
-//                    execute time > Now ->
-//                     */
-//
-//                }
-
                 drug.executeTime.forEach {
                     drugCurrentList.add(
                         ItemDataType.DrugType(
@@ -319,6 +267,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                 is ItemDataType.DrugType -> {
                     firebaseDataRepository.postDrugRecord(
                         it.itemDataType.drug.DrugData?.id!!, DrugLog(
+                            timeTag = it.itemDataType.timeInt,
                             result = 1,
                             createTime = Timestamp.now()
                         )
@@ -328,6 +277,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                 is ItemDataType.MeasureType -> {
                     firebaseDataRepository.postMeasureRecord(
                         it.itemDataType.measure.MeasureData?.id!!, MeasureLog(
+                            timeTag = it.itemDataType.timeInt,
                             result = 1,
                             createTime = Timestamp.now()
                         )
@@ -337,6 +287,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                 is ItemDataType.CareType -> {
                     firebaseDataRepository.postCareRecord(
                         it.itemDataType.care.CareData?.id!!, CareLog(
+                            timeTag = it.itemDataType.timeInt,
                             result = 1,
                             createTime = Timestamp.now()
                         )
@@ -346,6 +297,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                 is ItemDataType.ActivityType -> {
                     firebaseDataRepository.postActivityRecord(
                         it.itemDataType.activity.ActivityData?.id!!, ActivityLog(
+                            timeTag = it.itemDataType.timeInt,
                             result = 1,
                             createTime = Timestamp.now()
                         )
@@ -382,6 +334,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                 is ItemDataType.DrugType -> {
                     firebaseDataRepository.postDrugRecord(
                         it.itemDataType.drug.DrugData?.id!!, DrugLog(
+                            timeTag = it.itemDataType.timeInt,
                             result = 0,
                             createTime = Timestamp.now()
                         )
@@ -391,6 +344,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                 is ItemDataType.ActivityType -> {
                     firebaseDataRepository.postActivityRecord(
                         it.itemDataType.activity.ActivityData?.id!!, ActivityLog(
+                            timeTag = it.itemDataType.timeInt,
                             result = 0,
                             createTime = Timestamp.now()
                         )

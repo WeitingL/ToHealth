@@ -11,12 +11,8 @@ import androidx.navigation.fragment.findNavController
 import com.google.firebase.Timestamp
 import com.weiting.tohealth.NavigationDirections
 import com.weiting.tohealth.PublicApplication
-import com.weiting.tohealth.data.ItemData
-import com.weiting.tohealth.data.ItemLogData
-import com.weiting.tohealth.data.ItemType
 import com.weiting.tohealth.data.MeasureLog
 import com.weiting.tohealth.databinding.MeasureRecordFragmentBinding
-import com.weiting.tohealth.factory.HomeViewModelFactory
 import com.weiting.tohealth.factory.RecordViewModelFactory
 
 class MeasureRecordFragment : Fragment() {
@@ -28,7 +24,7 @@ class MeasureRecordFragment : Fragment() {
     ): View? {
         val binding = MeasureRecordFragmentBinding.inflate(inflater, container, false)
         val measureData = MeasureRecordFragmentArgs.fromBundle(requireArguments()).measureData
-        val itemPosition = MeasureRecordFragmentArgs.fromBundle(requireArguments()).itemPosition
+        val timeTag = MeasureRecordFragmentArgs.fromBundle(requireArguments()).timeTag
         val factory = RecordViewModelFactory(PublicApplication.application.firebaseDataRepository)
         val viewModel = ViewModelProvider(this, factory).get(RecordViewModel::class.java)
 
@@ -97,6 +93,7 @@ class MeasureRecordFragment : Fragment() {
                         viewModel.postMeasureLog(
                             itemId = measureData.id!!,
                             measureLog = MeasureLog(
+                                timeTag = timeTag,
                                 result = 0,
                                 createTime = Timestamp.now(),
                                 record = mapOf(
@@ -112,6 +109,7 @@ class MeasureRecordFragment : Fragment() {
                         viewModel.postMeasureLog(
                             itemId = measureData.id!!,
                             measureLog = MeasureLog(
+                                timeTag = timeTag,
                                 result = 0,
                                 createTime = Timestamp.now(),
                                 record = mapOf(

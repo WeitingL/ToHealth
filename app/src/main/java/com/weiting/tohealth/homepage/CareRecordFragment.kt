@@ -27,7 +27,7 @@ class CareRecordFragment : Fragment() {
         val factory = RecordViewModelFactory(PublicApplication.application.firebaseDataRepository)
         val viewModel = ViewModelProvider(this, factory).get(RecordViewModel::class.java)
         val careData = CareRecordFragmentArgs.fromBundle(requireArguments()).careData
-        val itemPosition = CareRecordFragmentArgs.fromBundle(requireArguments()).itemPosition
+        val timeTag = CareRecordFragmentArgs.fromBundle(requireArguments()).timeTag
 
         binding.apply {
 
@@ -132,6 +132,7 @@ class CareRecordFragment : Fragment() {
                 viewModel.postCareLog(
                     itemId = careData.id!!,
                     careLog = CareLog(
+                        timeTag = timeTag,
                         result = 0,
                         createTime = Timestamp.now()
                     )

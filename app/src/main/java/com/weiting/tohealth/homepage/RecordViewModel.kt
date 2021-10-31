@@ -25,7 +25,7 @@ class RecordViewModel(private val firebaseDataRepository: FirebaseRepository) : 
     }
 
     fun postMeasureLog(itemId: String, measureLog: MeasureLog){
-
+        firebaseDataRepository.postMeasureRecord(itemId, measureLog)
     }
 
 

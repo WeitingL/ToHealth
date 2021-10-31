@@ -97,7 +97,7 @@
             android:name="measureData"
             app:argType="com.weiting.tohealth.data.Measure" />
         <argument
-            android:name="itemPosition"
+            android:name="timeTag"
             app:argType="integer" />
     </fragment>
     <action android:id="@+id/action_global_measureRecordFragment" app:destination="@id/measureRecordFragment" />
@@ -110,7 +110,7 @@
             android:name="careData"
             app:argType="com.weiting.tohealth.data.Care" />
         <argument
-            android:name="itemPosition"
+            android:name="timeTag"
             app:argType="integer" />
     </fragment>
     <action android:id="@+id/action_global_careRecordFragment" app:destination="@id/careRecordFragment" />
