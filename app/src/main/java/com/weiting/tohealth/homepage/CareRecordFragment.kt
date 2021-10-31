@@ -13,11 +13,8 @@ import com.weiting.tohealth.NavigationDirections
 import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.R
 import com.weiting.tohealth.data.CareLog
-import com.weiting.tohealth.data.ItemData
-import com.weiting.tohealth.data.ItemLogData
-import com.weiting.tohealth.data.ItemType
 import com.weiting.tohealth.databinding.CareRecordFragmentBinding
-import com.weiting.tohealth.factory.HomeViewModelFactory
+import com.weiting.tohealth.factory.RecordViewModelFactory
 
 class CareRecordFragment : Fragment() {
 
@@ -27,8 +24,8 @@ class CareRecordFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = CareRecordFragmentBinding.inflate(inflater, container, false)
-        val factory = HomeViewModelFactory(PublicApplication.application.firebaseDataRepository)
-        val viewModel = ViewModelProvider(this, factory).get(HomeViewModel::class.java)
+        val factory = RecordViewModelFactory(PublicApplication.application.firebaseDataRepository)
+        val viewModel = ViewModelProvider(this, factory).get(RecordViewModel::class.java)
         val careData = CareRecordFragmentArgs.fromBundle(requireArguments()).careData
         val itemPosition = CareRecordFragmentArgs.fromBundle(requireArguments()).itemPosition
 
@@ -131,20 +128,13 @@ class CareRecordFragment : Fragment() {
             }
 
             btEnterCareLog.setOnClickListener {
-                viewModel.getInfo(binding.editTextTextPersonName.editableText.toString())
-                viewModel.getItemLog(
-                    ItemLogData(
-                        ItemId = careData.id!!,
-                        ItemType.CARE,
-                        CareLog = CareLog(
-                            result = 0,
-                            record = mapOf(
-                                "emotion" to viewModel.careScore.value.toString(),
-                                "note" to viewModel.careInfo.value
-                            ),
-                            createTime = Timestamp.now()
-                        )
-                    ), itemPosition
+                viewModel.getCareInfo(binding.editTextTextPersonName.editableText.toString())
+                viewModel.postCareLog(
+                    itemId = careData.id!!,
+                    careLog = CareLog(
+                        result = 0,
+                        createTime = Timestamp.now()
+                    )
                 )
                 Toast.makeText(context, "登錄完成", Toast.LENGTH_LONG).show()
                 findNavController().navigate(NavigationDirections.actionGlobalHomeFragment())

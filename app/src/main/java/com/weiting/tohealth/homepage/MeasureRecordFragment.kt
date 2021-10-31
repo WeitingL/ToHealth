@@ -17,6 +17,7 @@ import com.weiting.tohealth.data.ItemType
 import com.weiting.tohealth.data.MeasureLog
 import com.weiting.tohealth.databinding.MeasureRecordFragmentBinding
 import com.weiting.tohealth.factory.HomeViewModelFactory
+import com.weiting.tohealth.factory.RecordViewModelFactory
 
 class MeasureRecordFragment : Fragment() {
 
@@ -28,8 +29,8 @@ class MeasureRecordFragment : Fragment() {
         val binding = MeasureRecordFragmentBinding.inflate(inflater, container, false)
         val measureData = MeasureRecordFragmentArgs.fromBundle(requireArguments()).measureData
         val itemPosition = MeasureRecordFragmentArgs.fromBundle(requireArguments()).itemPosition
-        val factory = HomeViewModelFactory(PublicApplication.application.firebaseDataRepository)
-        val viewModel = ViewModelProvider(this, factory).get(HomeViewModel::class.java)
+        val factory = RecordViewModelFactory(PublicApplication.application.firebaseDataRepository)
+        val viewModel = ViewModelProvider(this, factory).get(RecordViewModel::class.java)
 
         binding.apply {
             when (measureData.type) {
@@ -93,39 +94,33 @@ class MeasureRecordFragment : Fragment() {
             btEnterMeasure.setOnClickListener {
                 when (measureData.type) {
                     0 -> {
-                        viewModel.getItemLog(
-                            ItemLogData(
-                                ItemId = measureData.id!!,
-                                ItemType.MEASURE,
-                                MeasureLog = MeasureLog(
-                                    result = 0,
-                                    createTime = Timestamp.now(),
-                                    record = mapOf(
-                                        "X" to binding.edtDiastolic.editableText.toString().toInt(),
-                                        "Y" to binding.edtSystolic.editableText.toString().toInt(),
-                                        "Z" to binding.editTextNumber.editableText.toString()
-                                            .toInt()
-                                    )
+                        viewModel.postMeasureLog(
+                            itemId = measureData.id!!,
+                            measureLog = MeasureLog(
+                                result = 0,
+                                createTime = Timestamp.now(),
+                                record = mapOf(
+                                    "X" to binding.edtDiastolic.editableText.toString().toInt(),
+                                    "Y" to binding.edtSystolic.editableText.toString().toInt(),
+                                    "Z" to binding.editTextNumber.editableText.toString()
+                                        .toInt()
                                 )
-                            ), itemPosition
+                            )
                         )
                     }
                     else -> {
-                        viewModel.getItemLog(
-                            ItemLogData(
-                                ItemId = measureData.id!!,
-                                ItemType.MEASURE,
-                                MeasureLog = MeasureLog(
-                                    result = 0,
-                                    createTime = Timestamp.now(),
-                                    record = mapOf(
-                                        "X" to binding.editTextNumber.editableText.toString()
-                                            .toInt(),
-                                        "Y" to null,
-                                        "Z" to null
-                                    )
+                        viewModel.postMeasureLog(
+                            itemId = measureData.id!!,
+                            measureLog = MeasureLog(
+                                result = 0,
+                                createTime = Timestamp.now(),
+                                record = mapOf(
+                                    "X" to binding.editTextNumber.editableText.toString()
+                                        .toInt(),
+                                    "Y" to null,
+                                    "Z" to null
                                 )
-                            ), itemPosition
+                            )
                         )
                     }
                 }

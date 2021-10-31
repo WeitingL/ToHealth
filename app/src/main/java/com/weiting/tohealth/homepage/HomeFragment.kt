@@ -5,23 +5,21 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.Timestamp
 import com.weiting.tohealth.NavigationDirections
 import com.weiting.tohealth.PublicApplication
+import com.weiting.tohealth.RecyclerViewSwipe
 import com.weiting.tohealth.data.*
 import com.weiting.tohealth.databinding.FragmentHomeBinding
-import com.weiting.tohealth.factory.HomeViewModelFactory
+import com.weiting.tohealth.factory.RecordViewModelFactory
 import com.weiting.tohealth.getVmFactory
-import com.weiting.tohealth.homepage.HomeViewModel.*
-import com.weiting.tohealth.itemeditpage.EditType
-import com.weiting.tohealth.mymanagepage.ManageType
+import com.weiting.tohealth.itemeditpage.TimeSetAdapter
 
 class HomeFragment : Fragment() {
 
@@ -33,158 +31,162 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
-        val homeAdapter = HomeAdapter(
-            HomeAdapter.OnclickListener {
-                if (it == HomePageItem.AddNewItem) {
-                    findNavController().navigate(
-                        NavigationDirections.actionGlobalItemEditFragment(
-                            EditType.CREATE, ManageType.DRUG
-                        )
-                    )
-                }
-            }, viewModel
-        )
+        val factory = RecordViewModelFactory(PublicApplication.application.firebaseDataRepository)
+        val recordViewModel = ViewModelProvider(this, factory).get(RecordViewModel::class.java)
+        val adapter = TodayItemAdapter()
+        val swipeSet = object : RecyclerViewSwipe() {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                when (direction) {
 
-        //Card
-        viewModel.nextTaskList.observe(viewLifecycleOwner) {
-            homeAdapter.submitList(it)
-            Toast.makeText(context, "取得最新資訊", Toast.LENGTH_LONG).show()
+                    //Skip
+                    ItemTouchHelper.LEFT -> {
+                        when (viewHolder.itemViewType) {
+
+                            ITEM_VIEWTYPE_DRUG -> {
+                                viewModel.swipeToSkip(
+                                    SwipeData(
+                                        adapter.currentList[viewHolder.bindingAdapterPosition],
+                                        viewHolder.bindingAdapterPosition
+                                    )
+                                )
+
+                                viewModel.itemDataMediator.value?.removeAt(viewHolder.bindingAdapterPosition)
+                                adapter.notifyItemRemoved(viewHolder.bindingAdapterPosition)
+
+                                Snackbar.make(binding.rvHomeCardView, "跳過", Snackbar.LENGTH_LONG)
+                                    .setAction("回復", View.OnClickListener {
+                                        viewModel.undoSwipeToSkip()
+                                        adapter.notifyItemInserted(viewHolder.bindingAdapterPosition)
+                                    }).show()
+
+                            }
+                            ITEM_VIEWTYPE_MEASURE -> {
+                                viewModel.swipeToSkip(
+                                    SwipeData(
+                                        adapter.currentList[viewHolder.bindingAdapterPosition],
+                                        viewHolder.bindingAdapterPosition
+                                    )
+                                )
+
+                                viewModel.itemDataMediator.value?.removeAt(viewHolder.bindingAdapterPosition)
+                                adapter.notifyItemRemoved(viewHolder.bindingAdapterPosition)
+
+                                Snackbar.make(binding.rvHomeCardView, "跳過", Snackbar.LENGTH_LONG)
+                                    .setAction("回復", View.OnClickListener {
+                                        viewModel.undoSwipeToSkip()
+                                        adapter.notifyItemInserted(viewHolder.bindingAdapterPosition)
+                                    }).show()
+                            }
+                            ITEM_VIEWTYPE_ACTIVITY -> {
+                                viewModel.swipeToSkip(
+                                    SwipeData(
+                                        adapter.currentList[viewHolder.bindingAdapterPosition],
+                                        viewHolder.bindingAdapterPosition
+                                    )
+                                )
+
+                                viewModel.itemDataMediator.value?.removeAt(viewHolder.bindingAdapterPosition)
+                                adapter.notifyItemRemoved(viewHolder.bindingAdapterPosition)
+
+                                Snackbar.make(binding.rvHomeCardView, "跳過", Snackbar.LENGTH_LONG)
+                                    .setAction("回復", View.OnClickListener {
+                                        viewModel.undoSwipeToSkip()
+                                        adapter.notifyItemInserted(viewHolder.bindingAdapterPosition)
+                                    }).show()
+                            }
+                            ITEM_VIEWTYPE_CARE -> {
+                                viewModel.swipeToSkip(
+                                    SwipeData(
+                                        adapter.currentList[viewHolder.bindingAdapterPosition],
+                                        viewHolder.bindingAdapterPosition
+                                    )
+                                )
+
+                                viewModel.itemDataMediator.value?.removeAt(viewHolder.bindingAdapterPosition)
+                                adapter.notifyItemRemoved(viewHolder.bindingAdapterPosition)
+
+                                Snackbar.make(binding.rvHomeCardView, "跳過", Snackbar.LENGTH_LONG)
+                                    .setAction("回復", View.OnClickListener {
+                                        viewModel.undoSwipeToSkip()
+                                        adapter.notifyItemInserted(viewHolder.bindingAdapterPosition)
+                                    }).show()
+                            }
+                        }
+                    }
+
+                    //Log
+                    ItemTouchHelper.RIGHT -> {
+                        when (viewHolder.itemViewType) {
+                            ITEM_VIEWTYPE_DRUG -> {
+                                viewModel.getFinishedLog(
+                                    SwipeData(
+                                        adapter.currentList[viewHolder.bindingAdapterPosition],
+                                        viewHolder.bindingAdapterPosition
+                                    )
+                                )
+
+                                viewModel.itemDataMediator.value?.removeAt(viewHolder.bindingAdapterPosition)
+                                adapter.notifyItemRemoved(viewHolder.bindingAdapterPosition)
+
+                                Snackbar.make(binding.rvHomeCardView, "完成", Snackbar.LENGTH_LONG)
+                                    .setAction("回復", View.OnClickListener {
+                                        viewModel.undoSwipeToLog()
+                                        adapter.notifyItemInserted(viewHolder.bindingAdapterPosition)
+                                    }).show()
+
+                            }
+
+                            ITEM_VIEWTYPE_MEASURE -> {
+                                findNavController().navigate(
+                                    NavigationDirections.actionGlobalMeasureRecordFragment(
+                                        (adapter.currentList[viewHolder.bindingAdapterPosition] as ItemDataType.MeasureType).measure.MeasureData!!,
+                                        viewHolder.bindingAdapterPosition
+                                    )
+                                )
+                            }
+
+                            ITEM_VIEWTYPE_ACTIVITY -> {
+                                viewModel.getFinishedLog(
+                                    SwipeData(
+                                        adapter.currentList[viewHolder.bindingAdapterPosition],
+                                        viewHolder.bindingAdapterPosition
+                                    )
+                                )
+
+                                viewModel.itemDataMediator.value?.removeAt(viewHolder.bindingAdapterPosition)
+                                adapter.notifyItemRemoved(viewHolder.bindingAdapterPosition)
+
+                                Snackbar.make(binding.rvHomeCardView, "完成", Snackbar.LENGTH_LONG)
+                                    .setAction("回復", View.OnClickListener {
+                                        viewModel.undoSwipeToLog()
+                                        adapter.notifyItemInserted(viewHolder.bindingAdapterPosition)
+                                    }).show()
+                            }
+
+                            ITEM_VIEWTYPE_CARE -> {
+                                findNavController().navigate(
+                                    NavigationDirections.actionGlobalCareRecordFragment(
+                                        (adapter.currentList[viewHolder.bindingAdapterPosition] as ItemDataType.CareType).care.CareData!!,
+                                        viewHolder.bindingAdapterPosition
+                                    )
+                                )
+                            }
+                        }
+                    }
+                }
+            }
         }
+
+        val touchHelper = ItemTouchHelper(swipeSet)
+        touchHelper.attachToRecyclerView(binding.rvHomeCardView)
 
         //Get data from firebase
-        viewModel.drugList.observe(viewLifecycleOwner) {
-            viewModel.getDrugs(it)
-        }
-
-        viewModel.measureList.observe(viewLifecycleOwner) {
-            viewModel.getMeasures(it)
-        }
-
-        viewModel.activityList.observe(viewLifecycleOwner) {
-            viewModel.getActivity(it)
-        }
-
-        viewModel.careList.observe(viewLifecycleOwner) {
-            viewModel.getCares(it)
-        }
-
-        //Navigation to PostLog or skip.
-        viewModel.navigateToDialog.observe(viewLifecycleOwner) {
-            when (it.itemDataType) {
-                is ItemDataType.DrugType -> {
-                    viewModel.getItemLog(
-                        ItemLogData(
-                            ItemId = it.itemDataType.drug.DrugData?.id,
-                            ItemType = ItemType.DRUG,
-                            DrugLog = DrugLog(
-                                result = 0,
-                                createTime = Timestamp.now()
-                            )
-                        ), it.positionOfItem
-                    )
-                    Snackbar.make(requireView(), "已經完成紀錄", Snackbar.LENGTH_LONG)
-                        .setAction("回復") {
-                            viewModel.removeLast()
-                        }.show()
-                }
-
-                is ItemDataType.MeasureType -> {
-                    findNavController().navigate(
-                        NavigationDirections.actionGlobalMeasureRecordFragment(
-                            it.itemDataType.measure.MeasureData!!, it.positionOfItem
-                        )
-                    )
-                }
-
-                is ItemDataType.ActivityType -> {
-                    viewModel.getItemLog(
-                        ItemLogData(
-                            ItemId = it.itemDataType.activity.ActivityData?.id,
-                            ItemType = ItemType.ACTIVITY,
-                            ActivityLog = ActivityLog(
-                                result = 0,
-                                createTime = Timestamp.now()
-                            )
-                        ), it.positionOfItem
-                    )
-                    Snackbar.make(requireView(), "已經完成紀錄", Snackbar.LENGTH_LONG)
-                        .setAction("回復") {
-                            viewModel.removeLast()
-                        }.show()
-                }
-
-                is ItemDataType.CareType -> {
-                    findNavController().navigate(
-                        NavigationDirections.actionGlobalCareRecordFragment(
-                            it.itemDataType.care.CareData!!, it.positionOfItem
-                        )
-                    )
-                }
-            }
-        }
-
-        viewModel.navigateToSkip.observe(viewLifecycleOwner) {
-            when (it.itemDataType) {
-                is ItemDataType.DrugType -> {
-                    viewModel.getItemLog(
-                        ItemLogData(
-                            ItemId = it.itemDataType.drug.DrugData?.id,
-                            ItemType.DRUG,
-                            DrugLog(
-                                result = 1,
-                                createTime = Timestamp.now()
-                            )
-                        ), it.positionOfItem
-                    )
-                }
-
-                is ItemDataType.MeasureType -> {
-                    viewModel.getItemLog(
-                        ItemLogData(
-                            ItemId = it.itemDataType.measure.MeasureData?.id,
-                            ItemType = ItemType.MEASURE,
-                            MeasureLog = MeasureLog(
-                                result = 1,
-                                createTime = Timestamp.now()
-                            )
-                        ), it.positionOfItem
-                    )
-                }
-
-                is ItemDataType.ActivityType -> {
-                    viewModel.getItemLog(
-                        ItemLogData(
-                            ItemId = it.itemDataType.activity.ActivityData?.id,
-                            ItemType = ItemType.ACTIVITY,
-                            ActivityLog = ActivityLog(
-                                result = 1,
-                                createTime = Timestamp.now()
-                            )
-                        ), it.positionOfItem
-                    )
-                }
-
-                is ItemDataType.CareType -> {
-                    viewModel.getItemLog(
-                        ItemLogData(
-                            ItemId = it.itemDataType.care.CareData?.id,
-                            ItemType = ItemType.CARE,
-                            CareLog = CareLog(
-                                result = 1,
-                                createTime = Timestamp.now()
-                            )
-                        ), it.positionOfItem
-                    )
-                }
-            }
-            Snackbar.make(requireView(), "跳過紀錄", Snackbar.LENGTH_LONG)
-                .setAction("回復"){
-                    viewModel.removeLast()
-                }.show()
+        viewModel.itemDataMediator.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
         }
 
         binding.apply {
-            rvHomeCardView.adapter = homeAdapter
+            rvHomeCardView.adapter = adapter
         }
 
         return binding.root
@@ -192,6 +194,7 @@ class HomeFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        viewModel.postRecord()
+//        viewModel.postSkipLog()
+//        viewModel.postFinishDrugAndActivityLog()
     }
 }

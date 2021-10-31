@@ -32,4 +32,12 @@
     <color name="red">#FF3B3B</color>
     <color name="reb_brown">#634444</color>
 
+
+<!-- basicColor   -->
+    <color name="Silk">#FFDDD2</color>
+    <color name="Melon">#FFBCB5</color>
+    <color name="Cyan">#DAF0EE</color>
+    <color name="Blue_eyes">#AED2FF</color>
+
+
 </resources>

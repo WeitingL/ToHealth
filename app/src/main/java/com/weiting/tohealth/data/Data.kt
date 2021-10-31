@@ -128,6 +128,6 @@ data class Care(
 data class CareLog(
     var id: String? = null,
     val result: Int? = null,
-    val record: Map<String, String?> = mapOf("emotion" to null, "note" to null),
+    var record: Map<String, String?> = mapOf("emotion" to null, "note" to null),
     val createTime: Timestamp? = null
 ) : Parcelable

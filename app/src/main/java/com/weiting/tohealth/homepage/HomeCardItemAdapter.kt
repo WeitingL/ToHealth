@@ -19,8 +19,7 @@ const val HOME_VIEWTYPE_DAILYINFO = 1
 const val HOME_VIEWTYPE_TODAYTASK = 2
 
 class HomeAdapter(
-    val onClickListener: OnclickListener,
-    val viewModel: HomeViewModel
+    val onClickListener: OnclickListener
 ) :
     ListAdapter<HomePageItem, RecyclerView.ViewHolder>(DiffCallback) {
 
@@ -47,72 +46,74 @@ class HomeAdapter(
 
         fun bind(nextTask: HomePageItem.NextTask) {
 
-            val adapter = TodayItemAdapter(viewModel)
-            val context = PublicApplication.application.applicationContext
-            val swipeSet =
-                object : RecyclerViewSwipe(context, viewModel) {
-                    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                        val adapterList = adapter.currentList
-                        val position = viewHolder.bindingAdapterPosition
-
-                        when (direction) {
-                            //Skip
-                            ItemTouchHelper.LEFT -> {
-                                when (viewHolder.itemViewType) {
-                                    ITEM_VIEWTYPE_DRUG -> {
-                                        //Get position to find out the data from list!!
-                                        viewModel.swipeToSkip(adapterList[position], position)
-                                    }
-                                    ITEM_VIEWTYPE_MEASURE -> {
-                                        viewModel.swipeToSkip(adapterList[position], position)
-                                    }
-                                    ITEM_VIEWTYPE_ACTIVITY -> {
-                                        viewModel.swipeToSkip(adapterList[position], position)
-                                    }
-                                    ITEM_VIEWTYPE_CARE -> {
-                                        viewModel.swipeToSkip(adapterList[position], position)
-                                    }
-                                }
-
-                            }
-
-                            //Entry data
-                            ItemTouchHelper.RIGHT -> {
-                                when (viewHolder.itemViewType) {
-                                    ITEM_VIEWTYPE_DRUG -> {
-                                        viewModel.swipeToNavigate(adapterList[position], position)
-                                    }
-                                    ITEM_VIEWTYPE_MEASURE -> {
-                                        viewModel.swipeToNavigate(adapterList[position], position)
-                                    }
-                                    ITEM_VIEWTYPE_ACTIVITY -> {
-                                        viewModel.swipeToNavigate(adapterList[position], position)
-                                    }
-                                    ITEM_VIEWTYPE_CARE -> {
-                                        viewModel.swipeToNavigate(adapterList[position], position)
-                                    }
-                                }
-                            }
-                        }
-
-                        //Last item in this time point.
-                        if (getItemViewType(position - 1) == ITEM_VIEWTYPE_TIME &&
-                            getItemViewType(position + 1) == ITEM_VIEWTYPE_TIME
-                        ) {
-                            viewModel.getOutDateTimeHeader(adapterList[position - 1], position - 1)
-                        }
-                    }
+            val adapter = TodayItemAdapter()
+            binding.apply {
+                rvGroupInfo.adapter = adapter
+                tvMore.setOnClickListener{
+                    onClickListener.onClick(nextTask)
                 }
-
-            val touchHelper = ItemTouchHelper(swipeSet)
-            touchHelper.attachToRecyclerView(binding.rvGroupInfo)
-
-            adapter.submitList(nextTask.list)
-
-            binding.rvGroupInfo.apply {
-                this.adapter = adapter
-                this.setHasFixedSize(true)
             }
+
+
+
+
+//            val swipeSet =
+//                object : RecyclerViewSwipe(context, viewModel) {
+//                    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+//                        val adapterList = adapter.currentList
+//                        val position = viewHolder.bindingAdapterPosition
+//
+//                        when (direction) {
+//                            //Skip
+//                            ItemTouchHelper.LEFT -> {
+//                                when (viewHolder.itemViewType) {
+//                                    ITEM_VIEWTYPE_DRUG -> {
+//                                        //Get position to find out the data from list!!
+//                                        viewModel.swipeToSkip(adapterList[position], position)
+//                                    }
+//                                    ITEM_VIEWTYPE_MEASURE -> {
+//                                        viewModel.swipeToSkip(adapterList[position], position)
+//                                    }
+//                                    ITEM_VIEWTYPE_ACTIVITY -> {
+//                                        viewModel.swipeToSkip(adapterList[position], position)
+//                                    }
+//                                    ITEM_VIEWTYPE_CARE -> {
+//                                        viewModel.swipeToSkip(adapterList[position], position)
+//                                    }
+//                                }
+//
+//                            }
+//
+//                            //Entry data
+//                            ItemTouchHelper.RIGHT -> {
+//                                when (viewHolder.itemViewType) {
+//                                    ITEM_VIEWTYPE_DRUG -> {
+//                                        viewModel.swipeToNavigate(adapterList[position], position)
+//                                    }
+//                                    ITEM_VIEWTYPE_MEASURE -> {
+//                                        viewModel.swipeToNavigate(adapterList[position], position)
+//                                    }
+//                                    ITEM_VIEWTYPE_ACTIVITY -> {
+//                                        viewModel.swipeToNavigate(adapterList[position], position)
+//                                    }
+//                                    ITEM_VIEWTYPE_CARE -> {
+//                                        viewModel.swipeToNavigate(adapterList[position], position)
+//                                    }
+//                                }
+//                            }
+//                        }
+//
+//                        //Last item in this time point.
+//                        if (getItemViewType(position - 1) == ITEM_VIEWTYPE_TIME &&
+//                            getItemViewType(position + 1) == ITEM_VIEWTYPE_TIME
+//                        ) {
+//                            viewModel.getOutDateTimeHeader(adapterList[position - 1], position - 1)
+//                        }
+//                    }
+//                }
+//
+//            val touchHelper = ItemTouchHelper(swipeSet)
+//            touchHelper.attachToRecyclerView(binding.rvGroupInfo)
         }
     }
 

@@ -235,3 +235,17 @@ fun toWeek(int: Int): String {
         else -> "What?!"
     }
 }
+
+//0000 -> 2359
+fun getTimeStampToTimeInt(timestamp: Timestamp): Int {
+    val c = Calendar.getInstance()
+    c.time = timestamp.toDate()
+    return (c.get(Calendar.HOUR_OF_DAY) * 100 + c.get(Calendar.MINUTE))
+}
+
+//0101 -> 1231
+fun getTimeStampToDateInt(timestamp: Timestamp):Int{
+    val c = Calendar.getInstance()
+    c.time = timestamp.toDate()
+    return ((c.get(Calendar.MONTH)+1)*100 + (c.get(Calendar.DAY_OF_MONTH)+1))
+}

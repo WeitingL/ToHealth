@@ -29,6 +29,7 @@ class TodoListGenerator() {
     var outDateItemList = mutableListOf<ItemDataType>()
 
     fun getDrugs(list: List<Drug>) {
+        Log.i("snap", "getDrugsGenerator")
         drugItemList.clear()
         list.forEach { drug ->
             drug.executeTime.forEach {
@@ -49,6 +50,7 @@ class TodoListGenerator() {
     }
 
     fun getMeasures(list: List<Measure>) {
+        Log.i("snap", "getMeasuresGenerator")
         measureItemList.clear()
         list.forEach { measure ->
 
@@ -75,6 +77,7 @@ class TodoListGenerator() {
     }
 
     fun getActivity(list: List<Activity>) {
+        Log.i("snap", "getActivityGenerator")
         activityItemList.clear()
         list.forEach { activity ->
 
@@ -101,6 +104,7 @@ class TodoListGenerator() {
     }
 
     fun getCares(list: List<Care>) {
+        Log.i("snap", "getCaresGenerator")
         careItemList.clear()
         list.forEach { care ->
             care.executeTime.forEach {
@@ -162,6 +166,7 @@ class TodoListGenerator() {
                 }
             }
         }
+        Log.i("snapData", finalItemList.toString())
     }
 
     fun getOutTimeHeader(itemDataType: ItemDataType, position: Int){
