@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_note_Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="項目名稱"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="本文內容，這可以寫好多好多呢!"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tv_note_Title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_note_Title" />
+
+    <TextView
+        android:id="@+id/tv_note_creatTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="2021.12.17 12:21"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_content"
+        app:layout_constraintTop_toBottomOf="@+id/tv_content" />
+
+    <TextView
+        android:id="@+id/tv_create_member"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="媽媽"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/tv_content"
+        app:layout_constraintTop_toTopOf="@+id/tv_note_creatTime"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/tv_note_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/tag_bg_green"
+        android:paddingHorizontal="10dp"
+        android:text="筆記"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/tv_content"
+        app:layout_constraintTop_toTopOf="@+id/tv_note_Title" />
+
+    <TextView
+        android:id="@+id/tv_note_tag2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/tag_bg_yellow"
+        android:paddingHorizontal="10dp"
+        android:text="注意"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/tv_note_tag"
+        app:layout_constraintTop_toTopOf="@+id/tv_note_Title" />
+
+    <TextView
+        android:id="@+id/tv_note_tag3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/tag_bg_red"
+        android:paddingHorizontal="10dp"
+        android:text="緊急"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/tv_note_tag2"
+        app:layout_constraintTop_toTopOf="@+id/tv_note_Title" />
+</androidx.constraintlayout.widget.ConstraintLayout>
