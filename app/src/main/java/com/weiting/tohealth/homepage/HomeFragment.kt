@@ -29,7 +29,6 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
-        val factory = RecordViewModelFactory(PublicApplication.application.firebaseDataRepository)
         val adapter = TodayItemAdapter()
         val swipeSet = object : RecyclerViewSwipe() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
@@ -184,6 +183,9 @@ class HomeFragment : Fragment() {
 
         binding.apply {
             rvHomeCardView.adapter = adapter
+            btFastAdd.setOnClickListener {
+                findNavController().navigate(NavigationDirections.actionGlobalFastAddFragment())
+            }
         }
 
         return binding.root

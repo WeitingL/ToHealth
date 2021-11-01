@@ -169,5 +169,9 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.getUserInfo(userId)
     }
 
+    override fun editStock(itemId: String, num: Int) {
+        return firebaseSource.editStock(itemId, num)
+    }
+
 
 }

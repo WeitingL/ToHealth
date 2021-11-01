@@ -3,6 +3,7 @@ package com.weiting.tohealth.homepage
 import android.util.Log
 import androidx.lifecycle.*
 import com.google.firebase.Timestamp
+import com.weiting.tohealth.ItemArranger
 import com.weiting.tohealth.data.*
 import com.weiting.tohealth.getTimeStampToDateInt
 import com.weiting.tohealth.getTimeStampToTimeInt
@@ -31,166 +32,222 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
     private val timeIntList = mutableListOf<Int>()
 
     val itemDataMediator = MediatorLiveData<MutableList<ItemDataType>>().apply {
-
         addSource(drugList) { drugList ->
-            drugCurrentList.clear()
-            drugList.forEach { drug ->
-
-                viewModelScope.launch {
-                    drug.drugLogs = firebaseDataRepository.getDrugRecord(drug.id!!, Timestamp.now())
-                }
-
+            viewModelScope.launch {
+                drugCurrentList.clear()
                 val todayLogCreateTimeIntList = mutableListOf<Int>()
-                drug.drugLogs.forEach { drugLog ->
-                    if (getTimeStampToDateInt(drugLog.createTime!!) ==
-                        getTimeStampToDateInt(Timestamp.now())
-                    ) {
-                        todayLogCreateTimeIntList.add(getTimeStampToDateInt(drugLog.createTime))
+                drugList.forEach { drug ->
+
+                    drug.drugLogs = firebaseDataRepository.getDrugRecord(drug.id!!, Timestamp.now())
+                    drug.drugLogs.forEach { drugLog ->
+                        if (getTimeStampToDateInt(drugLog.createTime!!) ==
+                            getTimeStampToDateInt(Timestamp.now())
+                        ) {
+                            todayLogCreateTimeIntList.add(drugLog.timeTag!!)
+                        }
+                        todayLogCreateTimeIntList.sort()
                     }
-                    todayLogCreateTimeIntList.sort()
+
+                    if (ItemArranger().isTodayNeedToDo(ItemType.DRUG, ItemData(DrugData = drug))) {
+                        drug.executeTime.forEach {
+                            if (getTimeStampToTimeInt(it) !in todayLogCreateTimeIntList) {
+                                drugCurrentList.add(
+                                    ItemDataType.DrugType(
+                                        ItemData(DrugData = drug),
+                                        getTimeStampToTimeInt(it)
+                                    )
+                                )
+                                if (getTimeStampToTimeInt(it) !in timeIntList) {
+                                    timeIntList.add(getTimeStampToTimeInt(it))
+                                    timeCurrentList.add(
+                                        ItemDataType.TimeType(
+                                            toTimeFromTimeStamp(it),
+                                            getTimeStampToTimeInt(it)
+                                        )
+                                    )
+                                }
+                            }
+                        }
+                    }
                 }
 
-                drug.executeTime.forEach {
-                    drugCurrentList.add(
-                        ItemDataType.DrugType(
-                            ItemData(DrugData = drug),
-                            getTimeStampToTimeInt(it)
-                        )
-                    )
-                    if (getTimeStampToTimeInt(it) !in timeIntList) {
-                        timeIntList.add(getTimeStampToTimeInt(it))
-                        timeCurrentList.add(
-                            ItemDataType.TimeType(
-                                toTimeFromTimeStamp(it),
-                                getTimeStampToTimeInt(it)
-                            )
-                        )
-                    }
-                }
+                value = arrangeTodoList(
+                    timeIntList,
+                    timeCurrentList,
+                    drugCurrentList,
+                    measureCurrentList,
+                    activityCurrentList,
+                    careCurrentList
+                )
             }
-
-
-            value = arrangeTodoList(
-                timeIntList,
-                timeCurrentList,
-                drugCurrentList,
-                measureCurrentList,
-                activityCurrentList,
-                careCurrentList
-            )
         }
 
         addSource(measureList) { measureList ->
-            measureCurrentList.clear()
-            measureList.forEach { measure ->
+            viewModelScope.launch {
+                measureCurrentList.clear()
+                measureList.forEach { measure ->
 
-                viewModelScope.launch {
                     measure.measureLogs =
                         firebaseDataRepository.getMeasureRecord(measure.id!!, Timestamp.now())
-                }
 
-                measure.executeTime.forEach {
-                    measureCurrentList.add(
-                        ItemDataType.MeasureType(
-                            ItemData(MeasureData = measure),
-                            getTimeStampToTimeInt(it)
-                        )
-                    )
+                    val todayLogCreateTimeIntList = mutableListOf<Int>()
+                    measure.measureLogs.forEach { measureLog ->
+                        if (getTimeStampToDateInt(measureLog.createTime!!) ==
+                            getTimeStampToDateInt(Timestamp.now())
+                        ) {
+                            todayLogCreateTimeIntList.add(measureLog.timeTag!!)
+                        }
+                        todayLogCreateTimeIntList.sort()
+                    }
 
-                    if (getTimeStampToTimeInt(it) !in timeIntList) {
-                        timeIntList.add(getTimeStampToTimeInt(it))
-                        timeCurrentList.add(
-                            ItemDataType.TimeType(
-                                toTimeFromTimeStamp(it),
-                                getTimeStampToTimeInt(it)
-                            )
+                    if (ItemArranger().isTodayNeedToDo(
+                            ItemType.MEASURE,
+                            ItemData(MeasureData = measure)
                         )
+                    ) {
+                        measure.executeTime.forEach {
+
+                            if (getTimeStampToTimeInt(it) !in todayLogCreateTimeIntList) {
+                                measureCurrentList.add(
+                                    ItemDataType.MeasureType(
+                                        ItemData(MeasureData = measure),
+                                        getTimeStampToTimeInt(it)
+                                    )
+                                )
+
+                                if (getTimeStampToTimeInt(it) !in timeIntList) {
+                                    timeIntList.add(getTimeStampToTimeInt(it))
+                                    timeCurrentList.add(
+                                        ItemDataType.TimeType(
+                                            toTimeFromTimeStamp(it),
+                                            getTimeStampToTimeInt(it)
+                                        )
+                                    )
+                                }
+                            }
+                        }
                     }
                 }
+                value = arrangeTodoList(
+                    timeIntList,
+                    timeCurrentList,
+                    drugCurrentList,
+                    measureCurrentList,
+                    activityCurrentList,
+                    careCurrentList
+                )
             }
-            value = arrangeTodoList(
-                timeIntList,
-                timeCurrentList,
-                drugCurrentList,
-                measureCurrentList,
-                activityCurrentList,
-                careCurrentList
-            )
         }
 
         addSource(activityList) { activityList ->
-            activityCurrentList.clear()
-            activityList.forEach { activity ->
+            viewModelScope.launch {
+                activityCurrentList.clear()
+                activityList.forEach { activity ->
 
-                viewModelScope.launch {
                     activity.activityLogs =
                         firebaseDataRepository.getActivityRecord(activity.id!!, Timestamp.now())
-                }
 
-                activity.executeTime.forEach {
-                    activityCurrentList.add(
-                        ItemDataType.ActivityType(
-                            ItemData(ActivityData = activity),
-                            getTimeStampToTimeInt(it)
-                        )
-                    )
+                    val todayLogCreateTimeIntList = mutableListOf<Int>()
+                    activity.activityLogs.forEach { activityLog ->
+                        if (getTimeStampToDateInt(activityLog.createTime!!) ==
+                            getTimeStampToDateInt(Timestamp.now())
+                        ) {
+                            todayLogCreateTimeIntList.add(activityLog.timeTag!!)
+                        }
+                        todayLogCreateTimeIntList.sort()
+                    }
 
-                    if (getTimeStampToTimeInt(it) !in timeIntList) {
-                        timeIntList.add(getTimeStampToTimeInt(it))
-                        timeCurrentList.add(
-                            ItemDataType.TimeType(
-                                toTimeFromTimeStamp(it),
-                                getTimeStampToTimeInt(it)
-                            )
+                    if (ItemArranger().isTodayNeedToDo(
+                            ItemType.ACTIVITY,
+                            ItemData(ActivityData = activity)
                         )
+                    ) {
+                        activity.executeTime.forEach {
+                            if (getTimeStampToTimeInt(it) !in todayLogCreateTimeIntList) {
+                                activityCurrentList.add(
+                                    ItemDataType.ActivityType(
+                                        ItemData(ActivityData = activity),
+                                        getTimeStampToTimeInt(it)
+                                    )
+                                )
+
+                                if (getTimeStampToTimeInt(it) !in timeIntList) {
+                                    timeIntList.add(getTimeStampToTimeInt(it))
+                                    timeCurrentList.add(
+                                        ItemDataType.TimeType(
+                                            toTimeFromTimeStamp(it),
+                                            getTimeStampToTimeInt(it)
+                                        )
+                                    )
+                                }
+                            }
+                        }
                     }
                 }
+                value = arrangeTodoList(
+                    timeIntList,
+                    timeCurrentList,
+                    drugCurrentList,
+                    measureCurrentList,
+                    activityCurrentList,
+                    careCurrentList
+                )
             }
-            value = arrangeTodoList(
-                timeIntList,
-                timeCurrentList,
-                drugCurrentList,
-                measureCurrentList,
-                activityCurrentList,
-                careCurrentList
-            )
         }
 
         addSource(careList) { careList ->
-            careCurrentList.clear()
-            careList.forEach { care ->
+            viewModelScope.launch {
+                careCurrentList.clear()
+                careList.forEach { care ->
 
-                viewModelScope.launch {
                     care.careLogs = firebaseDataRepository.getCareRecord(care.id!!, Timestamp.now())
-                }
 
-                care.executeTime.forEach {
-                    careCurrentList.add(
-                        ItemDataType.CareType(
-                            ItemData(CareData = care),
-                            getTimeStampToTimeInt(it)
-                        )
-                    )
+                    val todayLogCreateTimeIntList = mutableListOf<Int>()
+                    care.careLogs.forEach { careLog ->
+                        if (getTimeStampToDateInt(careLog.createTime!!) ==
+                            getTimeStampToDateInt(Timestamp.now())
+                        ) {
+                            todayLogCreateTimeIntList.add(careLog.timeTag!!)
+                        }
+                        todayLogCreateTimeIntList.sort()
+                    }
 
-                    if (getTimeStampToTimeInt(it) !in timeIntList) {
-                        timeIntList.add(getTimeStampToTimeInt(it))
-                        timeCurrentList.add(
-                            ItemDataType.TimeType(
-                                toTimeFromTimeStamp(it),
-                                getTimeStampToTimeInt(it)
-                            )
+                    if (ItemArranger().isTodayNeedToDo(
+                            ItemType.CARE,
+                            ItemData(CareData = care)
                         )
+                    ) {
+                        care.executeTime.forEach {
+                            if (getTimeStampToTimeInt(it) !in todayLogCreateTimeIntList) {
+                                careCurrentList.add(
+                                    ItemDataType.CareType(
+                                        ItemData(CareData = care),
+                                        getTimeStampToTimeInt(it)
+                                    )
+                                )
+
+                                if (getTimeStampToTimeInt(it) !in timeIntList) {
+                                    timeIntList.add(getTimeStampToTimeInt(it))
+                                    timeCurrentList.add(
+                                        ItemDataType.TimeType(
+                                            toTimeFromTimeStamp(it),
+                                            getTimeStampToTimeInt(it)
+                                        )
+                                    )
+                                }
+                            }
+                        }
                     }
                 }
+                value = arrangeTodoList(
+                    timeIntList,
+                    timeCurrentList,
+                    drugCurrentList,
+                    measureCurrentList,
+                    activityCurrentList,
+                    careCurrentList
+                )
             }
-            value = arrangeTodoList(
-                timeIntList,
-                timeCurrentList,
-                drugCurrentList,
-                measureCurrentList,
-                activityCurrentList,
-                careCurrentList
-            )
         }
     }
 
@@ -339,6 +396,11 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                             createTime = Timestamp.now()
                         )
                     )
+
+                    val originStock = it.itemDataType.drug.DrugData.stock
+                    val updateStock = originStock - it.itemDataType.drug.DrugData.dose
+
+                   firebaseDataRepository.editStock(it.itemDataType.drug.DrugData.id!!, updateStock)
                 }
 
                 is ItemDataType.ActivityType -> {

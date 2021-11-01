@@ -47,15 +47,15 @@ class ManageDetailAdapter(private val dataType: ManageType) :
 
                         tvPerTimeTitle.visibility = View.VISIBLE
                         tvDose.visibility = View.VISIBLE
-                        tvDose.text = data?.dose?.toString()
+                        tvDose.text = data.dose.toString()
                         tvUnitManage.visibility = View.VISIBLE
-                        tvUnitManage.text = toUnit(data?.unit)
+                        tvUnitManage.text = toUnit(data.unit)
                         tvRatioTitle.text = "剩餘藥量"
                         tvRatioNum.text = "${data.stock}${toUnit(data?.unit)}"
 
-                        tvCreatedTime.text = toStringFromTimeStamp(data?.createTime)
+                        tvCreatedTime.text = toStringFromTimeStamp(data.createTime)
 
-                        tvEditorManage.text = if (data?.editor == UserManager.userId) {
+                        tvEditorManage.text = if (data.editor == UserManager.userId) {
                             UserManager.name
                         } else {
                             "others"

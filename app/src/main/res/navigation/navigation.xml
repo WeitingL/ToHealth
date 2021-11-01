@@ -114,4 +114,10 @@
             app:argType="integer" />
     </fragment>
     <action android:id="@+id/action_global_careRecordFragment" app:destination="@id/careRecordFragment" />
+    <fragment
+        android:id="@+id/fastAddFragment"
+        android:name="com.weiting.tohealth.homepage.fastadd.FastAddFragment"
+        android:label="fast_add_fragment"
+        tools:layout="@layout/fast_add_fragment" />
+    <action android:id="@+id/action_global_fastAddFragment" app:destination="@id/fastAddFragment" />
 </navigation>

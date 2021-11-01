@@ -110,4 +110,6 @@ interface FirebaseRepository {
 
     suspend fun getUserInfo (userId: String):User
 
+    fun editStock(itemId:String, num:Int)
+
 }

@@ -10,6 +10,7 @@ import com.google.firebase.firestore.ktx.toObject
 import com.weiting.tohealth.PublicApplication.Companion.application
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
+import kotlin.math.log
 
 object FirebaseDataSource : FirebaseSource {
 
@@ -141,14 +142,12 @@ object FirebaseDataSource : FirebaseSource {
                     Log.e("Listen failed.", error.toString())
                     return@addSnapshotListener
                 }
-
                 val list = mutableListOf<Drug>()
-
                 for (document in value!!) {
                     val data = document.toObject(Drug::class.java)
+
                     list.add(data)
                 }
-
                 drugList.value = list
             }
         return drugList
@@ -753,6 +752,17 @@ object FirebaseDataSource : FirebaseSource {
             }
             .addOnFailureListener { e ->
                 Log.w("Error to get data", e)
+            }
+    }
+
+    override fun editStock(itemId: String, num: Int) {
+        application.database.collection("drugs").document(itemId)
+            .update("stock", num)
+            .addOnSuccessListener { documentReference ->
+                Log.d("update success", "DocumentSnapshot with ID: ${itemId}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("update failure", "Error update document", e)
             }
     }
 }
