@@ -24,6 +24,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="標籤標題"
+            android:textAppearance="@style/title_text_bl"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -35,6 +36,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:text="這個內文可以放很多粉多東西!!"
+            android:textAppearance="@style/content_text_bl"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tv_noteTitle"
             app:layout_constraintTop_toBottomOf="@+id/tv_noteTitle" />
@@ -45,6 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="留"
+            android:textAppearance="@style/subTitle_text_bl"
             app:layout_constraintEnd_toEndOf="@+id/tv_noteContext"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/tv_noteContext"
@@ -56,6 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:text="TextView"
+            android:textAppearance="@style/subTitle_text_bl"
             app:layout_constraintBottom_toBottomOf="@+id/tv_footer"
             app:layout_constraintEnd_toStartOf="@+id/tv_footer"
             app:layout_constraintTop_toTopOf="@+id/tv_footer" />
@@ -67,6 +71,7 @@
             android:layout_marginTop="4dp"
             android:layout_marginBottom="16dp"
             android:text="2021.10.20  13:20"
+            android:textAppearance="@style/subTitle_text_bl"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/tv_footer"
             app:layout_constraintHorizontal_bias="1.0"

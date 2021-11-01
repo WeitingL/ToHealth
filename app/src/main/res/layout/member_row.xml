@@ -16,7 +16,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/avatar" />
+        app:srcCompat="@drawable/user__1_" />
 
     <TextView
         android:id="@+id/tv_memberName"
@@ -25,6 +25,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
         android:text="Weiting"
+        android:textAppearance="@style/title_text_bl"
         app:layout_constraintStart_toEndOf="@+id/iv_photo"
         app:layout_constraintTop_toTopOf="@+id/iv_photo" />
 
@@ -34,6 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="我自己"
+        android:textAppearance="@style/subTitle_text_bl"
         app:layout_constraintStart_toStartOf="@+id/tv_memberName"
         app:layout_constraintTop_toBottomOf="@+id/tv_memberName" />
 
@@ -42,9 +44,10 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:adjustViewBounds="true"
-        android:background="@color/reb_brown"
+        android:background="@color/main_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -55,9 +58,10 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:adjustViewBounds="true"
-        android:background="@color/green"
+        android:background="@color/sub_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/bt_stastistic_member"
         app:layout_constraintTop_toTopOf="parent"

@@ -21,7 +21,7 @@
     <color name="gray">#E7E7E7</color>
 
 <!--  green  -->
-    <color name="light_green">#53CF58</color>
+    <color name="light_green">#5CF58</color>
     <color name="green">#337C36</color>
 
 <!-- yellow  -->
@@ -39,5 +39,10 @@
     <color name="Cyan">#DAF0EE</color>
     <color name="Blue_eyes">#AED2FF</color>
 
+    <color name="main_color">#08323E</color>
+    <color name="light_main_color">#0F5A70</color>
+    <color name="sub_color">#004F67</color>
+
+    <color name="button_color">#FFC107</color>
 
 </resources>

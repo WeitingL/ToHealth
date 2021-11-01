@@ -16,6 +16,7 @@
         android:paddingHorizontal="10dp"
         android:paddingVertical="2dp"
         android:text="12:00"
+        android:textAppearance="@style/subTitle_text_bl"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

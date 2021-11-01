@@ -39,7 +39,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="下一個項目"
-            android:textSize="20sp"
+            android:textAppearance="@style/title_text_bl"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -49,6 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:text="查看更多"
+            android:textAppearance="@style/subTitle_text_bl"
             android:gravity="center_vertical"
             app:layout_constraintBottom_toBottomOf="@+id/tv_groupInfoTitle"
             app:layout_constraintEnd_toEndOf="parent"

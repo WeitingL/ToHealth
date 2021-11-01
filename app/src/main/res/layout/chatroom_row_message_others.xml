@@ -27,6 +27,7 @@
         android:paddingHorizontal="10dp"
         android:paddingVertical="4dp"
         android:text="TextView"
+        android:textAppearance="@style/subTitle_text_bl"
         app:layout_constraintBottom_toBottomOf="@+id/im_others"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -37,6 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
+        android:textAppearance="@style/subTitle_text_bl"
         app:layout_constraintBottom_toTopOf="@+id/tv_othersMessage"
         app:layout_constraintStart_toStartOf="@+id/tv_othersMessage"
         app:layout_constraintTop_toTopOf="@+id/im_others" />
