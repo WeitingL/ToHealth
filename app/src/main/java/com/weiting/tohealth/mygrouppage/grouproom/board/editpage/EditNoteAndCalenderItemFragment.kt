@@ -117,6 +117,7 @@ class EditNoteAndCalenderItemFragment : Fragment() {
                     }
                 }
             }
+            findNavController().popBackStack()
         }
 
 

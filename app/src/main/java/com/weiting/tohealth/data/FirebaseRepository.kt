@@ -102,6 +102,8 @@ interface FirebaseRepository {
 
     fun getLiveMember(groupId: String): MutableLiveData<List<Member>>
 
+    fun updateMemberInfo(groupId: String, member: Member)
+
     fun getLiveNote(groupId: String): MutableLiveData<List<Note>>
 
     fun getLiveCalenderItem(groupId: String): MutableLiveData<List<CalenderItem>>
@@ -109,6 +111,10 @@ interface FirebaseRepository {
     fun postNote(note: Note, groupId: String)
 
     fun postCalenderItem(calenderItem: CalenderItem, groupId: String)
+
+    fun deleteNote(note: Note, groupId: String)
+
+    fun deleteCalenderItem(calenderItem: CalenderItem, groupId: String)
 
     fun getLiveChatMessage(
         userId: String,

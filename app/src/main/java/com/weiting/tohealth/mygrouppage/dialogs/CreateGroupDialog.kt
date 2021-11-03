@@ -9,7 +9,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.data.Group
-import com.weiting.tohealth.data.Relationships
 import com.weiting.tohealth.databinding.DialogCreateGroupBinding
 import com.weiting.tohealth.factory.AddGroupViewModelFactory
 

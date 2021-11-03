@@ -29,7 +29,7 @@ class MembersFragment() : Fragment() {
         val viewModel = ViewModelProvider(this, factory).get(MembersViewModel::class.java)
         val adapter = MembersAdapter(
             MembersAdapter.EditOnclickListener {
-                findNavController().navigate(NavigationDirections.actionGlobalGroupMemberManageFragment(it))
+                findNavController().navigate(NavigationDirections.actionGlobalGroupMemberManageFragment(it, group.id!!))
             },
             MembersAdapter.ViewOnclickListener {
                 findNavController().navigate(NavigationDirections.actionGlobalGroupMemberStatisticFragment(it))

@@ -154,6 +154,10 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.getLiveMember(groupId)
     }
 
+    override fun updateMemberInfo(groupId: String, member: Member) {
+        return firebaseSource.updateMemberInfo(groupId, member)
+    }
+
     override fun getLiveNote(groupId: String): MutableLiveData<List<Note>> {
         return firebaseSource.getLiveNote(groupId)
     }
@@ -168,6 +172,14 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
 
     override fun postCalenderItem(calenderItem: CalenderItem, groupId: String) {
         return firebaseSource.postCalenderItem(calenderItem, groupId)
+    }
+
+    override fun deleteNote(note: Note, groupId: String) {
+        return firebaseSource.deleteNote(note, groupId)
+    }
+
+    override fun deleteCalenderItem(calenderItem: CalenderItem, groupId: String) {
+        return firebaseSource.deleteCalenderItem(calenderItem, groupId)
     }
 
     override fun getLiveChatMessage(
@@ -185,6 +197,7 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.getUserInfo(userId)
     }
 
+    //Reduce the stock when task finished.
     override fun editStock(itemId: String, num: Int) {
         return firebaseSource.editStock(itemId, num)
     }

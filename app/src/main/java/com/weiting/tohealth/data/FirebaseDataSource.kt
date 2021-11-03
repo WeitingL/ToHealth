@@ -491,8 +491,11 @@ object FirebaseDataSource : FirebaseSource {
     override fun joinGroup(member: Member, groupId: String) {
         val database = application.database
 
+        member.id = database.collection("groups").document(groupId)
+            .collection("members").document().id
+
         database.collection("groups").document(groupId)
-            .collection("members").document()
+            .collection("members").document(member.id!!)
             .set(member)
             .addOnSuccessListener { documentReference ->
                 Log.d(
@@ -653,6 +656,18 @@ object FirebaseDataSource : FirebaseSource {
         return memberList
     }
 
+    override fun updateMemberInfo(groupId: String, member: Member) {
+        application.database.collection("groups").document(groupId)
+            .collection("members").document(member.id!!)
+            .set(member, SetOptions.merge())
+            .addOnSuccessListener { documentReference ->
+                Log.d("store success", "DocumentSnapshot added with ID: ${member.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("store failure", "Error adding document", e)
+            }
+    }
+
     override fun getLiveNote(groupId: String): MutableLiveData<List<Note>> {
         val notesList = MutableLiveData<List<Note>>()
 
@@ -731,6 +746,32 @@ object FirebaseDataSource : FirebaseSource {
             .addOnFailureListener { e ->
                 Log.w("store failure", "Error adding document", e)
             }
+    }
+
+    override fun deleteNote(note: Note, groupId: String) {
+        application.database.collection("groups").document(groupId)
+            .collection("notes").document(note.id!!)
+            .delete()
+            .addOnSuccessListener {
+                Log.d(
+                    "Delete success",
+                    "DocumentSnapshot successfully deleted!"
+                )
+            }
+            .addOnFailureListener { e -> Log.w("Delete failure", "Error deleting document", e) }
+    }
+
+    override fun deleteCalenderItem(calenderItem: CalenderItem, groupId: String) {
+        application.database.collection("groups").document(groupId)
+            .collection("calenderItems").document(calenderItem.id!!)
+            .delete()
+            .addOnSuccessListener {
+                Log.d(
+                    "Delete success",
+                    "DocumentSnapshot successfully deleted!"
+                )
+            }
+            .addOnFailureListener { e -> Log.w("Delete failure", "Error deleting document", e) }
     }
 
     override fun getLiveChatMessage(

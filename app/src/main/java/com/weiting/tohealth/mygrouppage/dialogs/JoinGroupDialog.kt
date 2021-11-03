@@ -11,7 +11,6 @@ import androidx.lifecycle.viewModelScope
 import com.google.firestore.v1.TargetOrBuilder
 import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.data.Member
-import com.weiting.tohealth.data.Relationships
 import com.weiting.tohealth.data.UserManager
 import com.weiting.tohealth.databinding.DialogJoinGroupBinding
 import com.weiting.tohealth.factory.AddGroupViewModelFactory

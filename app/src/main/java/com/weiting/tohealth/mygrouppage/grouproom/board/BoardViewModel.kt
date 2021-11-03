@@ -46,6 +46,16 @@ class BoardViewModel(
         }
     }
 
+    fun deleteNote(note: Note){
+        firebaseDataRepository.deleteNote(note, group.id!!)
+    }
+
+    fun deleteReminder(calenderItem: CalenderItem){
+        firebaseDataRepository.deleteCalenderItem(calenderItem, group.id!!)
+    }
+
+
+
 }
 
 sealed class BoardType {

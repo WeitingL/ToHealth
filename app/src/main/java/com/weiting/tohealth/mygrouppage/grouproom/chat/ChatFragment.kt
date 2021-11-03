@@ -29,13 +29,8 @@ class ChatFragment() : Fragment() {
         val viewModel = ViewModelProvider(this, factory).get(ChatViewModel::class.java)
         val adapter = ChatAdapter()
 
-        viewModel.chatList.observe(viewLifecycleOwner){
-            Log.i("chatListList", it.toString())
-            viewModel.identifyUser(it)
-        }
 
-        viewModel.chatMessages.observe(viewLifecycleOwner){
-            Log.i("CalenderItemList", it.size.toString())
+        viewModel.chatMediatorLiveData.observe(viewLifecycleOwner){
             adapter.submitList(it)
             binding.rvChats.smoothScrollToPosition(adapter.itemCount-1)
         }
