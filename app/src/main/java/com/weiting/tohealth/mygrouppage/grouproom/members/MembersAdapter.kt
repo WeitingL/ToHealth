@@ -7,8 +7,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.data.Member
 import com.weiting.tohealth.databinding.MemberRowBinding
+import com.weiting.tohealth.homepage.HomeAdapter
+import com.weiting.tohealth.homepage.HomePageItem
 
-class MembersAdapter : ListAdapter<Member, MembersAdapter.MemberViewHolder>(DiffCallback) {
+class MembersAdapter(val onClickListener: EditOnclickListener, val onclickListener: ViewOnclickListener) :
+    ListAdapter<Member, MembersAdapter.MemberViewHolder>(DiffCallback) {
 
     object DiffCallback : DiffUtil.ItemCallback<Member>() {
         override fun areItemsTheSame(oldItem: Member, newItem: Member): Boolean =
@@ -24,8 +27,15 @@ class MembersAdapter : ListAdapter<Member, MembersAdapter.MemberViewHolder>(Diff
 
         fun bind(member: Member) {
             binding.apply {
-                tvMemberName.text = member.userId //TODO
+                tvMemberName.text = member.name
                 tvNickName.text = member.nickName
+
+                btEditMember.setOnClickListener {
+                    onClickListener.onClick(member)
+                }
+                btStastisticMember.setOnClickListener {
+                    onclickListener.onClick(member)
+                }
             }
         }
     }
@@ -44,5 +54,12 @@ class MembersAdapter : ListAdapter<Member, MembersAdapter.MemberViewHolder>(Diff
         return holder.bind(getItem(position))
     }
 
+    class EditOnclickListener(val clickListener: (member: Member) -> Unit) {
+        fun onClick(member: Member) = clickListener(member)
+    }
+
+    class ViewOnclickListener(val clickListener: (member: Member) -> Unit) {
+        fun onClick(member: Member) = clickListener(member)
+    }
 
 }

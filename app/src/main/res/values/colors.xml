@@ -34,14 +34,18 @@
 
 
 <!-- basicColor   -->
-    <color name="Silk">#FFDDD2</color>
-    <color name="Melon">#FFBCB5</color>
-    <color name="Cyan">#DAF0EE</color>
-    <color name="Blue_eyes">#AED2FF</color>
+    <color name="baby_pink">#FFCBCB</color>
+    <color name="uranian_blue">#C8E6FF</color>
+    <color name="areo_blue">#C4F4D8</color>
+    <color name="silver">#B2B2B2</color>
+    <color name="jeans_blue">#50AEFF</color>
+    <color name="dodger_blue">#065ca6</color>
 
-    <color name="main_color">#08323E</color>
-    <color name="light_main_color">#0F5A70</color>
-    <color name="sub_color">#004F67</color>
+
+
+    <color name="main_color">#c8e6ff</color>
+    <color name="light_main_color">#0d1db0</color>
+    <color name="sub_color">#0d1db0</color>
 
     <color name="button_color">#FFC107</color>
 

@@ -47,7 +47,7 @@ class ChatViewModel(
     private fun idChangeToName(idInChat: String):String{
         val nickname = group.member.forEach {
             if(it.userId == idInChat){
-                return it.nickName?:"成員"
+                return it.name?:"成員"
             }
         }
         return nickname.toString()

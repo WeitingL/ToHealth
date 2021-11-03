@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.weiting.tohealth.itemeditpage.ItemUpdateFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_updateItem"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/button_yellow_color"
+            android:text="確認"
+            android:textAppearance="@style/title_text_bl"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/gb_statusChoose" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_stock_update"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/card_block"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout3_update">
+
+            <EditText
+                android:id="@+id/etv_stock_update"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@null"
+                android:drawableBottom="@drawable/editext_bottomline"
+                android:ems="10"
+                android:inputType="number"
+                android:minHeight="48dp"
+                android:textCursorDrawable="@drawable/cursor_brown"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tv_unit_stock_update"
+                app:layout_constraintStart_toEndOf="@+id/tv_stock_edit_update"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_stock_edit_update"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="藥物庫存"
+                android:textAppearance="@style/subTitle_text_bl"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_unit_stock_update"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="單位"
+                android:textAppearance="@style/subTitle_text_bl"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_originStock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="原先庫存"
+                android:textColor="@color/red"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/etv_stock_update"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/etv_stock_update"
+                app:layout_constraintTop_toBottomOf="@+id/etv_stock_update" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout3_update"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/card_block"
+            android:paddingVertical="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cl_Period_update">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bt_time_set_update"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/button_yellow_color"
+                android:drawableStart="@drawable/ic_baseline_add_40"
+                android:gravity="center"
+                android:minHeight="48dp"
+                android:paddingStart="30sp"
+                android:text="新增提醒時間"
+                android:textAppearance="@style/subTitle_text_bl"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rv_originalTimeSet" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_timeChose_update"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:listitem="@layout/edit_time_row" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_originalTimeSet"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_originTime"
+                app:spanCount="5"
+                tools:listitem="@layout/row_manage_time" />
+
+            <TextView
+                android:id="@+id/tv_originTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="原先設定"
+                android:textColor="@color/red"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rv_timeChose_update" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_itemTypeTitle_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="健康項目種類"
+            android:textAppearance="@style/title_text_bl"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_itemName_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="項目名稱"
+            android:textAppearance="@style/title_text_bl"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_itemTypeTitle_update" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_unit_update"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/card_block"
+            android:paddingVertical="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_itemName_update">
+
+            <Spinner
+                android:id="@+id/sp_unit_update"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:entries="@array/ItemUnit"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_unit_edit_update"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_unit_edit_update"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="藥品單位"
+                android:textAppearance="@style/subTitle_text_bl"
+                app:layout_constraintBottom_toBottomOf="@+id/sp_unit_update"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/sp_unit_update" />
+
+            <TextView
+                android:id="@+id/tv_dose_edit_update"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="每次劑量"
+                android:textAppearance="@style/subTitle_text_bl"
+                app:layout_constraintBottom_toBottomOf="@+id/etv_drugDose_update"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/etv_drugDose_update" />
+
+            <EditText
+                android:id="@+id/etv_drugDose_update"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
+                android:ems="10"
+                android:hint="每次劑量 (如 : 1)"
+                android:inputType="textPersonName"
+                android:minHeight="48dp"
+                app:layout_constraintBottom_toTopOf="@+id/tv_originDose"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/tv_dose_edit_update"
+                app:layout_constraintTop_toBottomOf="@+id/sp_unit_update"
+                app:layout_constraintVertical_bias="0.875" />
+
+            <TextView
+                android:id="@+id/tv_originUnit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="原先單位"
+                android:textColor="@color/red"
+                app:layout_constraintEnd_toEndOf="@+id/sp_unit_update"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/sp_unit_update"
+                app:layout_constraintTop_toBottomOf="@+id/sp_unit_update" />
+
+            <TextView
+                android:id="@+id/tv_originDose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="原先劑量"
+                android:textColor="@color/red"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/etv_drugDose_update"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/etv_drugDose_update" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_Period_update"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/card_block"
+            android:paddingVertical="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cl_unit_update"
+            app:layout_goneMarginTop="16dp">
+
+            <Spinner
+                android:id="@+id/sp_period_update"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:entries="@array/Period"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_period_edit_update"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_period_edit_update"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="執行週期"
+                android:textAppearance="@style/subTitle_text_bl"
+                app:layout_constraintBottom_toBottomOf="@+id/sp_period_update"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/sp_period_update" />
+
+            <Spinner
+                android:id="@+id/sp_suspendDay_update"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
+                android:entries="@array/cycle_day"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_suspendDay_update"
+                app:layout_constraintTop_toBottomOf="@+id/sp_ongoingDay_update" />
+
+            <TextView
+                android:id="@+id/tv_ongoingDay_update"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="天"
+                android:textAppearance="@style/subTitle_text_bl"
+                app:layout_constraintBottom_toBottomOf="@+id/sp_ongoingDay_update"
+                app:layout_constraintEnd_toStartOf="@+id/sp_ongoingDay_update"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/sp_suspendDay_update"
+                app:layout_constraintStart_toStartOf="@+id/sp_period_update"
+                app:layout_constraintTop_toTopOf="@+id/sp_ongoingDay_update"
+                app:layout_constraintVertical_bias="0.5" />
+
+            <Spinner
+                android:id="@+id/sp_ongoingDay_update"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tv_ongoingDay_update"
+                app:layout_constraintTop_toBottomOf="@+id/sp_period_update" />
+
+            <TextView
+                android:id="@+id/tv_suspendDay_update"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="暫停幾天"
+                android:textAppearance="@style/subTitle_text_bl"
+                app:layout_constraintBottom_toBottomOf="@+id/sp_suspendDay_update"
+                app:layout_constraintEnd_toStartOf="@+id/sp_suspendDay_update"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/tv_ongoingDay_update"
+                app:layout_constraintTop_toTopOf="@+id/sp_suspendDay_update" />
+
+            <TextView
+                android:id="@+id/tv_originPeriod"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="原先週期"
+                android:textColor="@color/red"
+                app:layout_constraintEnd_toEndOf="@+id/sp_period_update"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/sp_period_update"
+                app:layout_constraintTop_toBottomOf="@+id/sp_period_update" />
+
+            <TextView
+                android:id="@+id/tv_originN"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="原先天數"
+                android:textColor="@color/red"
+                app:layout_constraintEnd_toEndOf="@+id/sp_ongoingDay_update"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/sp_ongoingDay_update"
+                app:layout_constraintTop_toBottomOf="@+id/sp_ongoingDay_update" />
+
+            <TextView
+                android:id="@+id/tv_originX"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="原先天數"
+                android:textColor="@color/red"
+                app:layout_constraintEnd_toEndOf="@+id/sp_suspendDay_update"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/sp_suspendDay_update"
+                app:layout_constraintTop_toBottomOf="@+id/sp_suspendDay_update" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_startDate_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="項目起始時間"
+            android:textAppearance="@style/subTitle_text_bl"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_itemName_update"
+            app:layout_constraintEnd_toStartOf="@+id/tv_startTime_update"
+            app:layout_constraintTop_toTopOf="@+id/tv_itemName_update"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/tv_startTime_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="2021. 11. 02"
+            android:textAppearance="@style/content_text_bl"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_startDate_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_startDate_title"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <RadioGroup
+            android:id="@+id/gb_statusChoose"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/bt_updateItem"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cl_stock_update">
+
+            <RadioButton
+                android:id="@+id/status_going"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:buttonTint="@color/jeans_blue"
+                android:text="執行中"/>
+
+            <RadioButton
+                android:id="@+id/status_pending"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:buttonTint="@color/jeans_blue"
+                android:text="暫停執行(可再次執行)" />
+
+            <RadioButton
+                android:id="@+id/status_stop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:buttonTint="@color/jeans_blue"
+                android:text="中止執行(不再執行，僅保留執行紀錄)" />
+
+        </RadioGroup>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

@@ -23,12 +23,11 @@
         android:id="@+id/bottomNavigationView"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:background="@color/main_color"
-        android:backgroundTint="@color/white"
+        android:background="@color/uranian_blue"
         app:itemIconSize="25dp"
-        app:itemIconTint="@color/white"
-        app:itemRippleColor="@color/white"
-        app:itemTextColor="@color/white"
+        app:itemIconTint="@color/dodger_blue"
+        app:itemRippleColor="@color/dodger_blue"
+        app:itemTextColor="@color/dodger_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +55,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:text="toHealth"
-                android:textAppearance="@style/title_text" />
+                android:textAppearance="@style/title_text_bl" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

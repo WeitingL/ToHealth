@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -35,6 +36,7 @@ class FastAddFragment : Fragment() {
                         result = 2,
                         createTime = Timestamp.now()
                     ), it.drug)
+                    Toast.makeText(context, "已登錄紀錄", Toast.LENGTH_LONG).show()
                     findNavController().navigate(NavigationDirections.actionGlobalHomeFragment())
                 }
                 is FastAddItem.ActivityItem -> {
@@ -43,6 +45,7 @@ class FastAddFragment : Fragment() {
                         result = 2,
                         createTime = Timestamp.now()
                     ))
+                    Toast.makeText(context, "已登錄紀錄", Toast.LENGTH_LONG).show()
                     findNavController().navigate(NavigationDirections.actionGlobalHomeFragment())
                 }
                 is FastAddItem.MeasureItem -> {

@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.toObject
 import com.weiting.tohealth.PublicApplication.Companion.application
 import kotlin.coroutines.resume
@@ -280,6 +281,49 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
+    override fun updateDrug(drug: Drug) {
+        application.database.collection("drugs").document(drug.id!!)
+            .set(drug, SetOptions.merge())
+            .addOnSuccessListener { documentReference ->
+                Log.d("store success", "DocumentSnapshot added with ID: ${drug.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("store failure", "Error adding document", e)
+            }
+    }
+
+    override fun updateMeasure(measure: Measure) {
+        application.database.collection("measures").document(measure.id!!)
+            .set(measure, SetOptions.merge())
+            .addOnSuccessListener { documentReference ->
+                Log.d("store success", "DocumentSnapshot added with ID: ${measure.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("store failure", "Error adding document", e)
+            }
+    }
+
+    override fun updateActivity(activity: Activity) {
+        application.database.collection("activity").document(activity.id!!)
+            .set(activity, SetOptions.merge())
+            .addOnSuccessListener { documentReference ->
+                Log.d("store success", "DocumentSnapshot added with ID: ${activity.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("store failure", "Error adding document", e)
+            }
+    }
+
+    override fun updateCare(care: Care) {
+        application.database.collection("cares").document(care.id!!)
+            .set(care, SetOptions.merge())
+            .addOnSuccessListener { documentReference ->
+                Log.d("store success", "DocumentSnapshot added with ID: ${care.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("store failure", "Error adding document", e)
+            }
+    }
 
     override fun postDrugRecord(id: String, drugLog: DrugLog) {
 

@@ -16,6 +16,7 @@ data class Group(
 @Parcelize
 data class Member(
     val userId: String? = null,
+    val name: String? = null,
     val nickName: String? = null,
     val private: Int? = null
 ) : Parcelable

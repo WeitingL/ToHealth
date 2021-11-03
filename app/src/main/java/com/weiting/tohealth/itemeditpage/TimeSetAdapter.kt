@@ -1,5 +1,6 @@
 package com.weiting.tohealth.itemeditpage
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -45,7 +46,6 @@ class TimeSetAdapter(val onClickListener: OnclickListener) : ListAdapter<Timesta
 
     override fun onBindViewHolder(holder: TimeEditViewHolder, position: Int) {
         holder.bind(getItem(position), position)
-
     }
 
     class OnclickListener(val clickListener: (position: Int) -> Unit) {

@@ -12,8 +12,8 @@ abstract class RecyclerViewSwipe() :
 
     private val skipIcon = R.drawable.ic_baseline_notifications_off_24
     private val doneIcon = R.drawable.ic_baseline_done_24
-    private val skipBackgroundColor = Color.parseColor("#FFDDD2")
-    private val doneBackgroundColor = Color.parseColor("#DAF0EE")
+    private val skipBackgroundColor = Color.parseColor("#8266d7")
+    private val doneBackgroundColor = Color.parseColor("#e7c9ff")
 
     override fun getMovementFlags(
         recyclerView: RecyclerView,

@@ -53,9 +53,6 @@
         android:label="item_edit_fragment"
         tools:layout="@layout/item_edit_fragment" >
         <argument
-            android:name="editType"
-            app:argType="com.weiting.tohealth.itemeditpage.EditType" />
-        <argument
             android:name="manageType"
             app:argType="com.weiting.tohealth.mymanagepage.ManageType" />
     </fragment><action android:id="@+id/action_global_itemEditFragment" app:destination="@id/itemEditFragment"/>
@@ -120,4 +117,62 @@
         android:label="fast_add_fragment"
         tools:layout="@layout/fast_add_fragment" />
     <action android:id="@+id/action_global_fastAddFragment" app:destination="@id/fastAddFragment" />
+    <fragment
+        android:id="@+id/groupMemberManageFragment"
+        android:name="com.weiting.tohealth.groupmemberpage.GroupMemberManageFragment"
+        android:label="group_member_management_fragment"
+        tools:layout="@layout/group_member_management_fragment" >
+        <argument
+            android:name="memberInfo"
+            app:argType="com.weiting.tohealth.data.Member" />
+    </fragment>
+    <fragment
+        android:id="@+id/groupMemberStatisticFragment"
+        android:name="com.weiting.tohealth.groupmemberpage.GroupMemberStatisticFragment"
+        android:label="group_member_statistic_fragment"
+        tools:layout="@layout/group_member_statistic_fragment" >
+        <argument
+            android:name="memberInfo"
+            app:argType="com.weiting.tohealth.data.Member" />
+    </fragment>
+    <action android:id="@+id/action_global_groupMemberStatisticFragment" app:destination="@id/groupMemberStatisticFragment" />
+    <action android:id="@+id/action_global_groupMemberManageFragment" app:destination="@id/groupMemberManageFragment" />
+    <fragment
+        android:id="@+id/boardFragment"
+        android:name="com.weiting.tohealth.mygrouppage.grouproom.board.BoardFragment"
+        android:label="broad_fragment"
+        tools:layout="@layout/broad_fragment" />
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.weiting.tohealth.mygrouppage.grouproom.chat.ChatFragment"
+        android:label="chatroom_fragment"
+        tools:layout="@layout/chatroom_fragment" />
+    <fragment
+        android:id="@+id/statisticDetailFragment"
+        android:name="com.weiting.tohealth.mystatisticpage.StatisticDetailFragment"
+        android:label="mystatistic_item_fagment"
+        tools:layout="@layout/mystatistic_item_fagment" />
+    <fragment
+        android:id="@+id/manageDetailFragment"
+        android:name="com.weiting.tohealth.mymanagepage.ManageDetailFragment"
+        android:label="mymanage_item_fragment"
+        tools:layout="@layout/mymanage_item_fragment" />
+    <fragment
+        android:id="@+id/membersFragment"
+        android:name="com.weiting.tohealth.mygrouppage.grouproom.members.MembersFragment"
+        android:label="members_fragment"
+        tools:layout="@layout/members_fragment" />
+    <fragment
+        android:id="@+id/itemUpdateFragment"
+        android:name="com.weiting.tohealth.itemeditpage.ItemUpdateFragment"
+        android:label="item_update_fragment"
+        tools:layout="@layout/item_update_fragment" >
+        <argument
+            android:name="itemData"
+            app:argType="com.weiting.tohealth.data.ItemData" />
+        <argument
+            android:name="manageType"
+            app:argType="com.weiting.tohealth.mymanagepage.ManageType" />
+    </fragment>
+    <action android:id="@+id/action_global_itemUpdateFragment" app:destination="@id/itemUpdateFragment" />
 </navigation>

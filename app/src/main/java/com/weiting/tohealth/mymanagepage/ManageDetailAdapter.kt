@@ -8,11 +8,14 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.*
 import com.weiting.tohealth.data.ItemData
+import com.weiting.tohealth.data.ItemType
 import com.weiting.tohealth.data.UserManager
 import com.weiting.tohealth.databinding.ManageRowItemBinding
+import com.weiting.tohealth.mygrouppage.GroupAdapter
+import com.weiting.tohealth.mygrouppage.GroupPageItem
 import com.weiting.tohealth.mymanagepage.ManageDetailAdapter.ItemsListViewHolder
 
-class ManageDetailAdapter(private val dataType: ManageType) :
+class ManageDetailAdapter(private val dataType: ManageType, val onClickListener: OnclickListener) :
     ListAdapter<ItemData, ItemsListViewHolder>(DiffCallBack) {
 
     object DiffCallBack : DiffUtil.ItemCallback<ItemData>() {
@@ -44,6 +47,7 @@ class ManageDetailAdapter(private val dataType: ManageType) :
                         tvItemNameManage.text = data?.drugName
                         imItemIcon.setImageResource(setDrugDrawable(data?.unit))
                         tvPeriod.text = toStringFromPeriod(data?.period!!)
+                        tvTagManage.text = toStatus(data?.status)
 
                         tvPerTimeTitle.visibility = View.VISIBLE
                         tvDose.visibility = View.VISIBLE
@@ -52,7 +56,7 @@ class ManageDetailAdapter(private val dataType: ManageType) :
                         tvUnitManage.text = toUnit(data.unit)
                         tvRatioTitle.text = "剩餘藥量"
                         tvRatioNum.text = "${data.stock}${toUnit(data?.unit)}"
-
+                        tvUpdateTime.text = toStringFromTimeStamp(data.lastEditTime)
                         tvCreatedTime.text = toStringFromTimeStamp(data.createTime)
 
                         tvEditorManage.text = if (data.editor == UserManager.userId) {
@@ -72,10 +76,13 @@ class ManageDetailAdapter(private val dataType: ManageType) :
                         imItemIcon.setImageResource(setMeasureDrawable(data?.type))
                         tvPeriod.text = "每天執行"
 
+                        tvTagManage.text = toStatus(data?.status)
+
                         tvPerTimeTitle.visibility = View.GONE
                         tvDose.visibility = View.GONE
                         tvUnitManage.visibility = View.GONE
                         tvCreatedTime.text = toStringFromTimeStamp(data?.createTime)
+                        tvUpdateTime.text = toStringFromTimeStamp(data?.lastEditTime)
                         tvRatioTitle.text = "剩餘天數"
                         tvRatioNum.text = "無期限"
 
@@ -95,11 +102,13 @@ class ManageDetailAdapter(private val dataType: ManageType) :
                         tvItemNameManage.text = toActivityType(data?.type)
                         imItemIcon.setImageResource(setActivityType(data?.type))
                         tvPeriod.text = toStringFromPeriod(data?.period!!)
+                        tvTagManage.text = toStatus(data?.status)
 
                         tvPerTimeTitle.visibility = View.GONE
                         tvDose.visibility = View.GONE
                         tvUnitManage.visibility = View.GONE
                         tvCreatedTime.text = toStringFromTimeStamp(data?.createTime)
+                        tvUpdateTime.text = toStringFromTimeStamp(data.lastEditTime)
                         tvRatioTitle.text = "剩餘天數"
                         tvRatioNum.text = "無期限"
 
@@ -121,12 +130,14 @@ class ManageDetailAdapter(private val dataType: ManageType) :
                         tvPeriod.text = toStringFromPeriod(data?.period!!)
                         tvRatioTitle.text = "剩餘天數"
                         tvRatioNum.text = "無期限"
+                        tvTagManage.text = toStatus(data?.status)
 
                         tvPerTimeTitle.visibility = View.GONE
                         tvDose.visibility = View.GONE
                         tvUnitManage.visibility = View.GONE
 
                         tvCreatedTime.text = toStringFromTimeStamp(data?.createTime)
+                        tvUpdateTime.text = toStringFromTimeStamp(data.lastEditTime)
 
                         tvEditorManage.text = if (data?.editor == UserManager.userId) {
                             UserManager.name
@@ -151,7 +162,15 @@ class ManageDetailAdapter(private val dataType: ManageType) :
     }
 
     override fun onBindViewHolder(holder: ItemsListViewHolder, position: Int) {
-        return holder.bind(getItem(position))
+        holder.bind(getItem(position))
+        holder.itemView.setOnClickListener {
+            onClickListener.onClick(getItem(position), dataType)
+        }
     }
+
+    class OnclickListener(val clickListener: (itemData: ItemData, manageType: ManageType) -> Unit) {
+        fun onClick(itemData: ItemData, manageType: ManageType) = clickListener(itemData, manageType)
+    }
+
 }
 

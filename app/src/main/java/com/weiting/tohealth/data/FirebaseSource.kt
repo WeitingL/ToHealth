@@ -46,6 +46,15 @@ interface FirebaseSource {
 
     fun postCare(care: Care)
 
+    //Update Item
+    fun updateDrug(drug: Drug)
+
+    fun updateMeasure(measure: Measure)
+
+    fun updateActivity(activity: Activity)
+
+    fun updateCare(care: Care)
+
     //Post Item record
     fun postDrugRecord(id: String, drugLog: DrugLog)
 

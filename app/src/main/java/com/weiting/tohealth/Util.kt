@@ -34,8 +34,8 @@ fun toEndDate(map: Map<String, Int?>?): String {
 fun toStatus(int: Int?): String {
     return when (int) {
         0 -> "執行中"
-        1 -> "不執行"
-        2 -> "暫停執行"
+        1 -> "暫停執行"
+        2 -> "中止執行"
         else -> "未知狀態"
     }
 }
@@ -139,6 +139,11 @@ fun setActivityType(int: Int?): Int {
 
 fun toStringFromTimeStamp(timestamp: Timestamp?): String {
     return SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.TAIWAN).format(timestamp!!.toDate())
+        .toString()
+}
+
+fun toDateFromTimeStamp(timestamp: Timestamp?): String {
+    return SimpleDateFormat("yyyy/MM/dd", Locale.TAIWAN).format(timestamp!!.toDate())
         .toString()
 }
 
@@ -248,4 +253,27 @@ fun getTimeStampToDateInt(timestamp: Timestamp):Int{
     val c = Calendar.getInstance()
     c.time = timestamp.toDate()
     return ((c.get(Calendar.MONTH)+1)*100 + (c.get(Calendar.DAY_OF_MONTH)+1))
+}
+
+fun toPeriod(int: Int?):String{
+    return when(int){
+        0 -> "每日數次"
+        1 -> "每幾日執行"
+        2 -> "每個禮拜幾執行"
+        3 -> "連續幾天執行後，再暫停幾天"
+        4 -> "依需求執行"
+        else -> "What?!"
+    }
+}
+
+fun toDay(int: Int?):String{
+    return when(int){
+        0 -> "1日"
+        1 -> "2日"
+        2 -> "3日"
+        3 -> "4日"
+        4 -> "5日"
+        5 -> "6日"
+        else -> "What?!"
+    }
 }

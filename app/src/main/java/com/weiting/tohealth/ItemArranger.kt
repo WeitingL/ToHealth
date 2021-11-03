@@ -57,8 +57,7 @@ class ItemArranger() {
                     else -> false
                 }
             }
-
-            else -> false
+            else -> true
         }
     }
 

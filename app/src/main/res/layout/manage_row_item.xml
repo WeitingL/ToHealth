@@ -104,15 +104,15 @@
         app:layout_constraintTop_toBottomOf="@+id/rv_timeList" />
 
     <TextView
-        android:id="@+id/tv_createdTime_title"
+        android:id="@+id/tv_UpdateTime_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="創建時間"
+        android:text="上次編輯時間"
         android:textAppearance="@style/subTitle_text_bl"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_createdTime"
-        app:layout_constraintEnd_toStartOf="@+id/tv_createdTime"
-        app:layout_constraintTop_toTopOf="@+id/tv_createdTime" />
+        app:layout_constraintBottom_toBottomOf="@+id/tv_updateTime"
+        app:layout_constraintEnd_toStartOf="@+id/tv_updateTime"
+        app:layout_constraintTop_toTopOf="@+id/tv_updateTime" />
 
     <TextView
         android:id="@+id/tv_uptakeValue"
@@ -148,7 +148,7 @@
         app:layout_constraintTop_toTopOf="@+id/tv_editorTitle_manage" />
 
     <TextView
-        android:id="@+id/tv_createdTime"
+        android:id="@+id/tv_updateTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -156,7 +156,8 @@
         android:textAppearance="@style/content_text_bl"
         app:layout_constraintBottom_toBottomOf="@+id/tv_editorTitle_manage"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_editorTitle_manage" />
+        app:layout_constraintTop_toTopOf="@+id/tv_editorTitle_manage"
+        app:layout_constraintVertical_bias="0.00999999" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_timeList"
@@ -165,13 +166,12 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:orientation="horizontal"
-        android:paddingStart="20dp"
+        android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_timeTitle"
-        tools:itemCount="5"
+        app:spanCount="5"
         tools:listitem="@layout/row_manage_time" />
 
     <TextView
@@ -198,5 +198,28 @@
         android:textAppearance="@style/subTitle_text_bl"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_ratioTitle" />
+
+    <TextView
+        android:id="@+id/tv_createdTime_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="起始時間"
+        android:textAppearance="@style/subTitle_text_bl"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_timeTitle"
+        app:layout_constraintEnd_toStartOf="@+id/tv_CreatedTime"
+        app:layout_constraintTop_toTopOf="@+id/tv_timeTitle" />
+
+    <TextView
+        android:id="@+id/tv_CreatedTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="2021.01.01 11:11"
+        android:textAppearance="@style/content_text_bl"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_createdTime_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_createdTime_title"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

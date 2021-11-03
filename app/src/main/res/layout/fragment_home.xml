@@ -24,7 +24,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="今日概況"
-            android:textSize="20sp"
+            android:textAppearance="@style/title_text_bl"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="項目"
-            android:textSize="20sp"
+            android:textAppearance="@style/title_text_bl"
             app:layout_constraintStart_toStartOf="@+id/tv_dailyInfoTitle"
             app:layout_constraintTop_toBottomOf="@+id/tv_dailyInfoTitle" />
 
@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="8"
-            android:textSize="20sp"
+            android:textAppearance="@style/title_text_bl"
             app:layout_constraintBottom_toBottomOf="@+id/tv_dailyInfoTitle2"
             app:layout_constraintStart_toEndOf="@+id/tv_dailyInfoTitle2"
             app:layout_constraintTop_toTopOf="@+id/tv_dailyInfoTitle2" />
@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:text="10"
-            android:textSize="20sp"
+            android:textAppearance="@style/title_text_bl"
             app:layout_constraintBottom_toBottomOf="@+id/tv_slash"
             app:layout_constraintStart_toEndOf="@+id/tv_slash"
             app:layout_constraintTop_toTopOf="@+id/tv_slash"
@@ -83,7 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:text="/"
-            android:textSize="20sp"
+            android:textAppearance="@style/title_text_bl"
             app:layout_constraintBottom_toBottomOf="@+id/tv_finished"
             app:layout_constraintStart_toEndOf="@+id/tv_finished"
             app:layout_constraintTop_toTopOf="@+id/tv_finished" />
@@ -108,10 +108,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:background="@color/button_color"
+        android:background="@color/baby_pink"
         android:clickable="true"
         android:src="@drawable/ic_baseline_done_24"
-        app:backgroundTint="@color/button_color"
+        app:backgroundTint="@color/baby_pink"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

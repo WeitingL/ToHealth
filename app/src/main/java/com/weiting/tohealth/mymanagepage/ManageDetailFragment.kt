@@ -13,8 +13,6 @@ import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.data.ItemData
 import com.weiting.tohealth.databinding.MymanageItemFragmentBinding
 import com.weiting.tohealth.factory.ManageDetailViewModelFactory
-import com.weiting.tohealth.homepage.ItemDataType
-import com.weiting.tohealth.itemeditpage.EditType
 
 class ManageDetailFragment() : Fragment() {
 
@@ -30,10 +28,18 @@ class ManageDetailFragment() : Fragment() {
             manageType
         )
         val viewModel = ViewModelProvider(this, factory).get(ManageDetailViewModel::class.java)
-        val adapter = ManageDetailAdapter(manageType)
+        val adapter = ManageDetailAdapter(
+            manageType,
+            ManageDetailAdapter.OnclickListener { itemData, itemType ->
+                findNavController().navigate(
+                    NavigationDirections.actionGlobalItemUpdateFragment(
+                        itemData = itemData,
+                        manageType = manageType
+                    )
+                )
+            })
 
         when (manageType) {
-
             ManageType.DRUG -> {
                 viewModel.drugList.observe(viewLifecycleOwner) {
                     val list = mutableListOf<ItemData>()
@@ -84,10 +90,7 @@ class ManageDetailFragment() : Fragment() {
         binding.rvManageItems.adapter = adapter
         binding.btAddItem.setOnClickListener {
             findNavController().navigate(
-                NavigationDirections.actionGlobalItemEditFragment(
-                    EditType.CREATE,
-                    manageType
-                )
+                NavigationDirections.actionGlobalItemEditFragment(manageType)
             )
         }
         return binding.root

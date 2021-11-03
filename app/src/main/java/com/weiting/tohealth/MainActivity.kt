@@ -23,12 +23,23 @@ class MainActivity : AppCompatActivity() {
             when (navController.currentDestination?.id){
                 R.id.itemEditFragment -> {
                     binding.bottomNavigationView.visibility = View.GONE
+                    binding.toolbar.visibility = View.VISIBLE
                 }
                 R.id.editNoteAndCalenderItemFragment -> {
                     binding.bottomNavigationView.visibility = View.GONE
+                    binding.toolbar.visibility = View.VISIBLE
+                }
+                R.id.groupMemberManageFragment ->{
+                    binding.bottomNavigationView.visibility = View.GONE
+                    binding.toolbar.visibility = View.GONE
+                }
+                R.id.groupMemberStatisticFragment ->{
+                    binding.bottomNavigationView.visibility = View.GONE
+                    binding.toolbar.visibility = View.GONE
                 }
                 else -> {
                     binding.bottomNavigationView.visibility = View.VISIBLE
+                    binding.toolbar.visibility = View.VISIBLE
                 }
             }
         }

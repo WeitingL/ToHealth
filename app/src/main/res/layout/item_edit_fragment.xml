@@ -96,46 +96,21 @@
             app:layout_constraintStart_toEndOf="@+id/tv_itemName_edit"
             app:layout_constraintTop_toBottomOf="@+id/til_drugName" />
 
-        <CheckBox
-            android:id="@+id/cb_suspendUptake"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:text="暫停執行"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cl_stock" />
-
-        <CheckBox
-            android:id="@+id/cb_DeleteUptake"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="終止執行 (將本項目移除於您的清單中)"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cb_suspendUptake" />
-
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bt_enterItem"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
+            android:background="@drawable/button_yellow_color"
             android:text="確認"
             android:textAppearance="@style/title_text_bl"
-            android:background="@drawable/button_yellow_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cb_DeleteUptake" />
+            app:layout_constraintTop_toBottomOf="@+id/cl_stock" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_EndDate"
@@ -264,13 +239,14 @@
                 android:layout_height="48dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
+                android:entries="@array/cycle_day"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tv_suspendDay"
                 app:layout_constraintTop_toBottomOf="@+id/sp_ongoingDay" />
 
             <TextView
                 android:id="@+id/tv_ongoingDay"
-                android:layout_width="60dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:text="天"
@@ -296,7 +272,7 @@
 
             <TextView
                 android:id="@+id/tv_suspendDay"
-                android:layout_width="60dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:text="暫停幾天"

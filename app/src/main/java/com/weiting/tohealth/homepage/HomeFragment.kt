@@ -178,6 +178,7 @@ class HomeFragment : Fragment() {
 
         //Get data from firebase
         viewModel.itemDataMediator.observe(viewLifecycleOwner) {
+//            Log.i("All TodoList", it.toString())
             adapter.submitList(it)
         }
 

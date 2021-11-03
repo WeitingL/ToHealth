@@ -30,23 +30,18 @@ class ItemEditFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = ItemEditFragmentBinding.inflate(inflater, container, false)
-        val editType = ItemEditFragmentArgs.fromBundle(requireArguments()).editType
         val manageType = ItemEditFragmentArgs.fromBundle(requireArguments()).manageType
-        val factory =
-            ItemEditViewModelFactory(PublicApplication.application.firebaseDataRepository, editType)
+        val factory = ItemEditViewModelFactory(PublicApplication.application.firebaseDataRepository)
         val viewModel = ViewModelProvider(this, factory).get(ItemEditViewModel::class.java)
 
-
-        //User is navigated from which menagePage of Items.
+        //User is navigated from which menagePage of items to create new one.
         val position = when (manageType) {
             ManageType.DRUG -> 0
             ManageType.MEASURE -> 1
             ManageType.ACTIVITY -> 2
             ManageType.CARE -> 3
         }
-
         binding.spItemType.setSelection(position)
-
 
         //Listen the spinner item selected
         binding.spItemType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -167,7 +162,7 @@ class ItemEditFragment : Fragment() {
             }
         }
 
-        //Get periodType spinner selected to change views
+        //Get periodType spinner selected to change views.
         viewModel.currentPeriodType.observe(viewLifecycleOwner) {
             binding.apply {
                 when (it) {
@@ -214,11 +209,6 @@ class ItemEditFragment : Fragment() {
                         tvSuspendDay.visibility = View.VISIBLE
                         tvSuspendDay.text = "暫停幾天"
                         spSuspendDay.visibility = View.VISIBLE
-                        spSuspendDay.adapter = ArrayAdapter.createFromResource(
-                            PublicApplication.application.applicationContext,
-                            R.array.cycle_day,
-                            android.R.layout.simple_spinner_dropdown_item
-                        )
                     }
                     4 -> {
                         tvOngoingDay.visibility = View.GONE
@@ -232,10 +222,10 @@ class ItemEditFragment : Fragment() {
 
         //Get timeSet spinner selected to change views
         viewModel.timePointSet.observe(viewLifecycleOwner) {
-            Log.i("Date", it.toString())
+            Log.i("DataDate", it.toString())
             val adapter = TimeSetAdapter(
                 TimeSetAdapter.OnclickListener {
-                    viewModel.removeTimeSet(position)
+                    viewModel.removeTimeSet(it)
                 }
             )
             it.sort()
@@ -312,7 +302,7 @@ class ItemEditFragment : Fragment() {
             }
 
             1 -> {
-               true
+                true
             }
 
             2 -> {

@@ -1,5 +1,6 @@
 package com.weiting.tohealth.itemeditpage
 
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,17 +10,10 @@ import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.data.*
 import com.weiting.tohealth.databinding.ItemEditFragmentBinding
 import com.weiting.tohealth.toDateFromMilliTime
-import com.weiting.tohealth.toTimeFromMilliTime
-import java.sql.Time
 import java.util.*
-
-enum class EditType(val value: Int) {
-    CREATE(0), UPDATE(1), FINISHED(2)
-}
 
 class ItemEditViewModel(
     private val firebaseDataRepository: FirebaseRepository,
-    private val editType: EditType
 ) : ViewModel() {
 
     private val _editItemType = MutableLiveData<ItemType>()
@@ -38,15 +32,14 @@ class ItemEditViewModel(
     val dateSet: LiveData<String>
         get() = _dateSet
 
-    private val _dateSetInLong = MutableLiveData<Long>()
-
     private val _timePointSet = MutableLiveData<MutableList<Timestamp>>()
     val timePointSet: LiveData<MutableList<Timestamp>>
         get() = _timePointSet
 
     private val timestampList = mutableListOf<Timestamp>()
+
     //To check the double time set: 13:00 -> 1300
-    private val dateList = mutableListOf<Int>()
+    private val timeList = mutableListOf<Int>()
 
     private var startDateInLong = 0L
 
@@ -69,24 +62,24 @@ class ItemEditViewModel(
 
     fun getTimeSet(time: Long?) {
         val c = Calendar.getInstance()
-        c.time = Date(time?:0)
+        c.time = Date(time ?: 0)
 
-        if ((c.get(Calendar.HOUR_OF_DAY) * 100 + c.get(Calendar.MINUTE)) in dateList){
+        if ((c.get(Calendar.HOUR_OF_DAY) * 100 + c.get(Calendar.MINUTE)) in timeList) {
             Toast.makeText(
                 PublicApplication.application.applicationContext,
                 "重複添加囉!",
                 Toast.LENGTH_LONG
             ).show()
-        }else{
-            dateList.add(c.get(Calendar.HOUR_OF_DAY) * 100 + c.get(Calendar.MINUTE))
+        } else {
+            timeList.add(c.get(Calendar.HOUR_OF_DAY) * 100 + c.get(Calendar.MINUTE))
             timestampList.add(Timestamp(Date(time ?: 0)))
             _timePointSet.value = timestampList
         }
 
     }
 
-    fun removeTimeSet(position: Int){
-        dateList.removeAt(position)
+    fun removeTimeSet(position: Int) {
+        timeList.removeAt(position)
         timestampList.removeAt(position)
         _timePointSet.value = timestampList
     }
@@ -115,10 +108,11 @@ class ItemEditViewModel(
                         "X" to binding.spSuspendDay.selectedItemPosition
                     ),
                     executeTime = timePointSet.value!!,
+                    lastEditTime = Timestamp.now(),
                     stock = Integer.parseInt(binding.etvStock.text.toString()),
                     editor = UserManager.userId,
                     createTime = Timestamp.now(),
-                    status = editType.value
+                    status = 0
                 )
                 firebaseDataRepository.postDrug(data)
             }
@@ -129,7 +123,8 @@ class ItemEditViewModel(
                     executeTime = timePointSet.value!!,
                     editor = UserManager.userId,
                     createTime = Timestamp.now(),
-                    status = editType.value
+                    lastEditTime = Timestamp.now(),
+                    status = 0
                 )
 
                 firebaseDataRepository.postMeasure(data)
@@ -151,7 +146,8 @@ class ItemEditViewModel(
                     executeTime = timePointSet.value!!,
                     editor = UserManager.userId,
                     createTime = Timestamp.now(),
-                    status = editType.value
+                    lastEditTime = Timestamp.now(),
+                    status = 0
                 )
 
                 firebaseDataRepository.postActivity(data)
@@ -173,7 +169,8 @@ class ItemEditViewModel(
                     executeTime = timePointSet.value!!,
                     editor = UserManager.userId,
                     createTime = Timestamp.now(),
-                    status = editType.value
+                    lastEditTime = Timestamp.now(),
+                    status = 0
                 )
 
                 firebaseDataRepository.postCare(data)
