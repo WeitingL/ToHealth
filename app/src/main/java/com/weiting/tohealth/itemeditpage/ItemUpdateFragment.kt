@@ -33,11 +33,13 @@ class ItemUpdateFragment : Fragment() {
     ): View? {
         val binding = ItemUpdateFragmentBinding.inflate(inflater, container, false)
         val manageType = ItemUpdateFragmentArgs.fromBundle(requireArguments()).manageType
+        val userInfo = ItemUpdateFragmentArgs.fromBundle(requireArguments()).userInfo
         val itemData = ItemUpdateFragmentArgs.fromBundle(requireArguments()).itemData
         val factory = ItemUpdateViewModelFactory(
             PublicApplication.application.firebaseDataRepository,
             itemData,
-            manageType
+            manageType,
+            userInfo
         )
         val viewModel = ViewModelProvider(this, factory).get(ItemUpdateViewModel::class.java)
 
@@ -76,7 +78,8 @@ class ItemUpdateFragment : Fragment() {
                     tvStartTimeUpdate.text = toDateFromTimeStamp(itemData.ActivityData?.startDate)
                     clUnitUpdate.visibility = View.GONE
                     clStockUpdate.visibility = View.GONE
-                    tvOriginPeriod.text = "原先設定: ${toPeriod(itemData.ActivityData?.period?.get("type")!!)}"
+                    tvOriginPeriod.text =
+                        "原先設定: ${toPeriod(itemData.ActivityData?.period?.get("type")!!)}"
                     spPeriodUpdate.setSelection(itemData.ActivityData?.period?.get("type")!!)
                     viewModel.setPeriodType(itemData.ActivityData.period["type"]!!)
                     setExecuteTime(itemData, manageType, binding, viewModel)
@@ -100,7 +103,8 @@ class ItemUpdateFragment : Fragment() {
                     tvItemTypeTitleUpdate.text = "關懷項目"
                     tvItemNameUpdate.text = toCareType(itemData.CareData?.type)
                     tvStartTimeUpdate.text = toDateFromTimeStamp(itemData.CareData?.startDate)
-                    tvOriginPeriod.text = "原先設定: ${toPeriod(itemData.CareData?.period?.get("type")!!)}"
+                    tvOriginPeriod.text =
+                        "原先設定: ${toPeriod(itemData.CareData?.period?.get("type")!!)}"
                     clUnitUpdate.visibility = View.GONE
                     clStockUpdate.visibility = View.GONE
 
@@ -191,14 +195,14 @@ class ItemUpdateFragment : Fragment() {
 
 
         binding.gbStatusChoose.setOnCheckedChangeListener { radioGroup, i ->
-            when(i){
-                R.id.status_going ->{
+            when (i) {
+                R.id.status_going -> {
                     viewModel.getStatus(0)
                 }
-                R.id.status_pending ->{
+                R.id.status_pending -> {
                     viewModel.getStatus(1)
                 }
-                R.id.status_stop ->{
+                R.id.status_stop -> {
                     viewModel.getStatus(2)
                 }
             }
@@ -355,10 +359,10 @@ class ItemUpdateFragment : Fragment() {
     }
 
     private fun setStatus(
-        status:Int,
+        status: Int,
         binding: ItemUpdateFragmentBinding
     ) {
-        when(status){
+        when (status) {
             0 -> binding.statusGoing.isChecked = true
             1 -> binding.statusPending.isChecked = true
             2 -> binding.statusStop.isChecked = true

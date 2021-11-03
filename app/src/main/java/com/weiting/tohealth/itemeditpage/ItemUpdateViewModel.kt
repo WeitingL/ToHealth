@@ -15,7 +15,8 @@ import java.util.*
 class ItemUpdateViewModel(
     private val firebaseDataRepository: FirebaseRepository,
     private val itemData: ItemData,
-    private val manageType: ManageType
+    private val manageType: ManageType,
+    private val user: User
 ) : ViewModel() {
 
     private val _periodType = MutableLiveData<Int>()

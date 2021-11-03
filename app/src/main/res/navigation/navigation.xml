@@ -55,6 +55,9 @@
         <argument
             android:name="manageType"
             app:argType="com.weiting.tohealth.mymanagepage.ManageType" />
+        <argument
+            android:name="userInfo"
+            app:argType="com.weiting.tohealth.data.User" />
     </fragment><action android:id="@+id/action_global_itemEditFragment" app:destination="@id/itemEditFragment"/>
     <fragment
         android:id="@+id/groupFragment"
@@ -173,6 +176,9 @@
         <argument
             android:name="manageType"
             app:argType="com.weiting.tohealth.mymanagepage.ManageType" />
+        <argument
+            android:name="userInfo"
+            app:argType="com.weiting.tohealth.data.User" />
     </fragment>
     <action android:id="@+id/action_global_itemUpdateFragment" app:destination="@id/itemUpdateFragment" />
 </navigation>

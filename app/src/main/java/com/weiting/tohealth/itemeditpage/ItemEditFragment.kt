@@ -31,7 +31,8 @@ class ItemEditFragment : Fragment() {
     ): View? {
         val binding = ItemEditFragmentBinding.inflate(inflater, container, false)
         val manageType = ItemEditFragmentArgs.fromBundle(requireArguments()).manageType
-        val factory = ItemEditViewModelFactory(PublicApplication.application.firebaseDataRepository)
+        val user = ItemEditFragmentArgs.fromBundle(requireArguments()).userInfo
+        val factory = ItemEditViewModelFactory(PublicApplication.application.firebaseDataRepository, user)
         val viewModel = ViewModelProvider(this, factory).get(ItemEditViewModel::class.java)
 
         //User is navigated from which menagePage of items to create new one.

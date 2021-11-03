@@ -6,7 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
+import com.weiting.tohealth.data.User
 import com.weiting.tohealth.databinding.GroupMemberStatisticFragmentBinding
+import com.weiting.tohealth.mystatisticpage.MyStatisticAdapter
+import com.weiting.tohealth.mystatisticpage.StatisticDetailAdapter
 
 class GroupMemberStatisticFragment : Fragment() {
 
@@ -16,11 +19,18 @@ class GroupMemberStatisticFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = GroupMemberStatisticFragmentBinding.inflate(inflater, container, false)
-
+        val memberInfo = GroupMemberStatisticFragmentArgs.fromBundle(requireArguments()).memberInfo
         val viewPager = binding.vpMemberStatistic
         val tabLayout = binding.tabLayout
+        binding.tvMemberNickNameStatistic.text = memberInfo.nickName
+        binding.tvMemberNameStatistic.text = memberInfo.name
 
-        viewPager.adapter = GroupMemberStatisticAdapter(this)
+        viewPager.adapter = MyStatisticAdapter(
+            this, User(
+                id = memberInfo.userId,
+                name = memberInfo.name
+            )
+        )
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             when (position) {

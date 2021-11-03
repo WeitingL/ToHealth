@@ -14,6 +14,7 @@ import java.util.*
 
 class ItemEditViewModel(
     private val firebaseDataRepository: FirebaseRepository,
+    private val user: User
 ) : ViewModel() {
 
     private val _editItemType = MutableLiveData<ItemType>()
@@ -93,7 +94,7 @@ class ItemEditViewModel(
         when (editItemType.value) {
             ItemType.DRUG -> {
                 val data = Drug(
-                    userId = UserManager.userId,
+                    userId = user.id,
                     drugName = binding.tilDrugName.editText?.text.toString(),
                     dose = Integer.parseInt(binding.etvDrugDose.text.toString()),
                     unit = binding.spUnit.selectedItemPosition,
@@ -118,7 +119,7 @@ class ItemEditViewModel(
             }
             ItemType.MEASURE -> {
                 val data = Measure(
-                    userId = UserManager.userId,
+                    userId = user.id,
                     type = binding.spItemName.selectedItemPosition,
                     executeTime = timePointSet.value!!,
                     editor = UserManager.userId,
@@ -131,7 +132,7 @@ class ItemEditViewModel(
             }
             ItemType.ACTIVITY -> {
                 val data = Activity(
-                    userId = UserManager.userId,
+                    userId = user.id,
                     type = binding.spItemName.selectedItemPosition,
                     endDate = mapOf(
                         "type" to endDateSelected.value,
@@ -154,7 +155,7 @@ class ItemEditViewModel(
             }
             ItemType.CARE -> {
                 val data = Care(
-                    userId = UserManager.userId,
+                    userId = user.id,
                     type = binding.spItemName.selectedItemPosition,
                     endDate = mapOf(
                         "type" to endDateSelected.value,

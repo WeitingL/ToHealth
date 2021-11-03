@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.weiting.tohealth.R
+import com.weiting.tohealth.data.User
+import com.weiting.tohealth.data.UserManager
 import com.weiting.tohealth.databinding.FragmentMymanageBinding
 
 class MyManageFragment : Fragment(R.layout.fragment_mymanage) {
@@ -22,10 +24,16 @@ class MyManageFragment : Fragment(R.layout.fragment_mymanage) {
         val viewPager = binding.vpManagerPage
         val tabLayout = binding.tlManagerItem
 
-        viewPager.adapter = MyManageAdapter(this)
+        viewPager.adapter = MyManageAdapter(
+            this, User(
+                name = UserManager.name,
+                id = UserManager.userId,
+                groupList = UserManager.groupList
+            )
+        )
 
-        TabLayoutMediator(tabLayout, viewPager){ tab, position ->
-            when (position){
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            when (position) {
                 0 -> tab.text = "藥物項目"
                 1 -> tab.text = "測量項目"
                 2 -> tab.text = "活動項目"

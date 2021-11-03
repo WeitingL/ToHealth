@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.weiting.tohealth.NavigationDirections
 import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.data.ItemData
+import com.weiting.tohealth.data.User
 import com.weiting.tohealth.databinding.MymanageItemFragmentBinding
 import com.weiting.tohealth.factory.ManageDetailViewModelFactory
 
@@ -23,9 +24,11 @@ class ManageDetailFragment() : Fragment() {
     ): View? {
         val binding = MymanageItemFragmentBinding.inflate(inflater, container, false)
         val manageType = arguments?.get("type") as ManageType
+        val user = arguments?.get("user") as User
         val factory = ManageDetailViewModelFactory(
             PublicApplication.application.firebaseDataRepository,
-            manageType
+            manageType,
+            user
         )
         val viewModel = ViewModelProvider(this, factory).get(ManageDetailViewModel::class.java)
         val adapter = ManageDetailAdapter(
@@ -34,7 +37,8 @@ class ManageDetailFragment() : Fragment() {
                 findNavController().navigate(
                     NavigationDirections.actionGlobalItemUpdateFragment(
                         itemData = itemData,
-                        manageType = manageType
+                        manageType = manageType,
+                        userInfo = user
                     )
                 )
             })
@@ -90,7 +94,7 @@ class ManageDetailFragment() : Fragment() {
         binding.rvManageItems.adapter = adapter
         binding.btAddItem.setOnClickListener {
             findNavController().navigate(
-                NavigationDirections.actionGlobalItemEditFragment(manageType)
+                NavigationDirections.actionGlobalItemEditFragment(manageType, user)
             )
         }
         return binding.root
