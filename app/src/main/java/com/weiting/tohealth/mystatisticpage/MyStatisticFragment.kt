@@ -24,6 +24,7 @@ class MyStatisticFragment : Fragment() {
         val viewPager = binding.vpStatistic
         val tabLayout = binding.tlStatisticItem
 
+        viewPager.isUserInputEnabled = false
         viewPager.adapter = MyStatisticAdapter(
             this, User(
                 name = UserManager.name,

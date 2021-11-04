@@ -147,6 +147,11 @@ fun toDateFromTimeStamp(timestamp: Timestamp?): String {
         .toString()
 }
 
+fun toDateWithoutYearFromTimeStamp(timestamp: Timestamp?): String {
+    return SimpleDateFormat("MM/dd", Locale.TAIWAN).format(timestamp!!.toDate())
+        .toString()
+}
+
 fun toTimeFromTimeStamp(timestamp: Timestamp?): String {
 //    Log.i("Time", timestamp.toString())
     return SimpleDateFormat("HH:mm", Locale.TAIWAN).format(timestamp!!.toDate()).toString()
@@ -252,7 +257,7 @@ fun getTimeStampToTimeInt(timestamp: Timestamp): Int {
 fun getTimeStampToDateInt(timestamp: Timestamp):Int{
     val c = Calendar.getInstance()
     c.time = timestamp.toDate()
-    return ((c.get(Calendar.MONTH)+1)*100 + (c.get(Calendar.DAY_OF_MONTH)+1))
+    return ((c.get(Calendar.MONTH)+1)*100 + (c.get(Calendar.DAY_OF_MONTH)))
 }
 
 fun toPeriod(int: Int?):String{
