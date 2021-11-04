@@ -1,4 +1,4 @@
-package com.weiting.tohealth.mystatisticpage.drugchart
+package com.weiting.tohealth.mystatisticpage.activitychart
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,9 +7,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.R
 import com.weiting.tohealth.databinding.StasticDruglogRowBinding
+import com.weiting.tohealth.mystatisticpage.drugchart.DrugResultScaleAdapter
 
-class DrugResultScaleAdapter :
-    ListAdapter<Int, DrugResultScaleAdapter.DrugResultViewHolder>(DiffCallback) {
+class ActivityResultScaleAdapter:
+    ListAdapter<Int, ActivityResultScaleAdapter.ActivityResultViewHolder>(DiffCallback) {
 
     object DiffCallback : DiffUtil.ItemCallback<Int>() {
         override fun areItemsTheSame(oldItem: Int, newItem: Int): Boolean =
@@ -21,7 +22,7 @@ class DrugResultScaleAdapter :
     }
 
 
-    inner class DrugResultViewHolder(private val binding: StasticDruglogRowBinding) :
+    inner class ActivityResultViewHolder(private val binding: StasticDruglogRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(int: Int) {
             when(int){
@@ -32,8 +33,8 @@ class DrugResultScaleAdapter :
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DrugResultViewHolder {
-        return DrugResultViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActivityResultViewHolder {
+        return ActivityResultViewHolder(
             StasticDruglogRowBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -42,7 +43,7 @@ class DrugResultScaleAdapter :
         )
     }
 
-    override fun onBindViewHolder(holder: DrugResultViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ActivityResultViewHolder, position: Int) {
         return holder.bind(getItem(position))
     }
 

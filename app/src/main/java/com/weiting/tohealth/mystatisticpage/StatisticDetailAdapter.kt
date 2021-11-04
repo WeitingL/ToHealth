@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.databinding.*
+import com.weiting.tohealth.mystatisticpage.activitychart.ActivityTimeScaleAdapter
 import com.weiting.tohealth.mystatisticpage.drugchart.DrugTimeScaleAdapter
 import java.lang.ClassCastException
 
@@ -31,12 +32,18 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
             is LogItem.DrugLogItem -> STATISTIC_VIEWTYPE_DRUGLOGITEM
             is LogItem.Bottom -> STATISTIC_VIEWTYPE_BUTTON
             is LogItem.CareLogItem -> STATISTIC_VIEWTYPE_CARELOGITEM
+            is LogItem.ActivityLogItem -> STATISTIC_VIEWTYPE_ACTIVITYLOGITEM
         }
     }
 
     inner class ActivityLogItemViewHolder(private val binding: StatisticRowActivityBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
+            fun bind(item: LogItem.ActivityLogItem){
+                binding.tvItemName.text = item.itemName
+                val adapter = ActivityTimeScaleAdapter()
+                adapter.submitList(item.list)
+                binding.rvActivityTimeLine.adapter = adapter
+            }
     }
 
     inner class MeasureLogItemViewHolder(private val binding: StatisticRowMeasureBinding) :
@@ -86,6 +93,14 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
                 )
             )
 
+            STATISTIC_VIEWTYPE_ACTIVITYLOGITEM -> ActivityLogItemViewHolder(
+                StatisticRowActivityBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
+
             else -> throw ClassCastException("Unknown view type $viewType")
         }
     }
@@ -98,6 +113,10 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
 
             is ExportLogDataViewHolder -> {
                 holder.bind()
+            }
+
+            is ActivityLogItemViewHolder ->{
+                holder.bind(getItem(position) as LogItem.ActivityLogItem)
             }
         }
     }

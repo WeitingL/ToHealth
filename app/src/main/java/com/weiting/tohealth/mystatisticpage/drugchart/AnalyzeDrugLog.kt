@@ -24,14 +24,12 @@ class AnalyzeDrugLog {
                 drug.drugLogs.forEach { drugLog ->
                     if (getTimeStampToDateInt(drugLog.createTime!!) == it) {
                         resultList.add(drugLog.result!!)
-                    }else if (getTimeStampToDateInt(drugLog.createTime!!) == it){
-
                     }
                 }
                 resultInDateList.add(ResultInDate(date = allDateInTimestamp[index], resultList))
                 resultList = mutableListOf()
             }
-        Log.i("data", "${LogItem.DrugLogItem(drug.drugName!!, resultInDateList)}")
+//        Log.i("data", "${LogItem.DrugLogItem(drug.drugName!!, resultInDateList)}")
         return LogItem.DrugLogItem(drug.drugName!!, resultInDateList)
     }
 

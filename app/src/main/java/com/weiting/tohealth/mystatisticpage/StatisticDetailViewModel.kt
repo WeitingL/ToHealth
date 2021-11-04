@@ -10,6 +10,7 @@ import com.weiting.tohealth.data.Drug
 import com.weiting.tohealth.data.DrugLog
 import com.weiting.tohealth.data.FirebaseDataRepository
 import com.weiting.tohealth.data.FirebaseRepository
+import com.weiting.tohealth.mystatisticpage.activitychart.AnalyzeActivityLog
 import com.weiting.tohealth.mystatisticpage.drugchart.AnalyzeDrugLog
 import kotlinx.coroutines.launch
 import java.sql.Time
@@ -33,22 +34,26 @@ class StatisticDetailViewModel(
             StatisticType.CARE -> {
 
             }
-            StatisticType.ACTIVITY -> {
-
-            }
+            StatisticType.ACTIVITY -> getActivityLogs()
             StatisticType.MEASURE -> {
 
             }
         }
 
 
+    }
 
 
-
-
-
-
-        
+    private fun getActivityLogs() {
+        viewModelScope.launch {
+            val activityList = firebaseDataRepository.getAllActivities(userId)
+            activityList.forEach {
+                it.activityLogs = firebaseDataRepository.getActivityRecord(it.id!!, Timestamp.now())
+                logItemList.add(AnalyzeActivityLog().revertToResultInDateList(it))
+            }
+            logItemList.add(LogItem.Bottom)
+            _logList.value = logItemList
+        }
     }
 
     private fun getDrugLogs() {
@@ -62,13 +67,12 @@ class StatisticDetailViewModel(
             _logList.value = logItemList
         }
     }
-
-
 }
 
 sealed class LogItem {
     data class DrugLogItem(val itemName: String, val list: List<ResultInDate>) : LogItem()
     data class CareLogItem(val itemName: String, val list: List<ResultInDate>) : LogItem()
+    data class ActivityLogItem(val itemName: String, val list: List<ResultInDate>): LogItem()
     object Bottom : LogItem()
 }
 
