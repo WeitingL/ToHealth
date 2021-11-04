@@ -31,9 +31,7 @@ class StatisticDetailViewModel(
     init {
         when (statisticType) {
             StatisticType.DRUG -> getDrugLogs()
-            StatisticType.CARE -> {
-
-            }
+            StatisticType.CARE -> getCareLogs()
             StatisticType.ACTIVITY -> getActivityLogs()
             StatisticType.MEASURE -> {
 
@@ -41,6 +39,10 @@ class StatisticDetailViewModel(
         }
 
 
+    }
+
+    private fun getCareLogs(){
+        _logList.value = listOf(LogItem.CareLogItem("Care", listOf()), LogItem.Bottom)
     }
 
 

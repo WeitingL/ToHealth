@@ -1,10 +1,18 @@
 package com.weiting.tohealth.mystatisticpage
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.anychart.AnyChart
+import com.anychart.chart.common.dataentry.DataEntry
+import com.anychart.chart.common.dataentry.ValueDataEntry
+import com.anychart.enums.Anchor
+import com.anychart.enums.HoverMode
+import com.anychart.enums.Position
+import com.anychart.enums.TooltipPositionMode
 import com.weiting.tohealth.databinding.*
 import com.weiting.tohealth.mystatisticpage.activitychart.ActivityTimeScaleAdapter
 import com.weiting.tohealth.mystatisticpage.drugchart.DrugTimeScaleAdapter
@@ -38,12 +46,12 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
 
     inner class ActivityLogItemViewHolder(private val binding: StatisticRowActivityBinding) :
         RecyclerView.ViewHolder(binding.root) {
-            fun bind(item: LogItem.ActivityLogItem){
-                binding.tvItemName.text = item.itemName
-                val adapter = ActivityTimeScaleAdapter()
-                adapter.submitList(item.list)
-                binding.rvActivityTimeLine.adapter = adapter
-            }
+        fun bind(item: LogItem.ActivityLogItem) {
+            binding.tvItemName.text = item.itemName
+            val adapter = ActivityTimeScaleAdapter()
+            adapter.submitList(item.list)
+            binding.rvActivityTimeLine.adapter = adapter
+        }
     }
 
     inner class MeasureLogItemViewHolder(private val binding: StatisticRowMeasureBinding) :
@@ -53,7 +61,51 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
 
     inner class CareLogItemViewHolder(private val binding: StatisticRowCareBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: LogItem.CareLogItem) {
+            binding.acCareLogs.setProgressBar(binding.progressBar2)
+            val cartesian = AnyChart.column()
 
+            val data = mutableListOf<DataEntry>(
+                ValueEntry("10/12", 2),
+                ValueEntry("10/13", 3),
+                ValueEntry("10/14", 7),
+                ValueEntry("10/15", 4),
+                ValueEntry("10/16", 8),
+                ValueEntry("10/17", 3),
+                ValueEntry("10/18", 4),
+                ValueEntry("10/19", 1),
+                ValueEntry("10/20", 6),
+                ValueEntry("10/21", 2),
+                ValueEntry("10/22", 3),
+                ValueEntry("10/23", 0),
+                ValueEntry("10/24", 9)
+            )
+
+            Log.i("data", data.toString())
+
+            val column = cartesian.column(data)
+
+            column.tooltip()
+                .title("{%X}")
+                .position(Position.CENTER_BOTTOM)
+                .anchor(Anchor.CENTER_BOTTOM)
+                .offsetX(0)
+                .offsetX(0)
+                .format()
+
+            cartesian.animation(true)
+            cartesian.title("Cares")
+            cartesian.yScale().minimum(0)
+            cartesian.yAxis(0).labels().format("\${%Value}{groupsSeparator: }")
+
+            cartesian.tooltip().positionMode(TooltipPositionMode.POINT)
+            cartesian.interactivity().hoverMode(HoverMode.BY_X)
+
+            cartesian.yAxis(0).title("score")
+            cartesian.xAxis(0).title("Date")
+
+            binding.acCareLogs.setChart(cartesian)
+        }
     }
 
     inner class DrugLogItemViewHolder(private val binding: StatisticRowDrugBinding) :
@@ -115,10 +167,22 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
                 holder.bind()
             }
 
-            is ActivityLogItemViewHolder ->{
+            is ActivityLogItemViewHolder -> {
                 holder.bind(getItem(position) as LogItem.ActivityLogItem)
+            }
+            is CareLogItemViewHolder -> {
+                holder.bind(getItem(position) as LogItem.CareLogItem)
             }
         }
     }
+}
 
+private class ValueEntry internal constructor(
+    x: String,
+    n: Int
+) : ValueDataEntry(x, n) {
+    init {
+        setValue("x", x)
+        setValue("n", n)
+    }
 }
