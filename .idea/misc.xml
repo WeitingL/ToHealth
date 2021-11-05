@@ -12,7 +12,10 @@
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/drawable/circle_for_manage.xml" value="0.3296296296296296" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/drawable/cursor_brown.xml" value="0.12037037037037036" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/drawable/daliy_info_bar.xml" value="0.45897435897435895" />
+        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/drawable/edit_icon_selector.xml" value="0.4661458333333333" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/drawable/editext_bottomline.xml" value="0.2851851851851852" />
+        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/drawable/group_icon_selector.xml" value="0.4661458333333333" />
+        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/drawable/home_icon_selector.xml" value="0.4661458333333333" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/drawable/ic_baseline_delete_outline_24.xml" value="0.4661458333333333" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/drawable/icon_bg.xml" value="0.45897435897435895" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/drawable/progress_green.xml" value="0.33055555555555555" />
@@ -20,6 +23,7 @@
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/drawable/row_block.xml" value="0.4661458333333333" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/drawable/row_line.xml" value="0.4661458333333333" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/drawable/row_line_statistic_timerow.xml" value="0.4661458333333333" />
+        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/drawable/statistic_icon_selector.xml" value="0.4661458333333333" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/drawable/tag_bg.xml" value="0.4661458333333333" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/drawable/tag_bg_green.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/drawable/tag_bg_red.xml" value="0.4036458333333333" />
@@ -103,7 +107,7 @@
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/statistic_row_detail.xml" value="0.5" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/statistic_row_drug.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/statistic_row_item.xml" value="0.6" />
-        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/statistic_row_measure.xml" value="0.28854166666666664" />
+        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/statistic_row_measure.xml" value="0.6443148688046647" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/time_row.xml" value="0.3416666666666667" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/todolist_fragment.xml" value="0.2328125" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/menu/navigation_menu.xml" value="0.45" />

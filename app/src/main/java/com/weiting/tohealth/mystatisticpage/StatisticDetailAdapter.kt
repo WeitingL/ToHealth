@@ -93,7 +93,7 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
             cartesian.xScroller(true)
             cartesian.xScroller().position(ChartScrollerPosition.BEFORE_AXES)
             cartesian.xScroller().fill("#FFFFFF")
-            cartesian.xScroller().selectedFill("#7A7979", 4)
+            cartesian.xScroller().selectedFill("#F0F0F0", 90)
             cartesian.xScroller().allowRangeChange(false)
 
             binding.acCareLogs.setChart(cartesian)
