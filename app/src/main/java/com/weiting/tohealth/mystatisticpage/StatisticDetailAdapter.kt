@@ -9,13 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.anychart.AnyChart
 import com.anychart.chart.common.dataentry.DataEntry
 import com.anychart.chart.common.dataentry.ValueDataEntry
-import com.anychart.enums.Anchor
-import com.anychart.enums.HoverMode
-import com.anychart.enums.Position
-import com.anychart.enums.TooltipPositionMode
+import com.anychart.enums.*
 import com.weiting.tohealth.databinding.*
 import com.weiting.tohealth.mystatisticpage.activitychart.ActivityTimeScaleAdapter
 import com.weiting.tohealth.mystatisticpage.drugchart.DrugTimeScaleAdapter
+import com.weiting.tohealth.toStringFromTimeStamp
+import com.weiting.tohealth.toTimeFromTimeStamp
 import java.lang.ClassCastException
 
 const val STATISTIC_VIEWTYPE_DRUGLOGITEM = 0
@@ -62,47 +61,40 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
     inner class CareLogItemViewHolder(private val binding: StatisticRowCareBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: LogItem.CareLogItem) {
+            binding.tvItemName.text = item.itemName
+
             binding.acCareLogs.setProgressBar(binding.progressBar2)
             val cartesian = AnyChart.column()
+            val data = mutableListOf<DataEntry>()
 
-            val data = mutableListOf<DataEntry>(
-                ValueEntry("10/12", 2),
-                ValueEntry("10/13", 3),
-                ValueEntry("10/14", 7),
-                ValueEntry("10/15", 4),
-                ValueEntry("10/16", 8),
-                ValueEntry("10/17", 3),
-                ValueEntry("10/18", 4),
-                ValueEntry("10/19", 1),
-                ValueEntry("10/20", 6),
-                ValueEntry("10/21", 2),
-                ValueEntry("10/22", 3),
-                ValueEntry("10/23", 0),
-                ValueEntry("10/24", 9)
-            )
-
-            Log.i("data", data.toString())
+            item.list.forEach {
+                data.add(ValueEntry(toStringFromTimeStamp(it.createTime), it.emotion, it.note))
+            }
 
             val column = cartesian.column(data)
-
             column.tooltip()
-                .title("{%X}")
+                .titleFormat("{%X}")
                 .position(Position.CENTER_BOTTOM)
                 .anchor(Anchor.CENTER_BOTTOM)
                 .offsetX(0)
-                .offsetX(0)
-                .format()
+                .offsetY(2000)
+                .format("心情指數: {%Value} \\n 心情:{%Note}")
 
             cartesian.animation(true)
-            cartesian.title("Cares")
             cartesian.yScale().minimum(0)
-            cartesian.yAxis(0).labels().format("\${%Value}{groupsSeparator: }")
+            cartesian.yAxis(0).labels().format("{%Value}{groupsSeparator: }")
 
             cartesian.tooltip().positionMode(TooltipPositionMode.POINT)
             cartesian.interactivity().hoverMode(HoverMode.BY_X)
 
-            cartesian.yAxis(0).title("score")
-            cartesian.xAxis(0).title("Date")
+            cartesian.yAxis(0).title("分數")
+
+            cartesian.xZoom().setToPointsCount(4, false, null)
+            cartesian.xScroller(true)
+            cartesian.xScroller().position(ChartScrollerPosition.BEFORE_AXES)
+            cartesian.xScroller().fill("#FFFFFF")
+            cartesian.xScroller().selectedFill("#7A7979", 4)
+            cartesian.xScroller().allowRangeChange(false)
 
             binding.acCareLogs.setChart(cartesian)
         }
@@ -179,10 +171,12 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
 
 private class ValueEntry internal constructor(
     x: String,
-    n: Int
+    n: Int,
+    note: String
 ) : ValueDataEntry(x, n) {
     init {
         setValue("x", x)
         setValue("n", n)
+        setValue("note", note)
     }
 }

@@ -1,20 +1,15 @@
 package com.weiting.tohealth.mystatisticpage
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.Timestamp
-import com.weiting.tohealth.data.Drug
-import com.weiting.tohealth.data.DrugLog
-import com.weiting.tohealth.data.FirebaseDataRepository
 import com.weiting.tohealth.data.FirebaseRepository
 import com.weiting.tohealth.mystatisticpage.activitychart.AnalyzeActivityLog
+import com.weiting.tohealth.mystatisticpage.carechart.AnalyzeCareLog
 import com.weiting.tohealth.mystatisticpage.drugchart.AnalyzeDrugLog
 import kotlinx.coroutines.launch
-import java.sql.Time
-import java.util.*
 
 class StatisticDetailViewModel(
     private val firebaseDataRepository: FirebaseRepository,
@@ -37,12 +32,18 @@ class StatisticDetailViewModel(
 
             }
         }
-
-
     }
 
     private fun getCareLogs(){
-        _logList.value = listOf(LogItem.CareLogItem("Care", listOf()), LogItem.Bottom)
+        viewModelScope.launch {
+            val careList = firebaseDataRepository.getAllCares(userId)
+            careList.forEach {
+                it.careLogs = firebaseDataRepository.getCareRecord(it.id!!, Timestamp.now())
+                logItemList.add(AnalyzeCareLog().revertToResultInDateList(it))
+            }
+            logItemList.add(LogItem.Bottom)
+            _logList.value = logItemList
+        }
     }
 
 
@@ -73,7 +74,7 @@ class StatisticDetailViewModel(
 
 sealed class LogItem {
     data class DrugLogItem(val itemName: String, val list: List<ResultInDate>) : LogItem()
-    data class CareLogItem(val itemName: String, val list: List<ResultInDate>) : LogItem()
+    data class CareLogItem(val itemName: String, val list: List<ResultInDateForCare>) : LogItem()
     data class ActivityLogItem(val itemName: String, val list: List<ResultInDate>): LogItem()
     object Bottom : LogItem()
 }
@@ -82,5 +83,11 @@ sealed class LogItem {
 data class ResultInDate(
     val date: Timestamp,
     val results: List<Int>
+)
+
+data class ResultInDateForCare(
+    val createTime: Timestamp,
+    val emotion: Int,
+    val note: String
 )
 
