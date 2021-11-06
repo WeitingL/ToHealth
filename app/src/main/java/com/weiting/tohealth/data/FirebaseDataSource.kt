@@ -52,12 +52,12 @@ object FirebaseDataSource : FirebaseSource {
 
     }
 
-    override suspend fun getAllDrugs(): List<Drug> = suspendCoroutine { continuation ->
+    override suspend fun getAllDrugs(userId: String): List<Drug> = suspendCoroutine { continuation ->
         val list = mutableListOf<Drug>()
         val database = application.database
 
         database.collection("drugs")
-            .whereEqualTo("userId", "Weiting")
+            .whereEqualTo("userId", userId)
             .get()
             .addOnSuccessListener { result ->
 
@@ -72,12 +72,12 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
-    override suspend fun getAllMeasures(): List<Measure> = suspendCoroutine { continuation ->
+    override suspend fun getAllMeasures(userId: String): List<Measure> = suspendCoroutine { continuation ->
         val list = mutableListOf<Measure>()
         val database = application.database
 
         database.collection("measures")
-            .whereEqualTo("userId", "Weiting")
+            .whereEqualTo("userId", userId)
             .get()
             .addOnSuccessListener { result ->
 
@@ -92,12 +92,12 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
-    override suspend fun getAllActivities(): List<Activity> = suspendCoroutine { continuation ->
+    override suspend fun getAllActivities(userId: String): List<Activity> = suspendCoroutine { continuation ->
         val list = mutableListOf<Activity>()
         val database = application.database
 
         database.collection("activity")
-            .whereEqualTo("userId", "Weiting")
+            .whereEqualTo("userId", userId)
             .get()
             .addOnSuccessListener { result ->
 
@@ -112,12 +112,12 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
-    override suspend fun getAllCares(): List<Care> = suspendCoroutine { continuation ->
+    override suspend fun getAllCares(userId: String): List<Care> = suspendCoroutine { continuation ->
         val list = mutableListOf<Care>()
         val database = application.database
 
         database.collection("cares")
-            .whereEqualTo("userId", "Weiting")
+            .whereEqualTo("userId", userId)
             .get()
             .addOnSuccessListener { result ->
 
@@ -392,6 +392,7 @@ object FirebaseDataSource : FirebaseSource {
             val database = application.database
 
             database.collection("drugs").document(itemId).collection("drugLogs")
+                .orderBy("createTime", Query.Direction.DESCENDING)
                 .limit(100)
                 .get()
                 .addOnSuccessListener { result ->
@@ -412,6 +413,7 @@ object FirebaseDataSource : FirebaseSource {
             val database = application.database
 
             database.collection("measures").document(itemId).collection("measuresLogs")
+                .orderBy("createTime", Query.Direction.DESCENDING)
                 .limit(100)
                 .get()
                 .addOnSuccessListener { result ->
@@ -435,6 +437,7 @@ object FirebaseDataSource : FirebaseSource {
             val database = application.database
 
             database.collection("activity").document(itemId).collection("activityLogs")
+                .orderBy("createTime", Query.Direction.DESCENDING)
                 .limit(100)
                 .get()
                 .addOnSuccessListener { result ->
@@ -456,6 +459,7 @@ object FirebaseDataSource : FirebaseSource {
             val database = application.database
 
             database.collection("cares").document(itemId).collection("careLogs")
+                .orderBy("createTime", Query.Direction.DESCENDING)
                 .limit(100)
                 .get()
                 .addOnSuccessListener { result ->

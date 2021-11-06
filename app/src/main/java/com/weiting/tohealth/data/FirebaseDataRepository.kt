@@ -14,20 +14,20 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
     }
 
     //------------------OutDate.---------------------//
-    override suspend fun getAllDrugs(): List<Drug> {
-        return firebaseSource.getAllDrugs()
+    override suspend fun getAllDrugs(userId:String): List<Drug> {
+        return firebaseSource.getAllDrugs(userId)
     }
 
-    override suspend fun getAllMeasures(): List<Measure> {
-        return firebaseSource.getAllMeasures()
+    override suspend fun getAllMeasures(userId:String): List<Measure> {
+        return firebaseSource.getAllMeasures(userId)
     }
 
-    override suspend fun getAllActivities(): List<Activity> {
-        return firebaseSource.getAllActivities()
+    override suspend fun getAllActivities(userId:String): List<Activity> {
+        return firebaseSource.getAllActivities(userId)
     }
 
-    override suspend fun getAllCares(): List<Care> {
-        return firebaseSource.getAllCares()
+    override suspend fun getAllCares(userId:String): List<Care> {
+        return firebaseSource.getAllCares(userId)
     }
     //-------------------------------------------------//
 

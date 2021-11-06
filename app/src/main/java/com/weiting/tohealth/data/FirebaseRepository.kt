@@ -18,13 +18,13 @@ interface FirebaseRepository {
      */
 
     //Get Items list
-    suspend fun getAllDrugs(): List<Drug>
+    suspend fun getAllDrugs(userId: String): List<Drug>
 
-    suspend fun getAllMeasures(): List<Measure>
+    suspend fun getAllMeasures(userId: String): List<Measure>
 
-    suspend fun getAllActivities(): List<Activity>
+    suspend fun getAllActivities(userId: String): List<Activity>
 
-    suspend fun getAllCares(): List<Care>
+    suspend fun getAllCares(userId: String): List<Care>
 
     fun getLiveDrugList(userId: String): MutableLiveData<List<Drug>>
 

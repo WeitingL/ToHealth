@@ -147,6 +147,11 @@ fun toDateFromTimeStamp(timestamp: Timestamp?): String {
         .toString()
 }
 
+fun toDateWithoutYearFromTimeStamp(timestamp: Timestamp?): String {
+    return SimpleDateFormat("MM/dd", Locale.TAIWAN).format(timestamp!!.toDate())
+        .toString()
+}
+
 fun toTimeFromTimeStamp(timestamp: Timestamp?): String {
 //    Log.i("Time", timestamp.toString())
     return SimpleDateFormat("HH:mm", Locale.TAIWAN).format(timestamp!!.toDate()).toString()
@@ -252,7 +257,7 @@ fun getTimeStampToTimeInt(timestamp: Timestamp): Int {
 fun getTimeStampToDateInt(timestamp: Timestamp):Int{
     val c = Calendar.getInstance()
     c.time = timestamp.toDate()
-    return ((c.get(Calendar.MONTH)+1)*100 + (c.get(Calendar.DAY_OF_MONTH)+1))
+    return ((c.get(Calendar.MONTH)+1)*100 + (c.get(Calendar.DAY_OF_MONTH)))
 }
 
 fun toPeriod(int: Int?):String{
@@ -275,5 +280,16 @@ fun toDay(int: Int?):String{
         4 -> "5日"
         5 -> "6日"
         else -> "What?!"
+    }
+}
+
+fun toUnitForMeasure(int: Int?):String{
+    return when(int){
+        1 -> "血糖 mg/dl"
+        2 -> "血糖 mg/dl"
+        3 -> "血氧 %"
+        4 -> "公斤 Kg"
+        5 -> "攝氏 °C"
+        else -> "單位"
     }
 }

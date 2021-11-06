@@ -38,6 +38,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                 val todayLogCreateTimeIntList = mutableListOf<Int>()
                 drugList.forEach { drug ->
 
+                    //Get all Logs.
                     drug.drugLogs = firebaseDataRepository.getDrugRecord(drug.id!!, Timestamp.now())
                     drug.drugLogs.forEach { drugLog ->
                         if (getTimeStampToDateInt(drugLog.createTime!!) ==
@@ -50,6 +51,8 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
 
                     if (ItemArranger().isTodayNeedToDo(ItemType.DRUG, ItemData(DrugData = drug))) {
                         drug.executeTime.forEach {
+
+                            //Skip the time tag is the same with exist time tag.
                             if (getTimeStampToTimeInt(it) !in todayLogCreateTimeIntList) {
                                 drugCurrentList.add(
                                     ItemDataType.DrugType(

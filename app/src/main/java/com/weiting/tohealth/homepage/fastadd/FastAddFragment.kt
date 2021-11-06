@@ -16,6 +16,7 @@ import com.weiting.tohealth.data.DrugLog
 import com.weiting.tohealth.data.MeasureLog
 import com.weiting.tohealth.databinding.FastAddFragmentBinding
 import com.weiting.tohealth.factory.FastAddViewModelFactory
+import com.weiting.tohealth.getTimeStampToTimeInt
 import com.weiting.tohealth.homepage.ItemDataType
 
 class FastAddFragment : Fragment() {
@@ -32,7 +33,7 @@ class FastAddFragment : Fragment() {
             when (it) {
                 is FastAddItem.DrugItem -> {
                     viewModel.postDrugLog(it.drug.id!!, DrugLog(
-                        timeTag = 9999,
+                        timeTag = getTimeStampToTimeInt(Timestamp.now()),
                         result = 2,
                         createTime = Timestamp.now()
                     ), it.drug)
@@ -41,7 +42,7 @@ class FastAddFragment : Fragment() {
                 }
                 is FastAddItem.ActivityItem -> {
                     viewModel.postActivity(it.activity.id!!, ActivityLog(
-                        timeTag = 9999,
+                        timeTag = getTimeStampToTimeInt(Timestamp.now()),
                         result = 2,
                         createTime = Timestamp.now()
                     ))
