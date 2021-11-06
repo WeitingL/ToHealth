@@ -6,11 +6,13 @@ import com.weiting.tohealth.data.Drug
 import com.weiting.tohealth.getTimeStampToDateInt
 import com.weiting.tohealth.mystatisticpage.LogItem
 import com.weiting.tohealth.mystatisticpage.ResultInDate
+import com.weiting.tohealth.toDateWithoutYearFromTimeStamp
+import com.weiting.tohealth.toTimeFromTimeStamp
 
 class AnalyzeDrugLog {
 
     private val resultInDateList = mutableListOf<ResultInDate>()
-    private var resultList = mutableListOf<Int>()
+    private var resultList = mutableListOf<Map<String, String>>()
 
     //TODO Rearrange unexpected uptake to the last.
 
@@ -19,23 +21,28 @@ class AnalyzeDrugLog {
     private val allDateInTimestamp = mutableListOf<Timestamp>()
 
     fun revertToResultInDateList(drug: Drug): LogItem.DrugLogItem {
-            getAllDate(drug)
-            allDateInInt.forEachIndexed { index, it ->
-                drug.drugLogs.forEach { drugLog ->
-                    if (getTimeStampToDateInt(drugLog.createTime!!) == it) {
-                        resultList.add(drugLog.result!!)
-                    }
+        getAllDate(drug)
+        allDateInInt.forEachIndexed { index, it ->
+            drug.drugLogs.forEach { drugLog ->
+                if (getTimeStampToDateInt(drugLog.createTime!!) == it) {
+                    resultList.add(
+                        mapOf(
+                            "result" to drugLog.result.toString(),
+                            "time" to toTimeFromTimeStamp(drugLog.createTime)
+                        )
+                    )
                 }
-                resultInDateList.add(ResultInDate(date = allDateInTimestamp[index], resultList))
-                resultList = mutableListOf()
             }
+            resultInDateList.add(ResultInDate(date = allDateInTimestamp[index], resultList))
+            resultList = mutableListOf()
+        }
 //        Log.i("data", "${LogItem.DrugLogItem(drug.drugName!!, resultInDateList)}")
         return LogItem.DrugLogItem(drug.drugName!!, resultInDateList)
     }
 
     private fun getAllDate(drug: Drug) {
         drug.drugLogs.forEach {
-            if (getTimeStampToDateInt(it.createTime!!) !in allDateInInt){
+            if (getTimeStampToDateInt(it.createTime!!) !in allDateInInt) {
                 allDateInInt.add(getTimeStampToDateInt(it.createTime))
                 allDateInTimestamp.add(it.createTime)
 //                Log.i("data", allDateInInt.toString())

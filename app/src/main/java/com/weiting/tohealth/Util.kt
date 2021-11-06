@@ -282,3 +282,14 @@ fun toDay(int: Int?):String{
         else -> "What?!"
     }
 }
+
+fun toUnitForMeasure(int: Int?):String{
+    return when(int){
+        1 -> "血糖 mg/dl"
+        2 -> "血糖 mg/dl"
+        3 -> "血氧 %"
+        4 -> "公斤 Kg"
+        5 -> "攝氏 °C"
+        else -> "單位"
+    }
+}

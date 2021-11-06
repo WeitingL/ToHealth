@@ -16,7 +16,7 @@
         android:background="@drawable/button_main_color"
         android:gravity="center"
         android:text="新增健康群組"
-        android:textAppearance="@style/title_text"
+        android:textAppearance="@style/title_text_bl"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

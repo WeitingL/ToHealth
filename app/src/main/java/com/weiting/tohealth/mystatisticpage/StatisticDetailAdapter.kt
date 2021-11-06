@@ -9,12 +9,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.anychart.AnyChart
 import com.anychart.chart.common.dataentry.DataEntry
 import com.anychart.chart.common.dataentry.ValueDataEntry
+import com.anychart.data.Set
 import com.anychart.enums.*
 import com.weiting.tohealth.databinding.*
 import com.weiting.tohealth.mystatisticpage.activitychart.ActivityTimeScaleAdapter
 import com.weiting.tohealth.mystatisticpage.drugchart.DrugTimeScaleAdapter
+import com.weiting.tohealth.toDateWithoutYearFromTimeStamp
+import com.weiting.tohealth.toMeasureType
 import com.weiting.tohealth.toStringFromTimeStamp
-import com.weiting.tohealth.toTimeFromTimeStamp
+import com.weiting.tohealth.toUnitForMeasure
 import java.lang.ClassCastException
 
 const val STATISTIC_VIEWTYPE_DRUGLOGITEM = 0
@@ -40,6 +43,7 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
             is LogItem.Bottom -> STATISTIC_VIEWTYPE_BUTTON
             is LogItem.CareLogItem -> STATISTIC_VIEWTYPE_CARELOGITEM
             is LogItem.ActivityLogItem -> STATISTIC_VIEWTYPE_ACTIVITYLOGITEM
+            is LogItem.MeasureLogItem -> STATISTIC_VIEWTYPE_MEASURELOGITEM
         }
     }
 
@@ -55,12 +59,76 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
 
     inner class MeasureLogItemViewHolder(private val binding: StatisticRowMeasureBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: LogItem.MeasureLogItem) {
+            binding.tvItemName.text = toMeasureType(item.type)
+            Log.i("holder", item.toString())
+            binding.acMainChart.setProgressBar(binding.progressBar3)
 
+            //Get the dataList
+            val list = mutableListOf<DataEntry>()
+            item.list.forEach {
+                list.add(
+                    MeasureValueEntry(
+                        toStringFromTimeStamp(it.createTime),
+                        it.record["X"],
+                        it.record["Y"],
+                        it.record["Z"]
+                    )
+                )
+            }
+
+            //Blood Pressure chart
+            if (item.type == 0) {
+                val cartesian = AnyChart.cartesian()
+                val set = Set.instantiate()
+                set.data(list)
+                val data = set.mapAs("{x: 'x', high : 'n', low: 'm'}")
+
+                cartesian.rangeColumn(data)
+                cartesian.xAxis(true)
+                    .yAxis(true)
+                    .yGrid(true)
+                    .yMinorGrid(true)
+
+                cartesian.tooltip().titleFormat("登錄時間 {%x}")
+                    .format("收縮壓: {%n} mmHg \\n 舒張壓: {%m} mmHg \\n 心律: {%y} bpm")
+
+                cartesian.xZoom().setToPointsCount(6, false, null)
+                cartesian.xScroller(true)
+                cartesian.xScroller().position(ChartScrollerPosition.BEFORE_AXES)
+                cartesian.xScroller().fill("#FFFFFF")
+                cartesian.xScroller().selectedFill("#F0F0F0", 90)
+                cartesian.xScroller().allowRangeChange(false)
+                binding.acMainChart.setChart(cartesian)
+
+                //Others chart
+            } else {
+                val barChart = AnyChart.column()
+                val set = Set.instantiate()
+                set.data(list)
+                val data = set.mapAs("{x: 'x', n : 'n'}")
+                barChart.column(data)
+
+                barChart.animation(true)
+
+                barChart.yScale().stackMode(ScaleStackMode.VALUE)
+
+                barChart.yAxis(0).title("${toUnitForMeasure(item.type)}")
+                barChart.xAxis(0).overlapMode(LabelsOverlapMode.NO_OVERLAP)
+
+                barChart.tooltip()
+                    .titleFormat("登錄時間 {%x}")
+                    .format("{%n}")
+
+                binding.acMainChart.setChart(barChart)
+            }
+        }
     }
 
     inner class CareLogItemViewHolder(private val binding: StatisticRowCareBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: LogItem.CareLogItem) {
+
             binding.tvItemName.text = item.itemName
 
             binding.acCareLogs.setProgressBar(binding.progressBar2)
@@ -68,7 +136,7 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
             val data = mutableListOf<DataEntry>()
 
             item.list.forEach {
-                data.add(ValueEntry(toStringFromTimeStamp(it.createTime), it.emotion, it.note))
+                data.add(CareValueEntry(toStringFromTimeStamp(it.createTime), it.emotion, it.note))
             }
 
             val column = cartesian.column(data)
@@ -89,7 +157,7 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
 
             cartesian.yAxis(0).title("分數")
 
-            cartesian.xZoom().setToPointsCount(4, false, null)
+            cartesian.xZoom().setToPointsCount(6, false, null)
             cartesian.xScroller(true)
             cartesian.xScroller().position(ChartScrollerPosition.BEFORE_AXES)
             cartesian.xScroller().fill("#FFFFFF")
@@ -145,6 +213,14 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
                 )
             )
 
+            STATISTIC_VIEWTYPE_MEASURELOGITEM -> MeasureLogItemViewHolder(
+                StatisticRowMeasureBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
+
             else -> throw ClassCastException("Unknown view type $viewType")
         }
     }
@@ -162,21 +238,40 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
             is ActivityLogItemViewHolder -> {
                 holder.bind(getItem(position) as LogItem.ActivityLogItem)
             }
+
             is CareLogItemViewHolder -> {
                 holder.bind(getItem(position) as LogItem.CareLogItem)
+            }
+
+            is MeasureLogItemViewHolder -> {
+                holder.bind(getItem(position) as LogItem.MeasureLogItem)
             }
         }
     }
 }
 
-private class ValueEntry internal constructor(
+private class CareValueEntry(
     x: String,
-    n: Int,
-    note: String
+    n: Int?,
+    note: String?
 ) : ValueDataEntry(x, n) {
     init {
         setValue("x", x)
         setValue("n", n)
         setValue("note", note)
+    }
+}
+
+private class MeasureValueEntry(
+    x: String,
+    n: Int?,
+    m: Int?,
+    y: Int?,
+) : ValueDataEntry(x, n) {
+    init {
+        setValue("x", x)
+        setValue("n", n)
+        setValue("m", m)
+        setValue("y", y)
     }
 }

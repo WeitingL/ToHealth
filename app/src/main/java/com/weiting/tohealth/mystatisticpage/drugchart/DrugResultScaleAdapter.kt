@@ -1,5 +1,6 @@
 package com.weiting.tohealth.mystatisticpage.drugchart
 
+import android.icu.number.IntegerWidth
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -9,13 +10,13 @@ import com.weiting.tohealth.R
 import com.weiting.tohealth.databinding.StasticDruglogRowBinding
 
 class DrugResultScaleAdapter :
-    ListAdapter<Int, DrugResultScaleAdapter.DrugResultViewHolder>(DiffCallback) {
+    ListAdapter<Map<String, String>, DrugResultScaleAdapter.DrugResultViewHolder>(DiffCallback) {
 
-    object DiffCallback : DiffUtil.ItemCallback<Int>() {
-        override fun areItemsTheSame(oldItem: Int, newItem: Int): Boolean =
+    object DiffCallback : DiffUtil.ItemCallback<Map<String, String>>() {
+        override fun areItemsTheSame(oldItem: Map<String, String>, newItem: Map<String, String>): Boolean =
             oldItem == newItem
 
-        override fun areContentsTheSame(oldItem: Int, newItem: Int): Boolean =
+        override fun areContentsTheSame(oldItem: Map<String, String>, newItem: Map<String, String>): Boolean =
             oldItem == newItem
 
     }
@@ -23,11 +24,26 @@ class DrugResultScaleAdapter :
 
     inner class DrugResultViewHolder(private val binding: StasticDruglogRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(int: Int) {
-            when(int){
-                0 -> binding.imLog.setImageResource(R.drawable.success)
-                1 -> binding.imLog.setImageResource(R.drawable.error)
-                2 -> binding.imLog.setImageResource(R.drawable.warning)
+        fun bind(map: Map<String, String>) {
+            when(map["result"]!!.toInt()){
+                0 -> {
+                    binding.apply {
+                        imLog.setImageResource(R.drawable.circle_check_green)
+                        tvText.text = map["time"]
+                    }
+                }
+                1 -> {
+                    binding.apply {
+                        imLog.setImageResource(R.drawable.circle_check_cross)
+                        tvText.text = "未完成"
+                    }
+                }
+                2 -> {
+                    binding.apply {
+                        imLog.setImageResource(R.drawable.circle_check_blue)
+                        tvText.text = map["time"]
+                    }
+                }
             }
         }
     }

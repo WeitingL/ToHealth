@@ -9,6 +9,7 @@ import com.weiting.tohealth.data.FirebaseRepository
 import com.weiting.tohealth.mystatisticpage.activitychart.AnalyzeActivityLog
 import com.weiting.tohealth.mystatisticpage.carechart.AnalyzeCareLog
 import com.weiting.tohealth.mystatisticpage.drugchart.AnalyzeDrugLog
+import com.weiting.tohealth.mystatisticpage.measurechart.AnalyzeMeasureLog
 import kotlinx.coroutines.launch
 
 class StatisticDetailViewModel(
@@ -28,13 +29,23 @@ class StatisticDetailViewModel(
             StatisticType.DRUG -> getDrugLogs()
             StatisticType.CARE -> getCareLogs()
             StatisticType.ACTIVITY -> getActivityLogs()
-            StatisticType.MEASURE -> {
-
-            }
+            StatisticType.MEASURE -> getMeasureLogs()
         }
     }
 
-    private fun getCareLogs(){
+    private fun getMeasureLogs() {
+        viewModelScope.launch {
+            val measureList = firebaseDataRepository.getAllMeasures(userId)
+            measureList.forEach {
+                it.measureLogs = firebaseDataRepository.getMeasureRecord(it.id!!, Timestamp.now())
+                logItemList.add(AnalyzeMeasureLog().revertToResultInDateList(it))
+            }
+            logItemList.add(LogItem.Bottom)
+            _logList.value = logItemList
+        }
+    }
+
+    private fun getCareLogs() {
         viewModelScope.launch {
             val careList = firebaseDataRepository.getAllCares(userId)
             careList.forEach {
@@ -75,14 +86,20 @@ class StatisticDetailViewModel(
 sealed class LogItem {
     data class DrugLogItem(val itemName: String, val list: List<ResultInDate>) : LogItem()
     data class CareLogItem(val itemName: String, val list: List<ResultInDateForCare>) : LogItem()
-    data class ActivityLogItem(val itemName: String, val list: List<ResultInDate>): LogItem()
+    data class ActivityLogItem(val itemName: String, val list: List<ResultInDate>) : LogItem()
+    data class MeasureLogItem(
+        val itemName: String,
+        val type: Int,
+        val list: List<ResultInDateForMeasure>
+    ) : LogItem()
+
     object Bottom : LogItem()
 }
 
 //DrugLogData and CareLogData
 data class ResultInDate(
     val date: Timestamp,
-    val results: List<Int>
+    val results: List<Map<String, String>>
 )
 
 data class ResultInDateForCare(
@@ -91,3 +108,8 @@ data class ResultInDateForCare(
     val note: String
 )
 
+data class ResultInDateForMeasure(
+    val createTime: Timestamp,
+    val results: Int,
+    val record: Map<String, Int?>
+)
