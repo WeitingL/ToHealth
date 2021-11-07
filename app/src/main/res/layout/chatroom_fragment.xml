@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context="com.weiting.tohealth.mygrouppage.grouproom.chat.ChatFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -21,7 +22,7 @@
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:background="@drawable/row_block"
+        android:background="@drawable/card_block"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -50,7 +51,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:background="@drawable/bg_block_corner"
+            android:background="@drawable/square_block"
             android:ems="10"
             android:inputType="textPersonName"
             android:paddingHorizontal="10dp"

@@ -23,9 +23,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:background="@color/baby_pink"
+        android:background="@color/pink_brown"
         android:clickable="true"
-        app:backgroundTint="@color/baby_pink"
+        app:backgroundTint="@color/pink_brown"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_baseline_edit_24" />

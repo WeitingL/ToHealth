@@ -80,7 +80,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:background="@color/dark_blue"
+            android:background="@color/brown_black"
             android:paddingStart="8dp"
             android:text="群組訊息"
             android:textAppearance="@style/subTitle_text"

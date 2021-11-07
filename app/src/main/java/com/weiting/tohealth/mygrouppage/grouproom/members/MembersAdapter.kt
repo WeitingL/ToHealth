@@ -7,8 +7,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.data.Member
 import com.weiting.tohealth.databinding.MemberRowBinding
-import com.weiting.tohealth.homepage.HomeAdapter
-import com.weiting.tohealth.homepage.HomePageItem
 
 class MembersAdapter(val onClickListener: EditOnclickListener, val onclickListener: ViewOnclickListener) :
     ListAdapter<Member, MembersAdapter.MemberViewHolder>(DiffCallback) {

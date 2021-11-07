@@ -10,10 +10,8 @@ import androidx.navigation.fragment.findNavController
 import com.weiting.tohealth.NavigationDirections
 import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.data.Group
-import com.weiting.tohealth.data.Member
 import com.weiting.tohealth.databinding.MembersFragmentBinding
 import com.weiting.tohealth.factory.MembersViewModelFactory
-import com.weiting.tohealth.homepage.HomeAdapter
 
 class MembersFragment() : Fragment() {
 

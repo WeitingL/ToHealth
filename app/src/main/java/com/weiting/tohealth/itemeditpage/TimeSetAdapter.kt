@@ -8,9 +8,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.Timestamp
 import com.weiting.tohealth.databinding.EditTimeRowBinding
-import com.weiting.tohealth.homepage.HomeAdapter
-import com.weiting.tohealth.homepage.HomePageItem
-import com.weiting.tohealth.toStringFromTimeStamp
 import com.weiting.tohealth.toTimeFromTimeStamp
 
 class TimeSetAdapter(val onClickListener: OnclickListener) : ListAdapter<Timestamp, TimeSetAdapter.TimeEditViewHolder>(DiffCallBack) {

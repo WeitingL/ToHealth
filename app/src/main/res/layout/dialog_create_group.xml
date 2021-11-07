@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/uranian_blue"
+    android:background="@color/pink_brown"
     tools:context="com.weiting.tohealth.mygrouppage.dialogs.CreateGroupDialog">
 
     <TextView
@@ -80,7 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="輸入名稱"
-        android:textAppearance="@style/title_text_bl"
+        android:textAppearance="@style/title_text"
         android:background="@drawable/button_yellow_color"
         app:layout_constraintEnd_toEndOf="@+id/til_GroupName"
         app:layout_constraintStart_toStartOf="@+id/til_GroupName"
