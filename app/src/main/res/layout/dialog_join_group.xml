@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/main_color"
+    android:background="@color/jeans_blue"
     tools:context="com.weiting.tohealth.mygrouppage.dialogs.JoinGroupDialog">
 
     <TextView
@@ -14,7 +14,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="輸入群組代碼"
-        android:textAppearance="@style/title_text"
+        android:textAppearance="@style/title_text_bl"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -34,7 +34,7 @@
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/drawable/tag_bg_green.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/drawable/tag_bg_red.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/drawable/tag_bg_yellow.xml" value="0.4036458333333333" />
-        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/activity_main.xml" value="0.4466666666666667" />
+        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/activity_main.xml" value="0.2987551867219917" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/activity_record_fragment.xml" value="0.3416666666666667" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/board_row_calenderitem.xml" value="0.38058252427184464" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/board_row_note.xml" value="0.4260869565217391" />
@@ -49,9 +49,9 @@
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/detail_todo_time_row.xml" value="0.3875" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/dialog_activity_record.xml" value="0.45" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/dialog_add_exist_group.xml" value="0.4466666666666667" />
-        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/dialog_add_group.xml" value="0.3875" />
+        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/dialog_add_group.xml" value="0.14666666666666667" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/dialog_calender.xml" value="0.45" />
-        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/dialog_calendertime.xml" value="0.4466666666666667" />
+        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/dialog_calendertime.xml" value="0.36769759450171824" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/dialog_care_record.xml" value="0.6666666666666666" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/dialog_create_group.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/dialog_drug_record.xml" value="0.5" />
@@ -60,20 +60,20 @@
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/dialog_measure_record.xml" value="0.4466666666666667" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/dialog_new_group.xml" value="0.2609375" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/dialog_skip_record.xml" value="0.45" />
-        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/edit_noteandcalenderitem_fragment.xml" value="0.6500754147812972" />
+        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/edit_noteandcalenderitem_fragment.xml" value="0.41576506955177744" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/edit_time_row.xml" value="0.6" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/fast_add_fragment.xml" value="0.45" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/fragment_group.xml" value="0.3333333333333333" />
-        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/fragment_home.xml" value="0.5" />
+        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/fragment_home.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/fragment_manage.xml" value="0.45" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/fragment_mygroup.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/fragment_mymanage.xml" value="0.45" />
-        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/fragment_mystatistic.xml" value="0.3260416666666667" />
+        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/fragment_mystatistic.xml" value="0.4466666666666667" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/fragment_stastic.xml" value="0.2609375" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/fragment_statistic.xml" value="0.31614583333333335" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/fragmentmanage.xml" value="0.2609375" />
-        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/group_fragment.xml" value="0.345679012345679" />
-        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/group_member_management_fragment.xml" value="0.6" />
+        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/group_fragment.xml" value="0.4466666666666667" />
+        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/group_member_management_fragment.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/group_member_statistic_fragment.xml" value="0.21810699588477367" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/group_row_addgroup.xml" value="0.3875" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/group_row_group.xml" value="0.4466666666666667" />
@@ -95,9 +95,9 @@
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/manage_detail_fragment.xml" value="0.31614583333333335" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/manage_row_item.xml" value="0.4466666666666667" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/measure_record_fragment.xml" value="0.4466666666666667" />
-        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/member_row.xml" value="0.5" />
+        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/member_row.xml" value="0.22" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/members_fragment.xml" value="0.45" />
-        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/mygroup_row_group.xml" value="0.6" />
+        <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/mygroup_row_group.xml" value="0.49206349206349204" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/mygroup_row_member.xml" value="0.5" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/mygroup_row_note.xml" value="0.4559505409582689" />
         <entry key="..\:/Users/ss890/AndroidStudioProjects/Personal Project/ToHealth/app/src/main/res/layout/mymanage_item_fragment.xml" value="0.2359375" />

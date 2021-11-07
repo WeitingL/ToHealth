@@ -64,4 +64,7 @@ abstract class RecyclerViewSwipe() :
 
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
     }
+
+
+
 }

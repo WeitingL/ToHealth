@@ -10,7 +10,7 @@
         android:id="@+id/cl_memberInfo_edit"
         android:layout_width="0dp"
         android:layout_height="100dp"
-        android:background="@color/main_color"
+        android:background="@color/uranian_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="TextView"
-            android:textAppearance="@style/title_text"
+            android:textAppearance="@style/title_text_bl"
             app:layout_constraintStart_toEndOf="@+id/cardView2"
             app:layout_constraintTop_toTopOf="@+id/cardView2" />
 
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="TextView"
-            android:textAppearance="@style/subTitle_text"
+            android:textAppearance="@style/subTitle_text_bl"
             app:layout_constraintStart_toStartOf="@+id/tv_memberName_statistic"
             app:layout_constraintTop_toBottomOf="@+id/tv_memberName_statistic" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -62,9 +62,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cl_memberInfo_edit"
-        app:tabIndicatorColor="@color/main_color"
-        app:tabSelectedTextColor="@color/sub_color"
-        app:tabTextColor="@color/main_color">
+        app:tabIndicatorColor="@color/black"
+        app:tabSelectedTextColor="@color/black"
+        app:tabTextColor="@color/brown_black">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"

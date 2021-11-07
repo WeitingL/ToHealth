@@ -38,7 +38,7 @@
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:background="@color/main_color"
+        android:background="@color/uranian_blue"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"

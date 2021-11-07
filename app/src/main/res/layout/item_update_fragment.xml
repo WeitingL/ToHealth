@@ -20,7 +20,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:background="@drawable/button_yellow_color"
+            android:background="@drawable/button_main_color"
             android:text="確認"
             android:textAppearance="@style/title_text_bl"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -118,7 +118,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
-                android:background="@drawable/button_yellow_color"
+                android:background="@drawable/button_main_color"
                 android:drawableStart="@drawable/ic_baseline_add_40"
                 android:gravity="center"
                 android:minHeight="48dp"
@@ -439,21 +439,21 @@
                 android:id="@+id/status_going"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:buttonTint="@color/jeans_blue"
+                android:buttonTint="@color/brown_black"
                 android:text="執行中"/>
 
             <RadioButton
                 android:id="@+id/status_pending"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:buttonTint="@color/jeans_blue"
+                android:buttonTint="@color/brown_black"
                 android:text="暫停執行(可再次執行)" />
 
             <RadioButton
                 android:id="@+id/status_stop"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:buttonTint="@color/jeans_blue"
+                android:buttonTint="@color/brown_black"
                 android:text="中止執行(不再執行，僅保留執行紀錄)" />
 
         </RadioGroup>
