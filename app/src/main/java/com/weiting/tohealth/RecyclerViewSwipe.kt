@@ -2,6 +2,7 @@ package com.weiting.tohealth
 
 import android.content.Context
 import android.graphics.*
+import android.util.Log
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.homepage.*
@@ -65,6 +66,21 @@ abstract class RecyclerViewSwipe() :
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
     }
 
+    fun isLastInTimePoint(position: Int, adapter: TodayItemAdapter): Boolean {
 
-
+        return when (adapter.getItemViewType(position - 1) == ITEM_VIEWTYPE_TIME) {
+            true -> {
+                when (adapter.currentList.size == position) {
+                    true -> true
+                    false -> {
+                        when (adapter.getItemViewType(position) == ITEM_VIEWTYPE_TIME) {
+                            true -> true
+                            false -> false
+                        }
+                    }
+                }
+            }
+            false -> false
+        }
+    }
 }

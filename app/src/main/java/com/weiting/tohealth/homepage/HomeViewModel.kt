@@ -29,8 +29,8 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
     val allCompleted: LiveData<Boolean>
         get() = _allCompleted
 
-    fun taskCompleted(){
-        _allCompleted.value = true
+    fun taskCompleted() {
+        _allCompleted.value = totalTask.value == completedTask.value
     }
 
     init {
@@ -352,13 +352,19 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
         _completedTask.value = _completedTask.value?.plus(1)
     }
 
-    fun removeTimeHeader(swipeData: SwipeData){
+    fun removeTimeHeader(swipeData: SwipeData) {
         skipTimeList.add(swipeData)
     }
 
     fun undoSwipeToSkip() {
         val lastData = skipList.last()
         val currentList = itemDataMediator.value
+
+        if (skipTimeList.isNotEmpty() && lastData.position == (skipTimeList.last().position + 1)) {
+//            Log.i("data", skipTimeList.last().itemDataType.toString())
+            currentList?.add(skipTimeList.last().position, skipTimeList.last().itemDataType)
+            skipTimeList.removeLast()
+        }
 
         skipList.removeLast()
         _completedTask.value = _completedTask.value?.minus(1)
@@ -409,7 +415,6 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                         )
                     )
                 }
-
             }
         }
     }
@@ -420,17 +425,29 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
      */
 
     private val finishedLogList = mutableListOf<SwipeData>()
+    private val finishedTimeList= mutableListOf<SwipeData>()
 
     fun getFinishedLog(swipeData: SwipeData) {
         finishedLogList.add(swipeData)
         _completedTask.value = _completedTask.value?.plus(1)
     }
 
+    fun removeTimeHeaderOfFinished(swipeData: SwipeData){
+        finishedTimeList.add(swipeData)
+    }
+
     fun undoSwipeToLog() {
         val lastData = finishedLogList.last()
+        val currentList = itemDataMediator.value
+
+        if (finishedTimeList.isNotEmpty() && lastData.position == (finishedTimeList.last().position +1)){
+            currentList?.add(finishedTimeList.last().position, finishedTimeList.last().itemDataType)
+            finishedTimeList.removeLast()
+        }
+
         finishedLogList.removeLast()
         _completedTask.value = _completedTask.value?.minus(1)
-        val currentList = itemDataMediator.value
+
         currentList?.add(lastData.position, lastData.itemDataType)
         itemDataMediator.value = currentList
     }
