@@ -28,7 +28,7 @@ data class Note(
     var id: String? = null,
     val title: String? = null,
     val content: String? = null,
-    val editor: String? = null,
+    var editor: String? = null,
     val footer: Int? = null,
     val createTimestamp: Timestamp? = null
 ) : Parcelable
@@ -36,7 +36,7 @@ data class Note(
 @Parcelize
 data class CalenderItem(
     var id: String? = null,
-    val editor: String? = null,
+    var editor: String? = null,
     val content: String? = null,
     val date: Timestamp? = null,
     val createTime: Timestamp? = null,

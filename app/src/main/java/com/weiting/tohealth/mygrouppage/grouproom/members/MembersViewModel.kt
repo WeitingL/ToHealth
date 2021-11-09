@@ -1,9 +1,6 @@
 package com.weiting.tohealth.mygrouppage.grouproom.members
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.weiting.tohealth.data.FirebaseRepository
 import com.weiting.tohealth.data.Group
 import com.weiting.tohealth.data.Member
@@ -14,6 +11,18 @@ class MembersViewModel(
     private val group: Group
 ) : ViewModel() {
 
-//    val liveMembersList = group.member
+    private val liveMembersList = firebaseDataRepository.getLiveMember(groupId = group.id!!)
+
+    val memberLive = MediatorLiveData<List<Member>>().apply {
+        addSource(liveMembersList){ list ->
+            viewModelScope.launch {
+                list.forEach { member ->
+                    member.profilePhoto = firebaseDataRepository.getUserInfo(member.userId!!).userPhoto
+                }
+                value = list
+            }
+        }
+    }
+
 
 }

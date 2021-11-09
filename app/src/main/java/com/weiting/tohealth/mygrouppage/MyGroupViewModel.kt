@@ -30,17 +30,26 @@ class MyGroupViewModel(private val firebaseDataRepository: FirebaseRepository) :
                 if (groupList.isNotEmpty()) {
                     _groupItemList.value = listOf()
                     groupList.forEach {
-                        it.member += firebaseDataRepository.getMember(it.id!!)
 
+                        it.member += firebaseDataRepository.getMember(it.id!!)
                         it.member.forEach { member ->
-                            member.profilePhoto = firebaseDataRepository.getUserInfo(member.userId!!).userPhoto
+                            member.profilePhoto =
+                                firebaseDataRepository.getUserInfo(member.userId!!).userPhoto
                         }
 
                         it.notes += firebaseDataRepository.getNote(it.id!!)
-                        it.calenderItems += firebaseDataRepository.getCalenderItem(it.id!!)
+                        it.notes.forEach { note ->
+                            note.editor = firebaseDataRepository.getUserInfo(note.editor!!).name
+                        }
 
-//                        Log.i("GroupListVM", it.toString())
-                        _groupItemList.value = _groupItemList.value?.plus(GroupPageItem.MyGroups(it))
+                        it.calenderItems += firebaseDataRepository.getCalenderItem(it.id!!)
+                        it.calenderItems.forEach { calenderItem ->
+                            calenderItem.editor =
+                                firebaseDataRepository.getUserInfo(calenderItem.editor!!).name
+                        }
+
+                        _groupItemList.value =
+                            _groupItemList.value?.plus(GroupPageItem.MyGroups(it))
                     }
                     _groupItemList.value = _groupItemList.value?.plus(GroupPageItem.AddGroups)
                 }

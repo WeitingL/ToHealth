@@ -580,7 +580,7 @@ object FirebaseDataSource : FirebaseSource {
                     val dataList = result.toObjects(Group::class.java)
                     list += dataList
 
-                    Log.i("GroupList", list.toString())
+//                    Log.i("GroupList", list.toString())
                     continuation.resume(list)
                 }
                 .addOnFailureListener { e ->
@@ -601,7 +601,7 @@ object FirebaseDataSource : FirebaseSource {
                     val dataList = result.toObjects(Member::class.java)
                     list += dataList
 
-                    Log.i("MemberList", list.toString())
+//                    Log.i("MemberList", list.toString())
                     continuation.resume(list)
                 }
                 .addOnFailureListener { e ->
@@ -615,6 +615,7 @@ object FirebaseDataSource : FirebaseSource {
 
         database.collection("groups").document(groupId)
             .collection("notes")
+            .orderBy("createTimestamp", Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { result ->
 
@@ -636,6 +637,7 @@ object FirebaseDataSource : FirebaseSource {
 
             database.collection("groups").document(groupId)
                 .collection("calenderItems")
+                .orderBy("createTime", Query.Direction.DESCENDING)
                 .get()
                 .addOnSuccessListener { result ->
 
@@ -669,7 +671,7 @@ object FirebaseDataSource : FirebaseSource {
                     list.add(data)
                 }
 
-                Log.i("dataSource", memberList.value.toString())
+//                Log.i("dataSource", memberList.value.toString())
                 memberList.value = list
             }
         return memberList

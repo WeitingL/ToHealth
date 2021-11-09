@@ -1,6 +1,7 @@
 package com.weiting.tohealth.mygrouppage.grouproom.board
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,16 +27,9 @@ class BoardFragment (): Fragment() {
         val viewModel = ViewModelProvider(this, factory).get(BoardViewModel::class.java)
         val adapter = BoardAdapter(viewModel)
 
-        viewModel.boardList.observe(viewLifecycleOwner){
+        viewModel.boardLiveData.observe(viewLifecycleOwner){
+            Log.i("list", it.toString())
             adapter.submitList(it)
-        }
-
-        viewModel.calenderItem.observe(viewLifecycleOwner){
-            viewModel.getCalenderList(it)
-        }
-
-        viewModel.notesList.observe(viewLifecycleOwner){
-            viewModel.getNotesList(it)
         }
 
         binding.fbAddNewMessage.setOnClickListener {
