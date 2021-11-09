@@ -25,22 +25,28 @@ class MyGroupFragment : Fragment() {
         val viewModel = ViewModelProvider(this, factory).get(MyGroupViewModel::class.java)
 
         val adapter = GroupAdapter(GroupAdapter.OnclickListener {
-            when(it){
-                is GroupPageItem.MyGroups ->{
+            when (it) {
+                is GroupPageItem.MyGroups -> {
                     findNavController().navigate(NavigationDirections.actionGlobalGroupFragment(it.group))
                 }
 
-                is GroupPageItem.AddGroups ->{
+                is GroupPageItem.AddGroups -> {
                     findNavController().navigate(NavigationDirections.actionGlobalAddGroupDialog())
                 }
             }
         })
 
-        viewModel.userData.observe(viewLifecycleOwner){
+        viewModel.loading.observe(viewLifecycleOwner){
+            if (it == false){
+                binding.lavLoadingMygroup.visibility = View.GONE
+            }
+        }
+
+        viewModel.userData.observe(viewLifecycleOwner) {
             viewModel.getGroup(it.groupList)
         }
 
-        viewModel.groupItemList.observe(viewLifecycleOwner){
+        viewModel.groupItemList.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
 

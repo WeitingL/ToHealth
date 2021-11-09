@@ -34,15 +34,14 @@ object FirebaseDataSource : FirebaseSource {
     override suspend fun getUser(userId: String): User = suspendCoroutine { continuation ->
         val database = application.database
 
-        database.collection("users")
-            .whereEqualTo("id", userId)
+        database.collection("users").document(userId)
             .get()
             .addOnSuccessListener { result ->
 
-                val dataList = result.toObjects(User::class.java)
+                val data = result.toObject(User::class.java)
 
 //                Log.i("drugsList", list.toString())
-                continuation.resume(dataList.first())
+                continuation.resume(data?:User())
             }
             .addOnFailureListener { e ->
                 Log.w("Error to get data", e)
@@ -62,85 +61,89 @@ object FirebaseDataSource : FirebaseSource {
 
     }
 
-    override suspend fun getAllDrugs(userId: String): List<Drug> = suspendCoroutine { continuation ->
-        val list = mutableListOf<Drug>()
-        val database = application.database
+    override suspend fun getAllDrugs(userId: String): List<Drug> =
+        suspendCoroutine { continuation ->
+            val list = mutableListOf<Drug>()
+            val database = application.database
 
-        database.collection("drugs")
-            .whereEqualTo("userId", userId)
-            .get()
-            .addOnSuccessListener { result ->
+            database.collection("drugs")
+                .whereEqualTo("userId", userId)
+                .get()
+                .addOnSuccessListener { result ->
 
-                val dataList = result.toObjects(Drug::class.java)
-                list += dataList
+                    val dataList = result.toObjects(Drug::class.java)
+                    list += dataList
 
 //                Log.i("drugsList", list.toString())
-                continuation.resume(list)
-            }
-            .addOnFailureListener { e ->
-                Log.w("Error to get data", e)
-            }
-    }
+                    continuation.resume(list)
+                }
+                .addOnFailureListener { e ->
+                    Log.w("Error to get data", e)
+                }
+        }
 
-    override suspend fun getAllMeasures(userId: String): List<Measure> = suspendCoroutine { continuation ->
-        val list = mutableListOf<Measure>()
-        val database = application.database
+    override suspend fun getAllMeasures(userId: String): List<Measure> =
+        suspendCoroutine { continuation ->
+            val list = mutableListOf<Measure>()
+            val database = application.database
 
-        database.collection("measures")
-            .whereEqualTo("userId", userId)
-            .get()
-            .addOnSuccessListener { result ->
+            database.collection("measures")
+                .whereEqualTo("userId", userId)
+                .get()
+                .addOnSuccessListener { result ->
 
-                val dataList = result.toObjects(Measure::class.java)
-                list += dataList
+                    val dataList = result.toObjects(Measure::class.java)
+                    list += dataList
 
 //                Log.i("measuresList", list.toString())
-                continuation.resume(list)
-            }
-            .addOnFailureListener { e ->
-                Log.w("Error to get data", e)
-            }
-    }
+                    continuation.resume(list)
+                }
+                .addOnFailureListener { e ->
+                    Log.w("Error to get data", e)
+                }
+        }
 
-    override suspend fun getAllActivities(userId: String): List<Activity> = suspendCoroutine { continuation ->
-        val list = mutableListOf<Activity>()
-        val database = application.database
+    override suspend fun getAllActivities(userId: String): List<Activity> =
+        suspendCoroutine { continuation ->
+            val list = mutableListOf<Activity>()
+            val database = application.database
 
-        database.collection("activity")
-            .whereEqualTo("userId", userId)
-            .get()
-            .addOnSuccessListener { result ->
+            database.collection("activity")
+                .whereEqualTo("userId", userId)
+                .get()
+                .addOnSuccessListener { result ->
 
-                val dataList = result.toObjects(Activity::class.java)
-                list += dataList
+                    val dataList = result.toObjects(Activity::class.java)
+                    list += dataList
 
 //                Log.i("activityList", list.toString())
-                continuation.resume(list)
-            }
-            .addOnFailureListener { e ->
-                Log.w("Error to get data", e)
-            }
-    }
+                    continuation.resume(list)
+                }
+                .addOnFailureListener { e ->
+                    Log.w("Error to get data", e)
+                }
+        }
 
-    override suspend fun getAllCares(userId: String): List<Care> = suspendCoroutine { continuation ->
-        val list = mutableListOf<Care>()
-        val database = application.database
+    override suspend fun getAllCares(userId: String): List<Care> =
+        suspendCoroutine { continuation ->
+            val list = mutableListOf<Care>()
+            val database = application.database
 
-        database.collection("cares")
-            .whereEqualTo("userId", userId)
-            .get()
-            .addOnSuccessListener { result ->
+            database.collection("cares")
+                .whereEqualTo("userId", userId)
+                .get()
+                .addOnSuccessListener { result ->
 
-                val dataList = result.toObjects(Care::class.java)
-                list += dataList
+                    val dataList = result.toObjects(Care::class.java)
+                    list += dataList
 
 //                Log.i("caresList", list.toString())
-                continuation.resume(list)
-            }
-            .addOnFailureListener { e ->
-                Log.w("Error to get data", e)
-            }
-    }
+                    continuation.resume(list)
+                }
+                .addOnFailureListener { e ->
+                    Log.w("Error to get data", e)
+                }
+        }
 
     override fun getLiveDrugList(userId: String): MutableLiveData<List<Drug>> {
 
@@ -541,11 +544,10 @@ object FirebaseDataSource : FirebaseSource {
                 .addOnSuccessListener { result ->
                     val user = result.toObject(User::class.java)
 
-                    when (user?.groupList?.contains(groupId)){
+                    when (user?.groupList?.contains(groupId)) {
                         true -> continuation.resume(true)
                         false -> continuation.resume(false)
                     }
-
 
 
                 }

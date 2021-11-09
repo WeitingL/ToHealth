@@ -24,6 +24,10 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             when (navController.currentDestination?.id){
+                R.id.loginFragment ->{
+                    binding.bottomNavigationView.visibility = View.GONE
+                    binding.toolbar.visibility = View.GONE
+                }
                 R.id.itemEditFragment -> {
                     binding.bottomNavigationView.visibility = View.GONE
                     binding.toolbar.visibility = View.VISIBLE

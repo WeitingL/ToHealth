@@ -14,21 +14,28 @@ class MyGroupViewModel(private val firebaseDataRepository: FirebaseRepository) :
     val groupItemList: LiveData<List<GroupPageItem>>
         get() = _groupItemList
 
+    private val _loading = MutableLiveData<Boolean>()
+    val loading: LiveData<Boolean>
+        get() = _loading
+
     val userData = firebaseDataRepository.login(UserManager.UserInformation.id!!)
+
+    private val currentGroupList = mutableListOf<GroupPageItem>()
 
     init {
         _groupItemList.value = listOf(
             GroupPageItem.AddGroups
         )
+        _loading.value = true
     }
 
     fun getGroup(idList: List<String>) {
         viewModelScope.launch {
+            _groupItemList.value = mutableListOf()
             idList.forEach { id ->
                 val groupList = firebaseDataRepository.getGroups(id)
 
                 if (groupList.isNotEmpty()) {
-                    _groupItemList.value = listOf()
                     groupList.forEach {
 
                         it.member += firebaseDataRepository.getMember(it.id!!)
@@ -47,13 +54,13 @@ class MyGroupViewModel(private val firebaseDataRepository: FirebaseRepository) :
                             calenderItem.editor =
                                 firebaseDataRepository.getUserInfo(calenderItem.editor!!).name
                         }
-
-                        _groupItemList.value =
-                            _groupItemList.value?.plus(GroupPageItem.MyGroups(it))
+                        currentGroupList.add(GroupPageItem.MyGroups(it))
                     }
-                    _groupItemList.value = _groupItemList.value?.plus(GroupPageItem.AddGroups)
                 }
             }
+            _groupItemList.value = currentGroupList.toList()
+            _groupItemList.value = _groupItemList.value?.plus(GroupPageItem.AddGroups)
+            _loading.value = false
         }
     }
 }

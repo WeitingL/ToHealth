@@ -17,8 +17,16 @@ class LoginViewModel(private val firebaseDataRepository: FirebaseRepository) : V
         get() = _userInfo
 
     fun signInUserInfo(user: User) {
-        firebaseDataRepository.signIn(user)
-        UserManager.UserInformation = user
+        viewModelScope.launch {
+            val userExist = firebaseDataRepository.getUserInfo(user.id!!)
+
+            if (userExist.id == null){
+                firebaseDataRepository.signIn(user)
+                UserManager.UserInformation = user
+            }else{
+                initialUserManager(user.id)
+            }
+        }
     }
 
     fun initialUserManager(userId: String) {

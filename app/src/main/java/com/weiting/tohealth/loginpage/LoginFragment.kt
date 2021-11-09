@@ -59,7 +59,6 @@ class LoginFragment : Fragment() {
 
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -69,11 +68,11 @@ class LoginFragment : Fragment() {
 
         viewModel.userInfo.observe(viewLifecycleOwner){
             UserManager.UserInformation = it
-            findNavController().navigate(NavigationDirections.actionGlobalHomeFragment())
+            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
         }
 
 
-        binding.button2.setOnClickListener {
+        binding.cardView3.setOnClickListener {
             getGoogleSignInPop()
         }
 
