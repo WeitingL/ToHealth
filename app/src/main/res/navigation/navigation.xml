@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/loginFragment">
 
     <dialog
         android:id="@+id/addGroupDialog"
@@ -233,4 +233,10 @@
             app:argType="string" />
     </dialog>
     <action android:id="@+id/action_global_editMyNickNameDialog" app:destination="@id/editMyNickNameDialog" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.weiting.tohealth.loginpage.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
+    <action android:id="@+id/action_global_loginFragment" app:destination="@id/loginFragment" />
 </navigation>

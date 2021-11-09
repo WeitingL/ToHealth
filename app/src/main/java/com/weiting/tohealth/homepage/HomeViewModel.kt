@@ -46,10 +46,10 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
         Identify the finished mission by numbers and created time of ItemLog.
      */
 
-    private val drugList = firebaseDataRepository.getLiveDrugList(UserManager.userId)
-    private val measureList = firebaseDataRepository.getLiveMeasureList(UserManager.userId)
-    private val activityList = firebaseDataRepository.getLiveActivityList(UserManager.userId)
-    private val careList = firebaseDataRepository.getLiveCareList(UserManager.userId)
+    private val drugList = firebaseDataRepository.getLiveDrugList(UserManager.UserInformation.id!!)
+    private val measureList = firebaseDataRepository.getLiveMeasureList(UserManager.UserInformation.id!!)
+    private val activityList = firebaseDataRepository.getLiveActivityList(UserManager.UserInformation.id!!)
+    private val careList = firebaseDataRepository.getLiveCareList(UserManager.UserInformation.id!!)
 
     private val drugCurrentList = mutableListOf<ItemDataType>()
     private val measureCurrentList = mutableListOf<ItemDataType>()

@@ -87,6 +87,11 @@ dependencies {
     // Firebase
     implementation "io.grpc:grpc-okhttp:1.32.2"
 
+    //Firebase_GoogleLogin
+    implementation platform('com.google.firebase:firebase-bom:29.0.0')
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.google.android.gms:play-services-auth:19.2.0'
+
     //RecyclerViewSwipeDecorator
     implementation 'com.github.xabaras:RecyclerViewSwipeDecorator:1.3'
 

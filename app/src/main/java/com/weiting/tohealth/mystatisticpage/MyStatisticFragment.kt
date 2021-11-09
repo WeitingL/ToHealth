@@ -27,9 +27,9 @@ class MyStatisticFragment : Fragment() {
         viewPager.isUserInputEnabled = false
         viewPager.adapter = MyStatisticAdapter(
             this, User(
-                name = UserManager.name,
-                id = UserManager.userId,
-                groupList = UserManager.groupList
+                name = UserManager.UserInformation.name,
+                id = UserManager.UserInformation.id,
+                groupList = UserManager.UserInformation.groupList
             )
         )
 

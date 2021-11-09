@@ -29,7 +29,7 @@ class GroupMemberManageFragment : Fragment() {
         binding.tvMemberNameManage.text = memberInfo.name
         binding.tvMemberNickName.text = memberInfo.nickName
 
-        if (memberInfo.userId != UserManager.userId){
+        if (memberInfo.userId != UserManager.UserInformation.id){
             binding.ibEditNickName.visibility = View.GONE
         }
 

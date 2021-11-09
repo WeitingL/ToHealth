@@ -35,7 +35,7 @@ class ItemUpdateViewModel(
     private val timestampList = mutableListOf<Timestamp>()
     private val dateList = mutableListOf<Int>()
 
-    fun getStatus(int: Int){
+    fun getStatus(int: Int) {
         _statusSelected.value = int
     }
 
@@ -82,9 +82,9 @@ class ItemUpdateViewModel(
                 )
                 data.executeTime = timePointSet.value!!
                 data.stock = Integer.parseInt(binding.etvStockUpdate.text.toString())
-                data.editor = UserManager.userId
+                data.editor = UserManager.UserInformation.id
                 data.lastEditTime = Timestamp.now()
-                data.status = statusSelected.value?:data.status
+                data.status = statusSelected.value ?: data.status
 
                 firebaseDataRepository.updateDrug(data)
             }
@@ -93,9 +93,9 @@ class ItemUpdateViewModel(
                 val data = itemData.MeasureData!!
 
                 data.lastEditTime = Timestamp.now()
-                data.editor = UserManager.userId
+                data.editor = UserManager.UserInformation.id
                 data.executeTime = timePointSet.value!!
-                data.status = statusSelected.value?:data.status
+                data.status = statusSelected.value ?: data.status
 
                 firebaseDataRepository.updateMeasure(data)
             }
@@ -109,9 +109,9 @@ class ItemUpdateViewModel(
                     "X" to binding.spSuspendDayUpdate.selectedItemPosition
                 )
                 data.executeTime = timePointSet.value!!
-                data.editor = UserManager.userId
+                data.editor = UserManager.UserInformation.id
                 data.lastEditTime = Timestamp.now()
-                data.status = statusSelected.value?:data.status
+                data.status = statusSelected.value ?: data.status
 
                 firebaseDataRepository.updateActivity(data)
             }
@@ -125,9 +125,9 @@ class ItemUpdateViewModel(
                     "X" to binding.spSuspendDayUpdate.selectedItemPosition
                 )
                 data.executeTime = timePointSet.value!!
-                data.editor = UserManager.userId
+                data.editor = UserManager.UserInformation.id
                 data.lastEditTime = Timestamp.now()
-                data.status = statusSelected.value?:data.status
+                data.status = statusSelected.value ?: data.status
 
                 firebaseDataRepository.updateCare(data)
             }

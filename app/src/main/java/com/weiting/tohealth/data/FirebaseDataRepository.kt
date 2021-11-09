@@ -5,28 +5,32 @@ import com.google.firebase.Timestamp
 
 class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : FirebaseRepository {
 
-    override fun login(userName: String): MutableLiveData<User> {
-        return firebaseSource.login(userName)
+    override fun login(userId: String): MutableLiveData<User> {
+        return firebaseSource.login(userId)
     }
 
-    override fun signIn(userName: String) {
-        return firebaseSource.signIn(userName)
+    override suspend fun getUser(userId: String): User {
+        return getUser(userId)
+    }
+
+    override fun signIn(user: User) {
+        return firebaseSource.signIn(user)
     }
 
     //------------------OutDate.---------------------//
-    override suspend fun getAllDrugs(userId:String): List<Drug> {
+    override suspend fun getAllDrugs(userId: String): List<Drug> {
         return firebaseSource.getAllDrugs(userId)
     }
 
-    override suspend fun getAllMeasures(userId:String): List<Measure> {
+    override suspend fun getAllMeasures(userId: String): List<Measure> {
         return firebaseSource.getAllMeasures(userId)
     }
 
-    override suspend fun getAllActivities(userId:String): List<Activity> {
+    override suspend fun getAllActivities(userId: String): List<Activity> {
         return firebaseSource.getAllActivities(userId)
     }
 
-    override suspend fun getAllCares(userId:String): List<Care> {
+    override suspend fun getAllCares(userId: String): List<Care> {
         return firebaseSource.getAllCares(userId)
     }
     //-------------------------------------------------//

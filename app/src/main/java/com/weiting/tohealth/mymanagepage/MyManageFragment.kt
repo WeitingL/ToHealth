@@ -26,9 +26,9 @@ class MyManageFragment : Fragment(R.layout.fragment_mymanage) {
 
         viewPager.adapter = MyManageAdapter(
             this, User(
-                name = UserManager.name,
-                id = UserManager.userId,
-                groupList = UserManager.groupList
+                name = UserManager.UserInformation.name,
+                id = UserManager.UserInformation.id,
+                groupList = UserManager.UserInformation.groupList
             )
         )
 

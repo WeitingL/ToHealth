@@ -9,9 +9,11 @@ interface FirebaseRepository {
     Login with livedata
  */
 
-    fun login(userName: String): MutableLiveData<User>
+    fun login(userId: String): MutableLiveData<User>
 
-    fun signIn(userName: String)
+    suspend fun getUser(userId: String): User
+
+    fun signIn(user: User)
 
     /*
        Items operation
@@ -123,8 +125,8 @@ interface FirebaseRepository {
 
     fun postChatMessage(chat: Chat)
 
-    suspend fun getUserInfo (userId: String):User
+    suspend fun getUserInfo(userId: String): User
 
-    fun editStock(itemId:String, num:Int)
+    fun editStock(itemId: String, num: Int)
 
 }

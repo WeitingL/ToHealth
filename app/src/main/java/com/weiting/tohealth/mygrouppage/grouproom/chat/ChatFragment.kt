@@ -39,7 +39,7 @@ class ChatFragment() : Fragment() {
             viewModel.postMessage(Chat(
                 groupId = group.id,
                 context = binding.etvMessage.text.toString(),
-                creator = UserManager.userId,
+                creator = UserManager.UserInformation.id,
                 createTimestamp = Timestamp.now()
             ))
             binding.etvMessage.text.clear()

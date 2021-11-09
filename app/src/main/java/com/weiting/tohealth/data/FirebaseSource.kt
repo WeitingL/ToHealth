@@ -11,9 +11,11 @@ interface FirebaseSource {
         Login with livedata
      */
 
-    fun login(userName: String): MutableLiveData<User>
+    fun login(userId: String): MutableLiveData<User>
 
-    fun signIn(userName: String)
+    suspend fun getUser(userId: String): User
+
+    fun signIn(user: User)
 
     /*
        Items operation

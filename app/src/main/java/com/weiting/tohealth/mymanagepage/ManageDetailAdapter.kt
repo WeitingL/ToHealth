@@ -59,8 +59,8 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                         tvUpdateTime.text = toStringFromTimeStamp(data.lastEditTime)
                         tvCreatedTime.text = toStringFromTimeStamp(data.createTime)
 
-                        tvEditorManage.text = if (data.editor == UserManager.userId) {
-                            UserManager.name
+                        tvEditorManage.text = if (data.editor == UserManager.UserInformation.id) {
+                            UserManager.UserInformation.name
                         } else {
                             "others"
                         }
@@ -86,8 +86,8 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                         tvRatioTitle.text = "剩餘天數"
                         tvRatioNum.text = "無期限"
 
-                        tvEditorManage.text = if (data?.editor == UserManager.userId) {
-                            UserManager.name
+                        tvEditorManage.text = if (data?.editor == UserManager.UserInformation.id) {
+                            UserManager.UserInformation.name
                         } else {
                             "others"
                         }
@@ -112,8 +112,8 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                         tvRatioTitle.text = "剩餘天數"
                         tvRatioNum.text = "無期限"
 
-                        tvEditorManage.text = if (data?.editor == UserManager.userId) {
-                            UserManager.name
+                        tvEditorManage.text = if (data?.editor == UserManager.UserInformation.id) {
+                            UserManager.UserInformation.name
                         } else {
                             "others"
                         }
@@ -139,8 +139,8 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                         tvCreatedTime.text = toStringFromTimeStamp(data?.createTime)
                         tvUpdateTime.text = toStringFromTimeStamp(data.lastEditTime)
 
-                        tvEditorManage.text = if (data?.editor == UserManager.userId) {
-                            UserManager.name
+                        tvEditorManage.text = if (data?.editor == UserManager.UserInformation.id) {
+                            UserManager.UserInformation.name
                         } else {
                             "others"
                         }

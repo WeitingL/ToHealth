@@ -14,7 +14,7 @@ class MyGroupViewModel(private val firebaseDataRepository: FirebaseRepository) :
     val groupItemList: LiveData<List<GroupPageItem>>
         get() = _groupItemList
 
-    val userData = firebaseDataRepository.login(UserManager.name)
+    val userData = firebaseDataRepository.login(UserManager.UserInformation.id!!)
 
     init {
         _groupItemList.value = listOf(

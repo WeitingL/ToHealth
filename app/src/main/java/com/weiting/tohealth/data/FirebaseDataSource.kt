@@ -1,26 +1,23 @@
 package com.weiting.tohealth.data
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.SetOptions
-import com.google.firebase.firestore.ktx.toObject
 import com.weiting.tohealth.PublicApplication.Companion.application
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
-import kotlin.math.log
 
 object FirebaseDataSource : FirebaseSource {
 
-    override fun login(userName: String): MutableLiveData<User> {
+    override fun login(userId: String): MutableLiveData<User> {
         val database = application.database
         val user = MutableLiveData<User>()
 
         database.collection("users")
-            .whereEqualTo("name", userName)
+            .whereEqualTo("id", userId)
             .addSnapshotListener { value, error ->
                 if (error != null) {
                     Log.e("Listen failed.", error.toString())
@@ -34,17 +31,30 @@ object FirebaseDataSource : FirebaseSource {
         return user
     }
 
-    override fun signIn(userName: String) {
-        val data = User(
-            name = userName,
-            id = application.database.collection("users").document().id
-        )
+    override suspend fun getUser(userId: String): User = suspendCoroutine { continuation ->
+        val database = application.database
 
+        database.collection("users")
+            .whereEqualTo("id", userId)
+            .get()
+            .addOnSuccessListener { result ->
+
+                val dataList = result.toObjects(User::class.java)
+
+//                Log.i("drugsList", list.toString())
+                continuation.resume(dataList.first())
+            }
+            .addOnFailureListener { e ->
+                Log.w("Error to get data", e)
+            }
+    }
+
+    override fun signIn(user: User) {
         application.database.collection("users")
-            .document(data.id!!)
-            .set(data)
+            .document(user.id!!)
+            .set(user)
             .addOnSuccessListener { documentReference ->
-                Log.d("store success", "DocumentSnapshot added with ID: ${data.id}")
+                Log.d("store success", "DocumentSnapshot added with ID: ${user.id}")
             }
             .addOnFailureListener { e ->
                 Log.w("store failure", "Error adding document", e)
@@ -526,15 +536,18 @@ object FirebaseDataSource : FirebaseSource {
 
     override suspend fun checkIsRelationExist(userId: String, groupId: String): Boolean =
         suspendCoroutine { continuation ->
-            application.database.collection("users")
-                .whereArrayContains("groupList", groupId)
+            application.database.collection("users").document(userId)
                 .get()
                 .addOnSuccessListener { result ->
+                    val user = result.toObject(User::class.java)
 
-                    when (result.isEmpty) {
-                        true -> continuation.resume(false)
-                        false -> continuation.resume(true)
+                    when (user?.groupList?.contains(groupId)){
+                        true -> continuation.resume(true)
+                        false -> continuation.resume(false)
                     }
+
+
+
                 }
         }
 

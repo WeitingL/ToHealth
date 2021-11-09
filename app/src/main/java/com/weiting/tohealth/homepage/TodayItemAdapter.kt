@@ -88,8 +88,8 @@ class TodayItemAdapter() :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(care: Care?) {
             binding.apply {
-                val editor = if (care?.editor == UserManager.userId){
-                    "${UserManager.name}"
+                val editor = if (care?.editor == UserManager.UserInformation.id){
+                    "${UserManager.UserInformation.name}"
                 }else{
                     "others"
                 }

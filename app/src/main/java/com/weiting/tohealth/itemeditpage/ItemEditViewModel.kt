@@ -111,7 +111,7 @@ class ItemEditViewModel(
                     executeTime = timePointSet.value!!,
                     lastEditTime = Timestamp.now(),
                     stock = Integer.parseInt(binding.etvStock.text.toString()),
-                    editor = UserManager.userId,
+                    editor = UserManager.UserInformation.id,
                     createTime = Timestamp.now(),
                     status = 0
                 )
@@ -122,7 +122,7 @@ class ItemEditViewModel(
                     userId = user.id,
                     type = binding.spItemName.selectedItemPosition,
                     executeTime = timePointSet.value!!,
-                    editor = UserManager.userId,
+                    editor = UserManager.UserInformation.id,
                     createTime = Timestamp.now(),
                     lastEditTime = Timestamp.now(),
                     status = 0
@@ -145,7 +145,7 @@ class ItemEditViewModel(
                         "X" to binding.spSuspendDay.selectedItemPosition,
                     ),
                     executeTime = timePointSet.value!!,
-                    editor = UserManager.userId,
+                    editor = UserManager.UserInformation.id,
                     createTime = Timestamp.now(),
                     lastEditTime = Timestamp.now(),
                     status = 0
@@ -168,7 +168,7 @@ class ItemEditViewModel(
                         "X" to binding.spSuspendDay.selectedItemPosition,
                     ),
                     executeTime = timePointSet.value!!,
-                    editor = UserManager.userId,
+                    editor = UserManager.UserInformation.id,
                     createTime = Timestamp.now(),
                     lastEditTime = Timestamp.now(),
                     status = 0

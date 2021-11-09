@@ -18,13 +18,13 @@ class ChatViewModel(
     private val newList = mutableListOf<WhoseMessage>()
 
     private val liveMember = firebaseDataRepository.getLiveMember(group.id!!)
-    private val chatList = firebaseDataRepository.getLiveChatMessage(UserManager.userId, group.id!!)
+    private val chatList = firebaseDataRepository.getLiveChatMessage(UserManager.UserInformation.id!!, group.id!!)
 
 
     val chatMediatorLiveData = MediatorLiveData<MutableList<WhoseMessage>>().apply {
         addSource(chatList) {
             it.forEach { chat ->
-                when (chat.creator == UserManager.userId) {
+                when (chat.creator == UserManager.UserInformation.id) {
                     true -> {
                         chat.creator = changeCreatorIdToNickName(chat)
                         newList += WhoseMessage.SelfMessage(chat)

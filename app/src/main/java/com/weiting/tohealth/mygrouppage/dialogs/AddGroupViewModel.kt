@@ -47,7 +47,14 @@ class AddGroupViewModel(
 
     fun createGroup(group: Group) {
         firebaseRepository.createGroup(group)
-        firebaseRepository.joinGroup(Member(userId = UserManager.userId, private = 1), group.id!!)
+        firebaseRepository.joinGroup(
+            Member(
+                userId = UserManager.UserInformation.id,
+                private = 1,
+                name = UserManager.UserInformation.name,
+                nickName = UserManager.UserInformation.name
+            ), group.id!!
+        )
     }
 
     fun checkIsGroupIdExist(groupId: String) {
