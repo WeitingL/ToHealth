@@ -1,5 +1,6 @@
 package com.weiting.tohealth.homepage
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -87,8 +88,8 @@ class TodayItemAdapter() :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(care: Care?) {
             binding.apply {
-                val editor = if (care?.editor == UserManager.userId){
-                    "${UserManager.name}"
+                val editor = if (care?.editor == UserManager.UserInformation.id){
+                    "${UserManager.UserInformation.name}"
                 }else{
                     "others"
                 }
@@ -152,6 +153,9 @@ class TodayItemAdapter() :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+
+//        Log.i("positionAdapter", position.toString())
+
         when (holder) {
             is TimeViewHolder -> {
                 holder.bind((getItem(position) as ItemDataType.TimeType).time)

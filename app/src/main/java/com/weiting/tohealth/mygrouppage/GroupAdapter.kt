@@ -1,5 +1,6 @@
 package com.weiting.tohealth.mygrouppage
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModel
@@ -16,7 +17,8 @@ import java.lang.ClassCastException
 const val GROUP_VIEWTYPE_GROUP = 0
 const val GROUP_VIEWTYPE_ADDGROUP = 1
 
-class GroupAdapter (val onClickListener: OnclickListener) : ListAdapter<GroupPageItem, RecyclerView.ViewHolder>(DiffCallback) {
+class GroupAdapter(val onClickListener: OnclickListener) :
+    ListAdapter<GroupPageItem, RecyclerView.ViewHolder>(DiffCallback) {
 
     object DiffCallback : DiffUtil.ItemCallback<GroupPageItem>() {
         override fun areItemsTheSame(oldItem: GroupPageItem, newItem: GroupPageItem): Boolean =
@@ -96,8 +98,8 @@ class GroupAdapter (val onClickListener: OnclickListener) : ListAdapter<GroupPag
         }
     }
 
-    class OnclickListener(val clickListener: (groupPageItem:GroupPageItem) -> Unit) {
-        fun onClick(groupPageItem:GroupPageItem) = clickListener(groupPageItem)
+    class OnclickListener(val clickListener: (groupPageItem: GroupPageItem) -> Unit) {
+        fun onClick(groupPageItem: GroupPageItem) = clickListener(groupPageItem)
     }
 
 }

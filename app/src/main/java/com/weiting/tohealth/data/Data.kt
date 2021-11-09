@@ -34,20 +34,21 @@ data class Drug(
     var id: String? = null,
     val userId: String? = null,
     val drugName: String? = null,
-    val dose: Int = 0,
-    val unit: Int? = null,
+    var dose: Int = 0,
+    var unit: Int? = null,
     val endDate: Map<String, Int?> = mapOf("type" to null, "day" to null),
     val startDate: Timestamp? = null,
-    val period: Map<String, Int?> = mapOf(
+    var period: Map<String, Int?> = mapOf(
         "type" to null,
         "N" to null,
         "X" to null
     ),
-    val executeTime: List<Timestamp> = listOf(),
-    val stock: Int = 0,
-    val editor: String? = null,
+    var executeTime: List<Timestamp> = listOf(),
+    var stock: Int = 0,
+    var editor: String? = null,
     val createTime: Timestamp? = null,
-    val status: Int? = null,
+    var lastEditTime: Timestamp? = null,
+    var status: Int? = null,
     var drugLogs: List<DrugLog> = listOf()
 ) : Parcelable
 
@@ -64,10 +65,11 @@ data class Measure(
     var id: String? = null,
     val userId: String? = null,
     val type: Int? = null,
-    val executeTime: List<Timestamp> = listOf(),
-    val editor: String? = null,
+    var executeTime: List<Timestamp> = listOf(),
+    var editor: String? = null,
     val createTime: Timestamp? = null,
-    val status: Int? = null,
+    var lastEditTime: Timestamp? = null,
+    var status: Int? = null,
     var measureLogs: List<MeasureLog> = listOf()
 ) : Parcelable
 
@@ -86,16 +88,17 @@ data class Activity(
     val userId: String? = null,
     val type: Int? = null,
     val endDate: Map<String, Int?> = mapOf("type" to null, "day" to null),
-    val period: Map<String, Int?> = mapOf(
+    var period: Map<String, Int?> = mapOf(
         "type" to null,
         "N" to null,
         "X" to null
     ),
     val startDate: Timestamp? = null,
-    val executeTime: List<Timestamp> = listOf(),
-    val editor: String? = null,
+    var executeTime: List<Timestamp> = listOf(),
+    var editor: String? = null,
     val createTime: Timestamp? = null,
-    val status: Int? = null,
+    var lastEditTime: Timestamp? = null,
+    var status: Int? = null,
     var activityLogs: List<ActivityLog> = listOf()
 ) : Parcelable
 
@@ -114,16 +117,17 @@ data class Care(
     val userId: String? = null,
     val type: Int? = null,
     val endDate: Map<String, Int?> = mapOf("type" to null, "day" to null),
-    val period: Map<String, Int?> = mapOf(
+    var period: Map<String, Int?> = mapOf(
         "type" to null,
         "N" to null,
         "X" to null
     ),
     val startDate: Timestamp? = null,
-    val executeTime: List<Timestamp> = listOf(),
-    val editor: String? = null,
+    var executeTime: List<Timestamp> = listOf(),
+    var editor: String? = null,
     val createTime: Timestamp? = null,
-    val status: Int? = null,
+    var lastEditTime: Timestamp? = null,
+    var status: Int? = null,
     var careLogs: List<CareLog> = listOf()
 ) : Parcelable
 

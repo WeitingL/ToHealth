@@ -1,24 +1,23 @@
 package com.weiting.tohealth.data
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.firestore.SetOptions
 import com.weiting.tohealth.PublicApplication.Companion.application
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 object FirebaseDataSource : FirebaseSource {
 
-    override fun login(userName: String): MutableLiveData<User> {
+    override fun login(userId: String): MutableLiveData<User> {
         val database = application.database
         val user = MutableLiveData<User>()
 
         database.collection("users")
-            .whereEqualTo("name", userName)
+            .whereEqualTo("id", userId)
             .addSnapshotListener { value, error ->
                 if (error != null) {
                     Log.e("Listen failed.", error.toString())
@@ -32,17 +31,30 @@ object FirebaseDataSource : FirebaseSource {
         return user
     }
 
-    override fun signIn(userName: String) {
-        val data = User(
-            name = userName,
-            id = application.database.collection("users").document().id
-        )
+    override suspend fun getUser(userId: String): User = suspendCoroutine { continuation ->
+        val database = application.database
 
+        database.collection("users")
+            .whereEqualTo("id", userId)
+            .get()
+            .addOnSuccessListener { result ->
+
+                val dataList = result.toObjects(User::class.java)
+
+//                Log.i("drugsList", list.toString())
+                continuation.resume(dataList.first())
+            }
+            .addOnFailureListener { e ->
+                Log.w("Error to get data", e)
+            }
+    }
+
+    override fun signIn(user: User) {
         application.database.collection("users")
-            .document(data.id!!)
-            .set(data)
+            .document(user.id!!)
+            .set(user)
             .addOnSuccessListener { documentReference ->
-                Log.d("store success", "DocumentSnapshot added with ID: ${data.id}")
+                Log.d("store success", "DocumentSnapshot added with ID: ${user.id}")
             }
             .addOnFailureListener { e ->
                 Log.w("store failure", "Error adding document", e)
@@ -50,12 +62,12 @@ object FirebaseDataSource : FirebaseSource {
 
     }
 
-    override suspend fun getAllDrugs(): List<Drug> = suspendCoroutine { continuation ->
+    override suspend fun getAllDrugs(userId: String): List<Drug> = suspendCoroutine { continuation ->
         val list = mutableListOf<Drug>()
         val database = application.database
 
         database.collection("drugs")
-            .whereEqualTo("userId", "Weiting")
+            .whereEqualTo("userId", userId)
             .get()
             .addOnSuccessListener { result ->
 
@@ -70,12 +82,12 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
-    override suspend fun getAllMeasures(): List<Measure> = suspendCoroutine { continuation ->
+    override suspend fun getAllMeasures(userId: String): List<Measure> = suspendCoroutine { continuation ->
         val list = mutableListOf<Measure>()
         val database = application.database
 
         database.collection("measures")
-            .whereEqualTo("userId", "Weiting")
+            .whereEqualTo("userId", userId)
             .get()
             .addOnSuccessListener { result ->
 
@@ -90,12 +102,12 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
-    override suspend fun getAllActivities(): List<Activity> = suspendCoroutine { continuation ->
+    override suspend fun getAllActivities(userId: String): List<Activity> = suspendCoroutine { continuation ->
         val list = mutableListOf<Activity>()
         val database = application.database
 
         database.collection("activity")
-            .whereEqualTo("userId", "Weiting")
+            .whereEqualTo("userId", userId)
             .get()
             .addOnSuccessListener { result ->
 
@@ -110,12 +122,12 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
-    override suspend fun getAllCares(): List<Care> = suspendCoroutine { continuation ->
+    override suspend fun getAllCares(userId: String): List<Care> = suspendCoroutine { continuation ->
         val list = mutableListOf<Care>()
         val database = application.database
 
         database.collection("cares")
-            .whereEqualTo("userId", "Weiting")
+            .whereEqualTo("userId", userId)
             .get()
             .addOnSuccessListener { result ->
 
@@ -141,14 +153,12 @@ object FirebaseDataSource : FirebaseSource {
                     Log.e("Listen failed.", error.toString())
                     return@addSnapshotListener
                 }
-
                 val list = mutableListOf<Drug>()
-
                 for (document in value!!) {
                     val data = document.toObject(Drug::class.java)
+
                     list.add(data)
                 }
-
                 drugList.value = list
             }
         return drugList
@@ -281,6 +291,49 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
+    override fun updateDrug(drug: Drug) {
+        application.database.collection("drugs").document(drug.id!!)
+            .set(drug, SetOptions.merge())
+            .addOnSuccessListener { documentReference ->
+                Log.d("store success", "DocumentSnapshot added with ID: ${drug.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("store failure", "Error adding document", e)
+            }
+    }
+
+    override fun updateMeasure(measure: Measure) {
+        application.database.collection("measures").document(measure.id!!)
+            .set(measure, SetOptions.merge())
+            .addOnSuccessListener { documentReference ->
+                Log.d("store success", "DocumentSnapshot added with ID: ${measure.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("store failure", "Error adding document", e)
+            }
+    }
+
+    override fun updateActivity(activity: Activity) {
+        application.database.collection("activity").document(activity.id!!)
+            .set(activity, SetOptions.merge())
+            .addOnSuccessListener { documentReference ->
+                Log.d("store success", "DocumentSnapshot added with ID: ${activity.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("store failure", "Error adding document", e)
+            }
+    }
+
+    override fun updateCare(care: Care) {
+        application.database.collection("cares").document(care.id!!)
+            .set(care, SetOptions.merge())
+            .addOnSuccessListener { documentReference ->
+                Log.d("store success", "DocumentSnapshot added with ID: ${care.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("store failure", "Error adding document", e)
+            }
+    }
 
     override fun postDrugRecord(id: String, drugLog: DrugLog) {
 
@@ -349,6 +402,7 @@ object FirebaseDataSource : FirebaseSource {
             val database = application.database
 
             database.collection("drugs").document(itemId).collection("drugLogs")
+                .orderBy("createTime", Query.Direction.DESCENDING)
                 .limit(100)
                 .get()
                 .addOnSuccessListener { result ->
@@ -369,6 +423,7 @@ object FirebaseDataSource : FirebaseSource {
             val database = application.database
 
             database.collection("measures").document(itemId).collection("measuresLogs")
+                .orderBy("createTime", Query.Direction.DESCENDING)
                 .limit(100)
                 .get()
                 .addOnSuccessListener { result ->
@@ -392,6 +447,7 @@ object FirebaseDataSource : FirebaseSource {
             val database = application.database
 
             database.collection("activity").document(itemId).collection("activityLogs")
+                .orderBy("createTime", Query.Direction.DESCENDING)
                 .limit(100)
                 .get()
                 .addOnSuccessListener { result ->
@@ -413,6 +469,7 @@ object FirebaseDataSource : FirebaseSource {
             val database = application.database
 
             database.collection("cares").document(itemId).collection("careLogs")
+                .orderBy("createTime", Query.Direction.DESCENDING)
                 .limit(100)
                 .get()
                 .addOnSuccessListener { result ->
@@ -448,8 +505,11 @@ object FirebaseDataSource : FirebaseSource {
     override fun joinGroup(member: Member, groupId: String) {
         val database = application.database
 
+        member.id = database.collection("groups").document(groupId)
+            .collection("members").document().id
+
         database.collection("groups").document(groupId)
-            .collection("members").document()
+            .collection("members").document(member.id!!)
             .set(member)
             .addOnSuccessListener { documentReference ->
                 Log.d(
@@ -476,15 +536,18 @@ object FirebaseDataSource : FirebaseSource {
 
     override suspend fun checkIsRelationExist(userId: String, groupId: String): Boolean =
         suspendCoroutine { continuation ->
-            application.database.collection("users")
-                .whereArrayContains("groupList", groupId)
+            application.database.collection("users").document(userId)
                 .get()
                 .addOnSuccessListener { result ->
+                    val user = result.toObject(User::class.java)
 
-                    when (result.isEmpty) {
-                        true -> continuation.resume(false)
-                        false -> continuation.resume(true)
+                    when (user?.groupList?.contains(groupId)){
+                        true -> continuation.resume(true)
+                        false -> continuation.resume(false)
                     }
+
+
+
                 }
         }
 
@@ -602,12 +665,26 @@ object FirebaseDataSource : FirebaseSource {
 
                 for (document in value!!) {
                     val data = document.toObject(Member::class.java)
+
                     list.add(data)
                 }
 
+                Log.i("dataSource", memberList.value.toString())
                 memberList.value = list
             }
         return memberList
+    }
+
+    override fun updateMemberInfo(groupId: String, member: Member) {
+        application.database.collection("groups").document(groupId)
+            .collection("members").document(member.id!!)
+            .set(member, SetOptions.merge())
+            .addOnSuccessListener { documentReference ->
+                Log.d("store success", "DocumentSnapshot added with ID: ${member.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("store failure", "Error adding document", e)
+            }
     }
 
     override fun getLiveNote(groupId: String): MutableLiveData<List<Note>> {
@@ -690,6 +767,32 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
+    override fun deleteNote(note: Note, groupId: String) {
+        application.database.collection("groups").document(groupId)
+            .collection("notes").document(note.id!!)
+            .delete()
+            .addOnSuccessListener {
+                Log.d(
+                    "Delete success",
+                    "DocumentSnapshot successfully deleted!"
+                )
+            }
+            .addOnFailureListener { e -> Log.w("Delete failure", "Error deleting document", e) }
+    }
+
+    override fun deleteCalenderItem(calenderItem: CalenderItem, groupId: String) {
+        application.database.collection("groups").document(groupId)
+            .collection("calenderItems").document(calenderItem.id!!)
+            .delete()
+            .addOnSuccessListener {
+                Log.d(
+                    "Delete success",
+                    "DocumentSnapshot successfully deleted!"
+                )
+            }
+            .addOnFailureListener { e -> Log.w("Delete failure", "Error deleting document", e) }
+    }
+
     override fun getLiveChatMessage(
         userId: String,
         groupId: String
@@ -708,7 +811,7 @@ object FirebaseDataSource : FirebaseSource {
 
                 val list = mutableListOf<Chat>()
 
-                Log.i("LiveChatValue", "$value")
+//                Log.i("LiveChatValue", "$value")
 
                 for (document in value!!) {
                     val data = document.toObject(Chat::class.java)
@@ -753,6 +856,17 @@ object FirebaseDataSource : FirebaseSource {
             }
             .addOnFailureListener { e ->
                 Log.w("Error to get data", e)
+            }
+    }
+
+    override fun editStock(itemId: String, num: Int) {
+        application.database.collection("drugs").document(itemId)
+            .update("stock", num)
+            .addOnSuccessListener { documentReference ->
+                Log.d("update success", "DocumentSnapshot with ID: ${itemId}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("update failure", "Error update document", e)
             }
     }
 }

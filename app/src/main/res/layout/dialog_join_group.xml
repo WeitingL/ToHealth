@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/gray_light"
+    android:background="@color/pink_brown"
     tools:context="com.weiting.tohealth.mygrouppage.dialogs.JoinGroupDialog">
 
     <TextView
@@ -14,6 +14,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="輸入群組代碼"
+        android:textAppearance="@style/title_text_bl"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -42,8 +43,12 @@
         android:id="@+id/bt_EnterCode"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/button_yellow_color"
         android:text="輸入"
+        android:textAppearance="@style/title_text"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/til_GroupName"
         app:layout_constraintStart_toStartOf="@+id/til_GroupName"
         app:layout_constraintTop_toBottomOf="@+id/til_GroupName" />

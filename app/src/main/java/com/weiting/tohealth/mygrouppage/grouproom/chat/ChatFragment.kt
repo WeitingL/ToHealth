@@ -24,18 +24,14 @@ class ChatFragment() : Fragment() {
     ): View? {
         val binding = ChatroomFragmentBinding.inflate(inflater, container, false)
         val group: Group = arguments?.get("group") as Group
+
         val factory =
             ChatViewModelFactory(PublicApplication.application.firebaseDataRepository, group)
         val viewModel = ViewModelProvider(this, factory).get(ChatViewModel::class.java)
         val adapter = ChatAdapter()
 
-        viewModel.chatList.observe(viewLifecycleOwner){
-            Log.i("chatListList", it.toString())
-            viewModel.identifyUser(it)
-        }
 
-        viewModel.chatMessages.observe(viewLifecycleOwner){
-            Log.i("CalenderItemList", it.size.toString())
+        viewModel.chatMediatorLiveData.observe(viewLifecycleOwner){
             adapter.submitList(it)
             binding.rvChats.smoothScrollToPosition(adapter.itemCount-1)
         }
@@ -44,7 +40,7 @@ class ChatFragment() : Fragment() {
             viewModel.postMessage(Chat(
                 groupId = group.id,
                 context = binding.etvMessage.text.toString(),
-                creator = UserManager.userId,
+                creator = UserManager.UserInformation.id,
                 createTimestamp = Timestamp.now()
             ))
             binding.etvMessage.text.clear()

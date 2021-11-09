@@ -15,9 +15,12 @@ data class Group(
 
 @Parcelize
 data class Member(
+    var id: String? = null,
     val userId: String? = null,
-    val nickName: String? = null,
-    val private: Int? = null
+    val name: String? = null,
+    var nickName: String? = null,
+    var private: Int? = null,
+    var profilePhoto: String? = null
 ) : Parcelable
 
 @Parcelize
@@ -39,13 +42,4 @@ data class CalenderItem(
     val createTime: Timestamp? = null,
     val result: Int? = null
 ):Parcelable
-
-//This is firebase form.
-data class Relationships(
-    var id: String? = null,
-    val userId: String? = null,
-    val groupId:String? = null,
-    val nickName: String? = null,
-    val private: Int? = null
-)
 

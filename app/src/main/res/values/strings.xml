@@ -1,6 +1,13 @@
 <resources>
     <string name="app_name">ToHealth</string>
-
+    <string name="homepage_morningtitle">又是美好的早晨!</string>
+    <string name="homepage_noontitle">休閒的午間，小睡一下</string>
+    <string name="homepage_afternoontitle">傍晚時分，今天過的好嗎?</string>
+    <string name="homepage_nighttitle">輕鬆夜晚!</string>
+    <string name="homepage_sleeptitle">該睡覺囉! 明天見!</string>
+    <string name="itemskip_text">跳過</string>
+    <string name="itemswip_undo">回復</string>
+    <string name="itemfinished_text">完成</string>
 
     <string-array name="ItemType">
         <item>藥品</item>
@@ -51,8 +58,6 @@
         <item>症狀關懷</item>
         <item>睡眠關懷</item>
     </string-array>
-
-
 
     <string-array name="ItemUnit">
         <item>毫克</item>
@@ -154,6 +159,5 @@
         <item>祝福</item>
         <item>改</item>
     </string-array>
-
 
 </resources>

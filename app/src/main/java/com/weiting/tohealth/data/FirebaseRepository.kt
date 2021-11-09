@@ -9,22 +9,24 @@ interface FirebaseRepository {
     Login with livedata
  */
 
-    fun login(userName: String): MutableLiveData<User>
+    fun login(userId: String): MutableLiveData<User>
 
-    fun signIn(userName: String)
+    suspend fun getUser(userId: String): User
+
+    fun signIn(user: User)
 
     /*
        Items operation
      */
 
     //Get Items list
-    suspend fun getAllDrugs(): List<Drug>
+    suspend fun getAllDrugs(userId: String): List<Drug>
 
-    suspend fun getAllMeasures(): List<Measure>
+    suspend fun getAllMeasures(userId: String): List<Measure>
 
-    suspend fun getAllActivities(): List<Activity>
+    suspend fun getAllActivities(userId: String): List<Activity>
 
-    suspend fun getAllCares(): List<Care>
+    suspend fun getAllCares(userId: String): List<Care>
 
     fun getLiveDrugList(userId: String): MutableLiveData<List<Drug>>
 
@@ -42,6 +44,15 @@ interface FirebaseRepository {
     fun postActivity(activity: Activity)
 
     fun postCare(care: Care)
+
+    //Update Item
+    fun updateDrug(drug: Drug)
+
+    fun updateMeasure(measure: Measure)
+
+    fun updateActivity(activity: Activity)
+
+    fun updateCare(care: Care)
 
     //Post Item record
     fun postDrugRecord(id: String, drugLog: DrugLog)
@@ -93,6 +104,8 @@ interface FirebaseRepository {
 
     fun getLiveMember(groupId: String): MutableLiveData<List<Member>>
 
+    fun updateMemberInfo(groupId: String, member: Member)
+
     fun getLiveNote(groupId: String): MutableLiveData<List<Note>>
 
     fun getLiveCalenderItem(groupId: String): MutableLiveData<List<CalenderItem>>
@@ -101,6 +114,10 @@ interface FirebaseRepository {
 
     fun postCalenderItem(calenderItem: CalenderItem, groupId: String)
 
+    fun deleteNote(note: Note, groupId: String)
+
+    fun deleteCalenderItem(calenderItem: CalenderItem, groupId: String)
+
     fun getLiveChatMessage(
         userId: String,
         groupId: String
@@ -108,6 +125,8 @@ interface FirebaseRepository {
 
     fun postChatMessage(chat: Chat)
 
-    suspend fun getUserInfo (userId: String):User
+    suspend fun getUserInfo(userId: String): User
+
+    fun editStock(itemId: String, num: Int)
 
 }

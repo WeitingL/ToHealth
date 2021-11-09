@@ -24,7 +24,7 @@ class BoardFragment (): Fragment() {
         val group: Group = arguments?.get("group") as Group
         val factory = BoardViewModelFactory(PublicApplication.application.firebaseDataRepository, group)
         val viewModel = ViewModelProvider(this, factory).get(BoardViewModel::class.java)
-        val adapter = BoardAdapter()
+        val adapter = BoardAdapter(viewModel)
 
         viewModel.boardList.observe(viewLifecycleOwner){
             adapter.submitList(it)

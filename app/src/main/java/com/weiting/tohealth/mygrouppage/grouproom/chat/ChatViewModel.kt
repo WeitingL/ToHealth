@@ -1,13 +1,10 @@
 package com.weiting.tohealth.mygrouppage.grouproom.chat
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.util.Log
+import androidx.lifecycle.*
 import com.google.firebase.Timestamp
-import com.weiting.tohealth.data.Chat
-import com.weiting.tohealth.data.FirebaseRepository
-import com.weiting.tohealth.data.Group
-import com.weiting.tohealth.data.UserManager
+import com.weiting.tohealth.data.*
+import kotlinx.coroutines.launch
 import kotlin.system.measureTimeMillis
 
 class ChatViewModel(
@@ -15,50 +12,64 @@ class ChatViewModel(
     private val group: Group
 ) : ViewModel() {
 
-    private val _chatMessages = MutableLiveData<List<WhoseMessage>>()
-    val chatMessages: LiveData<List<WhoseMessage>>
-        get() = _chatMessages
+    private val memberList = group.member
+    private val newList = mutableListOf<WhoseMessage>()
 
-    val chatList = firebaseDataRepository.getLiveChatMessage(UserManager.userId, group.id!!)
+    private val chatList =
+        firebaseDataRepository.getLiveChatMessage(UserManager.UserInformation.id!!, group.id!!)
 
-    fun identifyUser(list: List<Chat>) {
-        val newList = mutableListOf<WhoseMessage>()
 
-        list.forEach {
-            when (it.creator == UserManager.userId) {
-                true -> {
-                    it.creator = idChangeToName(it.creator!!)
-                    newList += WhoseMessage.SelfMessage(it)
-                }
-                false -> {
-                    it.creator = idChangeToName(it.creator!!)
-                    newList += WhoseMessage.OthersMessage(it)
+    val chatMediatorLiveData = MediatorLiveData<MutableList<WhoseMessage>>().apply {
+        addSource(chatList) {
+            it.forEach { chat ->
+                viewModelScope.launch {
+                    when (chat.creator == UserManager.UserInformation.id) {
+                        true -> {
+                            newList += createSelfMessages(chat)
+                        }
+
+                        false -> {
+                            newList += createOthersMessages(chat)
+                        }
+                    }
+                    value = newList
                 }
             }
         }
+    }
 
-        _chatMessages.value = newList
+
+    private fun createOthersMessages(chat: Chat): WhoseMessage {
+        var data = Member()
+
+        memberList.forEach {
+            if (chat.creator == it.userId){
+                data = it
+            }
+        }
+        return WhoseMessage.OthersMessage(chat, data)
+    }
+
+    private fun createSelfMessages(chat: Chat): WhoseMessage {
+        var data = Member()
+
+        memberList.forEach {
+            if (chat.creator == it.userId){
+                data = it
+            }
+        }
+        return WhoseMessage.SelfMessage(chat, data)
     }
 
     fun postMessage(chat: Chat) {
         firebaseDataRepository.postChatMessage(chat)
     }
-
-    private fun idChangeToName(idInChat: String):String{
-        val nickname = group.member.forEach {
-            if(it.userId == idInChat){
-                return it.nickName?:"成員"
-            }
-        }
-        return nickname.toString()
-    }
-
 }
 
 sealed class WhoseMessage {
 
-    data class SelfMessage(val chat: Chat) : WhoseMessage()
+    data class SelfMessage(val chat: Chat, val member: Member) : WhoseMessage()
 
-    data class OthersMessage(val chat: Chat) : WhoseMessage()
+    data class OthersMessage(val chat: Chat, val member: Member) : WhoseMessage()
 
 }

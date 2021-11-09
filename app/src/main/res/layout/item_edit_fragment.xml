@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:text="健康項目"
+            android:textAppearance="@style/subTitle_text_bl"
             app:layout_constraintBottom_toBottomOf="@+id/sp_ItemType"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/sp_ItemType" />
@@ -39,6 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:text="藥物名稱"
+            android:textAppearance="@style/subTitle_text_bl"
             app:layout_constraintBottom_toBottomOf="@+id/til_drugName"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/til_drugName" />
@@ -78,6 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:text="項目選單"
+            android:textAppearance="@style/subTitle_text_bl"
             app:layout_constraintBottom_toBottomOf="@+id/sp_itemName"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/sp_itemName" />
@@ -93,44 +96,21 @@
             app:layout_constraintStart_toEndOf="@+id/tv_itemName_edit"
             app:layout_constraintTop_toBottomOf="@+id/til_drugName" />
 
-        <CheckBox
-            android:id="@+id/cb_suspendUptake"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:text="暫停執行"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cl_stock" />
-
-        <CheckBox
-            android:id="@+id/cb_DeleteUptake"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="終止執行 (將本項目移除於您的清單中)"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cb_suspendUptake" />
-
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bt_enterItem"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
+            android:background="@drawable/button_main_color"
             android:text="確認"
+            android:textAppearance="@style/title_text_bl"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cb_DeleteUptake" />
+            app:layout_constraintTop_toBottomOf="@+id/cl_stock" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_EndDate"
@@ -162,6 +142,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="執行期限"
+                android:textAppearance="@style/subTitle_text_bl"
                 app:layout_constraintBottom_toBottomOf="@+id/sp_endDate"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/sp_endDate" />
@@ -171,6 +152,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="天數"
+                android:textAppearance="@style/subTitle_text_bl"
                 app:layout_constraintBottom_toBottomOf="@+id/sp_day_edit"
                 app:layout_constraintEnd_toEndOf="@+id/tv_endDate_edit"
                 app:layout_constraintTop_toTopOf="@+id/sp_day_edit" />
@@ -208,6 +190,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="初始日"
+                android:textAppearance="@style/subTitle_text_bl"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_firstDateSelected"
                 app:layout_constraintEnd_toEndOf="@+id/tv_day_endDate"
                 app:layout_constraintTop_toTopOf="@+id/tv_firstDateSelected" />
@@ -245,6 +228,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="執行週期"
+                android:textAppearance="@style/subTitle_text_bl"
                 app:layout_constraintBottom_toBottomOf="@+id/sp_period"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/sp_period" />
@@ -255,16 +239,18 @@
                 android:layout_height="48dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
+                android:entries="@array/cycle_day"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tv_suspendDay"
                 app:layout_constraintTop_toBottomOf="@+id/sp_ongoingDay" />
 
             <TextView
                 android:id="@+id/tv_ongoingDay"
-                android:layout_width="60dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:text="天"
+                android:textAppearance="@style/subTitle_text_bl"
                 app:layout_constraintBottom_toBottomOf="@+id/sp_ongoingDay"
                 app:layout_constraintEnd_toStartOf="@+id/sp_ongoingDay"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -286,10 +272,11 @@
 
             <TextView
                 android:id="@+id/tv_suspendDay"
-                android:layout_width="60dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:text="暫停幾天"
+                android:textAppearance="@style/subTitle_text_bl"
                 app:layout_constraintBottom_toBottomOf="@+id/sp_suspendDay"
                 app:layout_constraintEnd_toStartOf="@+id/sp_suspendDay"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -328,6 +315,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="藥品單位"
+                android:textAppearance="@style/subTitle_text_bl"
                 app:layout_constraintBottom_toBottomOf="@+id/sp_unit"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/sp_unit" />
@@ -338,6 +326,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="每次劑量"
+                android:textAppearance="@style/subTitle_text_bl"
                 app:layout_constraintBottom_toBottomOf="@+id/etv_drugDose"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/etv_drugDose" />
@@ -383,8 +372,11 @@
                 android:layout_marginBottom="8dp"
                 android:drawableStart="@drawable/ic_baseline_add_40"
                 android:minHeight="48dp"
+                android:gravity="center"
+                android:paddingStart="30sp"
                 android:text="新增提醒時間"
-                android:textSize="20sp"
+                android:textAppearance="@style/subTitle_text_bl"
+                android:background="@drawable/button_main_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -441,6 +433,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="藥物庫存"
+                android:textAppearance="@style/subTitle_text_bl"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -451,6 +444,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:text="單位"
+                android:textAppearance="@style/subTitle_text_bl"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

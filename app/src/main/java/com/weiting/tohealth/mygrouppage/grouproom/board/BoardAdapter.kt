@@ -14,7 +14,7 @@ import java.lang.ClassCastException
 const val BOARD_VIEWTYPE_NOTE = 0
 const val BOARD_VIEWTYPE_CALENDER = 1
 
-class BoardAdapter : ListAdapter<BoardType, RecyclerView.ViewHolder>(DiffCallBack) {
+class BoardAdapter(val viewModel: BoardViewModel) : ListAdapter<BoardType, RecyclerView.ViewHolder>(DiffCallBack) {
 
     object DiffCallBack : DiffUtil.ItemCallback<BoardType>() {
         override fun areItemsTheSame(oldItem: BoardType, newItem: BoardType): Boolean =
@@ -28,7 +28,9 @@ class BoardAdapter : ListAdapter<BoardType, RecyclerView.ViewHolder>(DiffCallBac
     inner class NotesViewHolder(private val binding: BoardRowNoteBinding) :
         RecyclerView.ViewHolder(binding.root) {
             fun bind(list: List<Note>){
-                val adapter = BoardNotesAdapter()
+                val adapter = BoardNotesAdapter(BoardNotesAdapter.DeleteOnclickListener{
+                    viewModel.deleteNote(it)
+                })
                 adapter.submitList(list)
                 binding.rvNotes.adapter = adapter
             }
@@ -37,7 +39,9 @@ class BoardAdapter : ListAdapter<BoardType, RecyclerView.ViewHolder>(DiffCallBac
     inner class CalenderViewHolder(private val binding: BoardRowCalenderitemBinding) :
         RecyclerView.ViewHolder(binding.root) {
             fun bind(list: List<CalenderItem>){
-                val adapter = BoardCalenderItemsAdapter()
+                val adapter = BoardCalenderItemsAdapter(BoardCalenderItemsAdapter.DeleteOnclickListener{
+                    viewModel.deleteReminder(it)
+                })
                 adapter.submitList(list)
                 binding.rvCalenderItems.adapter = adapter
             }

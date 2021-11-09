@@ -1,5 +1,6 @@
 package com.weiting.tohealth.itemeditpage
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -7,9 +8,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.Timestamp
 import com.weiting.tohealth.databinding.EditTimeRowBinding
-import com.weiting.tohealth.homepage.HomeAdapter
-import com.weiting.tohealth.homepage.HomePageItem
-import com.weiting.tohealth.toStringFromTimeStamp
 import com.weiting.tohealth.toTimeFromTimeStamp
 
 class TimeSetAdapter(val onClickListener: OnclickListener) : ListAdapter<Timestamp, TimeSetAdapter.TimeEditViewHolder>(DiffCallBack) {
@@ -45,7 +43,6 @@ class TimeSetAdapter(val onClickListener: OnclickListener) : ListAdapter<Timesta
 
     override fun onBindViewHolder(holder: TimeEditViewHolder, position: Int) {
         holder.bind(getItem(position), position)
-
     }
 
     class OnclickListener(val clickListener: (position: Int) -> Unit) {

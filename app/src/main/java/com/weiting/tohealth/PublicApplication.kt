@@ -4,6 +4,7 @@ import android.app.Application
 import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.weiting.tohealth.data.FirebaseRepository
+import com.weiting.tohealth.data.UserManager
 import kotlin.properties.Delegates
 
 

@@ -6,11 +6,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.data.Chat
-import com.weiting.tohealth.data.UserManager
+import com.weiting.tohealth.data.Member
 import com.weiting.tohealth.databinding.ChatroomRowMessageOthersBinding
 import com.weiting.tohealth.databinding.ChatroomRowMessageSelfBinding
 import com.weiting.tohealth.toStringFromTimeStamp
-import com.weiting.tohealth.toTimeFromTimeStamp
+import com.weiting.tohealth.transferCircleImage
 import java.lang.ClassCastException
 
 const val CHAT_VIEWTYPE_SELF = 0
@@ -29,9 +29,9 @@ class ChatAdapter() : ListAdapter<WhoseMessage, RecyclerView.ViewHolder>(DiffCal
 
     inner class SelfMessageViewHolder(private val binding: ChatroomRowMessageSelfBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(chat: Chat) {
+        fun bind(chat: Chat, member: Member) {
             binding.apply {
-                tvSelfName.text = chat.creator
+                tvSelfName.text = member.nickName
                 tvSelfCreatedTime.text = toStringFromTimeStamp(chat.createTimestamp)
                 tvSelfMessage.text = chat.context
             }
@@ -40,11 +40,12 @@ class ChatAdapter() : ListAdapter<WhoseMessage, RecyclerView.ViewHolder>(DiffCal
 
     inner class OthersMessageViewHolder(private val binding: ChatroomRowMessageOthersBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(chat: Chat) {
+        fun bind(chat: Chat, member: Member) {
             binding.apply {
-                tvOthersName.text = chat.creator
+                tvOthersName.text = member.nickName
                 tvOthersCreatedTime.text = toStringFromTimeStamp(chat.createTimestamp)
                 tvOthersMessage.text = chat.context
+                transferCircleImage(imOthers, member.profilePhoto)
             }
         }
     }
@@ -79,12 +80,12 @@ class ChatAdapter() : ListAdapter<WhoseMessage, RecyclerView.ViewHolder>(DiffCal
 
             is SelfMessageViewHolder -> {
                 val data = getItem(position) as WhoseMessage.SelfMessage
-                holder.bind(data.chat)
+                holder.bind(data.chat, data.member)
             }
 
             is OthersMessageViewHolder -> {
                 val data = getItem(position) as WhoseMessage.OthersMessage
-                holder.bind(data.chat)
+                holder.bind(data.chat, data.member)
             }
         }
     }

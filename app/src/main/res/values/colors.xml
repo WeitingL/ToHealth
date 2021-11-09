@@ -12,7 +12,6 @@
 <!-- black   -->
     <color name="black">#FF000000</color>
     <color name="gray_bark">#7A7979</color>
-    <color name="brown_black">#403E3B</color>
 
 <!--  white  -->
     <color name="white">#FFFFFFFF</color>
@@ -30,14 +29,32 @@
 
 <!--  reb  -->
     <color name="red">#FF3B3B</color>
+
+
+
+<!--  brown color  -->
+    <color name="light_brown">#D6D1D1</color>
+    <color name="brown_black">#403E3B</color>
     <color name="reb_brown">#634444</color>
+    <color name="pink_brown">#C6B5B5</color>
 
 
-<!-- basicColor   -->
-    <color name="Silk">#FFDDD2</color>
-    <color name="Melon">#FFBCB5</color>
-    <color name="Cyan">#DAF0EE</color>
-    <color name="Blue_eyes">#AED2FF</color>
+
+
+<!-- basic Color   -->
+    <color name="baby_pink">#FFCBCB</color>
+    <color name="uranian_blue">#C8E6FF</color>
+    <color name="areo_blue">#C4F4D8</color>
+    <color name="silver">#B2B2B2</color>
+    <color name="jeans_blue">#50AEFF</color>
+
+    <color name="dodger_blue">#065ca6</color>
+    <color name="jeans_green">#52E388</color>
+    <color name="jeans_pink">#ED6060</color>
+    <color name="dark_blue">#202CA1</color>
+
+<!-- title color -->
+    <color name="light_main_color">#0d1db0</color>
 
 
 </resources>

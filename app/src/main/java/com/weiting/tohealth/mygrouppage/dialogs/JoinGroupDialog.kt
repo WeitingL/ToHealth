@@ -11,7 +11,6 @@ import androidx.lifecycle.viewModelScope
 import com.google.firestore.v1.TargetOrBuilder
 import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.data.Member
-import com.weiting.tohealth.data.Relationships
 import com.weiting.tohealth.data.UserManager
 import com.weiting.tohealth.databinding.DialogJoinGroupBinding
 import com.weiting.tohealth.factory.AddGroupViewModelFactory
@@ -38,7 +37,7 @@ class JoinGroupDialog : DialogFragment() {
             when (it) {
                 true -> {
                     viewModel.checkIsRelationshipExist(
-                        userId = UserManager.userId,
+                        userId = UserManager.UserInformation.id!!,
                         groupId = binding.tilGroupName.editText?.text.toString()
                     )
                 }
@@ -58,8 +57,10 @@ class JoinGroupDialog : DialogFragment() {
                 false -> {
                     viewModel.joinGroup(
                         member = Member(
-                            userId = UserManager.userId,
-                            private = 1
+                            userId = UserManager.UserInformation.id!!,
+                            private = 1,
+                            name = UserManager.UserInformation.name,
+                            nickName = UserManager.UserInformation.name
                         ),
                         groupId = binding.tilGroupName.editText?.text.toString()
                     )

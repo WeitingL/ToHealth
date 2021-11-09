@@ -10,8 +10,11 @@
         android:id="@+id/bt_enterMeasure"
         android:layout_width="0dp"
         android:layout_height="100dp"
+        android:layout_marginStart="8dp"
         android:layout_marginEnd="16dp"
+        android:background="@drawable/button_yellow_color"
         android:text="輸入"
+        android:textAppearance="@style/subTitle_text"
         app:layout_constraintBottom_toBottomOf="@+id/bt_cancelMeasure"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -23,9 +26,13 @@
         android:id="@+id/bt_cancelMeasure"
         android:layout_width="0dp"
         android:layout_height="100dp"
+        android:layout_marginHorizontal="8dp"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
+        android:background="@drawable/button_main_color"
         android:text="取消"
+        android:textAppearance="@style/subTitle_text_bl"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/bt_enterMeasure"
         app:layout_constraintHorizontal_bias="0.5"
@@ -36,7 +43,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="心搏"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textAppearance="@style/title_text_bl"
+        app:layout_constraintBottom_toTopOf="@+id/bt_enterMeasure"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -46,6 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="/"
+        android:textAppearance="@style/title_text_bl"
         app:layout_constraintBottom_toBottomOf="@+id/edt_Diastolic"
         app:layout_constraintEnd_toStartOf="@+id/edt_Systolic"
         app:layout_constraintHorizontal_bias="0.5"
@@ -75,7 +84,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.36" />
+        app:layout_constraintVertical_bias="0.26" />
 
     <TextView
         android:id="@+id/tv_Systolic"
@@ -83,6 +92,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="收縮壓"
+        android:textAppearance="@style/title_text_bl"
         app:layout_constraintBottom_toTopOf="@+id/edt_Diastolic"
         app:layout_constraintEnd_toEndOf="@+id/edt_Diastolic"
         app:layout_constraintStart_toStartOf="@+id/edt_Diastolic" />
@@ -104,6 +114,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="舒張壓"
+        android:textAppearance="@style/title_text_bl"
         app:layout_constraintBottom_toTopOf="@+id/edt_Systolic"
         app:layout_constraintEnd_toEndOf="@+id/edt_Systolic"
         app:layout_constraintStart_toStartOf="@+id/edt_Systolic" />

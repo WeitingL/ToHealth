@@ -6,11 +6,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.data.CalenderItem
+import com.weiting.tohealth.data.Member
 import com.weiting.tohealth.databinding.BoardRowCalenderitemBinding
 import com.weiting.tohealth.databinding.CalenderitemRowBinding
 import com.weiting.tohealth.toStringFromTimeStamp
 
-class BoardCalenderItemsAdapter :
+class BoardCalenderItemsAdapter (val onclickListener: DeleteOnclickListener) :
     ListAdapter<CalenderItem, BoardCalenderItemsAdapter.CalenderItemViewHolder>(DiffCallback) {
     object DiffCallback : DiffUtil.ItemCallback<CalenderItem>() {
 
@@ -30,6 +31,9 @@ class BoardCalenderItemsAdapter :
                     tvCreateTimeCalender.text = toStringFromTimeStamp(calenderItem.createTime)
                     tvDateCalender.text = toStringFromTimeStamp(calenderItem.date)
                     tvEditiorCalender.text = calenderItem.editor
+                    ibDeleteReminder.setOnClickListener {
+                        onclickListener.onClick(calenderItem)
+                    }
                 }
             }
     }
@@ -46,6 +50,10 @@ class BoardCalenderItemsAdapter :
 
     override fun onBindViewHolder(holder: CalenderItemViewHolder, position: Int) {
         return holder.bind(getItem(position))
+    }
+
+    class DeleteOnclickListener(val clickListener: (calenderItem: CalenderItem) -> Unit) {
+        fun onClick(calenderItem: CalenderItem) = clickListener(calenderItem)
     }
 
 

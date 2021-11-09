@@ -4,18 +4,19 @@ import android.os.Bundle
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.weiting.tohealth.data.User
 import io.grpc.internal.DnsNameResolver
 
-class MyStatisticAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+class MyStatisticAdapter(fragment: Fragment, private val user: User) : FragmentStateAdapter(fragment) {
 
     override fun getItemCount(): Int = 4
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> getInstance(bundleOf("type" to StatisticType.DRUG))
-            1 -> getInstance(bundleOf("type" to StatisticType.MEASURE))
-            2 -> getInstance(bundleOf("type" to StatisticType.ACTIVITY))
-            3 -> getInstance(bundleOf("type" to StatisticType.CARE))
+            0 -> getInstance(bundleOf("type" to StatisticType.DRUG, "user" to user))
+            1 -> getInstance(bundleOf("type" to StatisticType.MEASURE, "user" to user))
+            2 -> getInstance(bundleOf("type" to StatisticType.ACTIVITY, "user" to user))
+            3 -> getInstance(bundleOf("type" to StatisticType.CARE, "user" to user))
             else -> throw Exception("Unknown position $position")
         }
     }

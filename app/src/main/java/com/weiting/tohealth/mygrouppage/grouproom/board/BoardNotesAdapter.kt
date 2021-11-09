@@ -6,12 +6,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.Timestamp
+import com.weiting.tohealth.data.CalenderItem
 import com.weiting.tohealth.data.Note
 import com.weiting.tohealth.databinding.NoteRowBinding
 import com.weiting.tohealth.toFooter
 import com.weiting.tohealth.toStringFromTimeStamp
 
-class BoardNotesAdapter : ListAdapter<Note, BoardNotesAdapter.NoteViewHolder>(Diffcallback) {
+class BoardNotesAdapter(val onclickListener: DeleteOnclickListener) :
+    ListAdapter<Note, BoardNotesAdapter.NoteViewHolder>(Diffcallback) {
 
     object Diffcallback : DiffUtil.ItemCallback<Note>() {
         override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean =
@@ -24,15 +26,18 @@ class BoardNotesAdapter : ListAdapter<Note, BoardNotesAdapter.NoteViewHolder>(Di
 
     inner class NoteViewHolder(private val binding: NoteRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
-            fun bind(note: Note){
-                binding.apply {
-                    tvNoteTitle.text = note.title
-                    tvEditor.text = note.editor
-                    tvNoteContext.text = note.content
-                    tvNoteCreateTime.text = toStringFromTimeStamp(note.createTimestamp)
-                    tvFooter.text = toFooter(note.footer)
+        fun bind(note: Note) {
+            binding.apply {
+                tvNoteTitle.text = note.title
+                tvEditor.text = note.editor
+                tvNoteContext.text = note.content
+                tvNoteCreateTime.text = toStringFromTimeStamp(note.createTimestamp)
+                tvFooter.text = toFooter(note.footer)
+                ibDelecteNote.setOnClickListener {
+                    onclickListener.onClick(note)
                 }
             }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
@@ -47,6 +52,10 @@ class BoardNotesAdapter : ListAdapter<Note, BoardNotesAdapter.NoteViewHolder>(Di
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         return holder.bind(getItem(position))
+    }
+
+    class DeleteOnclickListener(val clickListener: (note: Note) -> Unit) {
+        fun onClick(note: Note) = clickListener(note)
     }
 
 }

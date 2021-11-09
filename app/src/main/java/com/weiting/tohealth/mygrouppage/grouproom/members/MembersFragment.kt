@@ -6,9 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.weiting.tohealth.NavigationDirections
 import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.data.Group
-import com.weiting.tohealth.data.Member
 import com.weiting.tohealth.databinding.MembersFragmentBinding
 import com.weiting.tohealth.factory.MembersViewModelFactory
 
@@ -24,13 +25,19 @@ class MembersFragment() : Fragment() {
         val factory =
             MembersViewModelFactory(PublicApplication.application.firebaseDataRepository, group)
         val viewModel = ViewModelProvider(this, factory).get(MembersViewModel::class.java)
-        val adapter = MembersAdapter()
+        val adapter = MembersAdapter(
+            MembersAdapter.EditOnclickListener {
+                findNavController().navigate(NavigationDirections.actionGlobalGroupMemberManageFragment(it, group.id!!))
+            },
+            MembersAdapter.ViewOnclickListener {
+                findNavController().navigate(NavigationDirections.actionGlobalGroupMemberStatisticFragment(it))
+            })
 
-        viewModel.liveMembersList.observe(viewLifecycleOwner){
-            adapter.submitList(it)
+        adapter.submitList(group.member)
+
+        binding.apply {
+            rvMemberList.adapter = adapter
         }
-
-        binding.rvMemberList.adapter = adapter
         return binding.root
     }
 }

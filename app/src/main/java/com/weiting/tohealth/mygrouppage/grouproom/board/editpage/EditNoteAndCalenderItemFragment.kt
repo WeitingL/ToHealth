@@ -93,7 +93,7 @@ class EditNoteAndCalenderItemFragment : Fragment() {
                             Note(
                                 title = binding.etvTitle.text.toString(),
                                 content = binding.etvContent.text.toString(),
-                                editor = UserManager.name,
+                                editor = UserManager.UserInformation.id,
                                 footer = binding.spFooter.selectedItemPosition,
                                 createTimestamp = Timestamp.now()
                             )
@@ -107,7 +107,7 @@ class EditNoteAndCalenderItemFragment : Fragment() {
                     } else {
                         viewModel.postCalenderItem(
                             CalenderItem(
-                                editor = UserManager.name,
+                                editor = UserManager.UserInformation.id,
                                 content = binding.edvReminderTitle.text.toString(),
                                 date= Timestamp(Date(viewModel.longTime.value!!)),
                                 createTime = Timestamp.now(),
@@ -117,6 +117,7 @@ class EditNoteAndCalenderItemFragment : Fragment() {
                     }
                 }
             }
+            findNavController().popBackStack()
         }
 
 

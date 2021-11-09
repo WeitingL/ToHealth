@@ -4,7 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context="com.weiting.tohealth.homepage.HomeFragment">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lav_finished"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cl_daily"
+        app:layout_constraintVertical_bias="0.13" />
+
+    <TextView
+        android:id="@+id/tv_finishedSlogan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="你好棒!! 今天的健康項目都做完了!"
+        android:textAppearance="@style/title_text_bl"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/lav_finished"
+        app:layout_constraintStart_toStartOf="@+id/lav_finished"
+        app:layout_constraintTop_toBottomOf="@+id/lav_finished" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_daily"
@@ -16,6 +40,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lav_homeToday"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/progressBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/tv_dailyInfoTitle"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true" />
+
         <TextView
             android:id="@+id/tv_dailyInfoTitle"
             android:layout_width="wrap_content"
@@ -23,7 +64,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="今日概況"
-            android:textSize="20sp"
+            android:textAppearance="@style/title_text_bl"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="項目"
-            android:textSize="20sp"
+            android:textAppearance="@style/title_text_bl"
             app:layout_constraintStart_toStartOf="@+id/tv_dailyInfoTitle"
             app:layout_constraintTop_toBottomOf="@+id/tv_dailyInfoTitle" />
 
@@ -59,7 +100,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="8"
-            android:textSize="20sp"
+            android:textAppearance="@style/title_text_bl"
             app:layout_constraintBottom_toBottomOf="@+id/tv_dailyInfoTitle2"
             app:layout_constraintStart_toEndOf="@+id/tv_dailyInfoTitle2"
             app:layout_constraintTop_toTopOf="@+id/tv_dailyInfoTitle2" />
@@ -70,7 +111,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:text="10"
-            android:textSize="20sp"
+            android:textAppearance="@style/title_text_bl"
             app:layout_constraintBottom_toBottomOf="@+id/tv_slash"
             app:layout_constraintStart_toEndOf="@+id/tv_slash"
             app:layout_constraintTop_toTopOf="@+id/tv_slash"
@@ -82,7 +123,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:text="/"
-            android:textSize="20sp"
+            android:textAppearance="@style/title_text_bl"
             app:layout_constraintBottom_toBottomOf="@+id/tv_finished"
             app:layout_constraintStart_toEndOf="@+id/tv_finished"
             app:layout_constraintTop_toTopOf="@+id/tv_finished" />
@@ -100,4 +141,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cl_daily" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/bt_fastAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/pink_brown"
+        android:clickable="true"
+        android:src="@drawable/ic_baseline_done_24"
+        app:backgroundTint="@color/pink_brown"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

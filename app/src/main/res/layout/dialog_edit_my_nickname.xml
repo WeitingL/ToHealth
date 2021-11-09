@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="com.weiting.tohealth.groupmemberpage.EditMyMemberInfoDialog">
+
+    <TextView
+        android:id="@+id/tv_nickNameTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="你想要改叫甚麼暱稱呢?"
+        android:textAppearance="@style/title_text_bl"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/edt_myNickName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:hint="原始暱稱"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tv_nickNameTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tv_nickNameTitle" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt_change"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="變更"
+        android:background="@drawable/button_main_color"
+        android:textAppearance="@style/subTitle_text_bl"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_myNickName">
+
+        <RadioButton
+            android:id="@+id/private_all"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="允許所有權限(推薦選項)" />
+
+        <RadioButton
+            android:id="@+id/private_readLog"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="僅可閱讀紀錄" />
+
+        <RadioButton
+            android:id="@+id/private_onlyRead"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="可以閱讀紀錄與項目管理" />
+
+        <RadioButton
+            android:id="@+id/private_allRefused"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="拒絕所有權限" />
+
+    </RadioGroup>
+</androidx.constraintlayout.widget.ConstraintLayout>
