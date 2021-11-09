@@ -12,6 +12,7 @@ import com.weiting.tohealth.data.User
 import com.weiting.tohealth.data.UserManager
 import com.weiting.tohealth.databinding.GroupMemberManagementFragmentBinding
 import com.weiting.tohealth.mymanagepage.MyManageAdapter
+import com.weiting.tohealth.transferCircleImage
 
 class GroupMemberManageFragment : Fragment() {
 
@@ -28,6 +29,7 @@ class GroupMemberManageFragment : Fragment() {
 
         binding.tvMemberNameManage.text = memberInfo.name
         binding.tvMemberNickName.text = memberInfo.nickName
+        transferCircleImage(binding.imageView3, memberInfo.profilePhoto)
 
         if (memberInfo.userId != UserManager.UserInformation.id){
             binding.ibEditNickName.visibility = View.GONE

@@ -19,7 +19,8 @@ data class Member(
     val userId: String? = null,
     val name: String? = null,
     var nickName: String? = null,
-    var private: Int? = null
+    var private: Int? = null,
+    var profilePhoto: String? = null
 ) : Parcelable
 
 @Parcelize

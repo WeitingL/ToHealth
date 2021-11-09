@@ -1,6 +1,8 @@
 package com.weiting.tohealth
 
 import android.util.Log
+import android.widget.ImageView
+import com.bumptech.glide.Glide
 import com.google.firebase.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
@@ -292,4 +294,16 @@ fun toUnitForMeasure(int: Int?):String{
         5 -> "攝氏 °C"
         else -> "單位"
     }
+}
+
+fun transferCircleImage(imgView: ImageView, imgUri: String?){
+
+    if (!imgUri.isNullOrEmpty()){
+        Glide.with(imgView.context)
+            .load(imgUri)
+            .placeholder(R.drawable.user_1)
+            .circleCrop()
+            .into(imgView)
+    }
+
 }

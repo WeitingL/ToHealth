@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.data.Member
 import com.weiting.tohealth.databinding.MemberRowBinding
+import com.weiting.tohealth.transferCircleImage
 
 class MembersAdapter(val onClickListener: EditOnclickListener, val onclickListener: ViewOnclickListener) :
     ListAdapter<Member, MembersAdapter.MemberViewHolder>(DiffCallback) {
@@ -27,6 +28,8 @@ class MembersAdapter(val onClickListener: EditOnclickListener, val onclickListen
             binding.apply {
                 tvMemberName.text = member.name
                 tvNickName.text = member.nickName
+
+                transferCircleImage(ivPhoto, member.profilePhoto)
 
                 btEditMember.setOnClickListener {
                     onClickListener.onClick(member)

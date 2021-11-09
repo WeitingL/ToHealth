@@ -24,6 +24,7 @@ class ChatFragment() : Fragment() {
     ): View? {
         val binding = ChatroomFragmentBinding.inflate(inflater, container, false)
         val group: Group = arguments?.get("group") as Group
+
         val factory =
             ChatViewModelFactory(PublicApplication.application.firebaseDataRepository, group)
         val viewModel = ViewModelProvider(this, factory).get(ChatViewModel::class.java)

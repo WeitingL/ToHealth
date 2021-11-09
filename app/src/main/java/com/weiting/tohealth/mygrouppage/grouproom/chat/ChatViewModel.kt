@@ -1,12 +1,10 @@
 package com.weiting.tohealth.mygrouppage.grouproom.chat
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.google.firebase.Timestamp
 import com.weiting.tohealth.data.*
+import kotlinx.coroutines.launch
 import kotlin.system.measureTimeMillis
 
 class ChatViewModel(
@@ -14,46 +12,53 @@ class ChatViewModel(
     private val group: Group
 ) : ViewModel() {
 
-    private val memberList = MutableLiveData<MutableList<Member>>()
+    private val memberList = group.member
     private val newList = mutableListOf<WhoseMessage>()
 
-    private val liveMember = firebaseDataRepository.getLiveMember(group.id!!)
-    private val chatList = firebaseDataRepository.getLiveChatMessage(UserManager.UserInformation.id!!, group.id!!)
+    private val chatList =
+        firebaseDataRepository.getLiveChatMessage(UserManager.UserInformation.id!!, group.id!!)
 
 
     val chatMediatorLiveData = MediatorLiveData<MutableList<WhoseMessage>>().apply {
         addSource(chatList) {
             it.forEach { chat ->
-                when (chat.creator == UserManager.UserInformation.id) {
-                    true -> {
-                        chat.creator = changeCreatorIdToNickName(chat)
-                        newList += WhoseMessage.SelfMessage(chat)
-                    }
+                viewModelScope.launch {
+                    when (chat.creator == UserManager.UserInformation.id) {
+                        true -> {
+                            newList += createSelfMessages(chat)
+                        }
 
-                    false -> {
-                        chat.creator = changeCreatorIdToNickName(chat)
-                        newList += WhoseMessage.OthersMessage(chat)
+                        false -> {
+                            newList += createOthersMessages(chat)
+                        }
                     }
+                    value = newList
                 }
-
-                value = newList
             }
-        }
-        addSource(liveMember) {
-//            Log.i("data!", it.toString())
-            memberList.value = it.toMutableList()
         }
     }
 
-    private fun changeCreatorIdToNickName(chat: Chat): String {
-        var nickName = "Member"
-//        Log.i("data", memberList.value.toString())
-        memberList.value?.forEach { it ->
-            if (chat.creator == it.userId) {
-                nickName = it.nickName!!
+
+    private fun createOthersMessages(chat: Chat): WhoseMessage {
+        var data = Member()
+
+        memberList.forEach {
+            if (chat.creator == it.userId){
+                data = it
             }
         }
-        return nickName
+        return WhoseMessage.OthersMessage(chat, data)
+    }
+
+    private fun createSelfMessages(chat: Chat): WhoseMessage {
+        var data = Member()
+
+        memberList.forEach {
+            if (chat.creator == it.userId){
+                data = it
+            }
+        }
+        return WhoseMessage.SelfMessage(chat, data)
     }
 
     fun postMessage(chat: Chat) {
@@ -63,8 +68,8 @@ class ChatViewModel(
 
 sealed class WhoseMessage {
 
-    data class SelfMessage(val chat: Chat) : WhoseMessage()
+    data class SelfMessage(val chat: Chat, val member: Member) : WhoseMessage()
 
-    data class OthersMessage(val chat: Chat) : WhoseMessage()
+    data class OthersMessage(val chat: Chat, val member: Member) : WhoseMessage()
 
 }

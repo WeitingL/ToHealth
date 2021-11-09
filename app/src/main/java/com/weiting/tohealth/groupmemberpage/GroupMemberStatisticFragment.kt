@@ -10,6 +10,7 @@ import com.weiting.tohealth.data.User
 import com.weiting.tohealth.databinding.GroupMemberStatisticFragmentBinding
 import com.weiting.tohealth.mystatisticpage.MyStatisticAdapter
 import com.weiting.tohealth.mystatisticpage.StatisticDetailAdapter
+import com.weiting.tohealth.transferCircleImage
 
 class GroupMemberStatisticFragment : Fragment() {
 
@@ -24,6 +25,7 @@ class GroupMemberStatisticFragment : Fragment() {
         val tabLayout = binding.tabLayout
         binding.tvMemberNickNameStatistic.text = memberInfo.nickName
         binding.tvMemberNameStatistic.text = memberInfo.name
+        transferCircleImage(binding.imageView5, memberInfo.profilePhoto)
 
         viewPager.adapter = MyStatisticAdapter(
             this, User(

@@ -31,7 +31,7 @@
                 android:id="@+id/imageView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/user__1_" />
+                app:srcCompat="@drawable/user_1" />
         </androidx.cardview.widget.CardView>
 
         <TextView

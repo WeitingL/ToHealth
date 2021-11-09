@@ -31,6 +31,11 @@ class MyGroupViewModel(private val firebaseDataRepository: FirebaseRepository) :
                     _groupItemList.value = listOf()
                     groupList.forEach {
                         it.member += firebaseDataRepository.getMember(it.id!!)
+
+                        it.member.forEach { member ->
+                            member.profilePhoto = firebaseDataRepository.getUserInfo(member.userId!!).userPhoto
+                        }
+
                         it.notes += firebaseDataRepository.getNote(it.id!!)
                         it.calenderItems += firebaseDataRepository.getCalenderItem(it.id!!)
 

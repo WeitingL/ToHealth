@@ -665,9 +665,11 @@ object FirebaseDataSource : FirebaseSource {
 
                 for (document in value!!) {
                     val data = document.toObject(Member::class.java)
+
                     list.add(data)
                 }
 
+                Log.i("dataSource", memberList.value.toString())
                 memberList.value = list
             }
         return memberList
@@ -809,7 +811,7 @@ object FirebaseDataSource : FirebaseSource {
 
                 val list = mutableListOf<Chat>()
 
-                Log.i("LiveChatValue", "$value")
+//                Log.i("LiveChatValue", "$value")
 
                 for (document in value!!) {
                     val data = document.toObject(Chat::class.java)

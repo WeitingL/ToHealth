@@ -33,9 +33,7 @@ class MembersFragment() : Fragment() {
                 findNavController().navigate(NavigationDirections.actionGlobalGroupMemberStatisticFragment(it))
             })
 
-        viewModel.liveMembersList.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
-        }
+        adapter.submitList(group.member)
 
         binding.apply {
             rvMemberList.adapter = adapter

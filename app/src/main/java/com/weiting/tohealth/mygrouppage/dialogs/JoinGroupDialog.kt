@@ -58,7 +58,9 @@ class JoinGroupDialog : DialogFragment() {
                     viewModel.joinGroup(
                         member = Member(
                             userId = UserManager.UserInformation.id!!,
-                            private = 1
+                            private = 1,
+                            name = UserManager.UserInformation.name,
+                            nickName = UserManager.UserInformation.name
                         ),
                         groupId = binding.tilGroupName.editText?.text.toString()
                     )
