@@ -344,6 +344,9 @@ class HomeFragment : Fragment() {
             if (it){
                 binding.btFastAdd.visibility = View.GONE
                 binding.tvFinishedSlogan.text = getString(R.string.newbieSlogan_homepage)
+            }else{
+                binding.btFastAdd.visibility = View.VISIBLE
+                binding.tvFinishedSlogan.text = getString(R.string.finished_todayList)
             }
         }
 

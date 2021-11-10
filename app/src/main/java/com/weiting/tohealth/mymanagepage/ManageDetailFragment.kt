@@ -95,6 +95,9 @@ class ManageDetailFragment() : Fragment() {
             if (it){
                 binding.lavEmptyItems.visibility = View.VISIBLE
                 binding.tvNewbieSlogan.visibility = View.VISIBLE
+            }else{
+                binding.lavEmptyItems.visibility = View.GONE
+                binding.tvNewbieSlogan.visibility = View.GONE
             }
         }
 

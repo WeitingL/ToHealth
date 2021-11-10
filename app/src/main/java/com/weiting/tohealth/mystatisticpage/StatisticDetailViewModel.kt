@@ -17,7 +17,7 @@ class StatisticDetailViewModel(
     private val userId: String,
     private val statisticType: StatisticType
 ) : ViewModel() {
-    
+
     private val _logList = MutableLiveData<List<LogItem>>()
     val logList: LiveData<List<LogItem>>
         get() = _logList
