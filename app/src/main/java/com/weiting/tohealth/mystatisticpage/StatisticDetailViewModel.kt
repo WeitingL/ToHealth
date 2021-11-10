@@ -17,7 +17,7 @@ class StatisticDetailViewModel(
     private val userId: String,
     private val statisticType: StatisticType
 ) : ViewModel() {
-
+    
     private val _logList = MutableLiveData<List<LogItem>>()
     val logList: LiveData<List<LogItem>>
         get() = _logList
@@ -38,7 +38,9 @@ class StatisticDetailViewModel(
             val measureList = firebaseDataRepository.getAllMeasures(userId)
             measureList.forEach {
                 it.measureLogs = firebaseDataRepository.getMeasureRecord(it.id!!, Timestamp.now())
-                logItemList.add(AnalyzeMeasureLog().revertToResultInDateList(it))
+                if (it.measureLogs.isNotEmpty()){
+                    logItemList.add(AnalyzeMeasureLog().revertToResultInDateList(it))
+                }
             }
             logItemList.add(LogItem.Bottom)
             _logList.value = logItemList
@@ -50,7 +52,9 @@ class StatisticDetailViewModel(
             val careList = firebaseDataRepository.getAllCares(userId)
             careList.forEach {
                 it.careLogs = firebaseDataRepository.getCareRecord(it.id!!, Timestamp.now())
-                logItemList.add(AnalyzeCareLog().revertToResultInDateList(it))
+                if (it.careLogs.isNotEmpty()){
+                    logItemList.add(AnalyzeCareLog().revertToResultInDateList(it))
+                }
             }
             logItemList.add(LogItem.Bottom)
             _logList.value = logItemList
@@ -63,7 +67,9 @@ class StatisticDetailViewModel(
             val activityList = firebaseDataRepository.getAllActivities(userId)
             activityList.forEach {
                 it.activityLogs = firebaseDataRepository.getActivityRecord(it.id!!, Timestamp.now())
-                logItemList.add(AnalyzeActivityLog().revertToResultInDateList(it))
+                if (it.activityLogs.isNotEmpty()){
+                    logItemList.add(AnalyzeActivityLog().revertToResultInDateList(it))
+                }
             }
             logItemList.add(LogItem.Bottom)
             _logList.value = logItemList
@@ -75,7 +81,9 @@ class StatisticDetailViewModel(
             val drugList = firebaseDataRepository.getAllDrugs(userId)
             drugList.forEach {
                 it.drugLogs = firebaseDataRepository.getDrugRecord(it.id!!, Timestamp.now())
-                logItemList.add(AnalyzeDrugLog().revertToResultInDateList(it))
+                if (it.drugLogs.isNotEmpty()){
+                    logItemList.add(AnalyzeDrugLog().revertToResultInDateList(it))
+                }
             }
             logItemList.add(LogItem.Bottom)
             _logList.value = logItemList

@@ -340,6 +340,13 @@ class HomeFragment : Fragment() {
             }
         }
 
+        viewModel.isTheNewbie.observe(viewLifecycleOwner){
+            if (it){
+                binding.btFastAdd.visibility = View.GONE
+                binding.tvFinishedSlogan.text = getString(R.string.newbieSlogan_homepage)
+            }
+        }
+
         binding.apply {
             rvHomeCardView.adapter = adapter
             btFastAdd.setOnClickListener {

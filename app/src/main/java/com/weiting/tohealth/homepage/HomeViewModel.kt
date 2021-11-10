@@ -17,6 +17,10 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
        Percentage of the completion
      */
 
+    private val _isTheNewbie = MutableLiveData<Boolean>()
+    val isTheNewbie: LiveData<Boolean>
+        get() = _isTheNewbie
+
     private val _totalTask = MutableLiveData<Int>()
     val totalTask: LiveData<Int>
         get() = _totalTask
@@ -37,6 +41,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
         _totalTask.value = 0
         _completedTask.value = 0
         _allCompleted.value = false
+        _isTheNewbie.value = true
     }
 
     /*
@@ -47,8 +52,10 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
      */
 
     private val drugList = firebaseDataRepository.getLiveDrugList(UserManager.UserInformation.id!!)
-    private val measureList = firebaseDataRepository.getLiveMeasureList(UserManager.UserInformation.id!!)
-    private val activityList = firebaseDataRepository.getLiveActivityList(UserManager.UserInformation.id!!)
+    private val measureList =
+        firebaseDataRepository.getLiveMeasureList(UserManager.UserInformation.id!!)
+    private val activityList =
+        firebaseDataRepository.getLiveActivityList(UserManager.UserInformation.id!!)
     private val careList = firebaseDataRepository.getLiveCareList(UserManager.UserInformation.id!!)
 
     private val drugCurrentList = mutableListOf<ItemDataType>()
@@ -62,6 +69,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
         addSource(drugList) { drugList ->
             viewModelScope.launch {
                 drugCurrentList.clear()
+                isNotNewBie()
                 val todayLogCreateTimeIntList = mutableListOf<Int>()
                 drugList.forEach { drug ->
 
@@ -117,6 +125,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
         addSource(measureList) { measureList ->
             viewModelScope.launch {
                 measureCurrentList.clear()
+                isNotNewBie()
                 measureList.forEach { measure ->
 
                     measure.measureLogs =
@@ -176,6 +185,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
         addSource(activityList) { activityList ->
             viewModelScope.launch {
                 activityCurrentList.clear()
+                isNotNewBie()
                 activityList.forEach { activity ->
 
                     activity.activityLogs =
@@ -235,6 +245,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
         addSource(careList) { careList ->
             viewModelScope.launch {
                 careCurrentList.clear()
+                isNotNewBie()
                 careList.forEach { care ->
 
                     care.careLogs = firebaseDataRepository.getCareRecord(care.id!!, Timestamp.now())
@@ -339,6 +350,10 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
         return list
     }
 
+    private fun isNotNewBie(){
+        _isTheNewbie.value = false
+    }
+
     /*
        Swipe to Skip
      */
@@ -425,14 +440,14 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
      */
 
     private val finishedLogList = mutableListOf<SwipeData>()
-    private val finishedTimeList= mutableListOf<SwipeData>()
+    private val finishedTimeList = mutableListOf<SwipeData>()
 
     fun getFinishedLog(swipeData: SwipeData) {
         finishedLogList.add(swipeData)
         _completedTask.value = _completedTask.value?.plus(1)
     }
 
-    fun removeTimeHeaderOfFinished(swipeData: SwipeData){
+    fun removeTimeHeaderOfFinished(swipeData: SwipeData) {
         finishedTimeList.add(swipeData)
     }
 
@@ -440,7 +455,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
         val lastData = finishedLogList.last()
         val currentList = itemDataMediator.value
 
-        if (finishedTimeList.isNotEmpty() && lastData.position == (finishedTimeList.last().position +1)){
+        if (finishedTimeList.isNotEmpty() && lastData.position == (finishedTimeList.last().position + 1)) {
             currentList?.add(finishedTimeList.last().position, finishedTimeList.last().itemDataType)
             finishedTimeList.removeLast()
         }

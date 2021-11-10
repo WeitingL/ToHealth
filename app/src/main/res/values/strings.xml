@@ -8,6 +8,7 @@
     <string name="itemskip_text">跳過</string>
     <string name="itemswip_undo">回復</string>
     <string name="itemfinished_text">完成</string>
+    <string name="newbieSlogan_homepage">快去項目管理新增項目吧!</string>
 
     <string-array name="ItemType">
         <item>藥品</item>

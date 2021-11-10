@@ -34,7 +34,11 @@ class StatisticDetailFragment() : Fragment() {
         val adapter = StatisticDetailAdapter()
 
         viewModel.logList.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
+            if (it.size > 1){
+                adapter.submitList(it)
+                binding.lavEmptyList.visibility = View.GONE
+                binding.tvEmptyList.visibility = View.GONE
+            }
         }
 
         binding.rvStatisticDataList.adapter = adapter

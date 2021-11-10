@@ -91,6 +91,13 @@ class ManageDetailFragment() : Fragment() {
             }
         }
 
+        viewModel.isTheNewBie.observe(viewLifecycleOwner){
+            if (it){
+                binding.lavEmptyItems.visibility = View.VISIBLE
+                binding.tvNewbieSlogan.visibility = View.VISIBLE
+            }
+        }
+
         binding.rvManageItems.adapter = adapter
         binding.btAddItem.setOnClickListener {
             findNavController().navigate(
