@@ -405,7 +405,7 @@ object FirebaseDataSource : FirebaseSource {
             val database = application.database
 
             database.collection("drugs").document(itemId).collection("drugLogs")
-                .orderBy("createTime", Query.Direction.DESCENDING)
+                .orderBy("createdTime", Query.Direction.DESCENDING)
                 .limit(100)
                 .get()
                 .addOnSuccessListener { result ->
@@ -426,7 +426,7 @@ object FirebaseDataSource : FirebaseSource {
             val database = application.database
 
             database.collection("measures").document(itemId).collection("measuresLogs")
-                .orderBy("createTime", Query.Direction.DESCENDING)
+                .orderBy("createdTime", Query.Direction.DESCENDING)
                 .limit(100)
                 .get()
                 .addOnSuccessListener { result ->
@@ -450,7 +450,7 @@ object FirebaseDataSource : FirebaseSource {
             val database = application.database
 
             database.collection("activity").document(itemId).collection("activityLogs")
-                .orderBy("createTime", Query.Direction.DESCENDING)
+                .orderBy("createdTime", Query.Direction.DESCENDING)
                 .limit(100)
                 .get()
                 .addOnSuccessListener { result ->
@@ -472,7 +472,7 @@ object FirebaseDataSource : FirebaseSource {
             val database = application.database
 
             database.collection("cares").document(itemId).collection("careLogs")
-                .orderBy("createTime", Query.Direction.DESCENDING)
+                .orderBy("createdTime", Query.Direction.DESCENDING)
                 .limit(100)
                 .get()
                 .addOnSuccessListener { result ->
@@ -617,7 +617,7 @@ object FirebaseDataSource : FirebaseSource {
 
         database.collection("groups").document(groupId)
             .collection("notes")
-            .orderBy("createTimestamp", Query.Direction.DESCENDING)
+            .orderBy("createdTime", Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { result ->
 
@@ -639,7 +639,7 @@ object FirebaseDataSource : FirebaseSource {
 
             database.collection("groups").document(groupId)
                 .collection("calenderItems")
-                .orderBy("createTime", Query.Direction.DESCENDING)
+                .orderBy("createdTime", Query.Direction.DESCENDING)
                 .get()
                 .addOnSuccessListener { result ->
 
@@ -805,7 +805,7 @@ object FirebaseDataSource : FirebaseSource {
 
         application.database.collection("chats")
             .whereEqualTo("groupId", groupId)
-            .orderBy("createTimestamp", Query.Direction.ASCENDING)
+            .orderBy("createdTime", Query.Direction.ASCENDING)
             .limit(50)
             .addSnapshotListener { value, error ->
                 if (error != null) {
