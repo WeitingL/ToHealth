@@ -32,6 +32,7 @@ class MyGroupViewModel(private val firebaseDataRepository: FirebaseRepository) :
     fun getGroup(idList: List<String>) {
         viewModelScope.launch {
             _groupItemList.value = mutableListOf()
+            currentGroupList.clear()
             idList.forEach { id ->
                 val groupList = firebaseDataRepository.getGroups(id)
 

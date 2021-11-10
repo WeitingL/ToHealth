@@ -5,8 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.Timestamp
-import com.weiting.tohealth.data.CalenderItem
 import com.weiting.tohealth.data.Note
 import com.weiting.tohealth.databinding.NoteRowBinding
 import com.weiting.tohealth.toFooter
@@ -31,7 +29,7 @@ class BoardNotesAdapter(val onclickListener: DeleteOnclickListener) :
                 tvNoteTitle.text = note.title
                 tvEditor.text = note.editor
                 tvNoteContext.text = note.content
-                tvNoteCreateTime.text = toStringFromTimeStamp(note.createTimestamp)
+                tvNoteCreateTime.text = toStringFromTimeStamp(note.createdTime)
                 tvFooter.text = toFooter(note.footer)
                 ibDelecteNote.setOnClickListener {
                     onclickListener.onClick(note)

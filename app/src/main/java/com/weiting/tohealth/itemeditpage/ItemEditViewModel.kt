@@ -1,6 +1,5 @@
 package com.weiting.tohealth.itemeditpage
 
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -108,11 +107,11 @@ class ItemEditViewModel(
                         "N" to binding.spOngoingDay.selectedItemPosition,
                         "X" to binding.spSuspendDay.selectedItemPosition
                     ),
-                    executeTime = timePointSet.value!!,
+                    executedTime = timePointSet.value!!,
                     lastEditTime = Timestamp.now(),
                     stock = Integer.parseInt(binding.etvStock.text.toString()),
                     editor = UserManager.UserInformation.id,
-                    createTime = Timestamp.now(),
+                    createdTime = Timestamp.now(),
                     status = 0
                 )
                 firebaseDataRepository.postDrug(data)
@@ -121,9 +120,9 @@ class ItemEditViewModel(
                 val data = Measure(
                     userId = user.id,
                     type = binding.spItemName.selectedItemPosition,
-                    executeTime = timePointSet.value!!,
+                    executedTime = timePointSet.value!!,
                     editor = UserManager.UserInformation.id,
-                    createTime = Timestamp.now(),
+                    createdTime = Timestamp.now(),
                     lastEditTime = Timestamp.now(),
                     status = 0
                 )
@@ -144,9 +143,9 @@ class ItemEditViewModel(
                         "N" to binding.spOngoingDay.selectedItemPosition,
                         "X" to binding.spSuspendDay.selectedItemPosition,
                     ),
-                    executeTime = timePointSet.value!!,
+                    executedTime = timePointSet.value!!,
                     editor = UserManager.UserInformation.id,
-                    createTime = Timestamp.now(),
+                    createdTime = Timestamp.now(),
                     lastEditTime = Timestamp.now(),
                     status = 0
                 )
@@ -169,7 +168,7 @@ class ItemEditViewModel(
                     ),
                     executeTime = timePointSet.value!!,
                     editor = UserManager.UserInformation.id,
-                    createTime = Timestamp.now(),
+                    createdTime = Timestamp.now(),
                     lastEditTime = Timestamp.now(),
                     status = 0
                 )

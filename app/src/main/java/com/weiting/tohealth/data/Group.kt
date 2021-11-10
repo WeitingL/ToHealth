@@ -30,7 +30,7 @@ data class Note(
     val content: String? = null,
     var editor: String? = null,
     val footer: Int? = null,
-    val createTimestamp: Timestamp? = null
+    val createdTime: Timestamp? = null
 ) : Parcelable
 
 @Parcelize
@@ -39,7 +39,7 @@ data class CalenderItem(
     var editor: String? = null,
     val content: String? = null,
     val date: Timestamp? = null,
-    val createTime: Timestamp? = null,
+    val createdTime: Timestamp? = null,
     val result: Int? = null
 ):Parcelable
 

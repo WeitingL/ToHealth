@@ -8,11 +8,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.*
 import com.weiting.tohealth.data.ItemData
-import com.weiting.tohealth.data.ItemType
 import com.weiting.tohealth.data.UserManager
 import com.weiting.tohealth.databinding.ManageRowItemBinding
-import com.weiting.tohealth.mygrouppage.GroupAdapter
-import com.weiting.tohealth.mygrouppage.GroupPageItem
 import com.weiting.tohealth.mymanagepage.ManageDetailAdapter.ItemsListViewHolder
 
 class ManageDetailAdapter(private val dataType: ManageType, val onClickListener: OnclickListener) :
@@ -41,7 +38,7 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                 when (dataType) {
                     ManageType.DRUG -> {
                         val data = item.DrugData
-                        adapter.submitList(data?.executeTime)
+                        adapter.submitList(data?.executedTime)
 
                         rvTimeList.adapter = adapter
                         tvItemNameManage.text = data?.drugName
@@ -57,7 +54,7 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                         tvRatioTitle.text = "剩餘藥量"
                         tvRatioNum.text = "${data.stock}${toUnit(data?.unit)}"
                         tvUpdateTime.text = toStringFromTimeStamp(data.lastEditTime)
-                        tvCreatedTime.text = toStringFromTimeStamp(data.createTime)
+                        tvCreatedTime.text = toStringFromTimeStamp(data.createdTime)
 
                         tvEditorManage.text = if (data.editor == UserManager.UserInformation.id) {
                             UserManager.UserInformation.name
@@ -69,7 +66,7 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
 
                     ManageType.MEASURE -> {
                         val data = item.MeasureData
-                        adapter.submitList(data?.executeTime)
+                        adapter.submitList(data?.executedTime)
 
                         rvTimeList.adapter = adapter
                         tvItemNameManage.text = toMeasureType(data?.type)
@@ -81,7 +78,7 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                         tvPerTimeTitle.visibility = View.GONE
                         tvDose.visibility = View.GONE
                         tvUnitManage.visibility = View.GONE
-                        tvCreatedTime.text = toStringFromTimeStamp(data?.createTime)
+                        tvCreatedTime.text = toStringFromTimeStamp(data?.createdTime)
                         tvUpdateTime.text = toStringFromTimeStamp(data?.lastEditTime)
                         tvRatioTitle.text = "剩餘天數"
                         tvRatioNum.text = "無期限"
@@ -96,7 +93,7 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
 
                     ManageType.ACTIVITY -> {
                         val data = item.ActivityData
-                        adapter.submitList(data?.executeTime)
+                        adapter.submitList(data?.executedTime)
 
                         rvTimeList.adapter = adapter
                         tvItemNameManage.text = toActivityType(data?.type)
@@ -107,7 +104,7 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                         tvPerTimeTitle.visibility = View.GONE
                         tvDose.visibility = View.GONE
                         tvUnitManage.visibility = View.GONE
-                        tvCreatedTime.text = toStringFromTimeStamp(data?.createTime)
+                        tvCreatedTime.text = toStringFromTimeStamp(data?.createdTime)
                         tvUpdateTime.text = toStringFromTimeStamp(data.lastEditTime)
                         tvRatioTitle.text = "剩餘天數"
                         tvRatioNum.text = "無期限"
@@ -136,7 +133,7 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                         tvDose.visibility = View.GONE
                         tvUnitManage.visibility = View.GONE
 
-                        tvCreatedTime.text = toStringFromTimeStamp(data?.createTime)
+                        tvCreatedTime.text = toStringFromTimeStamp(data?.createdTime)
                         tvUpdateTime.text = toStringFromTimeStamp(data.lastEditTime)
 
                         tvEditorManage.text = if (data?.editor == UserManager.UserInformation.id) {

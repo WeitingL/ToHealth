@@ -13,11 +13,9 @@ import com.weiting.tohealth.NavigationDirections
 import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.data.ActivityLog
 import com.weiting.tohealth.data.DrugLog
-import com.weiting.tohealth.data.MeasureLog
 import com.weiting.tohealth.databinding.FastAddFragmentBinding
 import com.weiting.tohealth.factory.FastAddViewModelFactory
 import com.weiting.tohealth.getTimeStampToTimeInt
-import com.weiting.tohealth.homepage.ItemDataType
 
 class FastAddFragment : Fragment() {
     override fun onCreateView(
@@ -35,7 +33,7 @@ class FastAddFragment : Fragment() {
                     viewModel.postDrugLog(it.drug.id!!, DrugLog(
                         timeTag = getTimeStampToTimeInt(Timestamp.now()),
                         result = 2,
-                        createTime = Timestamp.now()
+                        createdTime = Timestamp.now()
                     ), it.drug)
                     Toast.makeText(context, "已登錄紀錄", Toast.LENGTH_LONG).show()
                     findNavController().navigate(NavigationDirections.actionGlobalHomeFragment())
@@ -44,7 +42,7 @@ class FastAddFragment : Fragment() {
                     viewModel.postActivity(it.activity.id!!, ActivityLog(
                         timeTag = getTimeStampToTimeInt(Timestamp.now()),
                         result = 2,
-                        createTime = Timestamp.now()
+                        createdTime = Timestamp.now()
                     ))
                     Toast.makeText(context, "已登錄紀錄", Toast.LENGTH_LONG).show()
                     findNavController().navigate(NavigationDirections.actionGlobalHomeFragment())

@@ -1,12 +1,10 @@
 package com.weiting.tohealth.mystatisticpage.drugchart
 
-import android.util.Log
 import com.google.firebase.Timestamp
 import com.weiting.tohealth.data.Drug
 import com.weiting.tohealth.getTimeStampToDateInt
 import com.weiting.tohealth.mystatisticpage.LogItem
 import com.weiting.tohealth.mystatisticpage.ResultInDate
-import com.weiting.tohealth.toDateWithoutYearFromTimeStamp
 import com.weiting.tohealth.toTimeFromTimeStamp
 
 class AnalyzeDrugLog {
@@ -24,11 +22,11 @@ class AnalyzeDrugLog {
         getAllDate(drug)
         allDateInInt.forEachIndexed { index, it ->
             drug.drugLogs.forEach { drugLog ->
-                if (getTimeStampToDateInt(drugLog.createTime!!) == it) {
+                if (getTimeStampToDateInt(drugLog.createdTime!!) == it) {
                     resultList.add(
                         mapOf(
                             "result" to drugLog.result.toString(),
-                            "time" to toTimeFromTimeStamp(drugLog.createTime)
+                            "time" to toTimeFromTimeStamp(drugLog.createdTime)
                         )
                     )
                 }
@@ -42,9 +40,9 @@ class AnalyzeDrugLog {
 
     private fun getAllDate(drug: Drug) {
         drug.drugLogs.forEach {
-            if (getTimeStampToDateInt(it.createTime!!) !in allDateInInt) {
-                allDateInInt.add(getTimeStampToDateInt(it.createTime))
-                allDateInTimestamp.add(it.createTime)
+            if (getTimeStampToDateInt(it.createdTime!!) !in allDateInInt) {
+                allDateInInt.add(getTimeStampToDateInt(it.createdTime))
+                allDateInTimestamp.add(it.createdTime)
 //                Log.i("data", allDateInInt.toString())
             }
         }

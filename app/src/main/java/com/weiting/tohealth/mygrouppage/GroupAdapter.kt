@@ -1,6 +1,5 @@
 package com.weiting.tohealth.mygrouppage
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -129,7 +128,7 @@ class GroupAdapter(val onClickListener: OnclickListener) :
                     BoardMessage(
                         title = firstNoteData.title!!,
                         content = firstNoteData.content!!,
-                        createTime = firstNoteData.createTimestamp!!,
+                        createTime = firstNoteData.createdTime!!,
                         editor = firstNoteData.editor!!,
                         result = 7
                     )
@@ -139,7 +138,7 @@ class GroupAdapter(val onClickListener: OnclickListener) :
                     BoardMessage(
                         title = firstCalenderItemData.content!!,
                         content = "時間: ${toStringFromTimeStamp(firstCalenderItemData.date)}",
-                        createTime = firstCalenderItemData.createTime!!,
+                        createTime = firstCalenderItemData.createdTime!!,
                         editor = firstCalenderItemData.editor!!,
                         result = 8
                     )
@@ -152,7 +151,7 @@ class GroupAdapter(val onClickListener: OnclickListener) :
                     BoardMessage(
                         title = firstNoteData.title!!,
                         content = firstNoteData.content!!,
-                        createTime = firstNoteData.createTimestamp!!,
+                        createTime = firstNoteData.createdTime!!,
                         editor = firstNoteData.editor!!,
                         result = 7
                     )
@@ -164,7 +163,7 @@ class GroupAdapter(val onClickListener: OnclickListener) :
                     BoardMessage(
                         title = firstCalenderItemData.content!!,
                         content = "時間: ${toStringFromTimeStamp(firstCalenderItemData.date)}",
-                        createTime = firstCalenderItemData.createTime!!,
+                        createTime = firstCalenderItemData.createdTime!!,
                         editor = firstCalenderItemData.editor!!,
                         result = 8
                     )

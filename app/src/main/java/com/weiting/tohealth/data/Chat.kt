@@ -10,5 +10,5 @@ data class Chat(
     val groupId: String? = null,
     val context: String? = null,
     var creator: String? = null,
-    val createTimestamp: Timestamp? = null
+    val createdTime: Timestamp? = null
 ):Parcelable

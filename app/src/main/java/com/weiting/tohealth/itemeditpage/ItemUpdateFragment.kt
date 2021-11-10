@@ -1,7 +1,6 @@
 package com.weiting.tohealth.itemeditpage
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,16 +9,12 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.weiting.tohealth.*
 import com.weiting.tohealth.data.*
-import com.weiting.tohealth.databinding.ItemEditFragmentBinding
 import com.weiting.tohealth.databinding.ItemUpdateFragmentBinding
-import com.weiting.tohealth.factory.ItemEditViewModelFactory
 import com.weiting.tohealth.factory.ItemUpdateViewModelFactory
-import com.weiting.tohealth.mymanagepage.ManageDetailAdapter
 import com.weiting.tohealth.mymanagepage.ManageDetailTimeAdapter
 import com.weiting.tohealth.mymanagepage.ManageType
 import com.weiting.tohealth.timeset.EditTimeType
@@ -90,7 +85,7 @@ class ItemUpdateFragment : Fragment() {
                 ManageType.MEASURE -> {
                     tvItemTypeTitleUpdate.text = "測量項目"
                     tvItemNameUpdate.text = toMeasureType(itemData.MeasureData?.type)
-                    tvStartTimeUpdate.text = toDateFromTimeStamp(itemData.MeasureData?.createTime)
+                    tvStartTimeUpdate.text = toDateFromTimeStamp(itemData.MeasureData?.createdTime)
                     clUnitUpdate.visibility = View.GONE
                     clStockUpdate.visibility = View.GONE
                     clPeriodUpdate.visibility = View.GONE
@@ -331,10 +326,10 @@ class ItemUpdateFragment : Fragment() {
         val adapter = ManageDetailTimeAdapter()
         when (manageType) {
             ManageType.DRUG -> {
-                itemData.DrugData?.executeTime?.forEach {
+                itemData.DrugData?.executedTime?.forEach {
                     viewModel.getTimeSet(it.toDate().time)
                 }
-                adapter.submitList(itemData.DrugData?.executeTime)
+                adapter.submitList(itemData.DrugData?.executedTime)
             }
             ManageType.CARE -> {
                 itemData.CareData?.executeTime?.forEach {
@@ -343,16 +338,16 @@ class ItemUpdateFragment : Fragment() {
                 adapter.submitList(itemData.CareData?.executeTime)
             }
             ManageType.ACTIVITY -> {
-                itemData.ActivityData?.executeTime?.forEach {
+                itemData.ActivityData?.executedTime?.forEach {
                     viewModel.getTimeSet(it.toDate().time)
                 }
-                adapter.submitList(itemData.ActivityData?.executeTime)
+                adapter.submitList(itemData.ActivityData?.executedTime)
             }
             ManageType.MEASURE -> {
-                itemData.MeasureData?.executeTime?.forEach {
+                itemData.MeasureData?.executedTime?.forEach {
                     viewModel.getTimeSet(it.toDate().time)
                 }
-                adapter.submitList(itemData.MeasureData?.executeTime)
+                adapter.submitList(itemData.MeasureData?.executedTime)
             }
         }
         binding.rvOriginalTimeSet.adapter = adapter

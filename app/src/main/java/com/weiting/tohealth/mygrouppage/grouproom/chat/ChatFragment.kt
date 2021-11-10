@@ -1,7 +1,6 @@
 package com.weiting.tohealth.mygrouppage.grouproom.chat
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,7 +40,7 @@ class ChatFragment() : Fragment() {
                 groupId = group.id,
                 context = binding.etvMessage.text.toString(),
                 creator = UserManager.UserInformation.id,
-                createTimestamp = Timestamp.now()
+                createdTime = Timestamp.now()
             ))
             binding.etvMessage.text.clear()
         }

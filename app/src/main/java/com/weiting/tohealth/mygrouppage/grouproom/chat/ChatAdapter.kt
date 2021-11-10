@@ -32,7 +32,7 @@ class ChatAdapter() : ListAdapter<WhoseMessage, RecyclerView.ViewHolder>(DiffCal
         fun bind(chat: Chat, member: Member) {
             binding.apply {
                 tvSelfName.text = member.nickName
-                tvSelfCreatedTime.text = toStringFromTimeStamp(chat.createTimestamp)
+                tvSelfCreatedTime.text = toStringFromTimeStamp(chat.createdTime)
                 tvSelfMessage.text = chat.context
             }
         }
@@ -43,7 +43,7 @@ class ChatAdapter() : ListAdapter<WhoseMessage, RecyclerView.ViewHolder>(DiffCal
         fun bind(chat: Chat, member: Member) {
             binding.apply {
                 tvOthersName.text = member.nickName
-                tvOthersCreatedTime.text = toStringFromTimeStamp(chat.createTimestamp)
+                tvOthersCreatedTime.text = toStringFromTimeStamp(chat.createdTime)
                 tvOthersMessage.text = chat.context
                 transferCircleImage(imOthers, member.profilePhoto)
             }

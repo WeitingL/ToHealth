@@ -10,5 +10,5 @@ data class Notification(
     val userId: String? = null,
     val logId: String? = null,
     val result: Int? = null,
-    val createTimestamp: Timestamp? = null
+    val createdTime: Timestamp? = null
 ) : Parcelable
