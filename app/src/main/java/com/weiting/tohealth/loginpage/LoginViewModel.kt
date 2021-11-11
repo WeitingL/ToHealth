@@ -20,7 +20,7 @@ class LoginViewModel(private val firebaseDataRepository: FirebaseRepository) : V
         viewModelScope.launch {
             val userExist = firebaseDataRepository.getUserInfo(user.id!!)
 
-            if (userExist.id == null){
+            if (userExist.id.isNullOrEmpty()){
                 firebaseDataRepository.signIn(user)
                 initialUserManager(user.id)
             }else{

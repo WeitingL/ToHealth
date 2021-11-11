@@ -36,12 +36,14 @@ class ChatFragment() : Fragment() {
         }
 
         binding.ibSentMessage.setOnClickListener {
-            viewModel.postMessage(Chat(
-                groupId = group.id,
-                context = binding.etvMessage.text.toString(),
-                creator = UserManager.UserInformation.id,
-                createdTime = Timestamp.now()
-            ))
+            if (binding.etvMessage.text.isNotEmpty()){
+                viewModel.postMessage(Chat(
+                    groupId = group.id,
+                    context = binding.etvMessage.text.toString(),
+                    creator = UserManager.UserInformation.id,
+                    createdTime = Timestamp.now()
+                ))
+            }
             binding.etvMessage.text.clear()
         }
 

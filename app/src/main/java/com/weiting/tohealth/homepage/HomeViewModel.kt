@@ -2,14 +2,11 @@ package com.weiting.tohealth.homepage
 
 import androidx.lifecycle.*
 import com.google.firebase.Timestamp
-import com.weiting.tohealth.ItemArranger
+import com.weiting.tohealth.*
 import com.weiting.tohealth.data.*
-import com.weiting.tohealth.getTimeStampToDateInt
-import com.weiting.tohealth.getTimeStampToTimeInt
-import com.weiting.tohealth.toTimeFromTimeStamp
 import kotlinx.coroutines.*
 
-class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : ViewModel() {
+class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : ViewModel(), NotificationGenerator {
 
     /*
        Percentage of the completion
@@ -72,6 +69,10 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
 
                 val todayLogCreateTimeIntList = mutableListOf<Int>()
                 drugList.forEach { drug ->
+
+                    if (isDrugExhausted(drug)){
+                        postDrugExhausted(drug)
+                    }
 
                     //Get all logs today.
                     drug.drugLogs =
@@ -506,13 +507,19 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
             }
         }
     }
-}
 
-sealed class HomePageItem() {
+    private fun postDrugExhausted(drug: Drug){
+        firebaseDataRepository.postNotification(
+            Notification(
+                userId = UserManager.UserInformation.id,
+                itemId = drug.id,
+                result = 6,
+                createdTime = Timestamp.now()
+            )
+        )
+    }
 
-    object AddNewItem : HomePageItem()
-    object TodayAbstract : HomePageItem()
-    object NextTask : HomePageItem()
+
 }
 
 sealed class ItemDataType() {

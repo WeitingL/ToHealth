@@ -39,9 +39,25 @@ object FirebaseDataSource : FirebaseSource {
             .addOnSuccessListener { result ->
 
                 val data = result.toObject(User::class.java)
+                continuation.resume(data ?: User())
+            }
+            .addOnFailureListener { e ->
+                Log.w("Error to get data", e)
+            }
+    }
 
-//                Log.i("drugsList", list.toString())
-                continuation.resume(data?:User())
+    override suspend fun getUserInfo(userId: String): User = suspendCoroutine { continuation ->
+
+        application.database.collection("users").document(userId)
+            .get()
+            .addOnSuccessListener { result ->
+                val data = result.toObject(User::class.java)
+
+                if (data != null) {
+                    continuation.resume(data)
+                } else {
+                    continuation.resume(User())
+                }
             }
             .addOnFailureListener { e ->
                 Log.w("Error to get data", e)
@@ -353,11 +369,19 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
+    override suspend fun getMeasureRecordId(itemId: String): String = suspendCoroutine {
+
+        val database = application.database
+        val id = database.collection("measures").document(itemId).collection("measuresLogs")
+            .document().id
+
+        it.resume(id)
+
+    }
+
     override fun postMeasureRecord(id: String, measureLog: MeasureLog) {
         val database = application.database
 
-        measureLog.id =
-            database.collection("measures").document(id).collection("measuresLogs").document().id
         database.collection("measures").document(id).collection("measuresLogs")
             .document(measureLog.id!!)
             .set(measureLog)
@@ -844,25 +868,6 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
-    override suspend fun getUserInfo(userId: String): User = suspendCoroutine { continuation ->
-
-        application.database.collection("users").document(userId)
-            .get()
-            .addOnSuccessListener { result ->
-
-                val data = result.toObject(User::class.java)
-
-                if (data != null) {
-                    Log.i("CalenderItemList", data.toString())
-                    continuation.resume(data)
-                }
-
-            }
-            .addOnFailureListener { e ->
-                Log.w("Error to get data", e)
-            }
-    }
-
     override fun editStock(itemId: String, num: Int) {
         application.database.collection("drugs").document(itemId)
             .update("stock", num)
@@ -873,4 +878,20 @@ object FirebaseDataSource : FirebaseSource {
                 Log.w("update failure", "Error update document", e)
             }
     }
+
+    override fun postNotification(notification: Notification) {
+        val database = application.database
+
+        notification.id = database.collection("notifications").document().id
+
+        database.collection("notifications").document(notification.id!!)
+            .set(notification)
+            .addOnSuccessListener { documentReference ->
+                Log.d("store success", "DocumentSnapshot added with ID: ${notification.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("store failure", "Error adding document", e)
+            }
+    }
+
 }

@@ -129,6 +129,4 @@ class LoginFragment : Fragment() {
             )
         }
     }
-
-
 }

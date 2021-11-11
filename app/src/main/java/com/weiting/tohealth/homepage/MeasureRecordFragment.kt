@@ -102,7 +102,7 @@ class MeasureRecordFragment : Fragment() {
                                     "Z" to binding.editTextNumber.editableText.toString()
                                         .toInt()
                                 )
-                            )
+                            ), measureData.type
                         )
                     }
                     else -> {
@@ -118,7 +118,7 @@ class MeasureRecordFragment : Fragment() {
                                     "Y" to null,
                                     "Z" to null
                                 )
-                            )
+                            ), measureData.type!!
                         )
                     }
                 }

@@ -87,6 +87,10 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.postDrugRecord(id, drugLog)
     }
 
+    override suspend fun getMeasureRecordId(itemId: String): String {
+        return firebaseSource.getMeasureRecordId(itemId)
+    }
+
     override fun postMeasureRecord(id: String, measureLog: MeasureLog) {
         return firebaseSource.postMeasureRecord(id, measureLog)
     }
@@ -204,6 +208,10 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
     //Reduce the stock when task finished.
     override fun editStock(itemId: String, num: Int) {
         return firebaseSource.editStock(itemId, num)
+    }
+
+    override fun postNotification(notification: Notification) {
+        return firebaseSource.postNotification(notification)
     }
 
 
