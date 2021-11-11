@@ -53,6 +53,8 @@
             android:layout_marginBottom="8dp"
             android:background="@drawable/square_block"
             android:ems="10"
+            android:maxLength="60"
+            android:maxLines="10"
             android:inputType="textPersonName"
             android:paddingHorizontal="10dp"
             android:textCursorDrawable="@drawable/cursor_brown"

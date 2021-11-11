@@ -70,6 +70,5 @@ class RecordViewModel(private val firebaseDataRepository: FirebaseRepository) : 
                 createdTime = Timestamp.now()
             )
         )
-
     }
 }

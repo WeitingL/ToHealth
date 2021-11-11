@@ -24,6 +24,8 @@
 
         <service android:name=".service.ReviewLogsService"/>
 
+        <service android:name=".service.GetNotificationService"/>
+
 
 
 

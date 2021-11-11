@@ -60,7 +60,7 @@ interface FirebaseSource {
     //Post Item record
     fun postDrugRecord(id: String, drugLog: DrugLog)
 
-    suspend fun getMeasureRecordId(itemId: String):String
+    suspend fun getMeasureRecordId(itemId: String): String
 
     fun postMeasureRecord(id: String, measureLog: MeasureLog)
 
@@ -133,9 +133,13 @@ interface FirebaseSource {
 
     suspend fun getUserInfo(userId: String): User
 
-    fun editStock(itemId:String, num:Int)
+    fun editStock(itemId: String, num: Int)
 
     fun postNotification(notification: Notification)
+
+    fun getLiveNotification(
+        userIdList: List<String>
+    ): MutableLiveData<List<Notification>>
 
 
 }

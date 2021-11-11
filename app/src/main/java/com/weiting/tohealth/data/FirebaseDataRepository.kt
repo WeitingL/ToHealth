@@ -10,7 +10,7 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
     }
 
     override suspend fun getUser(userId: String): User {
-        return getUser(userId)
+        return firebaseSource.getUser(userId)
     }
 
     override fun signIn(user: User) {
@@ -212,6 +212,12 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
 
     override fun postNotification(notification: Notification) {
         return firebaseSource.postNotification(notification)
+    }
+
+    override fun getLiveNotification(
+        userIdList: List<String>
+    ): MutableLiveData<List<Notification>> {
+        return firebaseSource.getLiveNotification(userIdList)
     }
 
 
