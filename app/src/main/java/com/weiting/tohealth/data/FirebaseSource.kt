@@ -143,5 +143,10 @@ interface FirebaseSource {
 
     fun postOnGetNotificationForService(notification: Notification)
 
+    fun getLiveChatMessageForService(
+        userId: String,
+        groupId: List<String>
+    ): MutableLiveData<List<Chat>>
+
 
 }

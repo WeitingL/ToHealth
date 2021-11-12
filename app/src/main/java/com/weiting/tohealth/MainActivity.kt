@@ -34,7 +34,9 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.memberIdList.observe(this) {
             stopService(notificationIntent)
-            notificationIntent.putExtra("memberList", it as Serializable)
+            notificationIntent
+                .putExtra("memberList", it as Serializable)
+                .putExtra("groupList", viewModel.groupList as Serializable)
             startForegroundService(notificationIntent)
         }
 

@@ -942,4 +942,33 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
+    override fun getLiveChatMessageForService(
+        userId: String,
+        groupId: List<String>
+    ): MutableLiveData<List<Chat>> {
+        val chatItemsList = MutableLiveData<List<Chat>>()
+
+        application.database.collection("chats")
+            .whereIn("groupId", groupId)
+            .orderBy("createdTime", Query.Direction.ASCENDING)
+            .limit(50)
+            .addSnapshotListener { value, error ->
+                if (error != null) {
+                    Log.e("Listen failed.", error.toString())
+                    return@addSnapshotListener
+                }
+
+                val list = mutableListOf<Chat>()
+
+                for (document in value!!) {
+                    val data = document.toObject(Chat::class.java)
+//                    Log.i("LiveChat", "$data")
+                    list.add(data)
+                }
+
+                chatItemsList.value = list
+            }
+        return chatItemsList
+    }
+
 }
