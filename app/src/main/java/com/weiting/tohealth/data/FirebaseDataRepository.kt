@@ -231,5 +231,9 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.getLiveChatMessageForService(userId, groupId)
     }
 
+    override fun postOnGetChatForService(chat: Chat) {
+        return firebaseSource.postOnGetChatForService(chat)
+    }
+
 
 }

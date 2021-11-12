@@ -148,5 +148,7 @@ interface FirebaseSource {
         groupId: List<String>
     ): MutableLiveData<List<Chat>>
 
+    fun postOnGetChatForService(chat: Chat)
+
 
 }

@@ -20,7 +20,11 @@ class MainActivityViewModel(private val firebaseDataRepository: FirebaseReposito
     val groupList = mutableListOf<String>()
 
     init {
-        getMemberIdList()
+
+        if (Firebase.auth.currentUser?.uid != null){
+            getMemberIdList()
+        }
+
     }
 
     private fun getMemberIdList() {

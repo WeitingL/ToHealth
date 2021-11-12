@@ -12,6 +12,7 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.weiting.tohealth.PublicApplication.Companion.application
 import io.grpc.Server
+import java.util.*
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -904,9 +905,14 @@ object FirebaseDataSource : FirebaseSource {
     ): MutableLiveData<List<Notification>> {
         val notificationList = MutableLiveData<List<Notification>>()
 
+        val c = Calendar.getInstance()
+        c.time = Timestamp.now().toDate()
+        c.add(Calendar.DATE, -3)
+
         application.database.collection("notifications")
             .whereIn("userId", userIdList)
             .orderBy("createdTime", Query.Direction.DESCENDING)
+            .whereGreaterThan("createdTime", Timestamp(c.time))
             .addSnapshotListener { value, error ->
 
                 if (error != null) {
@@ -917,8 +923,7 @@ object FirebaseDataSource : FirebaseSource {
 
                 for (document in value!!) {
                     val data = document.toObject(Notification::class.java)
-                    list.add(data)
-
+                        list.add(data)
                 }
                 notificationList.value = list
             }
@@ -948,9 +953,14 @@ object FirebaseDataSource : FirebaseSource {
     ): MutableLiveData<List<Chat>> {
         val chatItemsList = MutableLiveData<List<Chat>>()
 
+        val c = Calendar.getInstance()
+        c.time = Timestamp.now().toDate()
+        c.add(Calendar.DATE, -3)
+
         application.database.collection("chats")
             .whereIn("groupId", groupId)
             .orderBy("createdTime", Query.Direction.ASCENDING)
+            .whereGreaterThan("createdTime", Timestamp(c.time))
             .limit(50)
             .addSnapshotListener { value, error ->
                 if (error != null) {
@@ -962,13 +972,28 @@ object FirebaseDataSource : FirebaseSource {
 
                 for (document in value!!) {
                     val data = document.toObject(Chat::class.java)
-//                    Log.i("LiveChat", "$data")
-                    list.add(data)
+                    if (!data.isReadList.contains(Firebase.auth.currentUser?.uid)){
+                        list.add(data)
+                    }
                 }
-
                 chatItemsList.value = list
             }
         return chatItemsList
     }
+
+    override fun postOnGetChatForService(chat: Chat) {
+
+        chat.isReadList.add(Firebase.auth.currentUser?.uid!!)
+
+        application.database.collection("chats").document(chat.id!!)
+            .update("isReadList", chat.isReadList)
+            .addOnSuccessListener { documentReference ->
+                Log.d("store success", "DocumentSnapshot added with ID: ${chat.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("store failure", "Error adding document", e)
+            }
+    }
+
 
 }

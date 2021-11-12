@@ -144,4 +144,6 @@ interface FirebaseRepository {
         groupId: List<String>
     ): MutableLiveData<List<Chat>>
 
+    fun postOnGetChatForService(chat: Chat)
+
 }

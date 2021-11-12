@@ -10,5 +10,7 @@ data class Chat(
     val groupId: String? = null,
     val context: String? = null,
     var creator: String? = null,
-    val createdTime: Timestamp? = null
+    val createdTime: Timestamp? = null,
+    @JvmField
+    val isReadList: MutableList<String> = mutableListOf()
 ):Parcelable
