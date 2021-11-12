@@ -3,10 +3,15 @@ package com.weiting.tohealth.data
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.ktx.Firebase
 import com.weiting.tohealth.PublicApplication.Companion.application
+import io.grpc.Server
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -894,34 +899,47 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
-    override fun getLiveNotification(
+    override fun getLiveNotificationForService(
         userIdList: List<String>
     ): MutableLiveData<List<Notification>> {
         val notificationList = MutableLiveData<List<Notification>>()
 
         application.database.collection("notifications")
-            .orderBy("createdTime", Query.Direction.DESCENDING)
             .whereIn("userId", userIdList)
+            .orderBy("createdTime", Query.Direction.DESCENDING)
             .addSnapshotListener { value, error ->
+
                 if (error != null) {
                     Log.e("Listen failed.", error.toString())
                     return@addSnapshotListener
                 }
                 val list = mutableListOf<Notification>()
 
-                if (value != null) {
-                    for (document in value) {
-                        val data = document.toObject(Notification::class.java)
-                        list.add(data)
-                    }
-                }
+                for (document in value!!) {
+                    val data = document.toObject(Notification::class.java)
+                    list.add(data)
 
+                }
                 notificationList.value = list
             }
 
         return notificationList
 
 
+    }
+
+    override fun postOnGetNotificationForService(notification: Notification) {
+
+        notification.alreadySend.add(Firebase.auth.currentUser?.uid!!)
+
+        application.database.collection("notifications").document(notification.id!!)
+            .update("alreadySend", notification.alreadySend)
+            .addOnSuccessListener { documentReference ->
+                Log.d("store success", "DocumentSnapshot added with ID: ${notification.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("store failure", "Error adding document", e)
+            }
     }
 
 }

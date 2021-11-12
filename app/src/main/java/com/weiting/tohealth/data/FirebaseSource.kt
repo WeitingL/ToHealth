@@ -137,9 +137,11 @@ interface FirebaseSource {
 
     fun postNotification(notification: Notification)
 
-    fun getLiveNotification(
+    fun getLiveNotificationForService(
         userIdList: List<String>
     ): MutableLiveData<List<Notification>>
+
+    fun postOnGetNotificationForService(notification: Notification)
 
 
 }

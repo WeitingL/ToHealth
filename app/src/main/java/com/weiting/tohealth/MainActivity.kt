@@ -1,23 +1,29 @@
 package com.weiting.tohealth
 
+import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
+import android.content.ServiceConnection
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.IBinder
+import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.weiting.tohealth.databinding.ActivityMainBinding
 import com.weiting.tohealth.factory.MainActivityViewModelFactory
-import com.weiting.tohealth.service.GetNotificationService
-import io.grpc.internal.JsonUtil
+import com.weiting.tohealth.service.NotificationService
 import java.io.Serializable
+import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var notificationServiceBinder: NotificationService.NotificationServiceBinder
+    private var isServiceCreated by Delegates.notNull<Boolean>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,12 +34,18 @@ class MainActivity : AppCompatActivity() {
             MainActivityViewModelFactory(PublicApplication.application.firebaseDataRepository)
         val viewModel = ViewModelProvider(this, factory).get(MainActivityViewModel::class.java)
 
-//        viewModel.memberIdList.observe(this) {
-//            val notificationIntent = Intent(this, GetNotificationService::class.java)
-//            notificationIntent.putExtra("memberList", it as Serializable)
-//            startService(notificationIntent)
-//        }
+        val notificationIntent = Intent(this, NotificationService::class.java)
+        bindService(notificationIntent, serviceConnection, Context.BIND_AUTO_CREATE)
 
+        viewModel.memberIdList.observe(this) {
+
+            Log.i("isServiceCreated", isServiceCreated.toString())
+
+            if (!isServiceCreated){
+                notificationIntent.putExtra("memberList", it as Serializable)
+                startService(notificationIntent)
+            }
+        }
 
         val navController = this.findNavController(R.id.myNavHostFragment)
         binding.bottomNavigationView.setupWithNavController(navController)
@@ -67,4 +79,17 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+
+    private val serviceConnection = object : ServiceConnection {
+        override fun onServiceConnected(p0: ComponentName?, p1: IBinder?) {
+            val notificationServiceBinder = p1 as NotificationService.NotificationServiceBinder
+            isServiceCreated = notificationServiceBinder.getServiceStatus()
+        }
+
+        override fun onServiceDisconnected(p0: ComponentName?) {}
+
+    }
+
+
 }

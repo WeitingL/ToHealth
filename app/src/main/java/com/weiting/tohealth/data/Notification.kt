@@ -15,5 +15,6 @@ data class Notification(
     val itemId: String? = null,
     val logId: String? = null,
     val result: Int? = null,
-    val createdTime: Timestamp? = null
+    val createdTime: Timestamp? = null,
+    val alreadySend: MutableList<String> = mutableListOf()
 ) : Parcelable

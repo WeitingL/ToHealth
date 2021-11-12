@@ -1,6 +1,5 @@
 package com.weiting.tohealth.homepage
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,7 +14,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
 import com.weiting.tohealth.*
 import com.weiting.tohealth.databinding.FragmentHomeBinding
-import com.weiting.tohealth.service.GetNotificationService
 
 class HomeFragment : Fragment() {
 
