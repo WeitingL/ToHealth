@@ -22,14 +22,9 @@ class NotificationService : LifecycleService() {
 
     lateinit var firebaseDataRepository: FirebaseRepository
     lateinit var notificationManager: NotificationManager
-    private val binder = NotificationServiceBinder()
-
-    var isCreated = false
 
     override fun onCreate() {
         super.onCreate()
-
-        isCreated = true
 
         firebaseDataRepository = PublicApplication.application.firebaseDataRepository
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -56,21 +51,8 @@ class NotificationService : LifecycleService() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val memberIdList = intent?.getIntegerArrayListExtra("memberList") as MutableList<String>
 
-        Log.i("isCreate again?", isCreated.toString())
-
         startListenNotification(memberIdList)
         return super.onStartCommand(intent, flags, startId)
-    }
-
-    override fun onBind(intent: Intent): IBinder? {
-        super.onBind(intent)
-        return binder
-    }
-
-    inner class NotificationServiceBinder : Binder() {
-        fun getServiceStatus():Boolean{
-            return isCreated
-        }
     }
 
     /*

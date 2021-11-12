@@ -21,10 +21,6 @@ import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var firebaseAuth: FirebaseAuth
-    private lateinit var notificationServiceBinder: NotificationService.NotificationServiceBinder
-    private var isServiceCreated by Delegates.notNull<Boolean>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
@@ -35,16 +31,11 @@ class MainActivity : AppCompatActivity() {
         val viewModel = ViewModelProvider(this, factory).get(MainActivityViewModel::class.java)
 
         val notificationIntent = Intent(this, NotificationService::class.java)
-        bindService(notificationIntent, serviceConnection, Context.BIND_AUTO_CREATE)
 
         viewModel.memberIdList.observe(this) {
-
-            Log.i("isServiceCreated", isServiceCreated.toString())
-
-            if (!isServiceCreated){
-                notificationIntent.putExtra("memberList", it as Serializable)
-                startService(notificationIntent)
-            }
+            stopService(notificationIntent)
+            notificationIntent.putExtra("memberList", it as Serializable)
+            startForegroundService(notificationIntent)
         }
 
         val navController = this.findNavController(R.id.myNavHostFragment)
@@ -79,17 +70,4 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
-
-    private val serviceConnection = object : ServiceConnection {
-        override fun onServiceConnected(p0: ComponentName?, p1: IBinder?) {
-            val notificationServiceBinder = p1 as NotificationService.NotificationServiceBinder
-            isServiceCreated = notificationServiceBinder.getServiceStatus()
-        }
-
-        override fun onServiceDisconnected(p0: ComponentName?) {}
-
-    }
-
-
 }

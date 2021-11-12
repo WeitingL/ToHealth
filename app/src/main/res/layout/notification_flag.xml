@@ -19,7 +19,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="8dp"
-        android:text="0000000000000000000000000"
+        android:text="text"
         android:textAppearance="@style/title_text_bl" />
 
 
