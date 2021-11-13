@@ -4,6 +4,8 @@ import android.util.Log
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.google.firebase.Timestamp
+import com.weiting.tohealth.data.Measure
+import com.weiting.tohealth.data.MeasureLog
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -304,6 +306,33 @@ fun transferCircleImage(imgView: ImageView, imgUri: String?) {
             .placeholder(R.drawable.user_1)
             .circleCrop()
             .into(imgView)
+    }
+
+}
+
+fun toNotificationTextForMeasureLog(measure: Measure, measureLog: MeasureLog): String {
+    return when (measure.type) {
+        0 -> {
+            "血壓異常! \n收縮壓: ${measureLog.record["X"]} mmHg 舒張壓: ${measureLog.record["Y"]} mmHg \n心搏: ${measureLog.record["Z"]} bpm"
+        }
+
+        1 -> {
+            "飯前血糖異常! 測量值為 ${measureLog.record["X"]} mg/dl"
+        }
+
+        2 -> {
+            "飯後血糖異常! 測量值為 ${measureLog.record["X"]} mg/dl"
+        }
+
+        3 -> {
+            "血氧異常! 測量值為 ${measureLog.record["X"]} %"
+        }
+
+        5 -> {
+            "體溫異常! 測量值為 ${measureLog.record["X"]} °C"
+        }
+
+        else -> "未知測量項目異常"
     }
 
 }

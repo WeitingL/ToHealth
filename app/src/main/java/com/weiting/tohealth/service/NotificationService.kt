@@ -12,11 +12,8 @@ import androidx.lifecycle.LifecycleService
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.weiting.tohealth.MainActivity
-import com.weiting.tohealth.PublicApplication
-import com.weiting.tohealth.R
+import com.weiting.tohealth.*
 import com.weiting.tohealth.data.*
-import com.weiting.tohealth.getTimeStampToDateInt
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
@@ -30,7 +27,6 @@ class NotificationService : LifecycleService() {
     lateinit var firebaseDataRepository: FirebaseRepository
     lateinit var notificationManager: NotificationManager
 
-    private val job = Job()
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
 
@@ -80,7 +76,7 @@ class NotificationService : LifecycleService() {
             groupList
         ).observe(this) {
             it.forEach {
-                if ("hyFpkVTMnqbFJJyB38aHkL0CLO43" !in it.isReadList){
+                if ("hyFpkVTMnqbFJJyB38aHkL0CLO43" !in it.isReadList) {
                     showLatestChat(it)
                     firebaseDataRepository.postOnGetChatForService(it)
                 }
@@ -109,10 +105,20 @@ class NotificationService : LifecycleService() {
 
     private fun showLatestChat(chat: Chat) {
         coroutineScope.launch {
+            val groupName = firebaseDataRepository.getGroups(chat.groupId!!).first().groupName
+            val userName = firebaseDataRepository.getUser(chat.creator!!).name
+
+            val chatNotification = RemoteViews(packageName, R.layout.notification_chat)
+            chatNotification.setTextViewText(R.id.tv_name, "$groupName - $userName")
+            chatNotification.setTextViewText(R.id.tv_content, "${chat.context}")
+
+
             val cNotification = NotificationCompat.Builder(this@NotificationService, "toHealth")
+                .setStyle(NotificationCompat.DecoratedCustomViewStyle())
                 .setSmallIcon(R.drawable.user_1)
-                .setContentTitle(firebaseDataRepository.getUser(chat.creator!!).name)
-                .setContentText(chat.context)
+                .setOnlyAlertOnce(true)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .setContent(chatNotification)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .build()
 
@@ -124,24 +130,51 @@ class NotificationService : LifecycleService() {
     //TODO get the detail info.
     private fun showNotification(notification: Notification, int: Int) {
         coroutineScope.launch {
+            val userName = firebaseDataRepository.getUser(notification.userId!!).name
 
+            val alertNotification = RemoteViews(packageName, R.layout.notification_chat)
+            when (notification.result) {
+                4 -> {
+                    val measure = firebaseDataRepository.getMeasure(notification.itemId!!)
+                    val measureLog = firebaseDataRepository.getMeasureLog(
+                        notification.itemId,
+                        notification.logId!!
+                    )
+
+                    alertNotification.setTextViewText(R.id.tv_name, "測量項目異常 - $userName")
+                    alertNotification.setTextViewText(
+                        R.id.tv_content,
+                        toNotificationTextForMeasureLog(measure, measureLog)
+                    )
+                }
+
+                5 -> {
+
+                }
+
+                6 -> {
+                    val drugItem = firebaseDataRepository.getDrug(notification.itemId!!)
+                    alertNotification.setTextViewText(R.id.tv_name, "藥物快要用完了 - $userName")
+                    alertNotification.setTextViewText(
+                        R.id.tv_content,
+                        "剩餘服藥次數: ${drugItem.stock / drugItem.dose} 次" +
+                                "\n剩餘量: ${drugItem.stock} ${toUnit(drugItem.unit)} "
+                    )
+                }
+            }
 
             val nNotification = NotificationCompat.Builder(this@NotificationService, "toHealth")
                 .setSmallIcon(R.drawable.exclamation_mark)
-                .setContentTitle(notification.id)
-                .setContentText(notification.itemId)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setStyle(NotificationCompat.DecoratedCustomViewStyle())
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .setContent(alertNotification)
                 .build()
 
             val id = Random.nextInt(15)
             notificationManager.notify(id, nNotification)
         }
     }
-
-
-
-
-    
 
 
 }

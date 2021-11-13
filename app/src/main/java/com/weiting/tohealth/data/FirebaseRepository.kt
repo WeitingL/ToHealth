@@ -22,11 +22,15 @@ interface FirebaseRepository {
     //Get Items list
     suspend fun getAllDrugs(userId: String): List<Drug>
 
+    suspend fun getDrug(itemId: String): Drug
+
     suspend fun getAllMeasures(userId: String): List<Measure>
 
     suspend fun getAllActivities(userId: String): List<Activity>
 
     suspend fun getAllCares(userId: String): List<Care>
+
+    suspend fun getMeasure(itemId: String): Measure
 
     fun getLiveDrugList(userId: String): MutableLiveData<List<Drug>>
 
@@ -72,6 +76,8 @@ interface FirebaseRepository {
         itemId: String,
         createTime: Timestamp
     ): List<MeasureLog>
+
+    suspend fun getMeasureLog(itemId: String, itemsLogId: String): MeasureLog
 
     suspend fun getActivityRecord(
         itemId: String,

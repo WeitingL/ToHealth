@@ -104,6 +104,20 @@ object FirebaseDataSource : FirebaseSource {
                 }
         }
 
+    override suspend fun getDrug(itemId: String): Drug =
+        suspendCoroutine { continuation ->
+            application.database.collection("drugs").document(itemId)
+                .get()
+                .addOnSuccessListener {
+                    if (it != null) {
+                        continuation.resume(it.toObject(Drug::class.java) ?: Drug())
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Log.w("Error to get data", e)
+                }
+        }
+
     override suspend fun getAllMeasures(userId: String): List<Measure> =
         suspendCoroutine { continuation ->
             val list = mutableListOf<Measure>()
@@ -161,6 +175,18 @@ object FirebaseDataSource : FirebaseSource {
 
 //                Log.i("caresList", list.toString())
                     continuation.resume(list)
+                }
+                .addOnFailureListener { e ->
+                    Log.w("Error to get data", e)
+                }
+        }
+
+    override suspend fun getMeasure(itemId: String): Measure =
+        suspendCoroutine { continuation ->
+            application.database.collection("measures").document(itemId)
+                .get()
+                .addOnSuccessListener {
+                    continuation.resume(it?.toObject(Measure::class.java) ?: Measure())
                 }
                 .addOnFailureListener { e ->
                     Log.w("Error to get data", e)
@@ -470,6 +496,22 @@ object FirebaseDataSource : FirebaseSource {
                     Log.w("Error to get data", e)
                 }
         }
+
+    override suspend fun getMeasureLog(itemId: String, itemsLogId: String): MeasureLog =
+        suspendCoroutine { continuation ->
+            application.database.collection("measures").document(itemId)
+                .collection("measuresLogs").document(itemsLogId)
+                .get()
+                .addOnSuccessListener {
+                    if (it != null) {
+                        continuation.resume(it.toObject(MeasureLog::class.java) ?: MeasureLog())
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Log.w("Error to get data", e)
+                }
+        }
+
 
     override suspend fun getActivityRecord(
         itemId: String,
@@ -923,7 +965,7 @@ object FirebaseDataSource : FirebaseSource {
 
                 for (document in value!!) {
                     val data = document.toObject(Notification::class.java)
-                        list.add(data)
+                    list.add(data)
                 }
                 notificationList.value = list
             }
@@ -972,7 +1014,7 @@ object FirebaseDataSource : FirebaseSource {
 
                 for (document in value!!) {
                     val data = document.toObject(Chat::class.java)
-                    if (!data.isReadList.contains(Firebase.auth.currentUser?.uid)){
+                    if (!data.isReadList.contains(Firebase.auth.currentUser?.uid)) {
                         list.add(data)
                     }
                 }

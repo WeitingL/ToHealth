@@ -17,9 +17,12 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.signIn(user)
     }
 
-    //------------------OutDate.---------------------//
     override suspend fun getAllDrugs(userId: String): List<Drug> {
         return firebaseSource.getAllDrugs(userId)
+    }
+
+    override suspend fun getDrug(itemId: String): Drug {
+        return firebaseSource.getDrug(itemId)
     }
 
     override suspend fun getAllMeasures(userId: String): List<Measure> {
@@ -33,7 +36,10 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
     override suspend fun getAllCares(userId: String): List<Care> {
         return firebaseSource.getAllCares(userId)
     }
-    //-------------------------------------------------//
+
+    override suspend fun getMeasure(itemId: String): Measure {
+        return firebaseSource.getMeasure(itemId)
+    }
 
     override fun getLiveDrugList(userId: String): MutableLiveData<List<Drug>> {
         return firebaseSource.getLiveDrugList(userId)
@@ -109,6 +115,10 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
 
     override suspend fun getMeasureRecord(itemId: String, createTime: Timestamp): List<MeasureLog> {
         return firebaseSource.getMeasureRecord(itemId, createTime)
+    }
+
+    override suspend fun getMeasureLog(itemId: String, itemsLogId: String): MeasureLog {
+        return firebaseSource.getMeasureLog(itemId, itemsLogId)
     }
 
     override suspend fun getActivityRecord(
