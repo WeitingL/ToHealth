@@ -3,7 +3,7 @@ package com.weiting.tohealth.homepage
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.Timestamp
-import com.weiting.tohealth.NotificationGenerator
+import com.weiting.tohealth.util.NotificationGenerator
 import com.weiting.tohealth.data.*
 import kotlinx.coroutines.launch
 

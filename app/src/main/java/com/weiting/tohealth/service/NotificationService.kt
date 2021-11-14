@@ -29,7 +29,6 @@ class NotificationService : LifecycleService() {
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
-
     override fun onCreate() {
         super.onCreate()
 
@@ -44,7 +43,8 @@ class NotificationService : LifecycleService() {
         notificationManager.createNotificationChannel(channel)
 
         val mainIntent = Intent(this, MainActivity::class.java)
-        val pendingIntent = PendingIntent.getActivity(this, 0, mainIntent, 0)
+        val pendingIntent =
+            PendingIntent.getActivity(this, 0, mainIntent, PendingIntent.FLAG_CANCEL_CURRENT)
 
         val foregroundNotification = NotificationCompat.Builder(this, "toHealth")
             .setSmallIcon(R.drawable.hospital_sign)
@@ -67,7 +67,7 @@ class NotificationService : LifecycleService() {
     }
 
     /*
-        The Listener will be recreated or not? resolved
+        The Listener will be recreated or not? resolved!!
      */
 
     private fun startListenChat(groupList: List<String>) {

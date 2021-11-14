@@ -1,4 +1,4 @@
-package com.weiting.tohealth
+package com.weiting.tohealth.util
 
 import android.util.Log
 import android.util.TimeUtils

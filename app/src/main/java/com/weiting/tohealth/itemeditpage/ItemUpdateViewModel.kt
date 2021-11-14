@@ -79,7 +79,7 @@ class ItemUpdateViewModel(
                     "N" to binding.spOngoingDayUpdate.selectedItemPosition,
                     "X" to binding.spSuspendDayUpdate.selectedItemPosition
                 )
-                data.executedTime = timePointSet.value!!
+                data.executedTime = timePointSet.value?: data.executedTime
                 data.stock = Integer.parseInt(binding.etvStockUpdate.text.toString())
                 data.editor = UserManager.UserInformation.id
                 data.lastEditTime = Timestamp.now()
@@ -93,7 +93,7 @@ class ItemUpdateViewModel(
 
                 data.lastEditTime = Timestamp.now()
                 data.editor = UserManager.UserInformation.id
-                data.executedTime = timePointSet.value!!
+                data.executedTime = timePointSet.value?: data.executedTime
                 data.status = statusSelected.value ?: data.status
 
                 firebaseDataRepository.updateMeasure(data)
@@ -107,7 +107,7 @@ class ItemUpdateViewModel(
                     "N" to binding.spOngoingDayUpdate.selectedItemPosition,
                     "X" to binding.spSuspendDayUpdate.selectedItemPosition
                 )
-                data.executedTime = timePointSet.value!!
+                data.executedTime = timePointSet.value?: data.executedTime
                 data.editor = UserManager.UserInformation.id
                 data.lastEditTime = Timestamp.now()
                 data.status = statusSelected.value ?: data.status
@@ -123,7 +123,7 @@ class ItemUpdateViewModel(
                     "N" to binding.spOngoingDayUpdate.selectedItemPosition,
                     "X" to binding.spSuspendDayUpdate.selectedItemPosition
                 )
-                data.executeTime = timePointSet.value!!
+                data.executeTime = timePointSet.value?: data.executeTime
                 data.editor = UserManager.UserInformation.id
                 data.lastEditTime = Timestamp.now()
                 data.status = statusSelected.value ?: data.status

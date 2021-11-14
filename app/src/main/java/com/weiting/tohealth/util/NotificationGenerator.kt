@@ -1,4 +1,4 @@
-package com.weiting.tohealth
+package com.weiting.tohealth.util
 
 import android.text.BoringLayout
 import com.weiting.tohealth.data.Drug

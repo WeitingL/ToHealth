@@ -14,6 +14,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
 import com.weiting.tohealth.*
 import com.weiting.tohealth.databinding.FragmentHomeBinding
+import com.weiting.tohealth.util.RecyclerViewSwipe
 
 class HomeFragment : Fragment() {
 
