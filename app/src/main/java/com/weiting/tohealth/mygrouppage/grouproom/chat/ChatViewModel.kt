@@ -21,15 +21,16 @@ class ChatViewModel(
 
     val chatMediatorLiveData = MediatorLiveData<MutableList<WhoseMessage>>().apply {
         addSource(chatList) {
+            newList.clear()
             it.forEach { chat ->
                 viewModelScope.launch {
                     when (chat.creator == UserManager.UserInformation.id) {
                         true -> {
-                            newList += createSelfMessages(chat)
+                            newList.add(createSelfMessages(chat))
                         }
 
                         false -> {
-                            newList += createOthersMessages(chat)
+                            newList.add(createOthersMessages(chat))
                         }
                     }
                     value = newList

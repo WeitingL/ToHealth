@@ -68,7 +68,9 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
             viewModelScope.launch {
 
                 drugCurrentList.clear()
-                isNotNewBie()
+                if (drugList.isNotEmpty()){
+                    isNotNewBie()
+                }
 
                 val todayLogCreateTimeIntList = mutableListOf<Int>()
                 drugList.forEach { drug ->
@@ -133,8 +135,12 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
 
         addSource(measureList) { measureList ->
             viewModelScope.launch {
+
                 measureCurrentList.clear()
-                isNotNewBie()
+                if (measureList.isNotEmpty()){
+                    isNotNewBie()
+                }
+
                 measureList.forEach { measure ->
 
                     measure.measureLogs =
@@ -195,7 +201,11 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
         addSource(activityList) { activityList ->
             viewModelScope.launch {
                 activityCurrentList.clear()
-                isNotNewBie()
+
+                if (activityList.isNotEmpty()){
+                    isNotNewBie()
+                }
+
                 activityList.forEach { activity ->
 
                     activity.activityLogs =
@@ -255,7 +265,11 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
         addSource(careList) { careList ->
             viewModelScope.launch {
                 careCurrentList.clear()
-                isNotNewBie()
+
+                if (careList.isNotEmpty()){
+                    isNotNewBie()
+                }
+
                 careList.forEach { care ->
 
                     care.careLogs =

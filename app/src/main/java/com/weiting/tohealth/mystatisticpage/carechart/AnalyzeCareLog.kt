@@ -12,7 +12,12 @@ class AnalyzeCareLog {
     fun revertToResultInDateList(care: Care): LogItem.CareLogItem {
 
         care.careLogs.forEach {
-            resultInDateList.add(ResultInDateForCare(it.createdTime!!, 8 - it.record["emotion"]!!.toInt(), it.record["note"]!!))
+            if (it.record["emotion"] != null){
+                resultInDateList.add(ResultInDateForCare(it.createdTime!!, 8 - it.record["emotion"]!!.toInt(), it.record["note"]?:""))
+            }else{
+                resultInDateList.add(ResultInDateForCare(it.createdTime!!, null, it.record["note"]?:""))
+            }
+
         }
         return LogItem.CareLogItem(toCareType(care.type), resultInDateList)
     }

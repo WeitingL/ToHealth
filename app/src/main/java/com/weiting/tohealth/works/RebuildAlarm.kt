@@ -100,6 +100,7 @@ class RebuildAlarm() {
             c.set(Calendar.DATE, d)
             c.set(Calendar.HOUR_OF_DAY, h)
             c.set(Calendar.MINUTE, m)
+            c.add(Calendar.MINUTE, -5)
 
             alarmManager.set(AlarmManager.RTC_WAKEUP, c.timeInMillis, pendingIntent)
         }

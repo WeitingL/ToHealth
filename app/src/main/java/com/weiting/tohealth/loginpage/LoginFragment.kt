@@ -57,7 +57,6 @@ class LoginFragment : Fragment() {
             .build()
 
         googleSignInClient = GoogleSignIn.getClient(this.requireActivity(), gso)
-
     }
 
     override fun onCreateView(

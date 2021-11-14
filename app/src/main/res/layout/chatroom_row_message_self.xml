@@ -10,6 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="180dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/bg_message_self"
@@ -22,17 +23,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_selfName" />
 
     <TextView
         android:id="@+id/tv_selfName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="4dp"
         android:text="TextView"
         android:textAppearance="@style/subTitle_text_bl"
-        app:layout_constraintBottom_toTopOf="@+id/tv_selfMessage"
         app:layout_constraintEnd_toEndOf="@+id/tv_selfMessage"
         app:layout_constraintTop_toTopOf="parent" />
 

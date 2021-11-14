@@ -29,7 +29,7 @@ class AlarmReceiver : BroadcastReceiver() {
                     RebuildAlarm().updateNewTodoListToAlarmManager(database)
                 }
 
-                //23:59:58
+                //23:59:30
                 p1.action?.equals("check_today_unChecked_logs") == true -> {
                     PostUnCheckedLogsWork().checkTodayUnCheckedLogs(database)
                 }

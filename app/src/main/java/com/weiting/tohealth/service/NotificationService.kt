@@ -47,7 +47,7 @@ class NotificationService : LifecycleService() {
             PendingIntent.getActivity(this, 0, mainIntent, PendingIntent.FLAG_CANCEL_CURRENT)
 
         val foregroundNotification = NotificationCompat.Builder(this, "toHealth")
-            .setSmallIcon(R.drawable.hospital_sign)
+            .setSmallIcon(R.drawable.ic_tohealth)
             .setContentTitle("ToHealth 正在監控您的健康數據與群組訊息")
             .setContentText("輕觸可以開啟應用程式")
             .setContentIntent(pendingIntent)
@@ -109,8 +109,8 @@ class NotificationService : LifecycleService() {
             val userName = firebaseDataRepository.getUser(chat.creator!!).name
 
             val chatNotification = RemoteViews(packageName, R.layout.notification_chat)
-            chatNotification.setTextViewText(R.id.tv_name, "$groupName - $userName")
-            chatNotification.setTextViewText(R.id.tv_content, "${chat.context}")
+            chatNotification.setTextViewText(R.id.tv_name, "群組: $groupName")
+            chatNotification.setTextViewText(R.id.tv_content, "$userName: ${chat.context}")
 
 
             val cNotification = NotificationCompat.Builder(this@NotificationService, "toHealth")

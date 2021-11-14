@@ -110,7 +110,7 @@ class MainActivity : AppCompatActivity() {
         c.time = Timestamp.now().toDate()
         c.set(Calendar.HOUR_OF_DAY, 23)
         c.set(Calendar.MINUTE, 59)
-        c.set(Calendar.SECOND, 58)
+        c.set(Calendar.SECOND, 0)
         val time = c.timeInMillis
 
         val intent = Intent(this, AlarmReceiver::class.java)

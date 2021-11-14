@@ -112,12 +112,12 @@ data class ResultInDate(
 
 data class ResultInDateForCare(
     val createTime: Timestamp,
-    val emotion: Int,
+    val emotion: Int?,
     val note: String
 )
 
 data class ResultInDateForMeasure(
     val createTime: Timestamp,
-    val results: Int,
+    val results: Int?,
     val record: Map<String, Int?>
 )

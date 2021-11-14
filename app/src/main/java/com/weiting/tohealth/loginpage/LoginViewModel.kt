@@ -32,7 +32,7 @@ class LoginViewModel(private val firebaseDataRepository: FirebaseRepository) : V
     fun initialUserManager(userId: String) {
         viewModelScope.launch {
             _userInfo.value = firebaseDataRepository.getUserInfo(userId)
-//            Log.i("data", UserManager.UserInformation.toString())
+            Log.i("data", UserManager.UserInformation.toString())
         }
     }
 }

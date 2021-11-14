@@ -84,11 +84,9 @@ class TodoListNotification {
             is Drug -> {
                 val notification = NotificationCompat.Builder(context, "toHealth")
                     .setSmallIcon(R.drawable.hospital_sign)
-                    .setContentTitle("已經${toTimeFromTimeStamp(Timestamp.now())}該吃藥囉!")
+                    .setContentTitle("已經${toTimeFromTimeStamp(Timestamp.now())}  該吃藥囉!")
                     .setContentText(
-                        "${itemsDataType.drugName} " +
-                                "\n要吃${itemsDataType.dose} ${toUnit(itemsDataType.unit)}" +
-                                "\n輕觸可以開啟應用程式"
+                        "${itemsDataType.drugName}\n要吃 ${itemsDataType.dose} ${toUnit(itemsDataType.unit)}\n輕觸可以開啟應用程式"
                     )
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setContentIntent(pendingIntent)
@@ -102,8 +100,7 @@ class TodoListNotification {
                     .setSmallIcon(R.drawable.hospital_sign)
                     .setContentTitle("已經${toTimeFromTimeStamp(Timestamp.now())}囉!")
                     .setContentText(
-                        "應該要量${toMeasureType(itemsDataType.type)}了!" +
-                                "\n輕觸可以開啟應用程式"
+                        "應該要量${toMeasureType(itemsDataType.type)}了!\n輕觸可以開啟應用程式"
                     )
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setContentIntent(pendingIntent)
@@ -117,8 +114,7 @@ class TodoListNotification {
                     .setSmallIcon(R.drawable.hospital_sign)
                     .setContentTitle("已經${toTimeFromTimeStamp(Timestamp.now())}囉!")
                     .setContentText(
-                        "應該要填${toCareType(itemsDataType.type)}了!" +
-                                "\n輕觸可以開啟應用程式"
+                        "應該要填${toCareType(itemsDataType.type)}了!\n輕觸可以開啟應用程式"
                     )
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setContentIntent(pendingIntent)
@@ -131,8 +127,7 @@ class TodoListNotification {
                     .setSmallIcon(R.drawable.hospital_sign)
                     .setContentTitle("已經${toTimeFromTimeStamp(Timestamp.now())}囉!")
                     .setContentText(
-                        "應該要去${toCareType(itemsDataType.type)}了!" +
-                                "\n輕觸可以開啟應用程式"
+                        "應該要去${toCareType(itemsDataType.type)}了!\n輕觸可以開啟應用程式"
                     )
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setContentIntent(pendingIntent)
