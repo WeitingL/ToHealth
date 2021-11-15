@@ -29,7 +29,7 @@
 
     <string-array name="End_Date">
         <item>無限期</item>
-        <item>共幾天(為短時間用藥使用)</item>
+        <item>共幾天(為短期間使用)</item>
     </string-array>
 
     <string-array name="Activity_Item">

@@ -18,6 +18,7 @@ import com.weiting.tohealth.*
 import com.weiting.tohealth.data.UserManager
 import com.weiting.tohealth.databinding.FragmentHomeBinding
 import com.weiting.tohealth.util.RecyclerViewSwipe
+import java.lang.RuntimeException
 
 class HomeFragment : Fragment() {
 

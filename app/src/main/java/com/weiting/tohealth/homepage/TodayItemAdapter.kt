@@ -174,4 +174,8 @@ class TodayItemAdapter() :
             }
         }
     }
+
+    //TODO Empty space need to add new things.
+
+
 }
