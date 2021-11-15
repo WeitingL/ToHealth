@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/homeFragment">
 
     <dialog
         android:id="@+id/addGroupDialog"
@@ -57,7 +57,8 @@
         app:destination="@id/myGroupFragment" />
     <action
         android:id="@+id/action_global_homeFragment"
-        app:destination="@id/homeFragment" />
+        app:destination="@id/homeFragment"
+        app:popUpTo="@id/navigation" />
     <action
         android:id="@+id/action_global_myStatisticFragment"
         app:destination="@id/myStatisticFragment" />
@@ -237,11 +238,6 @@
         android:id="@+id/loginFragment"
         android:name="com.weiting.tohealth.loginpage.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
-        <action
-            android:id="@+id/action_loginFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
-            app:popUpTo="@id/navigation"
-            app:popUpToInclusive="true" />
-    </fragment>
+        tools:layout="@layout/fragment_login" />
+    <action android:id="@+id/action_global_loginFragment" app:destination="@id/loginFragment" />
 </navigation>

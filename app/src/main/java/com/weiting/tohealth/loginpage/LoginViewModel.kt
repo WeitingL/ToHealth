@@ -22,9 +22,9 @@ class LoginViewModel(private val firebaseDataRepository: FirebaseRepository) : V
 
             if (userExist.id.isNullOrEmpty()){
                 firebaseDataRepository.signIn(user)
-                initialUserManager(user.id)
+                initialUserManager(user.id!!)
             }else{
-                initialUserManager(user.id)
+                initialUserManager(user.id!!)
             }
         }
     }

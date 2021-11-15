@@ -45,11 +45,11 @@ class LoginFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         auth = Firebase.auth
-
-        if (auth.currentUser != null) {
-            //user Logged in
-            viewModel.initialUserManager(auth.uid!!)
-        }
+//
+//        if (auth.currentUser != null) {
+//            //user Logged in
+//            viewModel.initialUserManager(auth.uid!!)
+//        }
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.web_client_id))
@@ -68,7 +68,7 @@ class LoginFragment : Fragment() {
 
         viewModel.userInfo.observe(viewLifecycleOwner){
             UserManager.UserInformation = it
-            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
+            findNavController().navigate(NavigationDirections.actionGlobalHomeFragment())
         }
 
 

@@ -49,12 +49,12 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
         Identify the finished mission by numbers and created time of ItemLog.
      */
 
-    private val drugList = firebaseDataRepository.getLiveDrugList(UserManager.UserInformation.id!!)
+    private val drugList = firebaseDataRepository.getLiveDrugList(UserManager.UserInformation.id?:"")
     private val measureList =
-        firebaseDataRepository.getLiveMeasureList(UserManager.UserInformation.id!!)
+        firebaseDataRepository.getLiveMeasureList(UserManager.UserInformation.id?:"")
     private val activityList =
-        firebaseDataRepository.getLiveActivityList(UserManager.UserInformation.id!!)
-    private val careList = firebaseDataRepository.getLiveCareList(UserManager.UserInformation.id!!)
+        firebaseDataRepository.getLiveActivityList(UserManager.UserInformation.id?:"")
+    private val careList = firebaseDataRepository.getLiveCareList(UserManager.UserInformation.id?:"")
 
     private val drugCurrentList = mutableListOf<ItemDataType>()
     private val measureCurrentList = mutableListOf<ItemDataType>()
@@ -68,14 +68,14 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
             viewModelScope.launch {
 
                 drugCurrentList.clear()
-                if (drugList.isNotEmpty()){
+                if (drugList.isNotEmpty()) {
                     isNotNewBie()
                 }
 
                 val todayLogCreateTimeIntList = mutableListOf<Int>()
                 drugList.forEach { drug ->
 
-                    if (isDrugExhausted(drug)){
+                    if (isDrugExhausted(drug)) {
                         postDrugExhausted(drug)
                     }
 
@@ -137,7 +137,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
             viewModelScope.launch {
 
                 measureCurrentList.clear()
-                if (measureList.isNotEmpty()){
+                if (measureList.isNotEmpty()) {
                     isNotNewBie()
                 }
 
@@ -202,7 +202,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
             viewModelScope.launch {
                 activityCurrentList.clear()
 
-                if (activityList.isNotEmpty()){
+                if (activityList.isNotEmpty()) {
                     isNotNewBie()
                 }
 
@@ -266,7 +266,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
             viewModelScope.launch {
                 careCurrentList.clear()
 
-                if (careList.isNotEmpty()){
+                if (careList.isNotEmpty()) {
                     isNotNewBie()
                 }
 
@@ -413,46 +413,50 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
     }
 
     fun postSkipLog() {
-        skipList.forEach {
-            when (it.itemDataType) {
-                is ItemDataType.DrugType -> {
-                    firebaseDataRepository.postDrugRecord(
-                        it.itemDataType.drug.DrugData?.id!!, DrugLog(
-                            timeTag = it.itemDataType.timeInt,
-                            result = 1,
-                            createdTime = Timestamp.now()
+        viewModelScope.launch {
+            skipList.forEach {
+                when (it.itemDataType) {
+                    is ItemDataType.DrugType -> {
+                        firebaseDataRepository.postDrugRecord(
+                            it.itemDataType.drug.DrugData?.id!!, DrugLog(
+                                timeTag = it.itemDataType.timeInt,
+                                result = 1,
+                                createdTime = Timestamp.now()
+                            )
                         )
-                    )
-                }
+                    }
 
-                is ItemDataType.MeasureType -> {
-                    firebaseDataRepository.postMeasureRecord(
-                        it.itemDataType.measure.MeasureData?.id!!, MeasureLog(
-                            timeTag = it.itemDataType.timeInt,
-                            result = 1,
-                            createdTime = Timestamp.now()
+                    is ItemDataType.MeasureType -> {
+                        firebaseDataRepository.postMeasureRecord(
+                            it.itemDataType.measure.MeasureData?.id!!, MeasureLog(
+                                id = firebaseDataRepository
+                                    .getMeasureRecordId(it.itemDataType.measure.MeasureData.id!!),
+                                timeTag = it.itemDataType.timeInt,
+                                result = 1,
+                                createdTime = Timestamp.now()
+                            )
                         )
-                    )
-                }
+                    }
 
-                is ItemDataType.CareType -> {
-                    firebaseDataRepository.postCareRecord(
-                        it.itemDataType.care.CareData?.id!!, CareLog(
-                            timeTag = it.itemDataType.timeInt,
-                            result = 1,
-                            createdTime = Timestamp.now()
+                    is ItemDataType.CareType -> {
+                        firebaseDataRepository.postCareRecord(
+                            it.itemDataType.care.CareData?.id!!, CareLog(
+                                timeTag = it.itemDataType.timeInt,
+                                result = 1,
+                                createdTime = Timestamp.now()
+                            )
                         )
-                    )
-                }
+                    }
 
-                is ItemDataType.ActivityType -> {
-                    firebaseDataRepository.postActivityRecord(
-                        it.itemDataType.activity.ActivityData?.id!!, ActivityLog(
-                            timeTag = it.itemDataType.timeInt,
-                            result = 1,
-                            createdTime = Timestamp.now()
+                    is ItemDataType.ActivityType -> {
+                        firebaseDataRepository.postActivityRecord(
+                            it.itemDataType.activity.ActivityData?.id!!, ActivityLog(
+                                timeTag = it.itemDataType.timeInt,
+                                result = 1,
+                                createdTime = Timestamp.now()
+                            )
                         )
-                    )
+                    }
                 }
             }
         }
@@ -525,7 +529,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
         }
     }
 
-    private fun postDrugExhausted(drug: Drug){
+    private fun postDrugExhausted(drug: Drug) {
         firebaseDataRepository.postNotification(
             Notification(
                 userId = UserManager.UserInformation.id,
@@ -535,8 +539,6 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
             )
         )
     }
-
-
 }
 
 sealed class ItemDataType() {

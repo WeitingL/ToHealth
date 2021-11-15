@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class User(
     val name : String? = null,
-    val id : String? = null,
+    var id : String? = null,
     val userPhoto: String? = null,
     val groupList: List<String> = listOf()
 ): Parcelable

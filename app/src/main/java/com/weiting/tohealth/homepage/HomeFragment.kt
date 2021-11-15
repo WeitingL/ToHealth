@@ -12,7 +12,10 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.weiting.tohealth.*
+import com.weiting.tohealth.data.UserManager
 import com.weiting.tohealth.databinding.FragmentHomeBinding
 import com.weiting.tohealth.util.RecyclerViewSwipe
 
@@ -26,6 +29,13 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
+        val use = Firebase.auth.currentUser
+
+        if (use == null){
+            findNavController().navigate(NavigationDirections.actionGlobalLoginFragment())
+        }else{
+            UserManager.UserInformation.id = use.uid
+        }
 
         binding.apply {
             if (getTimeStampToTimeInt(Timestamp.now()) in 600..1000) {
