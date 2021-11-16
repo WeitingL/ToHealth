@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.*
 import com.weiting.tohealth.data.*
 import com.weiting.tohealth.databinding.ItemRowBinding
+import com.weiting.tohealth.databinding.ItemRowHomeBinding
 import com.weiting.tohealth.databinding.TimeRowBinding
 import java.lang.ClassCastException
 
@@ -47,44 +48,41 @@ class TodayItemAdapter() :
         }
     }
 
-    inner class DrugViewHolder(private val binding: ItemRowBinding) :
+    inner class DrugViewHolder(private val binding: ItemRowHomeBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(drug: Drug?) {
             binding.apply {
                 tvName.text = drug?.drugName
                 imageView.setImageResource(setDrugDrawable(drug?.unit))
                 tvUnit.text = drug?.dose.toString() + toUnit(drug?.unit)
-                tvStock.text = "剩餘" + drug?.stock.toString() + toUnit(drug?.unit)
             }
         }
     }
 
-    inner class MeasureViewHolder(private val binding: ItemRowBinding) :
+    inner class MeasureViewHolder(private val binding: ItemRowHomeBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(measure: Measure?) {
             binding.apply {
                 tvName.text = toMeasureType(measure?.type)
                 imageView.setImageResource(setMeasureDrawable(measure?.type))
                 tvUnit.visibility = View.GONE
-                tvStock.visibility = View.GONE
             }
         }
     }
 
-    inner class ActivityViewHolder(private val binding: ItemRowBinding) :
+    inner class ActivityViewHolder(private val binding: ItemRowHomeBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(activity: Activity?) {
             binding.apply {
                 tvName.text = toActivityType(activity?.type)
                 imageView.setImageResource(setActivityType(activity?.type))
                 tvUnit.visibility = View.GONE
-                tvStock.visibility = View.GONE
 
             }
         }
     }
 
-    inner class CareViewHolder(private val binding: ItemRowBinding) :
+    inner class CareViewHolder(private val binding: ItemRowHomeBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(care: Care?) {
             binding.apply {
@@ -97,7 +95,6 @@ class TodayItemAdapter() :
                 tvName.text = toCareType(care?.type)
                 imageView.setImageResource(R.drawable.stopwatch)
                 tvUnit.text = "提出人$editor"
-                tvStock.visibility = View.GONE
 
             }
         }
@@ -117,7 +114,7 @@ class TodayItemAdapter() :
             )
 
             ITEM_VIEWTYPE_DRUG -> DrugViewHolder(
-                ItemRowBinding.inflate(
+                ItemRowHomeBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
@@ -125,7 +122,7 @@ class TodayItemAdapter() :
             )
 
             ITEM_VIEWTYPE_MEASURE -> MeasureViewHolder(
-                ItemRowBinding.inflate(
+                ItemRowHomeBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
@@ -133,7 +130,7 @@ class TodayItemAdapter() :
             )
 
             ITEM_VIEWTYPE_ACTIVITY -> ActivityViewHolder(
-                ItemRowBinding.inflate(
+                ItemRowHomeBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
@@ -141,7 +138,7 @@ class TodayItemAdapter() :
             )
 
             ITEM_VIEWTYPE_CARE -> CareViewHolder(
-                ItemRowBinding.inflate(
+                ItemRowHomeBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false

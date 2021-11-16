@@ -8,7 +8,7 @@
     </item>
     <item android:id="@android:id/progress">
         <scale
-            android:drawable="@drawable/round_green"
+            android:drawable="@drawable/progress_bar_gradient"
             android:scaleWidth="100%" />
     </item>
 </layer-list>
