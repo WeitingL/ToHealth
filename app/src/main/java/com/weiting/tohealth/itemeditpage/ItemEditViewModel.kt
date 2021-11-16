@@ -95,7 +95,7 @@ class ItemEditViewModel(
                 val data = Drug(
                     userId = user.id,
                     drugName = binding.tilDrugName.editText?.text.toString(),
-                    dose = Integer.parseInt(binding.etvDrugDose.text.toString()),
+                    dose = binding.etvDrugDose.text.toString().toFloat(),
                     unit = binding.spUnit.selectedItemPosition,
                     endDate = mapOf(
                         "type" to endDateSelected.value,
@@ -107,9 +107,9 @@ class ItemEditViewModel(
                         "N" to binding.spOngoingDay.selectedItemPosition,
                         "X" to binding.spSuspendDay.selectedItemPosition
                     ),
-                    executedTime = timePointSet.value!!,
+                    executedTime = timePointSet.value?: listOf(),
                     lastEditTime = Timestamp.now(),
-                    stock = Integer.parseInt(binding.etvStock.text.toString()),
+                    stock = binding.etvStock.text.toString().toFloat(),
                     editor = UserManager.UserInformation.id,
                     createdTime = Timestamp.now(),
                     status = 0

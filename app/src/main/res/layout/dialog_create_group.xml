@@ -35,7 +35,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:hint="名稱"
+            android:hint="名稱 (上限10個字)"
+            android:maxLength="10"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 

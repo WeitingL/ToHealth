@@ -73,14 +73,14 @@ class ItemUpdateViewModel(
                 val data = itemData.DrugData!!
 
                 data.unit = binding.spUnitUpdate.selectedItemPosition
-                data.dose = Integer.parseInt(binding.etvDrugDoseUpdate.text.toString())
+                data.dose = binding.etvDrugDoseUpdate.text.toString().toFloat()
                 data.period = mapOf(
                     "type" to binding.spPeriodUpdate.selectedItemPosition,
                     "N" to binding.spOngoingDayUpdate.selectedItemPosition,
                     "X" to binding.spSuspendDayUpdate.selectedItemPosition
                 )
                 data.executedTime = timePointSet.value?: data.executedTime
-                data.stock = Integer.parseInt(binding.etvStockUpdate.text.toString())
+                data.stock = binding.etvStockUpdate.text.toString().toFloat()
                 data.editor = UserManager.UserInformation.id
                 data.lastEditTime = Timestamp.now()
                 data.status = statusSelected.value ?: data.status
@@ -131,9 +131,5 @@ class ItemUpdateViewModel(
                 firebaseDataRepository.updateCare(data)
             }
         }
-
-
     }
-
-
 }

@@ -216,7 +216,7 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
     }
 
     //Reduce the stock when task finished.
-    override fun editStock(itemId: String, num: Int) {
+    override fun editStock(itemId: String, num: Float) {
         return firebaseSource.editStock(itemId, num)
     }
 

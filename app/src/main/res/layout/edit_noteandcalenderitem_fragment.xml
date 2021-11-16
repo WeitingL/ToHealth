@@ -76,7 +76,7 @@
                 android:inputType="textMultiLine|textPersonName"
                 android:minHeight="48dp"
                 android:singleLine="false"
-                android:maxLength="100"
+                android:maxLength="80"
                 android:maxLines="20"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/etv_Title"

@@ -18,7 +18,7 @@ data class Drug(
     var id: String? = null,
     val userId: String? = null,
     val drugName: String? = null,
-    var dose: Int = 0,
+    var dose: Float = 0F,
     var unit: Int? = null,
     val endDate: Map<String, Int?> = mapOf("type" to null, "day" to null),
     val startDate: Timestamp? = null,
@@ -28,7 +28,7 @@ data class Drug(
         "X" to null
     ),
     var executedTime: List<Timestamp> = listOf(),
-    var stock: Int = 0,
+    var stock: Float = 0F,
     var editor: String? = null,
     val createdTime: Timestamp? = null,
     var lastEditTime: Timestamp? = null,

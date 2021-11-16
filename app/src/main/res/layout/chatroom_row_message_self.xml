@@ -14,7 +14,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/bg_message_self"
-        android:gravity="right"
+        android:gravity="left"
         android:maxWidth="220dp"
         android:paddingHorizontal="10dp"
         android:paddingVertical="4dp"

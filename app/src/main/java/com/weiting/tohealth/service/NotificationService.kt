@@ -76,7 +76,7 @@ class NotificationService : LifecycleService() {
             groupList
         ).observe(this) {
             it.forEach {
-                if ("hyFpkVTMnqbFJJyB38aHkL0CLO43" !in it.isReadList) {
+                if ( Firebase.auth.currentUser?.uid !in it.isReadList) {
                     showLatestChat(it)
                     firebaseDataRepository.postOnGetChatForService(it)
                 }

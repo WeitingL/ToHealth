@@ -139,7 +139,7 @@ interface FirebaseSource {
 
     suspend fun getUserInfo(userId: String): User
 
-    fun editStock(itemId: String, num: Int)
+    fun editStock(itemId: String, num: Float)
 
     fun postNotification(notification: Notification)
 

@@ -47,11 +47,18 @@ class MainActivity : AppCompatActivity() {
             setAlarmManagerToRearrangeItem()
         }
 
+
+
         val navController = this.findNavController(R.id.myNavHostFragment)
         binding.bottomNavigationView.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             when (navController.currentDestination?.id) {
+                R.id.groupFragment ->{
+                    binding.bottomNavigationView.visibility = View.GONE
+                    binding.toolbar.visibility = View.VISIBLE
+                }
+
                 R.id.loginFragment -> {
                     binding.bottomNavigationView.visibility = View.GONE
                     binding.toolbar.visibility = View.GONE
@@ -80,7 +87,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setAlarmManagerToRearrangeItem(){
+    private fun setAlarmManagerToRearrangeItem() {
         Log.i("startWork", "setAlarmManagerToRearrangeItem")
         val c = Calendar.getInstance()
         c.time = Timestamp.now().toDate()
@@ -104,7 +111,7 @@ class MainActivity : AppCompatActivity() {
         alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent)
     }
 
-    private fun setAlarmManagerToCheckLogs(){
+    private fun setAlarmManagerToCheckLogs() {
         Log.i("startWork", "setAlarmManagerToCheckLogs")
         val c = Calendar.getInstance()
         c.time = Timestamp.now().toDate()

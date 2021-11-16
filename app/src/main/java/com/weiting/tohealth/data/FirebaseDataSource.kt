@@ -4,14 +4,11 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.SetOptions
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.weiting.tohealth.PublicApplication.Companion.application
-import io.grpc.Server
 import java.util.*
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -916,7 +913,7 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
-    override fun editStock(itemId: String, num: Int) {
+    override fun editStock(itemId: String, num: Float) {
         application.database.collection("drugs").document(itemId)
             .update("stock", num)
             .addOnSuccessListener { documentReference ->

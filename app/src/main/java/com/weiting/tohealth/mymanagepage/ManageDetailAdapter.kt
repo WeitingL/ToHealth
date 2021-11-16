@@ -40,6 +40,15 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                         val data = item.DrugData
                         adapter.submitList(data?.executedTime)
 
+                        when (data?.executedTime?.isEmpty()) {
+                            true -> {
+                                binding.tvTimeTitle.text = "設定時間(空)"
+                            }
+                            false -> {
+                                binding.tvTimeTitle.text = "設定時間"
+                            }
+                        }
+
                         rvTimeList.adapter = adapter
                         tvItemNameManage.text = data?.drugName
                         imItemIcon.setImageResource(setDrugDrawable(data?.unit))
@@ -68,6 +77,15 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                         val data = item.MeasureData
                         adapter.submitList(data?.executedTime)
 
+                        when (data?.executedTime?.isEmpty()) {
+                            true -> {
+                                binding.tvTimeTitle.text = "設定時間(空)"
+                            }
+                            false -> {
+                                binding.tvTimeTitle.text = "設定時間"
+                            }
+                        }
+
                         rvTimeList.adapter = adapter
                         tvItemNameManage.text = toMeasureType(data?.type)
                         imItemIcon.setImageResource(setMeasureDrawable(data?.type))
@@ -95,6 +113,15 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                         val data = item.ActivityData
                         adapter.submitList(data?.executedTime)
 
+                        when (data?.executedTime?.isEmpty()) {
+                            true -> {
+                                binding.tvTimeTitle.text = "設定時間(空)"
+                            }
+                            false -> {
+                                binding.tvTimeTitle.text = "設定時間"
+                            }
+                        }
+
                         rvTimeList.adapter = adapter
                         tvItemNameManage.text = toActivityType(data?.type)
                         imItemIcon.setImageResource(setActivityType(data?.type))
@@ -120,6 +147,15 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                     ManageType.CARE -> {
                         val data = item.CareData
                         adapter.submitList(data?.executeTime)
+
+                        when (data?.executeTime?.isEmpty()) {
+                            true -> {
+                                binding.tvTimeTitle.text = "設定時間(空)"
+                            }
+                            false -> {
+                                binding.tvTimeTitle.text = "設定時間"
+                            }
+                        }
 
                         rvTimeList.adapter = adapter
                         tvItemNameManage.text = toCareType(data?.type)
@@ -166,7 +202,8 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
     }
 
     class OnclickListener(val clickListener: (itemData: ItemData, manageType: ManageType) -> Unit) {
-        fun onClick(itemData: ItemData, manageType: ManageType) = clickListener(itemData, manageType)
+        fun onClick(itemData: ItemData, manageType: ManageType) =
+            clickListener(itemData, manageType)
     }
 
 }
