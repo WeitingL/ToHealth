@@ -216,6 +216,7 @@ class ItemUpdateFragment : Fragment() {
 
         binding.btUpdateItem.setOnClickListener {
             viewModel.updateItem(binding)
+            viewModel.startSetAlarmForTodoList()
             Toast.makeText(context, "已成功更新!", Toast.LENGTH_LONG).show()
             findNavController().popBackStack()
         }

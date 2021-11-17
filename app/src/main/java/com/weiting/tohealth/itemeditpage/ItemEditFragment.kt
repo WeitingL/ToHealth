@@ -266,6 +266,7 @@ class ItemEditFragment : Fragment() {
             when (checkInput(binding)) {
                 true -> {
                     viewModel.postData(binding)
+                    viewModel.startSetAlarmForTodoList()
                     Toast.makeText(context, "新增完成!", Toast.LENGTH_LONG).show()
                     findNavController().popBackStack()
                 }
