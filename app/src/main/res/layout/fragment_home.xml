@@ -1,159 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FFFFFF"
     tools:context="com.weiting.tohealth.homepage.HomeFragment">
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lav_finished"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cl_daily"
-        app:layout_constraintVertical_bias="0.13" />
+    <data>
+        <variable
+            name="viewModel"
+            type="com.weiting.tohealth.homepage.HomeViewModel" />
 
-    <TextView
-        android:id="@+id/tv_finishedSlogan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="你好棒!! 今天的健康項目都做完了!"
-        android:textAppearance="@style/title_text_bl"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@+id/lav_finished"
-        app:layout_constraintStart_toStartOf="@+id/lav_finished"
-        app:layout_constraintTop_toBottomOf="@+id/lav_finished" />
+        <import type="android.view.View"/>
+    </data>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_daily"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:background="@drawable/card_block"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:background="#FFFFFF">
 
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/lav_homeToday"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/progressBar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/tv_dailyInfoTitle"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true" />
-
-        <TextView
-            android:id="@+id/tv_dailyInfoTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="今日概況"
-            android:textAppearance="@style/title_text_bl"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_dailyInfoTitle2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="項目"
-            android:textAppearance="@style/title_text_bl"
-            app:layout_constraintStart_toStartOf="@+id/tv_dailyInfoTitle"
-            app:layout_constraintTop_toBottomOf="@+id/tv_dailyInfoTitle" />
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:max="100"
-            android:progress="60"
-            android:progressDrawable="@drawable/progress_green"
+            android:id="@+id/lav_finished"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/tv_dailyInfoTitle2"
-            app:layout_constraintTop_toBottomOf="@+id/tv_dailyInfoTitle2" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cl_daily"
+            app:layout_constraintVertical_bias="0.13" />
 
         <TextView
-            android:id="@+id/tv_finished"
+            android:id="@+id/tv_finishedSlogan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="8"
+            android:layout_marginTop="24dp"
+            android:text="@{viewModel.isTheNewbie ? @string/newbieSlogan_homepage : @string/finished_todayList}"
             android:textAppearance="@style/title_text_bl"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_dailyInfoTitle2"
-            app:layout_constraintStart_toEndOf="@+id/tv_dailyInfoTitle2"
-            app:layout_constraintTop_toTopOf="@+id/tv_dailyInfoTitle2" />
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/lav_finished"
+            app:layout_constraintStart_toStartOf="@+id/lav_finished"
+            app:layout_constraintTop_toBottomOf="@+id/lav_finished" />
 
-        <TextView
-            android:id="@+id/tv_total"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_daily"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:text="10"
-            android:textAppearance="@style/title_text_bl"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_slash"
-            app:layout_constraintStart_toEndOf="@+id/tv_slash"
-            app:layout_constraintTop_toTopOf="@+id/tv_slash"
-            app:layout_constraintVertical_bias="0.0" />
+            android:layout_margin="8dp"
+            android:background="@drawable/card_block"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/tv_slash"
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lav_homeToday"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/progressBar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/tv_dailyInfoTitle"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                TimeStampForWelcomeLottie="@{viewModel.welcomeSlogan}"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true" />
+
+            <TextView
+                android:id="@+id/tv_dailyInfoTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                TimeStampForWelcomeSlogan="@{viewModel.welcomeSlogan}"
+                android:textAppearance="@style/title_text_bl"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_dailyInfoTitle2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="項目"
+                android:textAppearance="@style/title_text_bl"
+                app:layout_constraintStart_toStartOf="@+id/tv_dailyInfoTitle"
+                app:layout_constraintTop_toBottomOf="@+id/tv_dailyInfoTitle" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:progress="@{viewModel.completedTask}"
+                android:max="@{viewModel.totalTask}"
+                android:progressDrawable="@drawable/progress_green"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_dailyInfoTitle2"
+                app:layout_constraintTop_toBottomOf="@+id/tv_dailyInfoTitle2" />
+
+            <TextView
+                android:id="@+id/tv_finished"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@{viewModel.completedTask.toString()}"
+                android:textAppearance="@style/title_text_bl"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_dailyInfoTitle2"
+                app:layout_constraintStart_toEndOf="@+id/tv_dailyInfoTitle2"
+                app:layout_constraintTop_toTopOf="@+id/tv_dailyInfoTitle2" />
+
+            <TextView
+                android:id="@+id/tv_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="@{viewModel.totalTask.toString()}"
+                android:textAppearance="@style/title_text_bl"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_slash"
+                app:layout_constraintStart_toEndOf="@+id/tv_slash"
+                app:layout_constraintTop_toTopOf="@+id/tv_slash"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/tv_slash"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="/"
+                android:textAppearance="@style/title_text_bl"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_finished"
+                app:layout_constraintStart_toEndOf="@+id/tv_finished"
+                app:layout_constraintTop_toTopOf="@+id/tv_finished" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_homeCardView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="8dp"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cl_daily" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/bt_fastAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:text="/"
-            android:textAppearance="@style/title_text_bl"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_finished"
-            app:layout_constraintStart_toEndOf="@+id/tv_finished"
-            app:layout_constraintTop_toTopOf="@+id/tv_finished" />
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/pink_brown"
+            android:clickable="true"
+            android:visibility="@{viewModel.isTheNewbie ? View.GONE : View.VISIBLE}"
+            android:src="@drawable/ic_baseline_done_24"
+            app:backgroundTint="@color/pink_brown"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_homeCardView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginHorizontal="8dp"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cl_daily" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/bt_fastAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="@color/pink_brown"
-        android:clickable="true"
-        android:src="@drawable/ic_baseline_done_24"
-        app:backgroundTint="@color/pink_brown"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>

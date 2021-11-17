@@ -39,13 +39,13 @@
         android:background="@drawable/icon_bg"
         android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView8"
+        app:layout_constraintStart_toEndOf="@+id/im_swipeToCheckIcon"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/pills" />
 
     <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/im_swipeToCheckIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
@@ -56,7 +56,7 @@
         app:srcCompat="@drawable/ic_baseline_check_circle_outline_24" />
 
     <ImageView
-        android:id="@+id/imageView9"
+        android:id="@+id/im_swipeToSkipIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="12dp"
@@ -68,3 +68,4 @@
         app:srcCompat="@drawable/ic_baseline_arrow_circle_down_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

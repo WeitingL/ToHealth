@@ -1,5 +1,6 @@
 package com.weiting.tohealth.homepage
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.google.firebase.Timestamp
 import com.weiting.tohealth.*
@@ -31,6 +32,10 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
     val allCompleted: LiveData<Boolean>
         get() = _allCompleted
 
+    val welcomeSlogan = MutableLiveData<Timestamp>().apply {
+        value = Timestamp.now()
+    }
+
     fun taskCompleted() {
         _allCompleted.value = totalTask.value == completedTask.value
     }
@@ -49,12 +54,14 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
         Identify the finished mission by numbers and created time of ItemLog.
      */
 
-    private val drugList = firebaseDataRepository.getLiveDrugList(UserManager.UserInformation.id?:"")
+    private val drugList =
+        firebaseDataRepository.getLiveDrugList(UserManager.UserInformation.id ?: "")
     private val measureList =
-        firebaseDataRepository.getLiveMeasureList(UserManager.UserInformation.id?:"")
+        firebaseDataRepository.getLiveMeasureList(UserManager.UserInformation.id ?: "")
     private val activityList =
-        firebaseDataRepository.getLiveActivityList(UserManager.UserInformation.id?:"")
-    private val careList = firebaseDataRepository.getLiveCareList(UserManager.UserInformation.id?:"")
+        firebaseDataRepository.getLiveActivityList(UserManager.UserInformation.id ?: "")
+    private val careList =
+        firebaseDataRepository.getLiveCareList(UserManager.UserInformation.id ?: "")
 
     private val drugCurrentList = mutableListOf<ItemDataType>()
     private val measureCurrentList = mutableListOf<ItemDataType>()
@@ -409,6 +416,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
         _completedTask.value = _completedTask.value?.minus(1)
 
         currentList?.add(lastData.position, lastData.itemDataType)
+//        Log.i("data", "${lastData.position}: ${currentList}")
         itemDataMediator.value = currentList
     }
 
