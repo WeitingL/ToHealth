@@ -33,7 +33,9 @@ class RebuildAlarm() {
         }
         drugList.forEach {
             it.executedTime.forEach {
-                timeList.add(it)
+                if (getTimeStampToTimeInt(it) > getTimeStampToTimeInt(Timestamp.now())){
+                    timeList.add(it)
+                }
             }
         }
 
@@ -42,7 +44,9 @@ class RebuildAlarm() {
         }
         measureLog.forEach {
             it.executedTime.forEach {
-                timeList.add(it)
+                if (getTimeStampToTimeInt(it) > getTimeStampToTimeInt(Timestamp.now())){
+                    timeList.add(it)
+                }
             }
         }
 
@@ -51,7 +55,9 @@ class RebuildAlarm() {
         }
         activityList.forEach {
             it.executedTime.forEach {
-                timeList.add(it)
+                if (getTimeStampToTimeInt(it) > getTimeStampToTimeInt(Timestamp.now())){
+                    timeList.add(it)
+                }
             }
         }
 
@@ -60,7 +66,9 @@ class RebuildAlarm() {
         }
         careList.forEach {
             it.executeTime.forEach {
-                timeList.add(it)
+                if (getTimeStampToTimeInt(it) > getTimeStampToTimeInt(Timestamp.now())){
+                    timeList.add(it)
+                }
             }
         }
 
