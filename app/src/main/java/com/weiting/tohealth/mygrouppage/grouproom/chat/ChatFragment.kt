@@ -1,10 +1,11 @@
 package com.weiting.tohealth.mygrouppage.grouproom.chat
 
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.Timestamp
@@ -37,12 +38,14 @@ class ChatFragment() : Fragment() {
         }
 
         binding.ibSentMessage.setOnClickListener {
-            viewModel.postMessage(Chat(
-                groupId = group.id,
-                context = binding.etvMessage.text.toString(),
-                creator = UserManager.UserInformation.id,
-                createTimestamp = Timestamp.now()
-            ))
+            if (binding.etvMessage.text.isNotEmpty()){
+                viewModel.postMessage(Chat(
+                    groupId = group.id,
+                    context = binding.etvMessage.text.toString(),
+                    creator = UserManager.UserInformation.id,
+                    createdTime = Timestamp.now()
+                ))
+            }
             binding.etvMessage.text.clear()
         }
 

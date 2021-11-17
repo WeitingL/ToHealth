@@ -24,12 +24,16 @@ interface FirebaseSource {
     //Get Items list
     suspend fun getAllDrugs(userId: String): List<Drug>
 
+    suspend fun getDrug(itemId: String): Drug
+
     suspend fun getAllMeasures(userId: String): List<Measure>
 
     suspend fun getAllActivities(userId: String): List<Activity>
 
     suspend fun getAllCares(userId: String): List<Care>
 
+    //Get Item
+    suspend fun getMeasure(itemId: String): Measure
 
     fun getLiveDrugList(userId: String): MutableLiveData<List<Drug>>
 
@@ -60,19 +64,23 @@ interface FirebaseSource {
     //Post Item record
     fun postDrugRecord(id: String, drugLog: DrugLog)
 
+    suspend fun getMeasureRecordId(itemId: String): String
+
     fun postMeasureRecord(id: String, measureLog: MeasureLog)
 
     fun postActivityRecord(id: String, activityLog: ActivityLog)
 
     fun postCareRecord(id: String, careLog: CareLog)
 
-    //Get Item Log
+    //Get Item Logs
     suspend fun getDrugRecord(itemId: String, createTime: Timestamp): List<DrugLog>
 
     suspend fun getMeasureRecord(
         itemId: String,
         createTime: Timestamp
     ): List<MeasureLog>
+
+    suspend fun getMeasureLog(itemId: String, itemsLogId: String) : MeasureLog
 
     suspend fun getActivityRecord(
         itemId: String,
@@ -131,6 +139,22 @@ interface FirebaseSource {
 
     suspend fun getUserInfo(userId: String): User
 
-    fun editStock(itemId:String, num:Int)
+    fun editStock(itemId: String, num: Float)
+
+    fun postNotification(notification: Notification)
+
+    fun getLiveNotificationForService(
+        userIdList: List<String>
+    ): MutableLiveData<List<Notification>>
+
+    fun postOnGetNotificationForService(notification: Notification)
+
+    fun getLiveChatMessageForService(
+        userId: String,
+        groupId: List<String>
+    ): MutableLiveData<List<Chat>>
+
+    fun postOnGetChatForService(chat: Chat)
+
 
 }

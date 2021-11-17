@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
@@ -44,11 +45,11 @@ class LoginFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         auth = Firebase.auth
-
-        if (auth.currentUser != null) {
-            //user Logged in
-            viewModel.initialUserManager(auth.uid!!)
-        }
+//
+//        if (auth.currentUser != null) {
+//            //user Logged in
+//            viewModel.initialUserManager(auth.uid!!)
+//        }
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.web_client_id))
@@ -56,9 +57,7 @@ class LoginFragment : Fragment() {
             .build()
 
         googleSignInClient = GoogleSignIn.getClient(this.requireActivity(), gso)
-
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -73,7 +72,7 @@ class LoginFragment : Fragment() {
         }
 
 
-        binding.button2.setOnClickListener {
+        binding.cardView3.setOnClickListener {
             getGoogleSignInPop()
         }
 
@@ -89,6 +88,7 @@ class LoginFragment : Fragment() {
                 val account = task.getResult(ApiException::class.java)!!
                 firebaseAuthWithGoogle(account)
             } catch (e: Exception) {
+                Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show()
                 Log.w("firebaseAuthWithGoogle:", e.toString())
             }
         }
@@ -128,6 +128,4 @@ class LoginFragment : Fragment() {
             )
         }
     }
-
-
 }

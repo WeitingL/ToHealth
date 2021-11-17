@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="我自己"
-        android:textAppearance="@style/subTitle_text_bl"
+        android:textAppearance="@style/content_text_bl"
         app:layout_constraintStart_toStartOf="@+id/tv_memberName"
         app:layout_constraintTop_toBottomOf="@+id/tv_memberName" />
 

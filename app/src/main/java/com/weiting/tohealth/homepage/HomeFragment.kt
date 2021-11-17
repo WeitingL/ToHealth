@@ -1,6 +1,8 @@
 package com.weiting.tohealth.homepage
 
+import android.content.Context
 import android.os.Bundle
+import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,11 +11,18 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.Recycler
+import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.Timestamp
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.weiting.tohealth.*
+import com.weiting.tohealth.data.UserManager
 import com.weiting.tohealth.databinding.FragmentHomeBinding
+import com.weiting.tohealth.util.RecyclerViewSwipe
+import java.lang.IndexOutOfBoundsException
 
 class HomeFragment : Fragment() {
 
@@ -26,32 +35,21 @@ class HomeFragment : Fragment() {
     ): View? {
         val binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
 
-        binding.apply {
-            if (getTimeStampToTimeInt(Timestamp.now()) in 600..1000) {
-                tvDailyInfoTitle.text = getString(R.string.homepage_morningtitle)
-                lavHomeToday.setAnimation(R.raw.sunrise)
-            } else if (getTimeStampToTimeInt(Timestamp.now()) in 1000..1400) {
-                tvDailyInfoTitle.text = getString(R.string.homepage_noontitle)
-                lavHomeToday.setAnimation(R.raw.sunny)
-            } else if (getTimeStampToTimeInt(Timestamp.now()) in 1401..1800) {
-                tvDailyInfoTitle.text = getString(R.string.homepage_afternoontitle)
-                lavHomeToday.setAnimation(R.raw.sunset)
-            } else if (getTimeStampToTimeInt(Timestamp.now()) in 1801..2300) {
-                tvDailyInfoTitle.text = getString(R.string.homepage_nighttitle)
-                lavHomeToday.setAnimation(R.raw.weather_night)
-            } else {
-                tvDailyInfoTitle.text = getString(R.string.homepage_sleeptitle)
-                lavHomeToday.setAnimation(R.raw.sleeping)
-            }
+        val use = Firebase.auth.currentUser
+        if (use == null) {
+            findNavController().navigate(NavigationDirections.actionGlobalLoginFragment())
+        } else {
+            UserManager.UserInformation.id = use.uid
         }
+
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
 
         val adapter = TodayItemAdapter()
         val swipeSet = object : RecyclerViewSwipe() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position = viewHolder.position
-
+                val position = viewHolder.adapterPosition
                 when (direction) {
-
                     //Skip
                     ItemTouchHelper.LEFT -> {
                         when (viewHolder.itemViewType) {
@@ -59,7 +57,7 @@ class HomeFragment : Fragment() {
 
                                 viewModel.swipeToSkip(
                                     SwipeData(
-                                        adapter.currentList[position],
+                                        viewModel.itemDataMediator.value?.get(position)!!,
                                         position
                                     )
                                 )
@@ -78,17 +76,30 @@ class HomeFragment : Fragment() {
                                     viewModel.itemDataMediator.value?.removeAt(position - 1)
                                     adapter.notifyItemRemoved(position - 1)
                                 }
-
                                 Snackbar.make(
                                     binding.rvHomeCardView,
                                     getString(R.string.itemskip_text),
                                     Snackbar.LENGTH_LONG
-                                ).setAction(
-                                    getString(R.string.itemswip_undo),
-                                    View.OnClickListener {
-                                        viewModel.undoSwipeToSkip()
-                                        adapter.notifyItemRangeInserted(position - 1, 2)
-                                    }).show()
+                                )
+                                    .setAction(
+                                        getString(R.string.itemswip_undo),
+                                        View.OnClickListener {
+                                            viewModel.undoSwipeToSkip()
+                                            adapter.notifyItemRangeInserted(position - 1, 2)
+                                        })
+                                    .addCallback(object :
+                                        BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                                        override fun onDismissed(
+                                            transientBottomBar: Snackbar?,
+                                            event: Int
+                                        ) {
+                                            super.onDismissed(transientBottomBar, event)
+                                            if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
+                                                viewModel.postSkipLog()
+                                            }
+                                        }
+                                    })
+                                    .show()
 
                             }
                             ITEM_VIEWTYPE_MEASURE -> {
@@ -118,11 +129,24 @@ class HomeFragment : Fragment() {
                                     binding.rvHomeCardView,
                                     getString(R.string.itemskip_text),
                                     Snackbar.LENGTH_LONG
-                                ).setAction(
-                                    getString(R.string.itemswip_undo),
-                                    View.OnClickListener {
-                                        viewModel.undoSwipeToSkip()
-                                        adapter.notifyItemRangeInserted(position - 1, 2)
+                                )
+                                    .setAction(
+                                        getString(R.string.itemswip_undo),
+                                        View.OnClickListener {
+                                            viewModel.undoSwipeToSkip()
+                                            adapter.notifyItemRangeInserted(position - 1, 2)
+                                        })
+                                    .addCallback(object :
+                                        BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                                        override fun onDismissed(
+                                            transientBottomBar: Snackbar?,
+                                            event: Int
+                                        ) {
+                                            super.onDismissed(transientBottomBar, event)
+                                            if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
+                                                viewModel.postSkipLog()
+                                            }
+                                        }
                                     }).show()
                             }
                             ITEM_VIEWTYPE_ACTIVITY -> {
@@ -153,11 +177,24 @@ class HomeFragment : Fragment() {
                                     binding.rvHomeCardView,
                                     getString(R.string.itemskip_text),
                                     Snackbar.LENGTH_LONG
-                                ).setAction(
-                                    getString(R.string.itemswip_undo),
-                                    View.OnClickListener {
-                                        viewModel.undoSwipeToSkip()
-                                        adapter.notifyItemRangeInserted(position - 1, 2)
+                                )
+                                    .setAction(
+                                        getString(R.string.itemswip_undo),
+                                        View.OnClickListener {
+                                            viewModel.undoSwipeToSkip()
+                                            adapter.notifyItemRangeInserted(position - 1, 2)
+                                        })
+                                    .addCallback(object :
+                                        BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                                        override fun onDismissed(
+                                            transientBottomBar: Snackbar?,
+                                            event: Int
+                                        ) {
+                                            super.onDismissed(transientBottomBar, event)
+                                            if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
+                                                viewModel.postSkipLog()
+                                            }
+                                        }
                                     }).show()
                             }
                             ITEM_VIEWTYPE_CARE -> {
@@ -187,11 +224,24 @@ class HomeFragment : Fragment() {
                                     binding.rvHomeCardView,
                                     getString(R.string.itemskip_text),
                                     Snackbar.LENGTH_LONG
-                                ).setAction(
-                                    getString(R.string.itemswip_undo),
-                                    View.OnClickListener {
-                                        viewModel.undoSwipeToSkip()
-                                        adapter.notifyItemRangeInserted(position - 1, 2)
+                                )
+                                    .setAction(
+                                        getString(R.string.itemswip_undo),
+                                        View.OnClickListener {
+                                            viewModel.undoSwipeToSkip()
+                                            adapter.notifyItemRangeInserted(position - 1, 2)
+                                        })
+                                    .addCallback(object :
+                                        BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                                        override fun onDismissed(
+                                            transientBottomBar: Snackbar?,
+                                            event: Int
+                                        ) {
+                                            super.onDismissed(transientBottomBar, event)
+                                            if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
+                                                viewModel.postSkipLog()
+                                            }
+                                        }
                                     }).show()
                             }
                         }
@@ -201,7 +251,6 @@ class HomeFragment : Fragment() {
                     ItemTouchHelper.RIGHT -> {
                         when (viewHolder.itemViewType) {
                             ITEM_VIEWTYPE_DRUG -> {
-
                                 viewModel.getFinishedLog(
                                     SwipeData(
                                         adapter.currentList[position],
@@ -227,11 +276,24 @@ class HomeFragment : Fragment() {
                                     binding.rvHomeCardView,
                                     getString(R.string.itemfinished_text),
                                     Snackbar.LENGTH_LONG
-                                ).setAction(
-                                    getString(R.string.itemswip_undo),
-                                    View.OnClickListener {
-                                        viewModel.undoSwipeToLog()
-                                        adapter.notifyItemRangeInserted(position - 1, 2)
+                                )
+                                    .setAction(
+                                        getString(R.string.itemswip_undo),
+                                        View.OnClickListener {
+                                            viewModel.undoSwipeToLog()
+                                            adapter.notifyItemRangeInserted(position - 1, 2)
+                                        })
+                                    .addCallback(object :
+                                        BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                                        override fun onDismissed(
+                                            transientBottomBar: Snackbar?,
+                                            event: Int
+                                        ) {
+                                            super.onDismissed(transientBottomBar, event)
+                                            if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
+                                                viewModel.postFinishDrugAndActivityLog()
+                                            }
+                                        }
                                     }).show()
 
                             }
@@ -272,11 +334,24 @@ class HomeFragment : Fragment() {
                                     binding.rvHomeCardView,
                                     getString(R.string.itemfinished_text),
                                     Snackbar.LENGTH_LONG
-                                ).setAction(
-                                    getString(R.string.itemswip_undo),
-                                    View.OnClickListener {
-                                        viewModel.undoSwipeToLog()
-                                        adapter.notifyItemRangeInserted(position - 1, 2)
+                                )
+                                    .setAction(
+                                        getString(R.string.itemswip_undo),
+                                        View.OnClickListener {
+                                            viewModel.undoSwipeToLog()
+                                            adapter.notifyItemRangeInserted(position - 1, 2)
+                                        })
+                                    .addCallback(object :
+                                        BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                                        override fun onDismissed(
+                                            transientBottomBar: Snackbar?,
+                                            event: Int
+                                        ) {
+                                            super.onDismissed(transientBottomBar, event)
+                                            if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
+                                                viewModel.postFinishDrugAndActivityLog()
+                                            }
+                                        }
                                     }).show()
                             }
                             ITEM_VIEWTYPE_CARE -> {
@@ -298,27 +373,17 @@ class HomeFragment : Fragment() {
         val touchHelper = ItemTouchHelper(swipeSet)
         touchHelper.attachToRecyclerView(binding.rvHomeCardView)
 
-        //Get data from firebase
-        viewModel.itemDataMediator.observe(viewLifecycleOwner) {
-//            Log.i("position.size", it.size.toString())
+        viewModel.itemDataMediator.observe(viewLifecycleOwner){
             adapter.submitList(it)
         }
 
-        viewModel.totalTask.observe(viewLifecycleOwner) {
+
+        viewModel.totalTask.observe(viewLifecycleOwner){
             viewModel.taskCompleted()
-            binding.apply {
-                progressBar.max = it
-                tvTotal.text = it.toString()
-            }
         }
 
-        viewModel.completedTask.observe(viewLifecycleOwner) {
+        viewModel.completedTask.observe(viewLifecycleOwner){
             viewModel.taskCompleted()
-
-            binding.apply {
-                progressBar.progress = it
-                tvFinished.text = it.toString()
-            }
         }
 
         viewModel.allCompleted.observe(viewLifecycleOwner) {
@@ -326,7 +391,6 @@ class HomeFragment : Fragment() {
                 when (it) {
                     true -> {
                         lavFinished.setAnimation(R.raw.sunny)
-
                         lavFinished.visibility = View.VISIBLE
                         tvFinishedSlogan.visibility = View.VISIBLE
                         rvHomeCardView.visibility = View.GONE
@@ -341,17 +405,45 @@ class HomeFragment : Fragment() {
         }
 
         binding.apply {
+            rvHomeCardView.layoutManager = WrapContentLinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             rvHomeCardView.adapter = adapter
             btFastAdd.setOnClickListener {
                 findNavController().navigate(NavigationDirections.actionGlobalFastAddFragment())
             }
         }
+
         return binding.root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onStop() {
+        super.onStop()
         viewModel.postSkipLog()
         viewModel.postFinishDrugAndActivityLog()
+    }
+}
+
+class WrapContentLinearLayoutManager : LinearLayoutManager {
+    constructor(context: Context?) : super(context) {}
+    constructor(context: Context?, orientation: Int, reverseLayout: Boolean) : super(
+        context,
+        orientation,
+        reverseLayout
+    ) {
+    }
+
+    constructor(
+        context: Context?,
+        attrs: AttributeSet?,
+        defStyleAttr: Int,
+        defStyleRes: Int
+    ) : super(context, attrs, defStyleAttr, defStyleRes) {
+    }
+
+    override fun onLayoutChildren(recycler: Recycler, state: RecyclerView.State) {
+        try {
+            super.onLayoutChildren(recycler, state)
+        } catch (e: IndexOutOfBoundsException) {
+//            e.printStackTrace()
+        }
     }
 }

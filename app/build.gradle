@@ -5,6 +5,9 @@ plugins {
     id 'androidx.navigation.safeargs.kotlin'
     id 'com.google.gms.google-services'
     id 'kotlin-parcelize'
+
+    // Apply the Crashlytics Gradle plugin
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
@@ -14,7 +17,7 @@ android {
         applicationId "com.weiting.tohealth"
         minSdk 26
         targetSdk 30
-        versionCode 1
+        versionCode 14
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -105,4 +108,13 @@ dependencies {
 
     //MPAndroidChart_outDate
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    //WorkManager
+    implementation "androidx.work:work-runtime-ktx:2.6.0"
+    implementation 'androidx.work:work-multiprocess:2.6.0'
+
+    //Crashlytics and Analytics libraries
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+
 }

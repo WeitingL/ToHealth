@@ -1,17 +1,16 @@
 package com.weiting.tohealth.mygrouppage
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.weiting.tohealth.PublicApplication
+import com.google.firebase.Timestamp
+import com.weiting.tohealth.data.CalenderItem
+import com.weiting.tohealth.data.Note
 import com.weiting.tohealth.databinding.CardviewBottombuttonRowBinding
 import com.weiting.tohealth.databinding.MygroupRowGroupBinding
+import com.weiting.tohealth.toStringFromTimeStamp
 import java.lang.ClassCastException
 
 const val GROUP_VIEWTYPE_GROUP = 0
@@ -34,10 +33,15 @@ class GroupAdapter(val onClickListener: OnclickListener) :
             val group = myGroup.group
 
             val memberAdapter = GroupMemberAdapter()
-            val noteAdapter = GroupNoteAdapter()
-
             memberAdapter.submitList(group.member)
-            noteAdapter.submitList(group.notes)
+
+            val noteAdapter = GroupNoteAdapter()
+            noteAdapter.submitList(
+                getBoardMessageList(
+                    myGroup.group.notes,
+                    myGroup.group.calenderItems
+                )
+            )
 
             binding.apply {
                 tvGroupCode.text = group.id
@@ -100,6 +104,74 @@ class GroupAdapter(val onClickListener: OnclickListener) :
 
     class OnclickListener(val clickListener: (groupPageItem: GroupPageItem) -> Unit) {
         fun onClick(groupPageItem: GroupPageItem) = clickListener(groupPageItem)
+    }
+
+    data class BoardMessage(
+        val title: String,
+        val content: String,
+        val createTime: Timestamp,
+        val editor: String,
+        val result: Int
+    )
+
+    private fun getBoardMessageList(
+        noteList: List<Note>,
+        calenderItemList: List<CalenderItem>
+    ): List<BoardMessage> {
+        val list = mutableListOf<BoardMessage>()
+
+        when {
+            noteList.isNotEmpty() && calenderItemList.isNotEmpty() -> {
+                val firstNoteData = noteList.first()
+                val firstCalenderItemData = calenderItemList.first()
+                list.add(
+                    BoardMessage(
+                        title = firstNoteData.title!!,
+                        content = firstNoteData.content!!,
+                        createTime = firstNoteData.createdTime!!,
+                        editor = firstNoteData.editor!!,
+                        result = 7
+                    )
+                )
+
+                list.add(
+                    BoardMessage(
+                        title = firstCalenderItemData.content!!,
+                        content = "時間: ${toStringFromTimeStamp(firstCalenderItemData.date)}",
+                        createTime = firstCalenderItemData.createdTime!!,
+                        editor = firstCalenderItemData.editor!!,
+                        result = 8
+                    )
+                )
+            }
+
+            noteList.isNotEmpty() -> {
+                val firstNoteData = noteList.first()
+                list.add(
+                    BoardMessage(
+                        title = firstNoteData.title!!,
+                        content = firstNoteData.content!!,
+                        createTime = firstNoteData.createdTime!!,
+                        editor = firstNoteData.editor!!,
+                        result = 7
+                    )
+                )
+            }
+            calenderItemList.isNotEmpty() -> {
+                val firstCalenderItemData = calenderItemList.first()
+                list.add(
+                    BoardMessage(
+                        title = firstCalenderItemData.content!!,
+                        content = "時間: ${toStringFromTimeStamp(firstCalenderItemData.date)}",
+                        createTime = firstCalenderItemData.createdTime!!,
+                        editor = firstCalenderItemData.editor!!,
+                        result = 8
+                    )
+                )
+            }
+        }
+
+        return list
     }
 
 }

@@ -19,19 +19,23 @@
 
     <TextView
         android:id="@+id/tv_othersMessage"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="130dp"
+        android:layout_marginBottom="4dp"
         android:background="@drawable/bg_message_others"
+        android:maxWidth="160dp"
         android:paddingHorizontal="10dp"
         android:paddingVertical="4dp"
         android:text="TextView"
         android:textAppearance="@style/subTitle_text_bl"
-        app:layout_constraintBottom_toBottomOf="@+id/im_others"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/im_others" />
+        app:layout_constraintStart_toEndOf="@+id/im_others"
+        app:layout_constraintTop_toBottomOf="@+id/tv_othersName" />
 
     <TextView
         android:id="@+id/tv_othersName"
@@ -39,7 +43,6 @@
         android:layout_height="wrap_content"
         android:text="TextView"
         android:textAppearance="@style/subTitle_text_bl"
-        app:layout_constraintBottom_toTopOf="@+id/tv_othersMessage"
         app:layout_constraintStart_toStartOf="@+id/tv_othersMessage"
         app:layout_constraintTop_toTopOf="@+id/im_others" />
 

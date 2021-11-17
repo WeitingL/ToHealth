@@ -27,7 +27,7 @@ class MembersAdapter(val onClickListener: EditOnclickListener, val onclickListen
         fun bind(member: Member) {
             binding.apply {
                 tvMemberName.text = member.name
-                tvNickName.text = member.nickName
+                tvNickName.text = "聊天室暱稱: ${member.nickName}"
 
                 transferCircleImage(ivPhoto, member.profilePhoto)
 

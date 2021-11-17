@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.weiting.tohealth.NavigationDirections
 import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.data.Group
 import com.weiting.tohealth.databinding.DialogCreateGroupBinding
@@ -33,12 +35,15 @@ class CreateGroupDialog : DialogFragment() {
         binding.btEnterName.setOnClickListener {
             when (binding.tilGroupName.editText?.text.isNullOrEmpty()) {
                 true -> Toast.makeText(context, "幫你的群組取名子吧!", Toast.LENGTH_LONG).show()
-                false -> viewModel.createGroup(
-                    Group(
-                        id = viewModel.newGroupId.value,
-                        groupName = binding.tilGroupName.editText?.text.toString()
+                false -> {
+                    viewModel.createGroup(
+                        Group(
+                            id = viewModel.newGroupId.value,
+                            groupName = binding.tilGroupName.editText?.text.toString()
+                        )
                     )
-                )
+                    findNavController().navigate(NavigationDirections.actionGlobalMyGroupFragment())
+                }
             }
         }
         return binding.root

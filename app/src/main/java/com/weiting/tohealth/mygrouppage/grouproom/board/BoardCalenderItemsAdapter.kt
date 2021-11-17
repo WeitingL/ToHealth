@@ -6,8 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.data.CalenderItem
-import com.weiting.tohealth.data.Member
-import com.weiting.tohealth.databinding.BoardRowCalenderitemBinding
 import com.weiting.tohealth.databinding.CalenderitemRowBinding
 import com.weiting.tohealth.toStringFromTimeStamp
 
@@ -28,7 +26,7 @@ class BoardCalenderItemsAdapter (val onclickListener: DeleteOnclickListener) :
             fun bind(calenderItem: CalenderItem){
                 binding.apply {
                     tvCalenderTitle.text = calenderItem.content
-                    tvCreateTimeCalender.text = toStringFromTimeStamp(calenderItem.createTime)
+                    tvCreateTimeCalender.text = toStringFromTimeStamp(calenderItem.createdTime)
                     tvDateCalender.text = toStringFromTimeStamp(calenderItem.date)
                     tvEditiorCalender.text = calenderItem.editor
                     ibDeleteReminder.setOnClickListener {

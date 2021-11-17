@@ -95,7 +95,7 @@ class EditNoteAndCalenderItemFragment : Fragment() {
                                 content = binding.etvContent.text.toString(),
                                 editor = UserManager.UserInformation.id,
                                 footer = binding.spFooter.selectedItemPosition,
-                                createTimestamp = Timestamp.now()
+                                createdTime = Timestamp.now()
                             )
                         )
                     }
@@ -110,7 +110,7 @@ class EditNoteAndCalenderItemFragment : Fragment() {
                                 editor = UserManager.UserInformation.id,
                                 content = binding.edvReminderTitle.text.toString(),
                                 date= Timestamp(Date(viewModel.longTime.value!!)),
-                                createTime = Timestamp.now(),
+                                createdTime = Timestamp.now(),
                                 result = 0
                             )
                         )

@@ -1,12 +1,11 @@
 package com.weiting.tohealth.mygrouppage.grouproom.board
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.weiting.tohealth.data.CalenderItem
 import com.weiting.tohealth.data.FirebaseRepository
 import com.weiting.tohealth.data.Group
 import com.weiting.tohealth.data.Note
+import kotlinx.coroutines.launch
 
 class BoardViewModel(
     private val firebaseDataRepository: FirebaseRepository,
@@ -17,43 +16,73 @@ class BoardViewModel(
     val boardList: LiveData<List<BoardType>>
         get() = _boardList
 
-    val notesList = firebaseDataRepository.getLiveNote(group.id!!)
-    val calenderItem = firebaseDataRepository.getLiveCalenderItem(group.id!!)
+    private val notesLiveList = firebaseDataRepository.getLiveNote(group.id!!)
+    private val calenderLiveItem = firebaseDataRepository.getLiveCalenderItem(group.id!!)
 
-    fun getCalenderList(list: List<CalenderItem>){
+    private val noteCurrentList = mutableListOf<Note>()
+    private val calenderCurrentList = mutableListOf<CalenderItem>()
 
-        _boardList.value = listOf()
+    val boardLiveData = MediatorLiveData<MutableList<BoardType>>().apply {
 
-        if (list.isNotEmpty() && !notesList.value.isNullOrEmpty()){
-            val newList = listOf(BoardType.Notes(notesList.value!!),BoardType.CalenderItems(list) )
-            _boardList.value = _boardList.value?.plus(newList)
-        }else if (list.isNotEmpty() && notesList.value.isNullOrEmpty()){
-            val newList = listOf(BoardType.CalenderItems(list))
-            _boardList.value = _boardList.value?.plus(newList)
+        addSource(notesLiveList) { noteList ->
+            viewModelScope.launch {
+                noteCurrentList.clear()
+                noteList.forEach { note ->
+                    note.editor = firebaseDataRepository.getUserInfo(note.editor!!).name
+                    noteCurrentList.add(note)
+                }
+
+                value = getBoards()
+            }
+        }
+
+        addSource(calenderLiveItem) { calenderList ->
+            viewModelScope.launch {
+                calenderCurrentList.clear()
+                calenderList.forEach { calenderItem ->
+                    calenderItem.editor =
+                        firebaseDataRepository.getUserInfo(calenderItem.editor!!).name
+                    calenderCurrentList.add(calenderItem)
+                }
+                value = getBoards()
+            }
         }
     }
 
-    fun getNotesList(list: List<Note>){
+    private fun getBoards(): MutableList<BoardType> {
 
-        _boardList.value = listOf()
+        return when {
+            noteCurrentList.isNotEmpty() && calenderCurrentList.isNotEmpty() -> {
+                mutableListOf(
+                    BoardType.Notes(noteCurrentList),
+                    BoardType.CalenderItems(calenderCurrentList)
+                )
+            }
+            noteCurrentList.isNotEmpty() -> {
+                mutableListOf(
+                    BoardType.Notes(noteCurrentList)
+                )
+            }
+            calenderCurrentList.isNotEmpty() -> {
+                mutableListOf(
 
-        if (list.isNotEmpty() && !calenderItem.value.isNullOrEmpty()){
-            val newList = listOf(BoardType.Notes(list),BoardType.CalenderItems(calenderItem.value!!) )
-            _boardList.value = _boardList.value?.plus(newList)
-        }else if (list.isNotEmpty() && calenderItem.value.isNullOrEmpty()){
-            val newList = listOf(BoardType.Notes(list))
-            _boardList.value = _boardList.value?.plus(newList)
+                    BoardType.CalenderItems(calenderCurrentList)
+                )
+            }
+            else -> {
+                mutableListOf()
+            }
+
         }
     }
 
-    fun deleteNote(note: Note){
+    fun deleteNote(note: Note) {
         firebaseDataRepository.deleteNote(note, group.id!!)
     }
 
-    fun deleteReminder(calenderItem: CalenderItem){
+    fun deleteReminder(calenderItem: CalenderItem) {
         firebaseDataRepository.deleteCalenderItem(calenderItem, group.id!!)
     }
-
 
 
 }

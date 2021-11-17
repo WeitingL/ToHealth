@@ -35,13 +35,19 @@ class DrugResultScaleAdapter :
                 1 -> {
                     binding.apply {
                         imLog.setImageResource(R.drawable.circle_check_cross)
-                        tvText.text = "未完成"
+                        tvText.text = "跳過"
                     }
                 }
                 2 -> {
                     binding.apply {
                         imLog.setImageResource(R.drawable.circle_check_blue)
                         tvText.text = map["time"]
+                    }
+                }
+                3 ->{
+                    binding.apply {
+                        imLog.setImageResource(R.drawable.warning)
+                        tvText.text = "無紀錄"
                     }
                 }
             }

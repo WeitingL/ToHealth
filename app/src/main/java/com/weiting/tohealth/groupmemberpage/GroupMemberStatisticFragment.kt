@@ -27,6 +27,7 @@ class GroupMemberStatisticFragment : Fragment() {
         binding.tvMemberNameStatistic.text = memberInfo.name
         transferCircleImage(binding.imageView5, memberInfo.profilePhoto)
 
+        viewPager.isUserInputEnabled = false
         viewPager.adapter = MyStatisticAdapter(
             this, User(
                 id = memberInfo.userId,

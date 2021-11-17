@@ -1,6 +1,5 @@
 package com.weiting.tohealth.itemeditpage
 
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -74,14 +73,14 @@ class ItemUpdateViewModel(
                 val data = itemData.DrugData!!
 
                 data.unit = binding.spUnitUpdate.selectedItemPosition
-                data.dose = Integer.parseInt(binding.etvDrugDoseUpdate.text.toString())
+                data.dose = binding.etvDrugDoseUpdate.text.toString().toFloat()
                 data.period = mapOf(
                     "type" to binding.spPeriodUpdate.selectedItemPosition,
                     "N" to binding.spOngoingDayUpdate.selectedItemPosition,
                     "X" to binding.spSuspendDayUpdate.selectedItemPosition
                 )
-                data.executeTime = timePointSet.value!!
-                data.stock = Integer.parseInt(binding.etvStockUpdate.text.toString())
+                data.executedTime = timePointSet.value?: data.executedTime
+                data.stock = binding.etvStockUpdate.text.toString().toFloat()
                 data.editor = UserManager.UserInformation.id
                 data.lastEditTime = Timestamp.now()
                 data.status = statusSelected.value ?: data.status
@@ -94,7 +93,7 @@ class ItemUpdateViewModel(
 
                 data.lastEditTime = Timestamp.now()
                 data.editor = UserManager.UserInformation.id
-                data.executeTime = timePointSet.value!!
+                data.executedTime = timePointSet.value?: data.executedTime
                 data.status = statusSelected.value ?: data.status
 
                 firebaseDataRepository.updateMeasure(data)
@@ -108,7 +107,7 @@ class ItemUpdateViewModel(
                     "N" to binding.spOngoingDayUpdate.selectedItemPosition,
                     "X" to binding.spSuspendDayUpdate.selectedItemPosition
                 )
-                data.executeTime = timePointSet.value!!
+                data.executedTime = timePointSet.value?: data.executedTime
                 data.editor = UserManager.UserInformation.id
                 data.lastEditTime = Timestamp.now()
                 data.status = statusSelected.value ?: data.status
@@ -124,7 +123,7 @@ class ItemUpdateViewModel(
                     "N" to binding.spOngoingDayUpdate.selectedItemPosition,
                     "X" to binding.spSuspendDayUpdate.selectedItemPosition
                 )
-                data.executeTime = timePointSet.value!!
+                data.executeTime = timePointSet.value?: data.executeTime
                 data.editor = UserManager.UserInformation.id
                 data.lastEditTime = Timestamp.now()
                 data.status = statusSelected.value ?: data.status
@@ -132,9 +131,5 @@ class ItemUpdateViewModel(
                 firebaseDataRepository.updateCare(data)
             }
         }
-
-
     }
-
-
 }

@@ -1,10 +1,9 @@
-package com.weiting.tohealth
+package com.weiting.tohealth.util
 
-import android.content.Context
 import android.graphics.*
-import android.util.Log
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.weiting.tohealth.R
 import com.weiting.tohealth.homepage.*
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
@@ -13,8 +12,8 @@ abstract class RecyclerViewSwipe() :
 
     private val skipIcon = R.drawable.ic_baseline_notifications_off_24
     private val doneIcon = R.drawable.ic_baseline_done_24
-    private val skipBackgroundColor = Color.parseColor("#8266d7")
-    private val doneBackgroundColor = Color.parseColor("#e7c9ff")
+    private val skipBackgroundColor = Color.parseColor("#FFCBCB")
+    private val doneBackgroundColor = Color.parseColor("#C4F4D8")
 
     override fun getMovementFlags(
         recyclerView: RecyclerView,

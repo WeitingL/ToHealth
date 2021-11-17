@@ -95,14 +95,14 @@ class MeasureRecordFragment : Fragment() {
                             measureLog = MeasureLog(
                                 timeTag = timeTag,
                                 result = 0,
-                                createTime = Timestamp.now(),
+                                createdTime = Timestamp.now(),
                                 record = mapOf(
                                     "X" to binding.edtDiastolic.editableText.toString().toInt(),
                                     "Y" to binding.edtSystolic.editableText.toString().toInt(),
                                     "Z" to binding.editTextNumber.editableText.toString()
                                         .toInt()
                                 )
-                            )
+                            ), measureData.type
                         )
                     }
                     else -> {
@@ -111,14 +111,14 @@ class MeasureRecordFragment : Fragment() {
                             measureLog = MeasureLog(
                                 timeTag = timeTag,
                                 result = 0,
-                                createTime = Timestamp.now(),
+                                createdTime = Timestamp.now(),
                                 record = mapOf(
                                     "X" to binding.editTextNumber.editableText.toString()
                                         .toInt(),
                                     "Y" to null,
                                     "Z" to null
                                 )
-                            )
+                            ), measureData.type!!
                         )
                     }
                 }

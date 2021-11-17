@@ -47,7 +47,11 @@ class ManageDetailFragment() : Fragment() {
             ManageType.DRUG -> {
                 viewModel.drugList.observe(viewLifecycleOwner) {
                     val list = mutableListOf<ItemData>()
-                    it.forEach {
+                    val newList = it.filter {
+                        it.status != 2
+                    }
+
+                    newList.forEach {
                         list += ItemData(DrugData = it)
                     }
                     viewModel.putInDetailList(list)
@@ -57,7 +61,10 @@ class ManageDetailFragment() : Fragment() {
             ManageType.MEASURE -> {
                 viewModel.measureList.observe(viewLifecycleOwner) {
                     val list = mutableListOf<ItemData>()
-                    it.forEach {
+                    val newList = it.filter {
+                        it.status != 2
+                    }
+                    newList.forEach {
                         list += ItemData(MeasureData = it)
                     }
                     viewModel.putInDetailList(list)
@@ -67,7 +74,10 @@ class ManageDetailFragment() : Fragment() {
             ManageType.ACTIVITY -> {
                 viewModel.activityList.observe(viewLifecycleOwner) {
                     val list = mutableListOf<ItemData>()
-                    it.forEach {
+                    val newList = it.filter {
+                        it.status != 2
+                    }
+                    newList.forEach {
                         list += ItemData(ActivityData = it)
                     }
                     viewModel.putInDetailList(list)
@@ -77,7 +87,10 @@ class ManageDetailFragment() : Fragment() {
             ManageType.CARE -> {
                 viewModel.careList.observe(viewLifecycleOwner) {
                     val list = mutableListOf<ItemData>()
-                    it.forEach {
+                    val newList = it.filter {
+                        it.status != 2
+                    }
+                    newList.forEach {
                         list += ItemData(CareData = it)
                     }
                     viewModel.putInDetailList(list)
@@ -88,6 +101,16 @@ class ManageDetailFragment() : Fragment() {
         viewModel.manageDetailList.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 adapter.submitList(it)
+            }
+        }
+
+        viewModel.isTheNewBie.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.lavEmptyItems.visibility = View.VISIBLE
+                binding.tvNewbieSlogan.visibility = View.VISIBLE
+            } else {
+                binding.lavEmptyItems.visibility = View.GONE
+                binding.tvNewbieSlogan.visibility = View.GONE
             }
         }
 

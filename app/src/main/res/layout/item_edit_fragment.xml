@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -68,6 +69,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:hint="藥物名稱"
+                android:maxLength="30"
                 android:imeOptions="actionDone"
                 android:inputType="text"
                 android:textColor="@color/brown_black" />
@@ -339,8 +341,9 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:ems="10"
-                android:hint="每次劑量 (如 : 1)"
-                android:inputType="textPersonName"
+                android:hint="每次劑量 (如 : 1 ro 1.5)"
+                android:maxLength="10"
+                android:inputType="numberDecimal"
                 android:minHeight="48dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -369,18 +372,31 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp"
+                android:background="@drawable/button_main_color"
                 android:drawableStart="@drawable/ic_baseline_add_40"
-                android:minHeight="48dp"
                 android:gravity="center"
+                android:minHeight="48dp"
                 android:paddingStart="30sp"
                 android:text="新增提醒時間"
                 android:textAppearance="@style/subTitle_text_bl"
-                android:background="@drawable/button_main_color"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rv_timeChose" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:drawableLeft="@drawable/ic_baseline_access_alarm_24"
+                android:text="若不設定時間，則不會對您進行提醒 \n(您可於首頁右下角快速新增中依需求服藥)"
+                android:drawablePadding="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/bt_time_set"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/bt_time_set"
+                app:layout_constraintTop_toBottomOf="@+id/bt_time_set" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_timeChose"
@@ -419,8 +435,10 @@
                 android:background="@null"
                 android:drawableBottom="@drawable/editext_bottomline"
                 android:ems="10"
+                android:maxLength="4"
                 android:inputType="number"
                 android:minHeight="48dp"
+                android:hint="例如: 20"
                 android:textCursorDrawable="@drawable/cursor_brown"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/tv_unit_stock"

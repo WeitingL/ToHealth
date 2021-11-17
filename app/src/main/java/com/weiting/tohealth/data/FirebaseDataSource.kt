@@ -3,10 +3,13 @@ package com.weiting.tohealth.data
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.SetOptions
+import com.google.firebase.ktx.Firebase
 import com.weiting.tohealth.PublicApplication.Companion.application
+import java.util.*
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -34,15 +37,30 @@ object FirebaseDataSource : FirebaseSource {
     override suspend fun getUser(userId: String): User = suspendCoroutine { continuation ->
         val database = application.database
 
-        database.collection("users")
-            .whereEqualTo("id", userId)
+        database.collection("users").document(userId)
             .get()
             .addOnSuccessListener { result ->
 
-                val dataList = result.toObjects(User::class.java)
+                val data = result.toObject(User::class.java)
+                continuation.resume(data ?: User())
+            }
+            .addOnFailureListener { e ->
+                Log.w("Error to get data", e)
+            }
+    }
 
-//                Log.i("drugsList", list.toString())
-                continuation.resume(dataList.first())
+    override suspend fun getUserInfo(userId: String): User = suspendCoroutine { continuation ->
+
+        application.database.collection("users").document(userId)
+            .get()
+            .addOnSuccessListener { result ->
+                val data = result.toObject(User::class.java)
+
+                if (data != null) {
+                    continuation.resume(data)
+                } else {
+                    continuation.resume(User())
+                }
             }
             .addOnFailureListener { e ->
                 Log.w("Error to get data", e)
@@ -62,85 +80,115 @@ object FirebaseDataSource : FirebaseSource {
 
     }
 
-    override suspend fun getAllDrugs(userId: String): List<Drug> = suspendCoroutine { continuation ->
-        val list = mutableListOf<Drug>()
-        val database = application.database
+    override suspend fun getAllDrugs(userId: String): List<Drug> =
+        suspendCoroutine { continuation ->
+            val list = mutableListOf<Drug>()
+            val database = application.database
 
-        database.collection("drugs")
-            .whereEqualTo("userId", userId)
-            .get()
-            .addOnSuccessListener { result ->
+            database.collection("drugs")
+                .whereEqualTo("userId", userId)
+                .get()
+                .addOnSuccessListener { result ->
 
-                val dataList = result.toObjects(Drug::class.java)
-                list += dataList
+                    val dataList = result.toObjects(Drug::class.java)
+                    list += dataList
 
 //                Log.i("drugsList", list.toString())
-                continuation.resume(list)
-            }
-            .addOnFailureListener { e ->
-                Log.w("Error to get data", e)
-            }
-    }
+                    continuation.resume(list)
+                }
+                .addOnFailureListener { e ->
+                    Log.w("Error to get data", e)
+                }
+        }
 
-    override suspend fun getAllMeasures(userId: String): List<Measure> = suspendCoroutine { continuation ->
-        val list = mutableListOf<Measure>()
-        val database = application.database
+    override suspend fun getDrug(itemId: String): Drug =
+        suspendCoroutine { continuation ->
+            application.database.collection("drugs").document(itemId)
+                .get()
+                .addOnSuccessListener {
+                    if (it != null) {
+                        continuation.resume(it.toObject(Drug::class.java) ?: Drug())
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Log.w("Error to get data", e)
+                }
+        }
 
-        database.collection("measures")
-            .whereEqualTo("userId", userId)
-            .get()
-            .addOnSuccessListener { result ->
+    override suspend fun getAllMeasures(userId: String): List<Measure> =
+        suspendCoroutine { continuation ->
+            val list = mutableListOf<Measure>()
+            val database = application.database
 
-                val dataList = result.toObjects(Measure::class.java)
-                list += dataList
+            database.collection("measures")
+                .whereEqualTo("userId", userId)
+                .get()
+                .addOnSuccessListener { result ->
+
+                    val dataList = result.toObjects(Measure::class.java)
+                    list += dataList
 
 //                Log.i("measuresList", list.toString())
-                continuation.resume(list)
-            }
-            .addOnFailureListener { e ->
-                Log.w("Error to get data", e)
-            }
-    }
+                    continuation.resume(list)
+                }
+                .addOnFailureListener { e ->
+                    Log.w("Error to get data", e)
+                }
+        }
 
-    override suspend fun getAllActivities(userId: String): List<Activity> = suspendCoroutine { continuation ->
-        val list = mutableListOf<Activity>()
-        val database = application.database
+    override suspend fun getAllActivities(userId: String): List<Activity> =
+        suspendCoroutine { continuation ->
+            val list = mutableListOf<Activity>()
+            val database = application.database
 
-        database.collection("activity")
-            .whereEqualTo("userId", userId)
-            .get()
-            .addOnSuccessListener { result ->
+            database.collection("activity")
+                .whereEqualTo("userId", userId)
+                .get()
+                .addOnSuccessListener { result ->
 
-                val dataList = result.toObjects(Activity::class.java)
-                list += dataList
+                    val dataList = result.toObjects(Activity::class.java)
+                    list += dataList
 
 //                Log.i("activityList", list.toString())
-                continuation.resume(list)
-            }
-            .addOnFailureListener { e ->
-                Log.w("Error to get data", e)
-            }
-    }
+                    continuation.resume(list)
+                }
+                .addOnFailureListener { e ->
+                    Log.w("Error to get data", e)
+                }
+        }
 
-    override suspend fun getAllCares(userId: String): List<Care> = suspendCoroutine { continuation ->
-        val list = mutableListOf<Care>()
-        val database = application.database
+    override suspend fun getAllCares(userId: String): List<Care> =
+        suspendCoroutine { continuation ->
+            val list = mutableListOf<Care>()
+            val database = application.database
 
-        database.collection("cares")
-            .whereEqualTo("userId", userId)
-            .get()
-            .addOnSuccessListener { result ->
+            database.collection("cares")
+                .whereEqualTo("userId", userId)
+                .get()
+                .addOnSuccessListener { result ->
 
-                val dataList = result.toObjects(Care::class.java)
-                list += dataList
+                    val dataList = result.toObjects(Care::class.java)
+                    list += dataList
 
 //                Log.i("caresList", list.toString())
-                continuation.resume(list)
-            }
-            .addOnFailureListener { e ->
-                Log.w("Error to get data", e)
-            }
-    }
+                    continuation.resume(list)
+                }
+                .addOnFailureListener { e ->
+                    Log.w("Error to get data", e)
+                }
+        }
+
+    override suspend fun getMeasure(itemId: String): Measure =
+        suspendCoroutine { continuation ->
+            application.database.collection("measures").document(itemId)
+                .get()
+                .addOnSuccessListener {
+                    continuation.resume(it?.toObject(Measure::class.java) ?: Measure())
+                }
+                .addOnFailureListener { e ->
+                    Log.w("Error to get data", e)
+                }
+        }
 
     override fun getLiveDrugList(userId: String): MutableLiveData<List<Drug>> {
 
@@ -350,11 +398,19 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
+    override suspend fun getMeasureRecordId(itemId: String): String = suspendCoroutine {
+
+        val database = application.database
+        val id = database.collection("measures").document(itemId).collection("measuresLogs")
+            .document().id
+
+        it.resume(id)
+
+    }
+
     override fun postMeasureRecord(id: String, measureLog: MeasureLog) {
         val database = application.database
 
-        measureLog.id =
-            database.collection("measures").document(id).collection("measuresLogs").document().id
         database.collection("measures").document(id).collection("measuresLogs")
             .document(measureLog.id!!)
             .set(measureLog)
@@ -402,7 +458,7 @@ object FirebaseDataSource : FirebaseSource {
             val database = application.database
 
             database.collection("drugs").document(itemId).collection("drugLogs")
-                .orderBy("createTime", Query.Direction.DESCENDING)
+                .orderBy("createdTime", Query.Direction.DESCENDING)
                 .limit(100)
                 .get()
                 .addOnSuccessListener { result ->
@@ -423,7 +479,7 @@ object FirebaseDataSource : FirebaseSource {
             val database = application.database
 
             database.collection("measures").document(itemId).collection("measuresLogs")
-                .orderBy("createTime", Query.Direction.DESCENDING)
+                .orderBy("createdTime", Query.Direction.DESCENDING)
                 .limit(100)
                 .get()
                 .addOnSuccessListener { result ->
@@ -438,6 +494,22 @@ object FirebaseDataSource : FirebaseSource {
                 }
         }
 
+    override suspend fun getMeasureLog(itemId: String, itemsLogId: String): MeasureLog =
+        suspendCoroutine { continuation ->
+            application.database.collection("measures").document(itemId)
+                .collection("measuresLogs").document(itemsLogId)
+                .get()
+                .addOnSuccessListener {
+                    if (it != null) {
+                        continuation.resume(it.toObject(MeasureLog::class.java) ?: MeasureLog())
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Log.w("Error to get data", e)
+                }
+        }
+
+
     override suspend fun getActivityRecord(
         itemId: String,
         createTime: Timestamp
@@ -447,7 +519,7 @@ object FirebaseDataSource : FirebaseSource {
             val database = application.database
 
             database.collection("activity").document(itemId).collection("activityLogs")
-                .orderBy("createTime", Query.Direction.DESCENDING)
+                .orderBy("createdTime", Query.Direction.DESCENDING)
                 .limit(100)
                 .get()
                 .addOnSuccessListener { result ->
@@ -469,7 +541,7 @@ object FirebaseDataSource : FirebaseSource {
             val database = application.database
 
             database.collection("cares").document(itemId).collection("careLogs")
-                .orderBy("createTime", Query.Direction.DESCENDING)
+                .orderBy("createdTime", Query.Direction.DESCENDING)
                 .limit(100)
                 .get()
                 .addOnSuccessListener { result ->
@@ -541,11 +613,10 @@ object FirebaseDataSource : FirebaseSource {
                 .addOnSuccessListener { result ->
                     val user = result.toObject(User::class.java)
 
-                    when (user?.groupList?.contains(groupId)){
+                    when (user?.groupList?.contains(groupId)) {
                         true -> continuation.resume(true)
                         false -> continuation.resume(false)
                     }
-
 
 
                 }
@@ -580,7 +651,7 @@ object FirebaseDataSource : FirebaseSource {
                     val dataList = result.toObjects(Group::class.java)
                     list += dataList
 
-                    Log.i("GroupList", list.toString())
+//                    Log.i("GroupList", list.toString())
                     continuation.resume(list)
                 }
                 .addOnFailureListener { e ->
@@ -601,7 +672,7 @@ object FirebaseDataSource : FirebaseSource {
                     val dataList = result.toObjects(Member::class.java)
                     list += dataList
 
-                    Log.i("MemberList", list.toString())
+//                    Log.i("MemberList", list.toString())
                     continuation.resume(list)
                 }
                 .addOnFailureListener { e ->
@@ -615,6 +686,7 @@ object FirebaseDataSource : FirebaseSource {
 
         database.collection("groups").document(groupId)
             .collection("notes")
+            .orderBy("createdTime", Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { result ->
 
@@ -636,6 +708,7 @@ object FirebaseDataSource : FirebaseSource {
 
             database.collection("groups").document(groupId)
                 .collection("calenderItems")
+                .orderBy("createdTime", Query.Direction.DESCENDING)
                 .get()
                 .addOnSuccessListener { result ->
 
@@ -669,7 +742,7 @@ object FirebaseDataSource : FirebaseSource {
                     list.add(data)
                 }
 
-                Log.i("dataSource", memberList.value.toString())
+//                Log.i("dataSource", memberList.value.toString())
                 memberList.value = list
             }
         return memberList
@@ -801,7 +874,7 @@ object FirebaseDataSource : FirebaseSource {
 
         application.database.collection("chats")
             .whereEqualTo("groupId", groupId)
-            .orderBy("createTimestamp", Query.Direction.ASCENDING)
+            .orderBy("createdTime", Query.Direction.ASCENDING)
             .limit(50)
             .addSnapshotListener { value, error ->
                 if (error != null) {
@@ -840,26 +913,7 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
-    override suspend fun getUserInfo(userId: String): User = suspendCoroutine { continuation ->
-
-        application.database.collection("users").document(userId)
-            .get()
-            .addOnSuccessListener { result ->
-
-                val data = result.toObject(User::class.java)
-
-                if (data != null) {
-                    Log.i("CalenderItemList", data.toString())
-                    continuation.resume(data)
-                }
-
-            }
-            .addOnFailureListener { e ->
-                Log.w("Error to get data", e)
-            }
-    }
-
-    override fun editStock(itemId: String, num: Int) {
+    override fun editStock(itemId: String, num: Float) {
         application.database.collection("drugs").document(itemId)
             .update("stock", num)
             .addOnSuccessListener { documentReference ->
@@ -869,4 +923,116 @@ object FirebaseDataSource : FirebaseSource {
                 Log.w("update failure", "Error update document", e)
             }
     }
+
+    override fun postNotification(notification: Notification) {
+        val database = application.database
+
+        notification.id = database.collection("notifications").document().id
+
+        database.collection("notifications").document(notification.id!!)
+            .set(notification)
+            .addOnSuccessListener { documentReference ->
+                Log.d("store success", "DocumentSnapshot added with ID: ${notification.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("store failure", "Error adding document", e)
+            }
+    }
+
+    override fun getLiveNotificationForService(
+        userIdList: List<String>
+    ): MutableLiveData<List<Notification>> {
+        val notificationList = MutableLiveData<List<Notification>>()
+
+        val c = Calendar.getInstance()
+        c.time = Timestamp.now().toDate()
+        c.add(Calendar.DATE, -3)
+
+        application.database.collection("notifications")
+            .whereIn("userId", userIdList)
+            .orderBy("createdTime", Query.Direction.DESCENDING)
+            .whereGreaterThan("createdTime", Timestamp(c.time))
+            .addSnapshotListener { value, error ->
+
+                if (error != null) {
+                    Log.e("Listen failed.", error.toString())
+                    return@addSnapshotListener
+                }
+                val list = mutableListOf<Notification>()
+
+                for (document in value!!) {
+                    val data = document.toObject(Notification::class.java)
+                    list.add(data)
+                }
+                notificationList.value = list
+            }
+
+        return notificationList
+
+
+    }
+
+    override fun postOnGetNotificationForService(notification: Notification) {
+
+        notification.alreadySend.add(Firebase.auth.currentUser?.uid!!)
+
+        application.database.collection("notifications").document(notification.id!!)
+            .update("alreadySend", notification.alreadySend)
+            .addOnSuccessListener { documentReference ->
+                Log.d("store success", "DocumentSnapshot added with ID: ${notification.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("store failure", "Error adding document", e)
+            }
+    }
+
+    override fun getLiveChatMessageForService(
+        userId: String,
+        groupId: List<String>
+    ): MutableLiveData<List<Chat>> {
+        val chatItemsList = MutableLiveData<List<Chat>>()
+
+        val c = Calendar.getInstance()
+        c.time = Timestamp.now().toDate()
+        c.add(Calendar.DATE, -3)
+
+        application.database.collection("chats")
+            .whereIn("groupId", groupId)
+            .orderBy("createdTime", Query.Direction.ASCENDING)
+            .whereGreaterThan("createdTime", Timestamp(c.time))
+            .limit(50)
+            .addSnapshotListener { value, error ->
+                if (error != null) {
+                    Log.e("Listen failed.", error.toString())
+                    return@addSnapshotListener
+                }
+
+                val list = mutableListOf<Chat>()
+
+                for (document in value!!) {
+                    val data = document.toObject(Chat::class.java)
+                    if (!data.isReadList.contains(Firebase.auth.currentUser?.uid)) {
+                        list.add(data)
+                    }
+                }
+                chatItemsList.value = list
+            }
+        return chatItemsList
+    }
+
+    override fun postOnGetChatForService(chat: Chat) {
+
+        chat.isReadList.add(Firebase.auth.currentUser?.uid!!)
+
+        application.database.collection("chats").document(chat.id!!)
+            .update("isReadList", chat.isReadList)
+            .addOnSuccessListener { documentReference ->
+                Log.d("store success", "DocumentSnapshot added with ID: ${chat.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("store failure", "Error adding document", e)
+            }
+    }
+
+
 }

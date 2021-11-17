@@ -134,7 +134,7 @@ class CareRecordFragment : Fragment() {
                     careLog = CareLog(
                         timeTag = timeTag,
                         result = 0,
-                        createTime = Timestamp.now()
+                        createdTime = Timestamp.now()
                     )
                 )
                 Toast.makeText(context, "登錄完成", Toast.LENGTH_LONG).show()

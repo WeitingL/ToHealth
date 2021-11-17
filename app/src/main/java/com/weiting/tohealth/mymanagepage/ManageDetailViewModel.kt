@@ -13,6 +13,14 @@ class ManageDetailViewModel(
     private val user: User
 ) : ViewModel() {
 
+    private val _isTheNewBie = MutableLiveData<Boolean>()
+    val isTheNewBie: LiveData<Boolean>
+        get() = _isTheNewBie
+
+    init {
+        _isTheNewBie.value = true
+    }
+
     private val _manageDetailList = MutableLiveData<List<ItemData>>()
     val manageDetailList: LiveData<List<ItemData>>
         get() = _manageDetailList
@@ -23,8 +31,10 @@ class ManageDetailViewModel(
     val careList = firebaseDataRepository.getLiveCareList(user.id!!)
 
     fun putInDetailList(list: List<ItemData>) {
+        if (!list.isNullOrEmpty()){
+            _isTheNewBie.value = false
+        }
         _manageDetailList.value = list
     }
-
 
 }
