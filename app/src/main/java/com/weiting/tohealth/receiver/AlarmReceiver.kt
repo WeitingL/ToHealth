@@ -19,17 +19,17 @@ class AlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(p0: Context, p1: Intent) {
 
-        Log.i("startWork", "${p1.action}")
+        Log.i("startWork", "onReceive: ${p1.action}")
 
         coroutineScope.launch {
             when {
 
-                //00:00:01
-                p1.action?.equals("rebuild_plan") == true -> {
-                    RebuildAlarm().updateNewTodoListToAlarmManager(database)
-                }
+                //Won't need it
+//                p1.action?.equals("rebuild_plan") == true -> {
+//                    RebuildAlarm().updateNewTodoListToAlarmManager(database)
+//                }
 
-                //23:59:30
+                //23:59:00
                 p1.action?.equals("check_today_unChecked_logs") == true -> {
                     PostUnCheckedLogsWork().checkTodayUnCheckedLogs(database)
                 }

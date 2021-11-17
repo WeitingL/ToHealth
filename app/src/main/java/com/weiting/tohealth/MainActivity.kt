@@ -43,11 +43,10 @@ class MainActivity : AppCompatActivity() {
                 .putExtra("memberList", it as Serializable)
                 .putExtra("groupList", viewModel.groupList as Serializable)
             startForegroundService(notificationIntent)
+
+            viewModel.startSetAlarmForTodoList()
             setAlarmManagerToCheckLogs()
-            setAlarmManagerToRearrangeItem()
         }
-
-
 
         val navController = this.findNavController(R.id.myNavHostFragment)
         binding.bottomNavigationView.setupWithNavController(navController)
@@ -112,16 +111,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setAlarmManagerToCheckLogs() {
-        Log.i("startWork", "setAlarmManagerToCheckLogs")
+
         val c = Calendar.getInstance()
-        c.time = Timestamp.now().toDate()
         c.set(Calendar.HOUR_OF_DAY, 23)
         c.set(Calendar.MINUTE, 59)
         c.set(Calendar.SECOND, 0)
         val time = c.timeInMillis
+        Log.i("startWork", "setAlarmManagerToCheckLogs: ${c.time}")
 
         val intent = Intent(this, AlarmReceiver::class.java)
-        intent.action = "rebuild_plan"
+        intent.action = "check_today_unChecked_logs"
 
         val pendingIntent = PendingIntent.getBroadcast(
             this,
@@ -132,7 +131,6 @@ class MainActivity : AppCompatActivity() {
 
         val alarmManager = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent)
-
     }
 
 

@@ -8,6 +8,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.weiting.tohealth.data.FirebaseRepository
 import com.weiting.tohealth.data.UserManager
+import com.weiting.tohealth.works.RebuildAlarm
 import kotlinx.coroutines.launch
 
 class MainActivityViewModel(private val firebaseDataRepository: FirebaseRepository) : ViewModel() {
@@ -20,11 +21,15 @@ class MainActivityViewModel(private val firebaseDataRepository: FirebaseReposito
     val groupList = mutableListOf<String>()
 
     init {
-
-        if (Firebase.auth.currentUser?.uid != null){
+        if (Firebase.auth.currentUser?.uid != null) {
             getMemberIdList()
         }
+    }
 
+    fun startSetAlarmForTodoList() {
+        viewModelScope.launch {
+            RebuildAlarm().updateNewTodoListToAlarmManager(firebaseDataRepository)
+        }
     }
 
     private fun getMemberIdList() {

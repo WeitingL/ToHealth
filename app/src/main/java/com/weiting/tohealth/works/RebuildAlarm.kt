@@ -29,7 +29,7 @@ class RebuildAlarm() {
         val timeList = mutableListOf<Timestamp>()
 
         val drugList = firebaseDataRepository.getAllDrugs(userId!!).filter {
-            ItemArranger().isTodayNeedToDo(ItemType.DRUG, ItemData(DrugData = it))
+            ItemArranger().isThatDayNeedToDo(ItemType.DRUG, ItemData(DrugData = it), Timestamp.now())
         }
         drugList.forEach {
             it.executedTime.forEach {
@@ -38,7 +38,7 @@ class RebuildAlarm() {
         }
 
         val measureLog = firebaseDataRepository.getAllMeasures(userId).filter {
-            ItemArranger().isTodayNeedToDo(ItemType.MEASURE, ItemData(MeasureData = it))
+            ItemArranger().isThatDayNeedToDo(ItemType.MEASURE, ItemData(MeasureData = it), Timestamp.now())
         }
         measureLog.forEach {
             it.executedTime.forEach {
@@ -47,7 +47,7 @@ class RebuildAlarm() {
         }
 
         val activityList = firebaseDataRepository.getAllActivities(userId).filter {
-            ItemArranger().isTodayNeedToDo(ItemType.ACTIVITY, ItemData(ActivityData = it))
+            ItemArranger().isThatDayNeedToDo(ItemType.ACTIVITY, ItemData(ActivityData = it), Timestamp.now())
         }
         activityList.forEach {
             it.executedTime.forEach {
@@ -56,7 +56,7 @@ class RebuildAlarm() {
         }
 
         val careList = firebaseDataRepository.getAllCares(userId).filter {
-            ItemArranger().isTodayNeedToDo(ItemType.CARE, ItemData(CareData = it))
+            ItemArranger().isThatDayNeedToDo(ItemType.CARE, ItemData(CareData = it), Timestamp.now())
         }
         careList.forEach {
             it.executeTime.forEach {
@@ -74,7 +74,7 @@ class RebuildAlarm() {
         val c = Calendar.getInstance()
         c.time = Timestamp.now().toDate()
         val d = c.get(Calendar.DATE)
-        Log.i("startWork", "applyToAlarmManager")
+        Log.i("startWork", "RebuildAlarm_applyToAlarmManager")
         list.forEach {
             val intent =
                 Intent(PublicApplication.application.applicationContext, AlarmReceiver::class.java)

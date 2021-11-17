@@ -21,7 +21,10 @@ class TodoListNotification {
         val userId = Firebase.auth.currentUser?.uid
 
         val drugList = firebaseDataRepository.getAllDrugs(userId!!).filter {
-            ItemArranger().isTodayNeedToDo(ItemType.DRUG, ItemData(DrugData = it))
+            ItemArranger().isThatDayNeedToDo(
+                ItemType.DRUG, ItemData(DrugData = it),
+                Timestamp.now()
+            )
         }
         drugList.forEach { drug ->
             drug.executedTime.forEach { timeStamp ->
@@ -32,7 +35,10 @@ class TodoListNotification {
         }
 
         val measureList = firebaseDataRepository.getAllMeasures(userId).filter {
-            ItemArranger().isTodayNeedToDo(ItemType.MEASURE, ItemData(MeasureData = it))
+            ItemArranger().isThatDayNeedToDo(
+                ItemType.MEASURE, ItemData(MeasureData = it),
+                Timestamp.now()
+            )
         }
         measureList.forEach { measure ->
             measure.executedTime.forEach { timestamp ->
@@ -43,7 +49,10 @@ class TodoListNotification {
         }
 
         val careList = firebaseDataRepository.getAllCares(userId).filter {
-            ItemArranger().isTodayNeedToDo(ItemType.CARE, ItemData(CareData = it))
+            ItemArranger().isThatDayNeedToDo(
+                ItemType.CARE, ItemData(CareData = it),
+                Timestamp.now()
+            )
         }
         careList.forEach { care ->
             care.executeTime.forEach { timestamp ->
@@ -54,7 +63,10 @@ class TodoListNotification {
         }
 
         val activityList = firebaseDataRepository.getAllActivities(userId).filter {
-            ItemArranger().isTodayNeedToDo(ItemType.ACTIVITY, ItemData(ActivityData = it))
+            ItemArranger().isThatDayNeedToDo(
+                ItemType.ACTIVITY, ItemData(ActivityData = it),
+                Timestamp.now()
+            )
         }
         activityList.forEach { activity ->
             activity.executedTime.forEach { timestamp ->
@@ -106,7 +118,7 @@ class TodoListNotification {
                     .setContentIntent(pendingIntent)
                     .build()
 
-                notificationManager.notify(timestamp.nanoseconds+1, notification)
+                notificationManager.notify(timestamp.nanoseconds + 1, notification)
             }
 
             is Care -> {
@@ -120,20 +132,20 @@ class TodoListNotification {
                     .setContentIntent(pendingIntent)
                     .build()
 
-                notificationManager.notify(timestamp.nanoseconds+2, notification)
+                notificationManager.notify(timestamp.nanoseconds + 2, notification)
             }
             is Activity -> {
                 val notification = NotificationCompat.Builder(context, "toHealth")
                     .setSmallIcon(R.drawable.hospital_sign)
                     .setContentTitle("已經${toTimeFromTimeStamp(Timestamp.now())}囉!")
                     .setContentText(
-                        "應該要去${toCareType(itemsDataType.type)}了!\n輕觸可以開啟應用程式"
+                        "應該要去${toActivityType(itemsDataType.type)}了!\n輕觸可以開啟應用程式"
                     )
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setContentIntent(pendingIntent)
                     .build()
 
-                notificationManager.notify(timestamp.nanoseconds+3, notification)
+                notificationManager.notify(timestamp.nanoseconds + 3, notification)
             }
         }
     }

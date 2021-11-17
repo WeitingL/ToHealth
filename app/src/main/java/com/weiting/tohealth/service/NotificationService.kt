@@ -24,6 +24,8 @@ import kotlin.random.Random
 
 class NotificationService : LifecycleService() {
 
+
+    //foreground service
     lateinit var firebaseDataRepository: FirebaseRepository
     lateinit var notificationManager: NotificationManager
 

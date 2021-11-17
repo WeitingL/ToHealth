@@ -1,6 +1,5 @@
 package com.weiting.tohealth.homepage
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.google.firebase.Timestamp
 import com.weiting.tohealth.*
@@ -100,7 +99,12 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                     }
 
 
-                    if (ItemArranger().isTodayNeedToDo(ItemType.DRUG, ItemData(DrugData = drug))) {
+                    if (ItemArranger().isThatDayNeedToDo(
+                            ItemType.DRUG,
+                            ItemData(DrugData = drug),
+                            Timestamp.now()
+                        )
+                    ) {
                         drug.executedTime.forEach {
                             _totalTask.value = _totalTask.value?.plus(1)
 
@@ -164,9 +168,10 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                         todayLogCreateTimeIntList.sort()
                     }
 
-                    if (ItemArranger().isTodayNeedToDo(
+                    if (ItemArranger().isThatDayNeedToDo(
                             ItemType.MEASURE,
-                            ItemData(MeasureData = measure)
+                            ItemData(MeasureData = measure),
+                            Timestamp.now()
                         )
                     ) {
                         measure.executedTime.forEach {
@@ -228,9 +233,10 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                         todayLogCreateTimeIntList.sort()
                     }
 
-                    if (ItemArranger().isTodayNeedToDo(
+                    if (ItemArranger().isThatDayNeedToDo(
                             ItemType.ACTIVITY,
-                            ItemData(ActivityData = activity)
+                            ItemData(ActivityData = activity),
+                            Timestamp.now()
                         )
                     ) {
                         activity.executedTime.forEach {
@@ -291,9 +297,10 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                         todayLogCreateTimeIntList.sort()
                     }
 
-                    if (ItemArranger().isTodayNeedToDo(
+                    if (ItemArranger().isThatDayNeedToDo(
                             ItemType.CARE,
-                            ItemData(CareData = care)
+                            ItemData(CareData = care),
+                            Timestamp.now()
                         )
                     ) {
                         care.executeTime.forEach {
