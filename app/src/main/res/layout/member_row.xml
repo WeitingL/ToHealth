@@ -23,8 +23,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
         android:text="Weiting"
+        android:maxLength="12"
         android:textAppearance="@style/title_text_bl"
         app:layout_constraintStart_toEndOf="@+id/iv_photo"
         app:layout_constraintTop_toTopOf="@+id/iv_photo" />
@@ -33,8 +33,9 @@
         android:id="@+id/tv_nickName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:text="我自己"
+        android:maxLength="30"
         android:textAppearance="@style/content_text_bl"
         app:layout_constraintStart_toStartOf="@+id/tv_memberName"
         app:layout_constraintTop_toBottomOf="@+id/tv_memberName" />

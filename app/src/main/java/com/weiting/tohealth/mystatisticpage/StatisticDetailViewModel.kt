@@ -18,6 +18,10 @@ class StatisticDetailViewModel(
     private val statisticType: StatisticType
 ) : ViewModel() {
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading : LiveData<Boolean>
+    get() = _isLoading
+
     private val _logList = MutableLiveData<List<LogItem>>()
     val logList: LiveData<List<LogItem>>
         get() = _logList
@@ -31,6 +35,11 @@ class StatisticDetailViewModel(
             StatisticType.ACTIVITY -> getActivityLogs()
             StatisticType.MEASURE -> getMeasureLogs()
         }
+        _isLoading.value = true
+    }
+
+    fun loadingFinished(){
+        _isLoading.value = false
     }
 
     private fun getMeasureLogs() {
@@ -44,6 +53,7 @@ class StatisticDetailViewModel(
             }
             logItemList.add(LogItem.Bottom)
             _logList.value = logItemList
+            loadingFinished()
         }
     }
 
@@ -58,6 +68,7 @@ class StatisticDetailViewModel(
             }
             logItemList.add(LogItem.Bottom)
             _logList.value = logItemList
+            loadingFinished()
         }
     }
 
@@ -73,6 +84,7 @@ class StatisticDetailViewModel(
             }
             logItemList.add(LogItem.Bottom)
             _logList.value = logItemList
+            loadingFinished()
         }
     }
 
@@ -87,6 +99,7 @@ class StatisticDetailViewModel(
             }
             logItemList.add(LogItem.Bottom)
             _logList.value = logItemList
+            loadingFinished()
         }
     }
 }

@@ -30,7 +30,7 @@
         app:layout_constraintVertical_bias="0.3"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/filling_list" />
+        app:lottie_rawRes="@raw/loading" />
 
     <TextView
         android:id="@+id/tv_emptyList"
@@ -38,6 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:text="目前沒有完成項目的資料喔"
+        android:visibility="gone"
         android:textAppearance="@style/title_text_bl"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
