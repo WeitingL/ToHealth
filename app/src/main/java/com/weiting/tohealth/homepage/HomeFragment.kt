@@ -43,7 +43,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.viewModel = viewModel
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
 
         val adapter = TodayItemAdapter()
         val swipeSet = object : RecyclerViewSwipe() {

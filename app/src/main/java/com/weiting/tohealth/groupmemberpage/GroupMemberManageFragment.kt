@@ -43,7 +43,7 @@ class GroupMemberManageFragment : Fragment() {
         viewPager.adapter = MyManageAdapter(this, User(
             id = memberInfo.userId,
             name = memberInfo.name,
-        ))
+        ), memberInfo.private!!)
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             when (position) {

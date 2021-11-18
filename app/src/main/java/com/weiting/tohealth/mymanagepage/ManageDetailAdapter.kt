@@ -67,11 +67,7 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                         tvUpdateTime.text = toStringFromTimeStamp(data.lastEditTime)
                         tvCreatedTime.text = toStringFromTimeStamp(data.createdTime)
 
-                        tvEditorManage.text = if (data.editor == UserManager.UserInformation.id) {
-                            UserManager.UserInformation.name
-                        } else {
-                            "others"
-                        }
+                        tvEditorManage.text = data.editor
 
                     }
 
@@ -105,11 +101,7 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                         tvRatioTitle.text = "剩餘天數"
                         tvRatioNum.text = "無期限"
 
-                        tvEditorManage.text = if (data?.editor == UserManager.UserInformation.id) {
-                            UserManager.UserInformation.name
-                        } else {
-                            "others"
-                        }
+                        tvEditorManage.text = data?.editor
 
                     }
 
@@ -142,11 +134,7 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                         tvRatioTitle.text = "剩餘天數"
                         tvRatioNum.text = "無期限"
 
-                        tvEditorManage.text = if (data?.editor == UserManager.UserInformation.id) {
-                            UserManager.UserInformation.name
-                        } else {
-                            "others"
-                        }
+                        tvEditorManage.text = data?.editor
 
                     }
 
@@ -180,11 +168,7 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                         tvCreatedTime.text = toStringFromTimeStamp(data?.createdTime)
                         tvUpdateTime.text = toStringFromTimeStamp(data.lastEditTime)
 
-                        tvEditorManage.text = if (data?.editor == UserManager.UserInformation.id) {
-                            UserManager.UserInformation.name
-                        } else {
-                            "others"
-                        }
+                        tvEditorManage.text = data?.editor
 
                     }
                 }

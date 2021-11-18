@@ -60,7 +60,7 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: LogItem.MeasureLogItem) {
             binding.tvItemName.text = toMeasureType(item.type)
-            Log.i("holder", item.toString())
+//            Log.i("holder", item.toString())
             binding.acMainChart.setProgressBar(binding.progressBar3)
 
             //Get the dataList

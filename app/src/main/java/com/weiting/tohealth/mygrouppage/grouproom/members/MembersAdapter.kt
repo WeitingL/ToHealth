@@ -2,9 +2,11 @@ package com.weiting.tohealth.mygrouppage.grouproom.members
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.data.Member
 import com.weiting.tohealth.databinding.MemberRowBinding
 import com.weiting.tohealth.transferCircleImage
@@ -32,10 +34,21 @@ class MembersAdapter(val onClickListener: EditOnclickListener, val onclickListen
                 transferCircleImage(ivPhoto, member.profilePhoto)
 
                 btEditMember.setOnClickListener {
-                    onClickListener.onClick(member)
+                    val context = PublicApplication.application.applicationContext
+                    when(member.private){
+                        1 -> Toast.makeText(context, "使用者拒絕群組編輯", Toast.LENGTH_LONG).show()
+                        3 -> Toast.makeText(context, "使用者拒絕群組編輯", Toast.LENGTH_LONG).show()
+                        else -> onClickListener.onClick(member)
+                    }
+
                 }
                 btStastisticMember.setOnClickListener {
-                    onclickListener.onClick(member)
+                    val context = PublicApplication.application.applicationContext
+                    when(member.private){
+                        3 -> Toast.makeText(context, "使用者拒絕群組查看", Toast.LENGTH_LONG).show()
+                        else -> onclickListener.onClick(member)
+                    }
+
                 }
             }
         }
