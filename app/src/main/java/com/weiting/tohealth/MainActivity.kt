@@ -23,7 +23,6 @@ import com.weiting.tohealth.service.NotificationService
 import java.io.Serializable
 import java.sql.Time
 import java.util.*
-import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity() {
 
@@ -50,6 +49,11 @@ class MainActivity : AppCompatActivity() {
 
         val navController = this.findNavController(R.id.myNavHostFragment)
         binding.bottomNavigationView.setupWithNavController(navController)
+
+
+        binding.imMoreMotification.setOnClickListener {
+            navController.navigate(NavigationDirections.actionGlobalNotificationFragment(viewModel.memberIdList.value?.toTypedArray()?: arrayOf()))
+        }
 
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             when (navController.currentDestination?.id) {

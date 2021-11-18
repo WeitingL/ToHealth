@@ -225,7 +225,7 @@
         android:id="@+id/editMyNickNameDialog"
         android:name="com.weiting.tohealth.groupmemberpage.EditMyMemberInfoDialog"
         android:label="dialog_edit_my_nickname"
-        tools:layout="@layout/dialog_edit_my_nickname" >
+        tools:layout="@layout/dialog_edit_my_nickname">
         <argument
             android:name="myMemderInfo"
             app:argType="com.weiting.tohealth.data.Member" />
@@ -233,11 +233,27 @@
             android:name="groupId"
             app:argType="string" />
     </dialog>
-    <action android:id="@+id/action_global_editMyNickNameDialog" app:destination="@id/editMyNickNameDialog" />
+    <action
+        android:id="@+id/action_global_editMyNickNameDialog"
+        app:destination="@id/editMyNickNameDialog" />
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.weiting.tohealth.loginpage.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
-    <action android:id="@+id/action_global_loginFragment" app:destination="@id/loginFragment" />
+    <action
+        android:id="@+id/action_global_loginFragment"
+        app:destination="@id/loginFragment" />
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.weiting.tohealth.notificationpage.NotificationFragment"
+        android:label="notification_fragment"
+        tools:layout="@layout/notification_fragment">
+        <argument
+            android:name="memberList"
+            app:argType="string[]" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_notificationFragment"
+        app:destination="@id/notificationFragment" />
 </navigation>
