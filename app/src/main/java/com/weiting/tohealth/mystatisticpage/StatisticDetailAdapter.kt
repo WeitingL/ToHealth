@@ -34,7 +34,6 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
 
         override fun areContentsTheSame(oldItem: LogItem, newItem: LogItem): Boolean =
             oldItem == newItem
-
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -181,7 +180,7 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
     inner class ExportLogDataViewHolder(private val binding: CardviewBottombuttonRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind() {
-            binding.tvBottomButton.text = "資料輸出"
+            binding.tvBottomButton.text = "資料輸出(Coming Soon)"
         }
     }
 

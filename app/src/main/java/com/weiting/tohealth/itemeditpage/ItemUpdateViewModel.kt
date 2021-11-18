@@ -1,5 +1,6 @@
 package com.weiting.tohealth.itemeditpage
 
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,7 +10,9 @@ import com.google.firebase.Timestamp
 import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.data.*
 import com.weiting.tohealth.databinding.ItemUpdateFragmentBinding
+import com.weiting.tohealth.getTimeStampToTimeInt
 import com.weiting.tohealth.mymanagepage.ManageType
+import com.weiting.tohealth.toTimeFromTimeStamp
 import com.weiting.tohealth.works.RebuildAlarm
 import kotlinx.coroutines.launch
 import java.util.*
@@ -41,10 +44,13 @@ class ItemUpdateViewModel(
         _statusSelected.value = int
     }
 
-    //Time Set
     fun removeTimeSet(position: Int) {
         dateList.removeAt(position)
         timestampList.removeAt(position)
+        timestampList.sortBy {
+           getTimeStampToTimeInt(it)
+        }
+        dateList.sort()
         _timePointSet.value = timestampList
     }
 
@@ -52,6 +58,7 @@ class ItemUpdateViewModel(
         val c = Calendar.getInstance()
         c.time = Date(time ?: 0)
 
+        //Repeat check
         if ((c.get(Calendar.HOUR_OF_DAY) * 100 + c.get(Calendar.MINUTE)) in dateList) {
             Toast.makeText(
                 PublicApplication.application.applicationContext,
@@ -62,6 +69,14 @@ class ItemUpdateViewModel(
         } else {
             dateList.add(c.get(Calendar.HOUR_OF_DAY) * 100 + c.get(Calendar.MINUTE))
             timestampList.add(Timestamp(Date(time ?: 0)))
+
+            timestampList.sortBy {
+                getTimeStampToTimeInt(it)
+            }
+            dateList.sort()
+//            timestampList.forEach {
+//                Log.i("data?", "${ toTimeFromTimeStamp(it)} ${getTimeStampToTimeInt(it)} $dateList")
+//            }
             _timePointSet.value = timestampList
         }
     }
@@ -82,7 +97,7 @@ class ItemUpdateViewModel(
                     "N" to binding.spOngoingDayUpdate.selectedItemPosition,
                     "X" to binding.spSuspendDayUpdate.selectedItemPosition
                 )
-                data.executedTime = timePointSet.value?: data.executedTime
+                data.executedTime = timePointSet.value ?: data.executedTime
                 data.stock = binding.etvStockUpdate.text.toString().toFloat()
                 data.editor = UserManager.UserInformation.id
                 data.lastEditTime = Timestamp.now()
@@ -96,7 +111,7 @@ class ItemUpdateViewModel(
 
                 data.lastEditTime = Timestamp.now()
                 data.editor = UserManager.UserInformation.id
-                data.executedTime = timePointSet.value?: data.executedTime
+                data.executedTime = timePointSet.value ?: data.executedTime
                 data.status = statusSelected.value ?: data.status
 
                 firebaseDataRepository.updateMeasure(data)
@@ -110,7 +125,7 @@ class ItemUpdateViewModel(
                     "N" to binding.spOngoingDayUpdate.selectedItemPosition,
                     "X" to binding.spSuspendDayUpdate.selectedItemPosition
                 )
-                data.executedTime = timePointSet.value?: data.executedTime
+                data.executedTime = timePointSet.value ?: data.executedTime
                 data.editor = UserManager.UserInformation.id
                 data.lastEditTime = Timestamp.now()
                 data.status = statusSelected.value ?: data.status
@@ -126,7 +141,7 @@ class ItemUpdateViewModel(
                     "N" to binding.spOngoingDayUpdate.selectedItemPosition,
                     "X" to binding.spSuspendDayUpdate.selectedItemPosition
                 )
-                data.executeTime = timePointSet.value?: data.executeTime
+                data.executeTime = timePointSet.value ?: data.executeTime
                 data.editor = UserManager.UserInformation.id
                 data.lastEditTime = Timestamp.now()
                 data.status = statusSelected.value ?: data.status

@@ -38,7 +38,9 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                 when (dataType) {
                     ManageType.DRUG -> {
                         val data = item.DrugData
-                        adapter.submitList(data?.executedTime)
+                        adapter.submitList(data?.executedTime?.sortedBy {
+                            getTimeStampToTimeInt(it)
+                        })
 
                         when (data?.executedTime?.isEmpty()) {
                             true -> {
@@ -75,7 +77,9 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
 
                     ManageType.MEASURE -> {
                         val data = item.MeasureData
-                        adapter.submitList(data?.executedTime)
+                        adapter.submitList(data?.executedTime?.sortedBy {
+                            getTimeStampToTimeInt(it)
+                        })
 
                         when (data?.executedTime?.isEmpty()) {
                             true -> {
@@ -111,7 +115,9 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
 
                     ManageType.ACTIVITY -> {
                         val data = item.ActivityData
-                        adapter.submitList(data?.executedTime)
+                        adapter.submitList(data?.executedTime?.sortedBy {
+                            getTimeStampToTimeInt(it)
+                        })
 
                         when (data?.executedTime?.isEmpty()) {
                             true -> {
@@ -146,7 +152,9 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
 
                     ManageType.CARE -> {
                         val data = item.CareData
-                        adapter.submitList(data?.executeTime)
+                        adapter.submitList(data?.executeTime?.sortedBy {
+                            getTimeStampToTimeInt(it)
+                        })
 
                         when (data?.executeTime?.isEmpty()) {
                             true -> {

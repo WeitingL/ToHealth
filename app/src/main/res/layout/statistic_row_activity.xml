@@ -34,6 +34,7 @@
             android:drawableRight="@drawable/ic_baseline_navigate_next_24"
             android:gravity="center"
             android:text="詳細資訊"
+            android:visibility="invisible"
             android:textAppearance="@style/subTitle_text_bl"
             app:layout_constraintBottom_toBottomOf="@+id/tv_itemName"
             app:layout_constraintEnd_toEndOf="parent"

@@ -334,5 +334,4 @@ fun toNotificationTextForMeasureLog(measure: Measure, measureLog: MeasureLog): S
 
         else -> "未知測量項目異常"
     }
-
 }

@@ -79,7 +79,12 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                 }
 
                 val todayLogCreateTimeIntList = mutableListOf<Int>()
-                drugList.forEach { drug ->
+                val drugListByFilter = drugList.filter {
+                    //Executing
+                    it.status == 0
+                }
+
+                drugListByFilter.forEach { drug ->
 
                     if (isDrugExhausted(drug)) {
                         postDrugExhausted(drug)
@@ -152,7 +157,11 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                     isNotNewBie()
                 }
 
-                measureList.forEach { measure ->
+                val measureListByFilter = measureList.filter {
+                    it.status == 0
+                }
+
+                measureListByFilter.forEach { measure ->
 
                     measure.measureLogs =
                         firebaseDataRepository.getMeasureRecord(measure.id!!, Timestamp.now())
@@ -218,7 +227,11 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                     isNotNewBie()
                 }
 
-                activityList.forEach { activity ->
+                val activityListByFilter = activityList.filter {
+                    it.status == 0
+                }
+
+                activityListByFilter.forEach { activity ->
 
                     activity.activityLogs =
                         firebaseDataRepository.getActivityRecord(activity.id!!, Timestamp.now())
@@ -283,7 +296,11 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                     isNotNewBie()
                 }
 
-                careList.forEach { care ->
+                val careListByFilter = careList.filter {
+                    it.status == 0
+                }
+
+                careListByFilter.forEach { care ->
 
                     care.careLogs =
                         firebaseDataRepository.getCareRecord(care.id!!, Timestamp.now()).filter {

@@ -21,6 +21,7 @@ import com.weiting.tohealth.databinding.ItemEditFragmentBinding
 import com.weiting.tohealth.factory.ItemEditViewModelFactory
 import com.weiting.tohealth.mymanagepage.ManageType
 import com.weiting.tohealth.timeset.EditTimeType
+import com.weiting.tohealth.toTimeFromTimeStamp
 
 class ItemEditFragment : Fragment() {
 
@@ -32,7 +33,8 @@ class ItemEditFragment : Fragment() {
         val binding = ItemEditFragmentBinding.inflate(inflater, container, false)
         val manageType = ItemEditFragmentArgs.fromBundle(requireArguments()).manageType
         val user = ItemEditFragmentArgs.fromBundle(requireArguments()).userInfo
-        val factory = ItemEditViewModelFactory(PublicApplication.application.firebaseDataRepository, user)
+        val factory =
+            ItemEditViewModelFactory(PublicApplication.application.firebaseDataRepository, user)
         val viewModel = ViewModelProvider(this, factory).get(ItemEditViewModel::class.java)
 
         //User is navigated from which menagePage of items to create new one.
@@ -223,13 +225,15 @@ class ItemEditFragment : Fragment() {
 
         //Get timeSet spinner selected to change views
         viewModel.timePointSet.observe(viewLifecycleOwner) {
-            Log.i("DataDate", it.toString())
+//            Log.i("DataDate", it.toString())
             val adapter = TimeSetAdapter(
                 TimeSetAdapter.OnclickListener {
                     viewModel.removeTimeSet(it)
                 }
             )
-            it.sort()
+            it.sortedBy {
+                toTimeFromTimeStamp(it)
+            }
             adapter.submitList(it)
             binding.rvTimeChose.adapter = adapter
         }
