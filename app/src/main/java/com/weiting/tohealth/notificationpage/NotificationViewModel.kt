@@ -20,8 +20,13 @@ class NotificationViewModel(
     val notificationRecordList: LiveData<MutableList<NotificationRecord>>
         get() = _notificationRecordList
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean>
+        get() = _isLoading
+
     init {
         _notificationRecordList.value = mutableListOf()
+        _isLoading.value = true
     }
 
     fun transferToNotificationRecord(list: List<Notification>) {
@@ -66,7 +71,7 @@ class NotificationViewModel(
                             NotificationRecord(
                                 title = "藥物儲量警報",
                                 type = 6,
-                                itemName = "${user.name} \n${drug.drugName} 快要用完了!" +
+                                itemName = "${user.name} 的 ${drug.drugName} 快要用完了!" +
                                         "\n剩下 ${(drug.stock / drug.dose).toInt()} 次的服藥",
                                 createdTime = toStringFromTimeStamp(it.createdTime)
                             )
@@ -76,6 +81,7 @@ class NotificationViewModel(
                 }
             }
             _notificationRecordList.value = recordList
+            _isLoading.value = false
         }
     }
 }

@@ -30,6 +30,15 @@ class NotificationFragment : Fragment() {
 
         viewModel.notificationList.observe(viewLifecycleOwner){
             viewModel.transferToNotificationRecord(it)
+
+        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner){
+            if(it){
+                binding.lavLoagindNotification.visibility = View.VISIBLE
+            }else{
+                binding.lavLoagindNotification.visibility = View.GONE
+            }
         }
 
 
