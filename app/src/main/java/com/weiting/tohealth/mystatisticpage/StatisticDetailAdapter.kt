@@ -84,6 +84,7 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
                 val data = set.mapAs("{x: 'x', high : 'n', low: 'm'}")
 
                 cartesian.rangeColumn(data)
+                    .color("#634444")
                 cartesian.xAxis(true)
                     .yAxis(true)
                     .yGrid(true)
@@ -107,6 +108,7 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
                 set.data(list)
                 val data = set.mapAs("{x: 'x', n : 'n'}")
                 barChart.column(data)
+                    .color("#634444")
 
                 barChart.animation(true)
 
@@ -139,6 +141,7 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
             }
 
             val column = cartesian.column(data)
+                .color("#634444")
             column.tooltip()
                 .titleFormat("{%X}")
                 .position(Position.CENTER_BOTTOM)

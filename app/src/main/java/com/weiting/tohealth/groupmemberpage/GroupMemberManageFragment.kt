@@ -28,7 +28,7 @@ class GroupMemberManageFragment : Fragment() {
         val tabLayout = binding.tabLayout
 
         binding.tvMemberNameManage.text = memberInfo.name
-        binding.tvMemberNickName.text = memberInfo.nickName
+        binding.tvMemberNickName.text = "聊天室暱稱: ${memberInfo.nickName}"
         transferCircleImage(binding.imageView3, memberInfo.profilePhoto)
 
         if (memberInfo.userId != UserManager.UserInformation.id){

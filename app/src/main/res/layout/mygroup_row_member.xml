@@ -20,13 +20,15 @@
 
     <TextView
         android:id="@+id/tv_member_name"
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
-        android:text="我親愛的老爹"
+        android:gravity="center"
+        android:maxLength="12"
+        android:text="的名字"
         android:textAppearance="@style/content_text_bl"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -51,7 +51,7 @@ class StatisticDetailViewModel(
                     logItemList.add(AnalyzeMeasureLog().revertToResultInDateList(it))
                 }
             }
-            logItemList.add(LogItem.Bottom)
+//            logItemList.add(LogItem.Bottom)
             _logList.value = logItemList
             loadingFinished()
         }
@@ -66,7 +66,7 @@ class StatisticDetailViewModel(
                     logItemList.add(AnalyzeCareLog().revertToResultInDateList(it))
                 }
             }
-            logItemList.add(LogItem.Bottom)
+//            logItemList.add(LogItem.Bottom)
             _logList.value = logItemList
             loadingFinished()
         }
@@ -82,7 +82,7 @@ class StatisticDetailViewModel(
                     logItemList.add(AnalyzeActivityLog().revertToResultInDateList(it))
                 }
             }
-            logItemList.add(LogItem.Bottom)
+//            logItemList.add(LogItem.Bottom)
             _logList.value = logItemList
             loadingFinished()
         }
@@ -97,7 +97,7 @@ class StatisticDetailViewModel(
                     logItemList.add(AnalyzeDrugLog().revertToResultInDateList(it))
                 }
             }
-            logItemList.add(LogItem.Bottom)
+//            logItemList.add(LogItem.Bottom)
             _logList.value = logItemList
             loadingFinished()
         }

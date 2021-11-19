@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.Timestamp
 import com.weiting.tohealth.data.CalenderItem
 import com.weiting.tohealth.data.Note
@@ -35,13 +36,19 @@ class GroupAdapter(val onClickListener: OnclickListener) :
             val memberAdapter = GroupMemberAdapter()
             memberAdapter.submitList(group.member)
 
-            val noteAdapter = GroupNoteAdapter()
-            noteAdapter.submitList(
+            val noteAdapter = GroupNoteViewPagerAdapter(
                 getBoardMessageList(
-                    myGroup.group.notes,
-                    myGroup.group.calenderItems
+                    myGroup.group.notes, myGroup.group.calenderItems
                 )
             )
+
+//            val noteAdapter = GroupNoteAdapter()
+//            noteAdapter.submitList(
+//                getBoardMessageList(
+//                    myGroup.group.notes,
+//                    myGroup.group.calenderItems
+//                )
+//            )
 
             binding.apply {
                 tvGroupCode.text = group.id
@@ -51,6 +58,10 @@ class GroupAdapter(val onClickListener: OnclickListener) :
                 tvEnterGroup.setOnClickListener {
                     onClickListener.onClick(myGroup)
                 }
+
+                TabLayoutMediator(tabLayoutForDots, rvGroupNoteList){ tab, position ->
+                }.attach()
+
             }
         }
     }
@@ -122,52 +133,56 @@ class GroupAdapter(val onClickListener: OnclickListener) :
 
         when {
             noteList.isNotEmpty() && calenderItemList.isNotEmpty() -> {
-                val firstNoteData = noteList.first()
-                val firstCalenderItemData = calenderItemList.first()
-                list.add(
-                    BoardMessage(
-                        title = firstNoteData.title!!,
-                        content = firstNoteData.content!!,
-                        createTime = firstNoteData.createdTime!!,
-                        editor = firstNoteData.editor!!,
-                        result = 7
+                noteList.forEach { note ->
+                    list.add(
+                        BoardMessage(
+                            title = note.title!!,
+                            content = note.content!!,
+                            createTime = note.createdTime!!,
+                            editor = note.editor!!,
+                            result = 7
+                        )
                     )
-                )
+                }
 
-                list.add(
-                    BoardMessage(
-                        title = firstCalenderItemData.content!!,
-                        content = "時間: ${toStringFromTimeStamp(firstCalenderItemData.date)}",
-                        createTime = firstCalenderItemData.createdTime!!,
-                        editor = firstCalenderItemData.editor!!,
-                        result = 8
+                calenderItemList.forEach { calenderItem ->
+                    list.add(
+                        BoardMessage(
+                            title = calenderItem.content!!,
+                            content = "時間: ${toStringFromTimeStamp(calenderItem.date)}",
+                            createTime = calenderItem.createdTime!!,
+                            editor = calenderItem.editor!!,
+                            result = 8
+                        )
                     )
-                )
+                }
             }
 
             noteList.isNotEmpty() -> {
-                val firstNoteData = noteList.first()
-                list.add(
-                    BoardMessage(
-                        title = firstNoteData.title!!,
-                        content = firstNoteData.content!!,
-                        createTime = firstNoteData.createdTime!!,
-                        editor = firstNoteData.editor!!,
-                        result = 7
+                noteList.forEach { note ->
+                    list.add(
+                        BoardMessage(
+                            title = note.title!!,
+                            content = note.content!!,
+                            createTime = note.createdTime!!,
+                            editor = note.editor!!,
+                            result = 7
+                        )
                     )
-                )
+                }
             }
             calenderItemList.isNotEmpty() -> {
-                val firstCalenderItemData = calenderItemList.first()
-                list.add(
-                    BoardMessage(
-                        title = firstCalenderItemData.content!!,
-                        content = "時間: ${toStringFromTimeStamp(firstCalenderItemData.date)}",
-                        createTime = firstCalenderItemData.createdTime!!,
-                        editor = firstCalenderItemData.editor!!,
-                        result = 8
+                calenderItemList.forEach { calenderItem ->
+                    list.add(
+                        BoardMessage(
+                            title = calenderItem.content!!,
+                            content = "時間: ${toStringFromTimeStamp(calenderItem.date)}",
+                            createTime = calenderItem.createdTime!!,
+                            editor = calenderItem.editor!!,
+                            result = 8
+                        )
                     )
-                )
+                }
             }
         }
 

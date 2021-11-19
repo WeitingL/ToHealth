@@ -421,8 +421,8 @@ class HomeFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        viewModel.postSkipLog()
-        viewModel.postFinishDrugAndActivityLog()
+//        viewModel.postSkipLog()
+//        viewModel.postFinishDrugAndActivityLog()
     }
 }
 
