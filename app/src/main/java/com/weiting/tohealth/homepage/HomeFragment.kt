@@ -380,10 +380,14 @@ class HomeFragment : Fragment() {
 
         viewModel.totalTask.observe(viewLifecycleOwner){
             viewModel.taskCompleted()
+
+            binding.progressBar.max = it
         }
 
         viewModel.completedTask.observe(viewLifecycleOwner){
             viewModel.taskCompleted()
+
+            binding.progressBar.progress = it
         }
 
         viewModel.allCompleted.observe(viewLifecycleOwner) {

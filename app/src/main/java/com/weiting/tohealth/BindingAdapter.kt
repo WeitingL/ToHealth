@@ -2,12 +2,15 @@ package com.weiting.tohealth
 
 import android.app.Notification
 import android.util.Log
+import android.view.View
+import android.view.ViewTreeObserver
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
+import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.firebase.Timestamp
 import com.weiting.tohealth.homepage.ItemDataType
 import com.weiting.tohealth.homepage.TodayItemAdapter
@@ -67,17 +70,17 @@ fun bindNotificationRecyclerView(recyclerView: RecyclerView, list: List<Notifica
 @BindingAdapter("bindNotificationType")
 fun bindNotificationType(imageView: ImageView, type: Int) {
     imageView.setImageResource(
-        when(type){
-            4->{
+        when (type) {
+            4 -> {
                 R.drawable.loupe
             }
-            5->{
+            5 -> {
                 R.drawable.warning
             }
-            6->{
+            6 -> {
                 R.drawable.medicine
             }
-            else->{
+            else -> {
                 R.drawable.hospital_sign
             }
         }

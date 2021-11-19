@@ -3,9 +3,11 @@ package com.weiting.tohealth.mymanagepage
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.anychart.charts.Stock
 import com.weiting.tohealth.*
 import com.weiting.tohealth.data.ItemData
 import com.weiting.tohealth.data.UserManager
@@ -38,6 +40,9 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ItemData) {
             binding.apply {
+                btEdit.setOnClickListener {
+                    onClickListener.onClick(getItem(position), dataType)
+                }
                 coroutineScope.launch {
 
                     val adapter = ManageDetailTimeAdapter()
@@ -70,10 +75,12 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                             tvUnitManage.visibility = View.VISIBLE
                             tvUnitManage.text = toUnit(data.unit)
                             tvRatioTitle.text = "剩餘藥量"
+
                             tvRatioNum.text = "${data.stock}${toUnit(data?.unit)}"
+                            stockProgress(binding, data.stock.toInt(), data.dose.toInt())
+
                             tvUpdateTime.text = toStringFromTimeStamp(data.lastEditTime)
                             tvCreatedTime.text = toStringFromTimeStamp(data.createdTime)
-
                             tvEditorManage.text = database.getUser(data.editor!!).name
 
                         }
@@ -107,6 +114,8 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                             tvUpdateTime.text = toStringFromTimeStamp(data?.lastEditTime)
                             tvRatioTitle.text = "剩餘天數"
                             tvRatioNum.text = "無期限"
+                            tvStockDayUnit.text = "無期限"
+                            pbStock.progress = 100
 
                             tvEditorManage.text = database.getUser(data?.editor!!).name
 
@@ -140,6 +149,8 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                             tvUpdateTime.text = toStringFromTimeStamp(data.lastEditTime)
                             tvRatioTitle.text = "剩餘天數"
                             tvRatioNum.text = "無期限"
+                            tvStockDayUnit.text = "無期限"
+                            pbStock.progress = 100
 
                             tvEditorManage.text = database.getUser(data.editor!!).name
 
@@ -166,6 +177,8 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                             tvPeriod.text = toStringFromPeriod(data?.period!!)
                             tvRatioTitle.text = "剩餘天數"
                             tvRatioNum.text = "無期限"
+                            tvStockDayUnit.text = "無期限"
+                            pbStock.progress = 100
                             tvTagManage.text = toStatus(data?.status)
 
                             tvPerTimeTitle.visibility = View.GONE
@@ -196,9 +209,6 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
 
     override fun onBindViewHolder(holder: ItemsListViewHolder, position: Int) {
         holder.bind(getItem(position))
-        holder.itemView.setOnClickListener {
-            onClickListener.onClick(getItem(position), dataType)
-        }
     }
 
     class OnclickListener(val clickListener: (itemData: ItemData, manageType: ManageType) -> Unit) {
@@ -206,5 +216,18 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
             clickListener(itemData, manageType)
     }
 
+    private fun stockProgress(binding: ManageRowItemBinding, stock: Int, dose: Int) {
+        binding.apply {
+            val stillTime = stock / dose
+            val context = PublicApplication.application.applicationContext
+            tvStockDayUnit.text = "可執行\n${stillTime}次"
+            pbStock.progress = stillTime
+            when {
+                stillTime < 10 -> pbStock.setIndicatorColor(context.getColor(R.color.baby_pink))
+                stillTime < 50 -> pbStock.setIndicatorColor(context.getColor(R.color.pink_yellow))
+                else -> pbStock.setIndicatorColor(context.getColor(R.color.areo_blue))
+            }
+        }
+    }
 }
 
