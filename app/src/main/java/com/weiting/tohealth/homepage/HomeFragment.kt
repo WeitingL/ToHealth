@@ -418,12 +418,6 @@ class HomeFragment : Fragment() {
 
         return binding.root
     }
-
-    override fun onStop() {
-        super.onStop()
-//        viewModel.postSkipLog()
-//        viewModel.postFinishDrugAndActivityLog()
-    }
 }
 
 class WrapContentLinearLayoutManager : LinearLayoutManager {

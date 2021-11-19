@@ -418,11 +418,18 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
     private val skipTimeList = mutableListOf<SwipeData>()
 
     fun swipeToSkip(swipeData: SwipeData) {
+//        if (skipList.isNotEmpty()){
+//            postSkipLog()
+//            skipList.clear()
+//        }
         skipList.add(swipeData)
         _completedTask.value = _completedTask.value?.plus(1)
     }
 
     fun removeTimeHeader(swipeData: SwipeData) {
+//        if (skipTimeList.isNotEmpty()){
+//            skipTimeList.clear()
+//        }
         skipTimeList.add(swipeData)
     }
 
@@ -491,6 +498,8 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                     }
                 }
             }
+            skipList.clear()
+            skipTimeList.clear()
         }
     }
 
@@ -559,6 +568,8 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                 }
             }
         }
+        finishedLogList.clear()
+        finishedTimeList.clear()
     }
 
     private fun postDrugExhausted(drug: Drug) {
