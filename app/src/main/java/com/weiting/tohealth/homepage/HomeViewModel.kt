@@ -103,7 +103,6 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                         todayLogCreateTimeIntList.sort()
                     }
 
-
                     if (ItemArranger().isThatDayNeedToDo(
                             ItemType.DRUG,
                             ItemData(DrugData = drug),
@@ -400,7 +399,6 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                     list.add(it)
                 }
             }
-
         }
         return list
     }
@@ -594,6 +592,7 @@ sealed class ItemDataType() {
 }
 
 data class SwipeData(
+
     val itemDataType: ItemDataType,
     val position: Int
 )
