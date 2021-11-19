@@ -7,6 +7,7 @@
     android:layout_margin="10dp"
     android:paddingHorizontal="16dp"
     app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="8dp"
     app:cardElevation="20dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,8 +34,8 @@
             android:drawableRight="@drawable/ic_baseline_navigate_next_24"
             android:gravity="center"
             android:text="詳細資訊"
-            android:visibility="invisible"
             android:textAppearance="@style/subTitle_text_bl"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/tv_itemName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_itemName" />
