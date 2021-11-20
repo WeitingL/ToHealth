@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.weiting.tohealth.mygrouppage.grouproom.board.editpage.EditNoteAndCalenderItemFragment">
+
+    <TextView
+        android:id="@+id/tv_editItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="編輯項目"
+        android:textAppearance="@style/title_text_bl"
+        app:layout_constraintBottom_toBottomOf="@+id/sp_editNoteOrNot"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/sp_editNoteOrNot" />
+
+    <Spinner
+        android:id="@+id/sp_editNoteOrNot"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:entries="@array/editNoteOrCalenderNote"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_editItem"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_sticky"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="@+id/sp_editNoteOrNot"
+        app:layout_constraintStart_toStartOf="@+id/tv_editItem"
+        app:layout_constraintTop_toBottomOf="@+id/sp_editNoteOrNot">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/sticky_yellow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <EditText
+                android:id="@+id/etv_Title"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:maxLength="15"
+                android:maxLines="1"
+                android:hint="標題"
+                android:inputType="textPersonName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/etv_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="4dp"
+                android:ems="10"
+                android:hint="內容"
+                android:inputType="textMultiLine|textPersonName"
+                android:minHeight="48dp"
+                android:singleLine="false"
+                android:maxLength="80"
+                android:maxLines="20"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/etv_Title"
+                app:layout_constraintTop_toBottomOf="@+id/etv_Title" />
+
+            <Spinner
+                android:id="@+id/sp_footer"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="8dp"
+                android:entries="@array/footer"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.51"
+                app:layout_constraintStart_toEndOf="@+id/textView4"
+                app:layout_constraintTop_toBottomOf="@+id/etv_content" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="你的名子"
+                android:textAppearance="@style/subTitle_text_bl"
+                app:layout_constraintBottom_toBottomOf="@+id/sp_footer"
+                app:layout_constraintEnd_toEndOf="@+id/etv_content"
+                app:layout_constraintHorizontal_bias="0.41"
+                app:layout_constraintStart_toStartOf="@+id/etv_content"
+                app:layout_constraintTop_toBottomOf="@+id/etv_content" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_calenderItem"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        app:layout_constraintEnd_toEndOf="@+id/sp_editNoteOrNot"
+        app:layout_constraintStart_toStartOf="@+id/tv_editItem"
+        app:layout_constraintTop_toBottomOf="@+id/cl_sticky">
+
+        <EditText
+            android:id="@+id/edv_reminderTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:hint="提醒事項"
+            android:singleLine="false"
+            android:maxLines="8"
+            android:maxLength="80"
+            android:inputType="textMultiLine|textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_dateTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:text="提醒時間"
+            android:textAppearance="@style/title_text_bl"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edv_reminderTitle" />
+
+        <TextView
+            android:id="@+id/tv_editDate"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/row_block"
+            android:gravity="center|end"
+            android:paddingHorizontal="12dp"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_dateTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/tv_dateTitle"
+            app:layout_constraintTop_toTopOf="@+id/tv_dateTitle" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="16dp"
+        android:text="確定"
+        android:background="@drawable/button_main_color"
+        android:textAppearance="@style/subTitle_text_bl"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/sp_editNoteOrNot"
+        app:layout_constraintStart_toStartOf="@+id/tv_editItem"
+        app:layout_constraintTop_toBottomOf="@+id/cl_calenderItem"
+        app:layout_constraintVertical_bias="1.0" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,3 +1,165 @@
 <resources>
     <string name="app_name">ToHealth</string>
+    <string name="homepage_morningtitle">又是美好的早晨!</string>
+    <string name="homepage_noontitle">休閒的午間，小睡一下</string>
+    <string name="homepage_afternoontitle">傍晚時分，今天過的好嗎?</string>
+    <string name="homepage_nighttitle">輕鬆夜晚!</string>
+    <string name="homepage_sleeptitle">該睡覺囉! 明天見!</string>
+    <string name="itemskip_text">跳過</string>
+    <string name="itemswip_undo">回復</string>
+    <string name="itemfinished_text">完成</string>
+    <string name="newbieSlogan_homepage">您還沒有項目喔!\n快去項目管理中新增項目吧!</string>
+    <string name="finished_todayList">你好棒!! 今天的健康項目都做完了!</string>
+
+    <string-array name="ItemType">
+        <item>藥品</item>
+        <item>測量</item>
+        <item>健康活動</item>
+        <item>關懷項目</item>
+    </string-array>
+
+    <string-array name="Measure_Item">
+        <item>血壓</item>
+        <item>飯前血糖</item>
+        <item>飯後血糖</item>
+        <item>血氧</item>
+        <item>體重</item>
+        <item>體溫</item>
+    </string-array>
+
+    <string-array name="End_Date">
+        <item>無限期</item>
+        <item>共幾天(為短期間使用)</item>
+    </string-array>
+
+    <string-array name="Activity_Item">
+        <item>健身</item>
+        <item>走路(健走)</item>
+        <item>物理治療</item>
+        <item>跑步</item>
+        <item>呼吸訓練</item>
+        <item>心理諮商</item>
+        <item>冥想</item>
+        <item>瑜珈(伸展)</item>
+        <item>眼部運動</item>
+        <item>中醫治療</item>
+        <item>洗腎</item>
+    </string-array>
+
+    <string-array name="Period">
+        <item>每日數次</item>
+        <item>每幾日執行</item>
+        <item>每個禮拜幾執行</item>
+        <item>連續幾天執行後，再暫停幾天</item>
+        <item>依需求執行</item>
+    </string-array>
+
+    <string-array name="Care_Item">
+        <item>心情關懷</item>
+        <item>疼痛關懷</item>
+        <item>症狀關懷</item>
+        <item>睡眠關懷</item>
+    </string-array>
+
+    <string-array name="ItemUnit">
+        <item>毫克</item>
+        <item>毫升</item>
+        <item>針劑</item>
+        <item>單位</item>
+        <item>滴</item>
+        <item>片</item>
+        <item>顆</item>
+        <item>湯匙</item>
+        <item>袋/包</item>
+        <item>個</item>
+        <item>次</item>
+    </string-array>
+
+    <string-array name="week">
+        <item>星期一</item>
+        <item>星期二</item>
+        <item>星期三</item>
+        <item>星期四</item>
+        <item>星期五</item>
+        <item>星期六</item>
+        <item>星期日</item>
+    </string-array>
+
+    <string-array name="hour">
+        <item>1小時</item>
+        <item>2小時</item>
+        <item>3小時</item>
+        <item>4小時</item>
+        <item>5小時</item>
+        <item>6小時</item>
+        <item>7小時</item>
+        <item>8小時</item>
+        <item>9小時</item>
+        <item>10小時</item>
+        <item>11小時</item>
+        <item>12小時</item>
+        <item>13小時</item>
+        <item>14小時</item>
+        <item>15小時</item>
+        <item>16小時</item>
+        <item>17小時</item>
+        <item>18小時</item>
+        <item>19小時</item>
+        <item>20小時</item>
+        <item>21小時</item>
+        <item>22小時</item>
+        <item>23小時</item>
+    </string-array>
+
+    <string-array name="day">
+        <item>1日</item>
+        <item>2日</item>
+        <item>3日</item>
+        <item>4日</item>
+        <item>5日</item>
+        <item>6日</item>
+    </string-array>
+
+    <string-array name="cycle_day">
+        <item>1日</item>
+        <item>2日</item>
+        <item>3日</item>
+        <item>4日</item>
+        <item>5日</item>
+        <item>6日</item>
+        <item>7日</item>
+        <item>8日</item>
+        <item>9日</item>
+        <item>10日</item>
+        <item>11日</item>
+        <item>12日</item>
+        <item>13日</item>
+        <item>2週</item>
+        <item>3週</item>
+        <item>1個月</item>
+    </string-array>
+
+    <string-array name="Number">
+        <item>1次</item>
+        <item>2次</item>
+        <item>3次</item>
+        <item>4次</item>
+        <item>5次</item>
+        <item>6次</item>
+    </string-array>
+
+    <string-array name="editNoteOrCalenderNote">
+        <item>備忘錄</item>
+        <item>行事曆</item>
+    </string-array>
+
+    <string-array name="footer">
+        <item>留</item>
+        <item>關心您</item>
+        <item>紀錄</item>
+        <item>通知</item>
+        <item>祝福</item>
+        <item>改</item>
+    </string-array>
+
 </resources>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "670369027403",
+    "project_id": "tohealth-967e1",
+    "storage_bucket": "tohealth-967e1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:670369027403:android:5c86e9b348055123e404ce",
+        "android_client_info": {
+          "package_name": "com.weiting.tohealth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "670369027403-5hm3dgdilnreean498o6d6p10rid637m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYdao3e2auHoAshnmbd60YRsolxM49wug"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "670369027403-5hm3dgdilnreean498o6d6p10rid637m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/pink_brown"
+    tools:context="com.weiting.tohealth.mygrouppage.dialogs.CreateGroupDialog">
+
+    <TextView
+        android:id="@+id/tv_newGroupName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="為你的團隊取名吧!"
+        android:textAppearance="@style/title_text_bl"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_GroupName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_newGroupName">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:hint="名稱 (上限10個字)"
+            android:maxLength="10"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_groupCode_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="群組號碼"
+        android:textAppearance="@style/subTitle_text_bl"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bt_EnterName" />
+
+    <TextView
+        android:id="@+id/tv_codeInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="立即提供群組編號給你的成員，讓他加入你的團隊!"
+        android:textAppearance="@style/subTitle_text_bl"
+        app:layout_constraintEnd_toEndOf="@+id/tv_groupCode_title"
+        app:layout_constraintStart_toStartOf="@+id/tv_groupCode_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_groupCode_title" />
+
+    <TextView
+        android:id="@+id/tv_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="8dp"
+        android:text="AWSGOOD"
+        android:textAppearance="@style/subTitle_text_bl"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/tv_codeInfo"
+        app:layout_constraintStart_toStartOf="@+id/tv_codeInfo"
+        app:layout_constraintTop_toBottomOf="@+id/tv_codeInfo" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt_EnterName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="輸入名稱"
+        android:textAppearance="@style/title_text"
+        android:background="@drawable/button_yellow_color"
+        app:layout_constraintEnd_toEndOf="@+id/til_GroupName"
+        app:layout_constraintStart_toStartOf="@+id/til_GroupName"
+        app:layout_constraintTop_toBottomOf="@+id/til_GroupName" />
+</androidx.constraintlayout.widget.ConstraintLayout>

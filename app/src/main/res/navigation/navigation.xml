@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/homeFragment">
+
+    <dialog
+        android:id="@+id/addGroupDialog"
+        android:name="com.weiting.tohealth.mygrouppage.dialogs.AddGroupDialog"
+        android:label="dialog_add_group"
+        tools:layout="@layout/dialog_add_group" />
+    <dialog
+        android:id="@+id/createGroupDialog"
+        android:name="com.weiting.tohealth.mygrouppage.dialogs.CreateGroupDialog"
+        android:label="dialog_create_group"
+        tools:layout="@layout/dialog_create_group" />
+    <dialog
+        android:id="@+id/joinGroupDialog"
+        android:name="com.weiting.tohealth.mygrouppage.dialogs.JoinGroupDialog"
+        android:label="dialog_join_group"
+        tools:layout="@layout/dialog_join_group" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.weiting.tohealth.homepage.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/myGroupFragment"
+        android:name="com.weiting.tohealth.mygrouppage.MyGroupFragment"
+        android:label="fragment_mygroup"
+        tools:layout="@layout/fragment_mygroup" />
+    <fragment
+        android:id="@+id/myManageFragment"
+        android:name="com.weiting.tohealth.mymanagepage.MyManageFragment"
+        android:label="fragment_mymanage"
+        tools:layout="@layout/fragment_mymanage" />
+    <fragment
+        android:id="@+id/myStatisticFragment"
+        android:name="com.weiting.tohealth.mystatisticpage.MyStatisticFragment"
+        android:label="fragment_mystatistic"
+        tools:layout="@layout/fragment_mystatistic" />
+    <action
+        android:id="@+id/action_global_addGroupDialog"
+        app:destination="@id/addGroupDialog" />
+    <action
+        android:id="@+id/action_global_createGroupDialog"
+        app:destination="@id/createGroupDialog" />
+    <action
+        android:id="@+id/action_global_joinGroupDialog"
+        app:destination="@id/joinGroupDialog" />
+    <action
+        android:id="@+id/action_global_myManageFragment"
+        app:destination="@id/myManageFragment" />
+    <action
+        android:id="@+id/action_global_myGroupFragment"
+        app:destination="@id/myGroupFragment" />
+    <action
+        android:id="@+id/action_global_homeFragment"
+        app:destination="@id/homeFragment"
+        app:popUpTo="@id/navigation" />
+    <action
+        android:id="@+id/action_global_myStatisticFragment"
+        app:destination="@id/myStatisticFragment" />
+    <fragment
+        android:id="@+id/itemEditFragment"
+        android:name="com.weiting.tohealth.itemeditpage.ItemEditFragment"
+        android:label="item_edit_fragment"
+        tools:layout="@layout/item_edit_fragment">
+        <argument
+            android:name="manageType"
+            app:argType="com.weiting.tohealth.mymanagepage.ManageType" />
+        <argument
+            android:name="userInfo"
+            app:argType="com.weiting.tohealth.data.User" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_itemEditFragment"
+        app:destination="@id/itemEditFragment" />
+    <fragment
+        android:id="@+id/groupFragment"
+        android:name="com.weiting.tohealth.mygrouppage.grouproom.GroupRoomFragment"
+        android:label="group_fragment"
+        tools:layout="@layout/group_fragment">
+        <argument
+            android:name="group"
+            app:argType="com.weiting.tohealth.data.Group" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_groupFragment"
+        app:destination="@id/groupFragment" />
+    <fragment
+        android:id="@+id/editNoteAndCalenderItemFragment"
+        android:name="com.weiting.tohealth.mygrouppage.grouproom.board.editpage.EditNoteAndCalenderItemFragment"
+        android:label="edit_noteandcalenderitem_fragment"
+        tools:layout="@layout/edit_noteandcalenderitem_fragment">
+        <argument
+            android:name="group"
+            app:argType="com.weiting.tohealth.data.Group" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_editNoteAndCalenderItemFragment"
+        app:destination="@id/editNoteAndCalenderItemFragment" />
+    <dialog
+        android:id="@+id/calenderTimeDialog"
+        android:name="com.weiting.tohealth.timeset.CalenderTimeDialog"
+        android:label="dialog_calendertime"
+        tools:layout="@layout/dialog_calendertime">
+        <argument
+            android:name="timeEditType"
+            app:argType="com.weiting.tohealth.timeset.EditTimeType" />
+    </dialog>
+    <action
+        android:id="@+id/action_global_calenderTimeDialog"
+        app:destination="@id/calenderTimeDialog" />
+    <fragment
+        android:id="@+id/measureRecordFragment"
+        android:name="com.weiting.tohealth.homepage.MeasureRecordFragment"
+        android:label="measure_record_fragment"
+        tools:layout="@layout/measure_record_fragment">
+        <argument
+            android:name="measureData"
+            app:argType="com.weiting.tohealth.data.Measure" />
+        <argument
+            android:name="timeTag"
+            app:argType="integer" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_measureRecordFragment"
+        app:destination="@id/measureRecordFragment" />
+    <fragment
+        android:id="@+id/careRecordFragment"
+        android:name="com.weiting.tohealth.homepage.CareRecordFragment"
+        android:label="care_record_fragment"
+        tools:layout="@layout/care_record_fragment">
+        <argument
+            android:name="careData"
+            app:argType="com.weiting.tohealth.data.Care" />
+        <argument
+            android:name="timeTag"
+            app:argType="integer" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_careRecordFragment"
+        app:destination="@id/careRecordFragment" />
+    <fragment
+        android:id="@+id/fastAddFragment"
+        android:name="com.weiting.tohealth.homepage.fastadd.FastAddFragment"
+        android:label="fast_add_fragment"
+        tools:layout="@layout/fast_add_fragment" />
+    <action
+        android:id="@+id/action_global_fastAddFragment"
+        app:destination="@id/fastAddFragment" />
+    <fragment
+        android:id="@+id/groupMemberManageFragment"
+        android:name="com.weiting.tohealth.groupmemberpage.GroupMemberManageFragment"
+        android:label="group_member_management_fragment"
+        tools:layout="@layout/group_member_management_fragment">
+        <argument
+            android:name="memberInfo"
+            app:argType="com.weiting.tohealth.data.Member" />
+        <argument
+            android:name="groupId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/groupMemberStatisticFragment"
+        android:name="com.weiting.tohealth.groupmemberpage.GroupMemberStatisticFragment"
+        android:label="group_member_statistic_fragment"
+        tools:layout="@layout/group_member_statistic_fragment">
+        <argument
+            android:name="memberInfo"
+            app:argType="com.weiting.tohealth.data.Member" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_groupMemberStatisticFragment"
+        app:destination="@id/groupMemberStatisticFragment" />
+    <action
+        android:id="@+id/action_global_groupMemberManageFragment"
+        app:destination="@id/groupMemberManageFragment" />
+    <fragment
+        android:id="@+id/boardFragment"
+        android:name="com.weiting.tohealth.mygrouppage.grouproom.board.BoardFragment"
+        android:label="broad_fragment"
+        tools:layout="@layout/broad_fragment" />
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.weiting.tohealth.mygrouppage.grouproom.chat.ChatFragment"
+        android:label="chatroom_fragment"
+        tools:layout="@layout/chatroom_fragment" />
+    <fragment
+        android:id="@+id/statisticDetailFragment"
+        android:name="com.weiting.tohealth.mystatisticpage.StatisticDetailFragment"
+        android:label="mystatistic_item_fagment"
+        tools:layout="@layout/mystatistic_item_fagment" />
+    <fragment
+        android:id="@+id/manageDetailFragment"
+        android:name="com.weiting.tohealth.mymanagepage.ManageDetailFragment"
+        android:label="mymanage_item_fragment"
+        tools:layout="@layout/mymanage_item_fragment" />
+    <fragment
+        android:id="@+id/membersFragment"
+        android:name="com.weiting.tohealth.mygrouppage.grouproom.members.MembersFragment"
+        android:label="members_fragment"
+        tools:layout="@layout/members_fragment" />
+    <fragment
+        android:id="@+id/itemUpdateFragment"
+        android:name="com.weiting.tohealth.itemeditpage.ItemUpdateFragment"
+        android:label="item_update_fragment"
+        tools:layout="@layout/item_update_fragment">
+        <argument
+            android:name="itemData"
+            app:argType="com.weiting.tohealth.data.ItemData" />
+        <argument
+            android:name="manageType"
+            app:argType="com.weiting.tohealth.mymanagepage.ManageType" />
+        <argument
+            android:name="userInfo"
+            app:argType="com.weiting.tohealth.data.User" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_itemUpdateFragment"
+        app:destination="@id/itemUpdateFragment" />
+    <dialog
+        android:id="@+id/editMyNickNameDialog"
+        android:name="com.weiting.tohealth.groupmemberpage.EditMyMemberInfoDialog"
+        android:label="dialog_edit_my_nickname"
+        tools:layout="@layout/dialog_edit_my_nickname">
+        <argument
+            android:name="myMemderInfo"
+            app:argType="com.weiting.tohealth.data.Member" />
+        <argument
+            android:name="groupId"
+            app:argType="string" />
+    </dialog>
+    <action
+        android:id="@+id/action_global_editMyNickNameDialog"
+        app:destination="@id/editMyNickNameDialog" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.weiting.tohealth.loginpage.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
+    <action
+        android:id="@+id/action_global_loginFragment"
+        app:destination="@id/loginFragment" />
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.weiting.tohealth.notificationpage.NotificationFragment"
+        android:label="notification_fragment"
+        tools:layout="@layout/notification_fragment">
+        <argument
+            android:name="memberList"
+            app:argType="string[]" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_notificationFragment"
+        app:destination="@id/notificationFragment" />
+</navigation>

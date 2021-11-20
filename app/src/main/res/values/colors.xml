@@ -1,10 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+<!--  purple  -->
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
+
+<!--  teal  -->
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
+
+<!-- black   -->
     <color name="black">#FF000000</color>
+    <color name="gray_bark">#959494</color>
+
+<!--  white  -->
     <color name="white">#FFFFFFFF</color>
+    <color name="gray_light">#DADADA</color>
+    <color name="gray_lightF4">#F4F4F4</color>
+    <color name="gray">#E7E7E7</color>
+
+<!--  green  -->
+    <color name="light_green">#53CF58</color>
+    <color name="green">#337C36</color>
+
+<!-- yellow  -->
+    <color name="yellow">#FFC107</color>
+    <color name="sticky_yellow">#FFF8B7</color>
+
+<!--  reb  -->
+    <color name="red">#FF3B3B</color>
+
+
+
+<!--  brown color  -->
+    <color name="light_brown">#D6D1D1</color>
+    <color name="brown_black">#403E3B</color>
+    <color name="reb_brown">#634444</color>
+    <color name="pink_brown">#C6B5B5</color>
+
+
+<!-- basic Color   -->
+    <color name="baby_pink">#FFCBCB</color>
+    <color name="uranian_blue">#C8E6FF</color>
+    <color name="areo_blue">#C4F4D8</color>
+    <color name="pink_yellow">#FDEB91</color>
+    <color name="silver">#B2B2B2</color>
+    <color name="jeans_blue">#50AEFF</color>
+
+    <color name="dodger_blue">#065ca6</color>
+    <color name="jeans_green">#52E388</color>
+    <color name="jeans_pink">#ED6060</color>
+    <color name="dark_blue">#202CA1</color>
+
+<!-- title color -->
+    <color name="light_main_color">#0d1db0</color>
+
 </resources>

@@ -2,11 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.weiting.tohealth">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
     <application
+        android:name=".PublicApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/tohealth_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/tohealth_logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ToHealth">
         <activity
@@ -14,10 +18,22 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service android:name=".service.NotificationService" />
+
+        <receiver
+            android:name=".receiver.AlarmReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="rebuild_plan"/>
+                <action android:name="check_today_unChecked_logs"/>
+                <action android:name="item_notification"/>
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

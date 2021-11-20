@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@drawable/home_icon_selector"
+        android:title="首頁" />
+    <item
+        android:id="@+id/myGroupFragment"
+        android:icon="@drawable/group_icon_selector"
+        android:title="群組" />
+    <item
+        android:id="@+id/myStatisticFragment"
+        android:icon="@drawable/statistic_icon_selector"
+        android:title="統計資料" />
+    <item
+        android:id="@+id/myManageFragment"
+        android:icon="@drawable/edit_icon_selector"
+        android:title="項目管理" />
+</menu>
