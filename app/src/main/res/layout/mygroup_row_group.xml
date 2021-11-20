@@ -66,7 +66,7 @@
             android:id="@+id/tv_groupCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:text="AWSGOOD"
             app:layout_constraintStart_toStartOf="@+id/tv_groupName"
             app:layout_constraintTop_toBottomOf="@+id/tv_groupName" />
@@ -98,6 +98,16 @@
             app:tabTextColor="@android:color/transparent">
 
         </com.google.android.material.tabs.TabLayout>
+
+        <ImageView
+            android:id="@+id/im_generateQR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_groupCode"
+            app:layout_constraintStart_toEndOf="@+id/tv_groupCode"
+            app:layout_constraintTop_toTopOf="@+id/tv_groupCode"
+            app:srcCompat="@drawable/ic_baseline_qr_code_24" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

@@ -24,20 +24,29 @@ class MyGroupFragment : Fragment() {
         val factory = MyGroupViewModelFactory(PublicApplication.application.firebaseDataRepository)
         val viewModel = ViewModelProvider(this, factory).get(MyGroupViewModel::class.java)
 
-        val adapter = GroupAdapter(GroupAdapter.OnclickListener {
-            when (it) {
-                is GroupPageItem.MyGroups -> {
-                    findNavController().navigate(NavigationDirections.actionGlobalGroupFragment(it.group))
-                }
+        val adapter = GroupAdapter(
+            GroupAdapter.OnclickListener {
+                when (it) {
+                    is GroupPageItem.MyGroups -> {
+                        findNavController().navigate(
+                            NavigationDirections.actionGlobalGroupFragment(
+                                it.group
+                            )
+                        )
+                    }
 
-                is GroupPageItem.AddGroups -> {
-                    findNavController().navigate(NavigationDirections.actionGlobalAddGroupDialog())
+                    is GroupPageItem.AddGroups -> {
+                        findNavController().navigate(NavigationDirections.actionGlobalAddGroupDialog())
+                    }
                 }
+            },
+            GroupAdapter.OnclickListenerForQR {
+                findNavController().navigate(NavigationDirections.actionGlobalQRCodeDialog(it))
             }
-        })
+        )
 
-        viewModel.loading.observe(viewLifecycleOwner){
-            if (it == false){
+        viewModel.loading.observe(viewLifecycleOwner) {
+            if (it == false) {
                 binding.lavLoadingMygroup.visibility = View.GONE
             }
         }

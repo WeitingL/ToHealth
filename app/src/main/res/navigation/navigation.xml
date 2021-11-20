@@ -256,4 +256,14 @@
     <action
         android:id="@+id/action_global_notificationFragment"
         app:destination="@id/notificationFragment" />
+    <dialog
+        android:id="@+id/QRCodeDialog"
+        android:name="com.weiting.tohealth.mygrouppage.dialogs.QRCodeDialog"
+        android:label="dialog_qrcode"
+        tools:layout="@layout/dialog_qrcode" >
+        <argument
+            android:name="groupId"
+            app:argType="string" />
+    </dialog>
+    <action android:id="@+id/action_global_QRCodeDialog" app:destination="@id/QRCodeDialog" />
 </navigation>
