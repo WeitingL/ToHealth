@@ -77,7 +77,7 @@ class QRCodeScanDialog : DialogFragment() {
 
             override fun receiveDetections(p0: Detector.Detections<Barcode>) {
                 val qrCodes = p0.detectedItems
-                Log.i("code", qrCodes.toString())
+//                Log.i("code", qrCodes.toString())
                 if (qrCodes.size()!= 0){
                     viewModel.getGroupId(qrCodes.valueAt(0).displayValue)
                 }
@@ -85,11 +85,11 @@ class QRCodeScanDialog : DialogFragment() {
 
         })
 
-        viewModel.groupIdFromQRCode.observe(viewLifecycleOwner){
+        viewModel.groupIdFromQRCode.observe(this){
             if (!it.isNullOrEmpty()){
                 cameraSource.stop()
                 findNavController().navigate(NavigationDirections.actionGlobalJoinGroupDialog(it))
-                onDestroy()
+                dismiss()
             }
         }
         return binding.root
