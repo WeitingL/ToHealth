@@ -46,6 +46,7 @@ class CreateGroupDialog : DialogFragment() {
                 }
             }
         }
+
         return binding.root
     }
 

@@ -24,7 +24,7 @@ class AddGroupDialog: DialogFragment() {
             }
 
             btAddGroup.setOnClickListener {
-                findNavController().navigate(NavigationDirections.actionGlobalJoinGroupDialog())
+                findNavController().navigate(NavigationDirections.actionGlobalJoinGroupDialog(null))
             }
         }
 

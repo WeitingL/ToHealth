@@ -8,7 +8,9 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.findNavController
 import com.google.firestore.v1.TargetOrBuilder
+import com.weiting.tohealth.NavigationDirections
 import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.data.Member
 import com.weiting.tohealth.data.UserManager
@@ -27,7 +29,16 @@ class JoinGroupDialog : DialogFragment() {
             PublicApplication.application.firebaseDataRepository,
             HowToAddGroup.JOIN
         )
+        val groupId = JoinGroupDialogArgs.fromBundle(requireArguments()).groupId
         val viewModel = ViewModelProvider(this, factory).get(AddGroupViewModel::class.java)
+
+        if (groupId != null){
+            binding.tilGroupName.editText?.setText(groupId)
+        }
+
+        binding.imScanQR.setOnClickListener {
+            findNavController().navigate(NavigationDirections.actionGlobalQRCodeScanDialog())
+        }
 
         binding.btEnterCode.setOnClickListener {
             viewModel.checkIsGroupIdExist(binding.tilGroupName.editText?.text.toString())
