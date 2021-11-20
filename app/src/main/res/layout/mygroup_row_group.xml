@@ -55,7 +55,7 @@
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/rv_group_noteList"
             android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_height="210dp"
             android:layout_marginTop="8dp"
             app:layout_constraintBottom_toTopOf="@+id/tabLayoutForDots"
             app:layout_constraintEnd_toEndOf="@+id/rv_group_memberList"
@@ -86,16 +86,16 @@
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayoutForDots"
-            android:layout_width="100dp"
+            android:layout_width="0dp"
             android:layout_height="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/rv_group_noteList"
+            app:layout_constraintStart_toStartOf="@+id/rv_group_noteList"
             app:tabBackground="@drawable/tab_dots_selector"
             app:tabGravity="start"
             app:tabIndicatorHeight="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:tabSelectedTextColor="@android:color/transparent"
-            app:tabTextColor="@android:color/transparent" >
+            app:tabTextColor="@android:color/transparent">
 
         </com.google.android.material.tabs.TabLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -38,6 +38,7 @@
             app:itemIconTint="@color/bottom_icon_selector"
             app:itemRippleColor="@color/brown_black"
             app:itemTextColor="@color/bottom_icon_selector"
+            app:itemTextAppearanceActive="@style/subTitle_text_bl"
             app:labelVisibilityMode="labeled"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
