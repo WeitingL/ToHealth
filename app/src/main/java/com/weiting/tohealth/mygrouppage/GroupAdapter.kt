@@ -17,7 +17,7 @@ import java.lang.ClassCastException
 const val GROUP_VIEWTYPE_GROUP = 0
 const val GROUP_VIEWTYPE_ADDGROUP = 1
 
-class GroupAdapter(val onClickListener: OnclickListener) :
+class GroupAdapter(val onClickListener: OnclickListener, val onclickListenerForQR: OnclickListenerForQR) :
     ListAdapter<GroupPageItem, RecyclerView.ViewHolder>(DiffCallback) {
 
     object DiffCallback : DiffUtil.ItemCallback<GroupPageItem>() {
@@ -57,6 +57,9 @@ class GroupAdapter(val onClickListener: OnclickListener) :
                 rvGroupNoteList.adapter = noteAdapter
                 tvEnterGroup.setOnClickListener {
                     onClickListener.onClick(myGroup)
+                }
+                imGenerateQR.setOnClickListener {
+                    onclickListenerForQR.onClickForQR(myGroup.group.id!!)
                 }
 
                 TabLayoutMediator(tabLayoutForDots, rvGroupNoteList){ tab, position ->
@@ -115,6 +118,10 @@ class GroupAdapter(val onClickListener: OnclickListener) :
 
     class OnclickListener(val clickListener: (groupPageItem: GroupPageItem) -> Unit) {
         fun onClick(groupPageItem: GroupPageItem) = clickListener(groupPageItem)
+    }
+
+    class OnclickListenerForQR(val clickListener: (groupId: String) -> Unit) {
+        fun onClickForQR(groupId: String) = clickListener(groupId)
     }
 
     data class BoardMessage(
