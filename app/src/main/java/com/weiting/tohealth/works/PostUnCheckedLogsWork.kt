@@ -105,10 +105,10 @@ class PostUnCheckedLogsWork() {
         val timeTags = mutableListOf<Int>()
         val c = Calendar.getInstance()
         c.time = Timestamp.now().toDate()
-        c.set(Calendar.DATE, -1)
+        c.add(Calendar.DATE, -1)
         c.set(Calendar.HOUR_OF_DAY, 23)
         c.set(Calendar.MINUTE, 59)
-        c.set(Calendar.MINUTE, 0)
+        c.set(Calendar.SECOND, 59)
         val time = Timestamp(c.time)
 
         itemList.forEach { itemData ->
