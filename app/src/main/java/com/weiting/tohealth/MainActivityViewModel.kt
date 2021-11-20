@@ -1,5 +1,6 @@
 package com.weiting.tohealth
 
+import android.text.BoringLayout
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,6 +18,10 @@ class MainActivityViewModel(private val firebaseDataRepository: FirebaseReposito
     val memberIdList: LiveData<MutableList<String>>
         get() = _memberIdList
 
+    private val _isLogin = MutableLiveData<Boolean>()
+    val isLogin: LiveData<Boolean>
+        get() = _isLogin
+
     private val _navigationDestination = MutableLiveData<NavigationDestination>()
     val navigationDestination: LiveData<NavigationDestination>
         get() = _navigationDestination
@@ -28,6 +33,9 @@ class MainActivityViewModel(private val firebaseDataRepository: FirebaseReposito
     init {
         if (Firebase.auth.currentUser?.uid != null) {
             getMemberIdList()
+            _isLogin.value = true
+        }else{
+            _isLogin.value = false
         }
     }
 
@@ -54,7 +62,7 @@ class MainActivityViewModel(private val firebaseDataRepository: FirebaseReposito
         }
     }
 
-    fun getNavigationDestination(navigationDestination: NavigationDestination){
+    fun getNavigationDestination(navigationDestination: NavigationDestination) {
         _navigationDestination.value = navigationDestination
     }
 
