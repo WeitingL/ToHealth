@@ -972,6 +972,33 @@ object FirebaseDataSource : FirebaseSource {
 
     }
 
+    override fun getLiveNotification(
+        userIdList: List<String>
+    ): MutableLiveData<List<Notification>> {
+        val notificationList = MutableLiveData<List<Notification>>()
+
+        application.database.collection("notifications")
+            .whereIn("userId", userIdList)
+            .orderBy("createdTime", Query.Direction.DESCENDING)
+            .addSnapshotListener { value, error ->
+
+                if (error != null) {
+                    Log.e("Listen failed.", error.toString())
+                    return@addSnapshotListener
+                }
+                val list = mutableListOf<Notification>()
+
+                for (document in value!!) {
+                    val data = document.toObject(Notification::class.java)
+
+                    list.add(data)
+                }
+                notificationList.value = list
+            }
+
+        return notificationList
+    }
+
     override fun postOnGetNotificationForService(notification: Notification) {
 
         notification.alreadySend.add(Firebase.auth.currentUser?.uid!!)

@@ -30,7 +30,7 @@ class MyManageFragment : Fragment(R.layout.fragment_mymanage) {
                 id = UserManager.UserInformation.id,
                 groupList = UserManager.UserInformation.groupList
             )
-        )
+        , 0)
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             when (position) {

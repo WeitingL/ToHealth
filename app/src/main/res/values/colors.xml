@@ -11,7 +11,7 @@
 
 <!-- black   -->
     <color name="black">#FF000000</color>
-    <color name="gray_bark">#7A7979</color>
+    <color name="gray_bark">#959494</color>
 
 <!--  white  -->
     <color name="white">#FFFFFFFF</color>
@@ -24,7 +24,7 @@
     <color name="green">#337C36</color>
 
 <!-- yellow  -->
-    <color name="yellow">#FFEB3B</color>
+    <color name="yellow">#FFC107</color>
     <color name="sticky_yellow">#FFF8B7</color>
 
 <!--  reb  -->
@@ -43,6 +43,7 @@
     <color name="baby_pink">#FFCBCB</color>
     <color name="uranian_blue">#C8E6FF</color>
     <color name="areo_blue">#C4F4D8</color>
+    <color name="pink_yellow">#FDEB91</color>
     <color name="silver">#B2B2B2</color>
     <color name="jeans_blue">#50AEFF</color>
 
@@ -53,6 +54,5 @@
 
 <!-- title color -->
     <color name="light_main_color">#0d1db0</color>
-
 
 </resources>

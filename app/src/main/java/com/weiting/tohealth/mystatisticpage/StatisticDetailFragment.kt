@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.weiting.tohealth.PublicApplication
+import com.weiting.tohealth.R
 import com.weiting.tohealth.data.User
 import com.weiting.tohealth.databinding.MystatisticItemFagmentBinding
 import com.weiting.tohealth.factory.StatisticDetailViewModelFactory
@@ -34,10 +35,14 @@ class StatisticDetailFragment() : Fragment() {
         val adapter = StatisticDetailAdapter()
 
         viewModel.logList.observe(viewLifecycleOwner) {
-            if (it.size > 1){
+            if (it.isNotEmpty()){
                 adapter.submitList(it)
                 binding.lavEmptyList.visibility = View.GONE
                 binding.tvEmptyList.visibility = View.GONE
+            }else{
+                binding.lavEmptyList.visibility = View.VISIBLE
+                binding.lavEmptyList.setAnimation(R.raw.filling_list)
+                binding.tvEmptyList.visibility = View.VISIBLE
             }
         }
 

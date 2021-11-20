@@ -23,7 +23,7 @@ class GroupMemberStatisticFragment : Fragment() {
         val memberInfo = GroupMemberStatisticFragmentArgs.fromBundle(requireArguments()).memberInfo
         val viewPager = binding.vpMemberStatistic
         val tabLayout = binding.tabLayout
-        binding.tvMemberNickNameStatistic.text = memberInfo.nickName
+        binding.tvMemberNickNameStatistic.text = "聊天室暱稱: ${memberInfo.nickName}"
         binding.tvMemberNameStatistic.text = memberInfo.name
         transferCircleImage(binding.imageView5, memberInfo.profilePhoto)
 

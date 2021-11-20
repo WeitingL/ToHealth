@@ -14,7 +14,7 @@ import com.weiting.tohealth.data.Group
 import com.weiting.tohealth.databinding.BroadFragmentBinding
 import com.weiting.tohealth.factory.BoardViewModelFactory
 
-class BoardFragment (): Fragment() {
+class BoardFragment() : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -23,17 +23,22 @@ class BoardFragment (): Fragment() {
     ): View? {
         val binding = BroadFragmentBinding.inflate(inflater, container, false)
         val group: Group = arguments?.get("group") as Group
-        val factory = BoardViewModelFactory(PublicApplication.application.firebaseDataRepository, group)
+        val factory =
+            BoardViewModelFactory(PublicApplication.application.firebaseDataRepository, group)
         val viewModel = ViewModelProvider(this, factory).get(BoardViewModel::class.java)
         val adapter = BoardAdapter(viewModel)
 
-        viewModel.boardLiveData.observe(viewLifecycleOwner){
-            Log.i("list", it.toString())
+        viewModel.boardLiveData.observe(viewLifecycleOwner) {
+//            Log.i("list", it.toString())
             adapter.submitList(it)
         }
 
         binding.fbAddNewMessage.setOnClickListener {
-            findNavController().navigate(NavigationDirections.actionGlobalEditNoteAndCalenderItemFragment(group))
+            findNavController().navigate(
+                NavigationDirections.actionGlobalEditNoteAndCalenderItemFragment(
+                    group
+                )
+            )
         }
 
         binding.rvBoard.adapter = adapter

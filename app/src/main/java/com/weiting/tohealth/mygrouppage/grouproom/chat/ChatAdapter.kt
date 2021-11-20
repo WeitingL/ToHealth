@@ -10,6 +10,7 @@ import com.weiting.tohealth.data.Member
 import com.weiting.tohealth.databinding.ChatroomRowMessageOthersBinding
 import com.weiting.tohealth.databinding.ChatroomRowMessageSelfBinding
 import com.weiting.tohealth.toStringFromTimeStamp
+import com.weiting.tohealth.toTimeFromTimeStamp
 import com.weiting.tohealth.transferCircleImage
 import java.lang.ClassCastException
 
@@ -32,7 +33,7 @@ class ChatAdapter() : ListAdapter<WhoseMessage, RecyclerView.ViewHolder>(DiffCal
         fun bind(chat: Chat, member: Member) {
             binding.apply {
                 tvSelfName.text = member.nickName
-                tvSelfCreatedTime.text = toStringFromTimeStamp(chat.createdTime)
+                tvSelfCreatedTime.text = toTimeFromTimeStamp(chat.createdTime)
                 tvSelfMessage.text = chat.context
             }
         }
@@ -43,7 +44,7 @@ class ChatAdapter() : ListAdapter<WhoseMessage, RecyclerView.ViewHolder>(DiffCal
         fun bind(chat: Chat, member: Member) {
             binding.apply {
                 tvOthersName.text = member.nickName
-                tvOthersCreatedTime.text = toStringFromTimeStamp(chat.createdTime)
+                tvOthersCreatedTime.text = toTimeFromTimeStamp(chat.createdTime)
                 tvOthersMessage.text = chat.context
                 transferCircleImage(imOthers, member.profilePhoto)
             }

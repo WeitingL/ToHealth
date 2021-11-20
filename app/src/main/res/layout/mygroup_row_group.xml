@@ -7,13 +7,12 @@
     android:layout_margin="10dp"
     android:paddingHorizontal="16dp"
     app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="15dp"
-    app:cardElevation="20dp">
+    app:cardElevation="20dp"
+    app:cardCornerRadius="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
 
         <TextView
             android:id="@+id/tv_groupName"
@@ -53,18 +52,15 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_groupCode"
             tools:listitem="@layout/mygroup_row_member" />
 
-        <androidx.recyclerview.widget.RecyclerView
+        <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/rv_group_noteList"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="210dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/tabLayoutForDots"
             app:layout_constraintEnd_toEndOf="@+id/rv_group_memberList"
             app:layout_constraintStart_toStartOf="@+id/rv_group_memberList"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
-            tools:listitem="@layout/mygroup_row_note" />
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <TextView
             android:id="@+id/tv_groupCode"
@@ -84,9 +80,24 @@
             android:paddingStart="8dp"
             android:text="群組訊息"
             android:textAppearance="@style/subTitle_text"
-            app:layout_constraintEnd_toEndOf="@+id/rv_group_memberList"
-            app:layout_constraintStart_toStartOf="@+id/rv_group_memberList"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rv_group_memberList" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayoutForDots"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/rv_group_noteList"
+            app:layout_constraintStart_toStartOf="@+id/rv_group_noteList"
+            app:tabBackground="@drawable/tab_dots_selector"
+            app:tabGravity="start"
+            app:tabIndicatorHeight="0dp"
+            app:tabSelectedTextColor="@android:color/transparent"
+            app:tabTextColor="@android:color/transparent">
+
+        </com.google.android.material.tabs.TabLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

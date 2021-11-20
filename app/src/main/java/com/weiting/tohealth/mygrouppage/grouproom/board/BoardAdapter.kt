@@ -14,7 +14,8 @@ import java.lang.ClassCastException
 const val BOARD_VIEWTYPE_NOTE = 0
 const val BOARD_VIEWTYPE_CALENDER = 1
 
-class BoardAdapter(val viewModel: BoardViewModel) : ListAdapter<BoardType, RecyclerView.ViewHolder>(DiffCallBack) {
+class BoardAdapter(val viewModel: BoardViewModel) :
+    ListAdapter<BoardType, RecyclerView.ViewHolder>(DiffCallBack) {
 
     object DiffCallBack : DiffUtil.ItemCallback<BoardType>() {
         override fun areItemsTheSame(oldItem: BoardType, newItem: BoardType): Boolean =
@@ -27,24 +28,25 @@ class BoardAdapter(val viewModel: BoardViewModel) : ListAdapter<BoardType, Recyc
 
     inner class NotesViewHolder(private val binding: BoardRowNoteBinding) :
         RecyclerView.ViewHolder(binding.root) {
-            fun bind(list: List<Note>){
-                val adapter = BoardNotesAdapter(BoardNotesAdapter.DeleteOnclickListener{
-                    viewModel.deleteNote(it)
-                })
-                adapter.submitList(list)
-                binding.rvNotes.adapter = adapter
-            }
+        fun bind(list: List<Note>) {
+            val adapter = BoardNotesAdapter(BoardNotesAdapter.DeleteOnclickListener {
+                viewModel.deleteNote(it)
+            })
+            adapter.submitList(list)
+            binding.rvNotes.adapter = adapter
+        }
     }
 
     inner class CalenderViewHolder(private val binding: BoardRowCalenderitemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-            fun bind(list: List<CalenderItem>){
-                val adapter = BoardCalenderItemsAdapter(BoardCalenderItemsAdapter.DeleteOnclickListener{
+        fun bind(list: List<CalenderItem>) {
+            val adapter =
+                BoardCalenderItemsAdapter(BoardCalenderItemsAdapter.DeleteOnclickListener {
                     viewModel.deleteReminder(it)
                 })
-                adapter.submitList(list)
-                binding.rvCalenderItems.adapter = adapter
-            }
+            adapter.submitList(list)
+            binding.rvCalenderItems.adapter = adapter
+        }
 
     }
 
@@ -76,12 +78,12 @@ class BoardAdapter(val viewModel: BoardViewModel) : ListAdapter<BoardType, Recyc
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when(holder){
+        when (holder) {
             is NotesViewHolder -> {
                 holder.bind((getItem(position) as BoardType.Notes).list)
             }
 
-            is CalenderViewHolder ->{
+            is CalenderViewHolder -> {
                 holder.bind((getItem(position) as BoardType.CalenderItems).list)
             }
         }

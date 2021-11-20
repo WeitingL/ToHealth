@@ -188,7 +188,6 @@ class ItemUpdateFragment : Fragment() {
             }
         }
 
-
         binding.gbStatusChoose.setOnCheckedChangeListener { radioGroup, i ->
             when (i) {
                 R.id.status_going -> {
@@ -203,7 +202,6 @@ class ItemUpdateFragment : Fragment() {
             }
         }
 
-
         binding.spPeriodUpdate.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
@@ -213,9 +211,9 @@ class ItemUpdateFragment : Fragment() {
                 override fun onNothingSelected(p0: AdapterView<*>?) {}
             }
 
-
         binding.btUpdateItem.setOnClickListener {
             viewModel.updateItem(binding)
+            viewModel.startSetAlarmForTodoList()
             Toast.makeText(context, "已成功更新!", Toast.LENGTH_LONG).show()
             findNavController().popBackStack()
         }
@@ -225,7 +223,6 @@ class ItemUpdateFragment : Fragment() {
             val timeSetAdapter = TimeSetAdapter(TimeSetAdapter.OnclickListener {
                 viewModel.removeTimeSet(it)
             })
-            it.sort()
             timeSetAdapter.submitList(it)
             binding.rvTimeChoseUpdate.adapter = timeSetAdapter
         }
@@ -329,25 +326,33 @@ class ItemUpdateFragment : Fragment() {
                 itemData.DrugData?.executedTime?.forEach {
                     viewModel.getTimeSet(it.toDate().time)
                 }
-                adapter.submitList(itemData.DrugData?.executedTime)
+                adapter.submitList(itemData.DrugData?.executedTime?.sortedBy {
+                    getTimeStampToTimeInt(it)
+                })
             }
             ManageType.CARE -> {
                 itemData.CareData?.executeTime?.forEach {
                     viewModel.getTimeSet(it.toDate().time)
                 }
-                adapter.submitList(itemData.CareData?.executeTime)
+                adapter.submitList(itemData.CareData?.executeTime?.sortedBy {
+                    getTimeStampToTimeInt(it)
+                })
             }
             ManageType.ACTIVITY -> {
                 itemData.ActivityData?.executedTime?.forEach {
                     viewModel.getTimeSet(it.toDate().time)
                 }
-                adapter.submitList(itemData.ActivityData?.executedTime)
+                adapter.submitList(itemData.ActivityData?.executedTime?.sortedBy {
+                    getTimeStampToTimeInt(it)
+                })
             }
             ManageType.MEASURE -> {
                 itemData.MeasureData?.executedTime?.forEach {
                     viewModel.getTimeSet(it.toDate().time)
                 }
-                adapter.submitList(itemData.MeasureData?.executedTime)
+                adapter.submitList(itemData.MeasureData?.executedTime?.sortedBy {
+                    getTimeStampToTimeInt(it)
+                })
             }
         }
         binding.rvOriginalTimeSet.adapter = adapter

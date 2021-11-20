@@ -4,11 +4,14 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.Timestamp
 import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.data.*
 import com.weiting.tohealth.databinding.ItemEditFragmentBinding
 import com.weiting.tohealth.toDateFromMilliTime
+import com.weiting.tohealth.works.RebuildAlarm
+import kotlinx.coroutines.launch
 import java.util.*
 
 class ItemEditViewModel(
@@ -177,6 +180,12 @@ class ItemEditViewModel(
             }
             else -> {
             }
+        }
+    }
+
+    fun startSetAlarmForTodoList() {
+        viewModelScope.launch {
+            RebuildAlarm().updateNewTodoListToAlarmManager(firebaseDataRepository)
         }
     }
 

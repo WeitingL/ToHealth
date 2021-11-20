@@ -17,6 +17,11 @@ class MainActivityViewModel(private val firebaseDataRepository: FirebaseReposito
     val memberIdList: LiveData<MutableList<String>>
         get() = _memberIdList
 
+    private val _navigationDestination = MutableLiveData<NavigationDestination>()
+    val navigationDestination: LiveData<NavigationDestination>
+        get() = _navigationDestination
+
+
     private val memberList = mutableListOf<String>()
     val groupList = mutableListOf<String>()
 
@@ -47,6 +52,30 @@ class MainActivityViewModel(private val firebaseDataRepository: FirebaseReposito
             }
             _memberIdList.value = memberList
         }
-
     }
+
+    fun getNavigationDestination(navigationDestination: NavigationDestination){
+        _navigationDestination.value = navigationDestination
+    }
+
+}
+
+enum class NavigationDestination(val title: String) {
+    HomeFragment("toHealth"),
+    MyGroupFragment("我的群組"),
+    MyManageFragment("管理項目"),
+    MyStatisticFragment("統計數據"),
+    ItemEditFragment("新增項目"),
+    GroupFragment("群組大廳"),
+    EditNoteAndReminderFragment("編輯留言板"),
+    MeasureRecordFragment("測量記錄"),
+    CareRecordFragment("心情紀錄"),
+    FastAddFragment("添加完成項目"),
+    GroupMemberMenageFragment("管理群組成員項目"),
+    GroupMemberStatisticFragment("查看群組成員統計數據"),
+    ItemUpdateFragment("項目更新"),
+    NotificationFragment("警告消息"),
+    LoginFragment("登錄頁面"),
+    OtherFragment("toHealth")
+
 }

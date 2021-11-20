@@ -34,7 +34,6 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
 
         override fun areContentsTheSame(oldItem: LogItem, newItem: LogItem): Boolean =
             oldItem == newItem
-
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -61,7 +60,7 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: LogItem.MeasureLogItem) {
             binding.tvItemName.text = toMeasureType(item.type)
-            Log.i("holder", item.toString())
+//            Log.i("holder", item.toString())
             binding.acMainChart.setProgressBar(binding.progressBar3)
 
             //Get the dataList
@@ -85,6 +84,7 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
                 val data = set.mapAs("{x: 'x', high : 'n', low: 'm'}")
 
                 cartesian.rangeColumn(data)
+                    .color("#634444")
                 cartesian.xAxis(true)
                     .yAxis(true)
                     .yGrid(true)
@@ -108,6 +108,7 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
                 set.data(list)
                 val data = set.mapAs("{x: 'x', n : 'n'}")
                 barChart.column(data)
+                    .color("#634444")
 
                 barChart.animation(true)
 
@@ -140,6 +141,7 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
             }
 
             val column = cartesian.column(data)
+                .color("#634444")
             column.tooltip()
                 .titleFormat("{%X}")
                 .position(Position.CENTER_BOTTOM)
@@ -181,7 +183,7 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
     inner class ExportLogDataViewHolder(private val binding: CardviewBottombuttonRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind() {
-            binding.tvBottomButton.text = "資料輸出"
+            binding.tvBottomButton.text = "資料輸出(Coming Soon)"
         }
     }
 

@@ -313,26 +313,25 @@ fun transferCircleImage(imgView: ImageView, imgUri: String?) {
 fun toNotificationTextForMeasureLog(measure: Measure, measureLog: MeasureLog): String {
     return when (measure.type) {
         0 -> {
-            "血壓異常! \n收縮壓: ${measureLog.record["X"]} mmHg 舒張壓: ${measureLog.record["Y"]} mmHg \n心搏: ${measureLog.record["Z"]} bpm"
+            "血壓異常! \n收縮壓: ${measureLog.record["X"]} mmHg \n舒張壓: ${measureLog.record["Y"]} mmHg \n心搏: ${measureLog.record["Z"]} bpm"
         }
 
         1 -> {
-            "飯前血糖異常! 測量值為 ${measureLog.record["X"]} mg/dl"
+            "飯前血糖異常! \n測量值為 ${measureLog.record["X"]} mg/dl"
         }
 
         2 -> {
-            "飯後血糖異常! 測量值為 ${measureLog.record["X"]} mg/dl"
+            "飯後血糖異常! \n測量值為 ${measureLog.record["X"]} mg/dl"
         }
 
         3 -> {
-            "血氧異常! 測量值為 ${measureLog.record["X"]} %"
+            "血氧異常! \n測量值為 ${measureLog.record["X"]} %"
         }
 
         5 -> {
-            "體溫異常! 測量值為 ${measureLog.record["X"]} °C"
+            "體溫異常! \n測量值為 ${measureLog.record["X"]} °C"
         }
 
         else -> "未知測量項目異常"
     }
-
 }

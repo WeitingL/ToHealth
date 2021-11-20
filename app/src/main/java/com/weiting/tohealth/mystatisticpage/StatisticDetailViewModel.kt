@@ -18,6 +18,10 @@ class StatisticDetailViewModel(
     private val statisticType: StatisticType
 ) : ViewModel() {
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading : LiveData<Boolean>
+    get() = _isLoading
+
     private val _logList = MutableLiveData<List<LogItem>>()
     val logList: LiveData<List<LogItem>>
         get() = _logList
@@ -31,6 +35,11 @@ class StatisticDetailViewModel(
             StatisticType.ACTIVITY -> getActivityLogs()
             StatisticType.MEASURE -> getMeasureLogs()
         }
+        _isLoading.value = true
+    }
+
+    fun loadingFinished(){
+        _isLoading.value = false
     }
 
     private fun getMeasureLogs() {
@@ -42,8 +51,9 @@ class StatisticDetailViewModel(
                     logItemList.add(AnalyzeMeasureLog().revertToResultInDateList(it))
                 }
             }
-            logItemList.add(LogItem.Bottom)
+//            logItemList.add(LogItem.Bottom)
             _logList.value = logItemList
+            loadingFinished()
         }
     }
 
@@ -56,8 +66,9 @@ class StatisticDetailViewModel(
                     logItemList.add(AnalyzeCareLog().revertToResultInDateList(it))
                 }
             }
-            logItemList.add(LogItem.Bottom)
+//            logItemList.add(LogItem.Bottom)
             _logList.value = logItemList
+            loadingFinished()
         }
     }
 
@@ -71,8 +82,9 @@ class StatisticDetailViewModel(
                     logItemList.add(AnalyzeActivityLog().revertToResultInDateList(it))
                 }
             }
-            logItemList.add(LogItem.Bottom)
+//            logItemList.add(LogItem.Bottom)
             _logList.value = logItemList
+            loadingFinished()
         }
     }
 
@@ -85,8 +97,9 @@ class StatisticDetailViewModel(
                     logItemList.add(AnalyzeDrugLog().revertToResultInDateList(it))
                 }
             }
-            logItemList.add(LogItem.Bottom)
+//            logItemList.add(LogItem.Bottom)
             _logList.value = logItemList
+            loadingFinished()
         }
     }
 }

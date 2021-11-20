@@ -1,225 +1,293 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
-    android:background="@drawable/card_block">
+    android:layout_margin="10dp"
+    android:paddingHorizontal="16dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="15dp"
+    app:cardElevation="20dp">
 
-    <ImageView
-        android:id="@+id/im_itemIcon"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/icon_bg"
-        android:padding="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_itemName_manage"
-        app:srcCompat="@drawable/pills" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tv_itemName_manage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="項目名稱"
-        android:textAppearance="@style/title_text_bl"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/im_itemIcon"
+            android:layout_width="74dp"
+            android:layout_height="74dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/icon_bg"
+            android:padding="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/pills" />
 
-    <TextView
-        android:id="@+id/tv_dose"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="5"
-        android:textAppearance="@style/content_text_bl"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_perTimeTitle"
-        app:layout_constraintStart_toEndOf="@+id/tv_perTimeTitle"
-        app:layout_constraintTop_toTopOf="@+id/tv_perTimeTitle"
-        app:layout_constraintVertical_bias="0.0" />
+        <TextView
+            android:id="@+id/tv_itemName_manage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="項目名稱"
+            android:textAppearance="@style/title_text_bl"
+            app:layout_constraintStart_toEndOf="@+id/im_itemIcon"
+            app:layout_constraintTop_toTopOf="@+id/im_itemIcon" />
 
-    <TextView
-        android:id="@+id/tv_period"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="每日3次"
-        android:textAppearance="@style/content_text_bl"
-        app:layout_constraintEnd_toEndOf="@+id/tv_uptakeValue"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/tv_uptakeValue"
-        app:layout_constraintTop_toBottomOf="@+id/tv_uptakeValue" />
+        <TextView
+            android:id="@+id/tv_dose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="5"
+            android:textAppearance="@style/content_text_bl"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_perTimeTitle"
+            app:layout_constraintStart_toEndOf="@+id/tv_perTimeTitle"
+            app:layout_constraintTop_toTopOf="@+id/tv_perTimeTitle" />
 
-    <TextView
-        android:id="@+id/tv_timeTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="設定時間"
-        android:textAppearance="@style/subTitle_text_bl"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/im_itemIcon" />
+        <TextView
+            android:id="@+id/tv_period"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="每日3次"
+            android:textAppearance="@style/content_text_bl"
+            app:layout_constraintStart_toStartOf="@+id/tv_itemName_manage"
+            app:layout_constraintTop_toBottomOf="@+id/tv_itemName_manage" />
 
-    <TextView
-        android:id="@+id/tv_tag_manage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:background="@drawable/tag_bg_gray"
-        android:paddingHorizontal="10dp"
-        android:text="執行中"
-        android:textAppearance="@style/content_text_bl"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_itemName_manage"
-        app:layout_constraintStart_toEndOf="@+id/tv_itemName_manage"
-        app:layout_constraintTop_toTopOf="@+id/tv_itemName_manage"
-        app:layout_constraintVertical_bias="1.0" />
+        <TextView
+            android:id="@+id/tv_tag_manage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/tag_bg_gray"
+            android:paddingHorizontal="10dp"
+            android:text="執行中"
+            android:textAppearance="@style/content_text_bl"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_itemName_manage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_itemName_manage" />
 
-    <TextView
-        android:id="@+id/tv_unit_manage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="單位"
-        android:textAppearance="@style/content_text_bl"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_dose"
-        app:layout_constraintStart_toEndOf="@+id/tv_dose"
-        app:layout_constraintTop_toTopOf="@+id/tv_dose" />
+        <TextView
+            android:id="@+id/tv_unit_manage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="單位"
+            android:textAppearance="@style/content_text_bl"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_dose"
+            app:layout_constraintStart_toEndOf="@+id/tv_dose"
+            app:layout_constraintTop_toTopOf="@+id/tv_dose" />
 
-    <TextView
-        android:id="@+id/tv_editorTitle_manage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="編輯者"
-        android:textAppearance="@style/subTitle_text_bl"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rv_timeList" />
 
-    <TextView
-        android:id="@+id/tv_UpdateTime_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="上次編輯時間"
-        android:textAppearance="@style/subTitle_text_bl"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_updateTime"
-        app:layout_constraintEnd_toStartOf="@+id/tv_updateTime"
-        app:layout_constraintTop_toTopOf="@+id/tv_updateTime" />
+        <TextView
+            android:id="@+id/tv_perTimeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="每次"
+            android:textAppearance="@style/content_text_bl"
+            app:layout_constraintStart_toStartOf="@+id/tv_period"
+            app:layout_constraintTop_toBottomOf="@+id/tv_period" />
 
-    <TextView
-        android:id="@+id/tv_uptakeValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="執行方式"
-        android:textAppearance="@style/subTitle_text_bl"
-        app:layout_constraintBottom_toBottomOf="@+id/im_itemIcon"
-        app:layout_constraintStart_toEndOf="@+id/im_itemIcon"
-        app:layout_constraintTop_toTopOf="@+id/im_itemIcon"
-        app:layout_constraintVertical_bias="0.0" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/im_itemIcon">
 
-    <TextView
-        android:id="@+id/tv_perTimeTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="每次"
-        android:textAppearance="@style/content_text_bl"
-        app:layout_constraintStart_toStartOf="@+id/tv_period"
-        app:layout_constraintTop_toBottomOf="@+id/tv_period" />
 
-    <TextView
-        android:id="@+id/tv_editor_manage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="某某人"
-        android:textAppearance="@style/content_text_bl"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_editorTitle_manage"
-        app:layout_constraintStart_toEndOf="@+id/tv_editorTitle_manage"
-        app:layout_constraintTop_toTopOf="@+id/tv_editorTitle_manage" />
+            <TextView
+                android:id="@+id/tv_updateTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="8dp"
+                android:text="2021.01.01 11:11"
+                android:textAppearance="@style/content_text_bl"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_editor_manage" />
 
-    <TextView
-        android:id="@+id/tv_updateTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="2021.01.01 11:11"
-        android:textAppearance="@style/content_text_bl"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_editorTitle_manage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_editorTitle_manage"
-        app:layout_constraintVertical_bias="0.00999999" />
+            <TextView
+                android:id="@+id/tv_editor_manage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="某某人"
+                android:textAppearance="@style/content_text_bl"
+                app:layout_constraintStart_toStartOf="@+id/tv_editorTitle_manage"
+                app:layout_constraintTop_toBottomOf="@+id/tv_editorTitle_manage" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_timeList"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_timeTitle"
-        app:spanCount="5"
-        tools:listitem="@layout/row_manage_time" />
+            <TextView
+                android:id="@+id/tv_editorTitle_manage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="上次編輯資訊"
+                android:textAppearance="@style/subTitle_text_bl"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_CreatedTime" />
 
-    <TextView
-        android:id="@+id/tv_ratioTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="剩餘用量"
-        android:textAppearance="@style/subTitle_text_bl"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_itemName_manage"
-        app:layout_constraintEnd_toStartOf="@+id/tv_ratioNum"
-        app:layout_constraintTop_toTopOf="@+id/tv_itemName_manage"
-        app:layout_constraintVertical_bias="1.0" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_timeList"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_timeTitle"
+                app:spanCount="5"
+                tools:listitem="@layout/row_manage_time" />
 
-    <TextView
-        android:id="@+id/tv_ratioNum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/circle_for_manage"
-        android:gravity="center"
-        android:text="82顆"
-        android:textAppearance="@style/subTitle_text_bl"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_ratioTitle" />
+            <TextView
+                android:id="@+id/tv_timeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="設定時間"
+                android:textAppearance="@style/subTitle_text_bl"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_createdTime_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="起始時間"
-        android:textAppearance="@style/subTitle_text_bl"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_timeTitle"
-        app:layout_constraintEnd_toStartOf="@+id/tv_CreatedTime"
-        app:layout_constraintTop_toTopOf="@+id/tv_timeTitle" />
+            <TextView
+                android:id="@+id/tv_createdTime_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="項目起始時間"
+                android:textAppearance="@style/subTitle_text_bl"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rv_timeList" />
 
-    <TextView
-        android:id="@+id/tv_CreatedTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="2021.01.01 11:11"
-        android:textAppearance="@style/content_text_bl"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_createdTime_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_createdTime_title"
-        app:layout_constraintVertical_bias="1.0" />
+            <TextView
+                android:id="@+id/tv_CreatedTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="4dp"
+                android:text="2021.01.01 11:11"
+                android:textAppearance="@style/content_text_bl"
+                app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/tv_createdTime_title"
+                app:layout_constraintTop_toBottomOf="@+id/tv_createdTime_title" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toBottomOf="@+id/rv_timeList">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/ly_stock"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:cardElevation="50dp">
+
+                    <TextView
+                        android:id="@+id/tv_ratioNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:autoSizePresetSizes="@array/autosize_text"
+                        android:autoSizeTextType="uniform"
+                        android:gravity="center"
+                        android:text="82顆"
+                        android:textAppearance="@style/subTitle_text_bl"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_ratioTitle"
+                        app:layout_constraintStart_toStartOf="@+id/tv_ratioTitle"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_ratioTitle" />
+
+                    <TextView
+                        android:id="@+id/tv_ratioTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="目前儲量"
+                        android:textAppearance="@style/content_text_bl"
+                        app:layout_constraintBottom_toBottomOf="@+id/pb_stock"
+                        app:layout_constraintEnd_toStartOf="@+id/pb_stock"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/pb_stock"
+                        app:layout_constraintVertical_bias="0.23000002" />
+
+                    <com.google.android.material.progressindicator.CircularProgressIndicator
+                        android:id="@+id/pb_stock"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="4dp"
+                        android:max="100"
+                        android:progress="20"
+                        app:indicatorColor="@color/areo_blue"
+                        app:trackColor="@color/gray"
+                        app:indicatorDirectionCircular="counterclockwise"
+                        app:indicatorSize="80dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:trackThickness="8dp" />
+
+                    <TextView
+                        android:id="@+id/tv_stockDayUnit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="可執行\n15次"
+                        android:textAppearance="@style/content_text_bl"
+                        app:layout_constraintBottom_toBottomOf="@+id/pb_stock"
+                        app:layout_constraintEnd_toEndOf="@+id/pb_stock"
+                        app:layout_constraintStart_toStartOf="@+id/pb_stock"
+                        app:layout_constraintTop_toTopOf="@+id/pb_stock" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintGuide_begin="131dp"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_edit"
+            android:layout_width="80sp"
+            android:layout_height="30sp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/button_main_color"
+            android:text="編輯"
+            android:textAppearance="@style/content_text_bl"
+            app:layout_constraintBottom_toBottomOf="@+id/im_itemIcon"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
+

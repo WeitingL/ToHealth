@@ -43,7 +43,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.viewModel = viewModel
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
 
         val adapter = TodayItemAdapter()
         val swipeSet = object : RecyclerViewSwipe() {
@@ -380,10 +380,14 @@ class HomeFragment : Fragment() {
 
         viewModel.totalTask.observe(viewLifecycleOwner){
             viewModel.taskCompleted()
+
+            binding.progressBar.max = it
         }
 
         viewModel.completedTask.observe(viewLifecycleOwner){
             viewModel.taskCompleted()
+
+            binding.progressBar.progress = it
         }
 
         viewModel.allCompleted.observe(viewLifecycleOwner) {
@@ -413,12 +417,6 @@ class HomeFragment : Fragment() {
         }
 
         return binding.root
-    }
-
-    override fun onStop() {
-        super.onStop()
-        viewModel.postSkipLog()
-        viewModel.postFinishDrugAndActivityLog()
     }
 }
 

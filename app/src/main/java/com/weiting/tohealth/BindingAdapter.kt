@@ -1,13 +1,24 @@
 package com.weiting.tohealth
 
+import android.app.Notification
+import android.util.Log
+import android.view.View
+import android.view.ViewTreeObserver
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.firebase.Timestamp
+import com.weiting.tohealth.NavigationDestination.*
 import com.weiting.tohealth.homepage.ItemDataType
 import com.weiting.tohealth.homepage.TodayItemAdapter
+import com.weiting.tohealth.notificationpage.NotificationRecord
+import com.weiting.tohealth.notificationpage.NotificationRecordAdapter
 
 @BindingAdapter("TimeStampForWelcomeSlogan")
 fun bindTimeStampForWelcomeSlogan(textView: TextView, timestamp: Timestamp) {
@@ -50,4 +61,102 @@ fun bindTimeStampForWelcomeLottie(lottieAnimationView: LottieAnimationView, time
             lottieAnimationView.setAnimation(R.raw.sleeping)
         }
     }
+}
+
+@BindingAdapter("bindNotificationRecyclerView")
+fun bindNotificationRecyclerView(recyclerView: RecyclerView, list: List<NotificationRecord>) {
+    val adapter = NotificationRecordAdapter()
+    adapter.submitList(list)
+    recyclerView.adapter = adapter
+}
+
+@BindingAdapter("bindNotificationType")
+fun bindNotificationType(imageView: ImageView, type: Int) {
+    imageView.setImageResource(
+        when (type) {
+            4 -> {
+                R.drawable.loupe
+            }
+            5 -> {
+                R.drawable.warning
+            }
+            6 -> {
+                R.drawable.medicine
+            }
+            else -> {
+                R.drawable.hospital_sign
+            }
+        }
+    )
+}
+
+@BindingAdapter("navigationDestination")
+fun bindNavigationDestination(textView: TextView, navigationDestination: NavigationDestination) {
+    textView.text = when (navigationDestination) {
+        GroupFragment -> GroupFragment.title
+        LoginFragment -> LoginFragment.title
+        HomeFragment -> HomeFragment.title
+        FastAddFragment -> FastAddFragment.title
+        MyGroupFragment -> MyGroupFragment.title
+        MyStatisticFragment -> MyStatisticFragment.title
+        MyManageFragment -> MyManageFragment.title
+        ItemEditFragment -> ItemEditFragment.title
+        ItemUpdateFragment -> ItemUpdateFragment.title
+        EditNoteAndReminderFragment -> EditNoteAndReminderFragment.title
+        MeasureRecordFragment -> MeasureRecordFragment.title
+        CareRecordFragment -> CareRecordFragment.title
+        GroupMemberStatisticFragment -> GroupMemberStatisticFragment.title
+        GroupMemberMenageFragment -> GroupMemberMenageFragment.title
+        NotificationFragment -> NotificationFragment.title
+        OtherFragment -> OtherFragment.title
+    }
+}
+
+@BindingAdapter("navigationDestinationWithToolBar")
+fun bindNavigationDestinationWithToolBar(toolbar: Toolbar, navigationDestination: NavigationDestination) {
+    toolbar.visibility = when (navigationDestination) {
+        GroupFragment -> View.VISIBLE
+        LoginFragment -> View.VISIBLE
+        HomeFragment -> View.VISIBLE
+        FastAddFragment -> View.VISIBLE
+        MyGroupFragment -> View.VISIBLE
+        MyStatisticFragment -> View.VISIBLE
+        MyManageFragment -> View.VISIBLE
+        ItemEditFragment -> View.VISIBLE
+        ItemUpdateFragment -> View.VISIBLE
+        EditNoteAndReminderFragment -> View.VISIBLE
+        MeasureRecordFragment -> View.VISIBLE
+        CareRecordFragment -> View.VISIBLE
+        GroupMemberStatisticFragment -> View.VISIBLE
+        GroupMemberMenageFragment -> View.VISIBLE
+        NotificationFragment -> View.VISIBLE
+        OtherFragment -> View.VISIBLE
+    }
+
+}
+
+@BindingAdapter("navigationDestination")
+fun bindNavigationDestination(
+    bottomNavigationView: BottomNavigationView,
+    navigationDestination: NavigationDestination
+) {
+    bottomNavigationView.visibility = when (navigationDestination) {
+        GroupFragment -> View.GONE
+        LoginFragment -> View.VISIBLE
+        HomeFragment -> View.VISIBLE
+        FastAddFragment -> View.GONE
+        MyGroupFragment -> View.VISIBLE
+        MyStatisticFragment -> View.VISIBLE
+        MyManageFragment -> View.VISIBLE
+        ItemEditFragment -> View.GONE
+        ItemUpdateFragment -> View.GONE
+        EditNoteAndReminderFragment -> View.GONE
+        MeasureRecordFragment -> View.GONE
+        CareRecordFragment -> View.GONE
+        GroupMemberStatisticFragment -> View.GONE
+        GroupMemberMenageFragment -> View.GONE
+        NotificationFragment -> View.GONE
+        OtherFragment -> View.VISIBLE
+    }
+
 }

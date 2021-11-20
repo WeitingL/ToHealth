@@ -79,7 +79,12 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                 }
 
                 val todayLogCreateTimeIntList = mutableListOf<Int>()
-                drugList.forEach { drug ->
+                val drugListByFilter = drugList.filter {
+                    //Executing
+                    it.status == 0
+                }
+
+                drugListByFilter.forEach { drug ->
 
                     if (isDrugExhausted(drug)) {
                         postDrugExhausted(drug)
@@ -97,7 +102,6 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                         todayLogCreateTimeIntList.add(drugLog.timeTag!!)
                         todayLogCreateTimeIntList.sort()
                     }
-
 
                     if (ItemArranger().isThatDayNeedToDo(
                             ItemType.DRUG,
@@ -152,7 +156,11 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                     isNotNewBie()
                 }
 
-                measureList.forEach { measure ->
+                val measureListByFilter = measureList.filter {
+                    it.status == 0
+                }
+
+                measureListByFilter.forEach { measure ->
 
                     measure.measureLogs =
                         firebaseDataRepository.getMeasureRecord(measure.id!!, Timestamp.now())
@@ -218,7 +226,11 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                     isNotNewBie()
                 }
 
-                activityList.forEach { activity ->
+                val activityListByFilter = activityList.filter {
+                    it.status == 0
+                }
+
+                activityListByFilter.forEach { activity ->
 
                     activity.activityLogs =
                         firebaseDataRepository.getActivityRecord(activity.id!!, Timestamp.now())
@@ -283,7 +295,11 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                     isNotNewBie()
                 }
 
-                careList.forEach { care ->
+                val careListByFilter = careList.filter {
+                    it.status == 0
+                }
+
+                careListByFilter.forEach { care ->
 
                     care.careLogs =
                         firebaseDataRepository.getCareRecord(care.id!!, Timestamp.now()).filter {
@@ -383,7 +399,6 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                     list.add(it)
                 }
             }
-
         }
         return list
     }
@@ -401,11 +416,18 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
     private val skipTimeList = mutableListOf<SwipeData>()
 
     fun swipeToSkip(swipeData: SwipeData) {
+//        if (skipList.isNotEmpty()){
+//            postSkipLog()
+//            skipList.clear()
+//        }
         skipList.add(swipeData)
         _completedTask.value = _completedTask.value?.plus(1)
     }
 
     fun removeTimeHeader(swipeData: SwipeData) {
+//        if (skipTimeList.isNotEmpty()){
+//            skipTimeList.clear()
+//        }
         skipTimeList.add(swipeData)
     }
 
@@ -474,6 +496,8 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                     }
                 }
             }
+            skipList.clear()
+            skipTimeList.clear()
         }
     }
 
@@ -542,6 +566,8 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                 }
             }
         }
+        finishedLogList.clear()
+        finishedTimeList.clear()
     }
 
     private fun postDrugExhausted(drug: Drug) {
@@ -566,6 +592,7 @@ sealed class ItemDataType() {
 }
 
 data class SwipeData(
+
     val itemDataType: ItemDataType,
     val position: Int
 )

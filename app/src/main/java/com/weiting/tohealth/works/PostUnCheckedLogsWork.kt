@@ -103,6 +103,13 @@ class PostUnCheckedLogsWork() {
         firebaseDataRepository: FirebaseRepository
     ) {
         val timeTags = mutableListOf<Int>()
+        val c = Calendar.getInstance()
+        c.time = Timestamp.now().toDate()
+        c.set(Calendar.DATE, -1)
+        c.set(Calendar.HOUR_OF_DAY, 23)
+        c.set(Calendar.MINUTE, 59)
+        c.set(Calendar.MINUTE, 0)
+        val time = Timestamp(c.time)
 
         itemList.forEach { itemData ->
             when (itemData) {
@@ -116,7 +123,7 @@ class PostUnCheckedLogsWork() {
                                 itemData.id!!, DrugLog(
                                     timeTag = getTimeStampToTimeInt(timeStamp),
                                     result = 3,
-                                    createdTime = Timestamp.now()
+                                    createdTime = time
                                 )
                             )
                         }
@@ -134,7 +141,7 @@ class PostUnCheckedLogsWork() {
                                 itemData.id!!, ActivityLog(
                                     timeTag = getTimeStampToTimeInt(timeStamp),
                                     result = 3,
-                                    createdTime = Timestamp.now(),
+                                    createdTime = time,
                                 )
                             )
                         }
@@ -154,7 +161,7 @@ class PostUnCheckedLogsWork() {
                                     id = firebaseDataRepository.getMeasureRecordId(itemData.id!!),
                                     timeTag = getTimeStampToTimeInt(timeStamp),
                                     result = 3,
-                                    createdTime = Timestamp.now()
+                                    createdTime = time
                                 )
                             )
                         }
@@ -173,7 +180,7 @@ class PostUnCheckedLogsWork() {
                                 CareLog(
                                     timeTag = getTimeStampToTimeInt(timeStamp),
                                     result = 3,
-                                    createdTime = Timestamp.now()
+                                    createdTime = time
                                 )
                             )
                         }
