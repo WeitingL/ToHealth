@@ -11,7 +11,7 @@
 
 <!-- black   -->
     <color name="black">#FF000000</color>
-    <color name="gray_bark">#7A7979</color>
+    <color name="gray_bark">#959494</color>
 
 <!--  white  -->
     <color name="white">#FFFFFFFF</color>
@@ -54,6 +54,5 @@
 
 <!-- title color -->
     <color name="light_main_color">#0d1db0</color>
-
 
 </resources>

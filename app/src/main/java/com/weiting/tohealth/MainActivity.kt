@@ -10,10 +10,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
+import android.widget.AdapterView
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.weiting.tohealth.NavigationDestination.*
@@ -53,7 +56,6 @@ class MainActivity : AppCompatActivity() {
 
         val navController = this.findNavController(R.id.myNavHostFragment)
         binding.bottomNavigationView.setupWithNavController(navController)
-
 
         binding.imMoreMotification.setOnClickListener {
             navController.navigate(NavigationDirections.actionGlobalNotificationFragment(viewModel.memberIdList.value?.toTypedArray()?: arrayOf()))

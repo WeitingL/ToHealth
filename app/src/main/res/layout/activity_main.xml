@@ -5,6 +5,7 @@
     tools:context=".MainActivity">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.weiting.tohealth.MainActivityViewModel" />
@@ -29,15 +30,15 @@
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigationView"
+            navigationDestination="@{viewModel.navigationDestination}"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:background="@color/white"
             app:itemIconSize="25dp"
-            app:itemIconTint="@color/brown_black"
+            app:itemIconTint="@color/bottom_icon_selector"
             app:itemRippleColor="@color/brown_black"
-            app:itemTextColor="@color/brown_black"
+            app:itemTextColor="@color/bottom_icon_selector"
             app:labelVisibilityMode="labeled"
-            navigationDestination="@{viewModel.navigationDestination}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -45,12 +46,12 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
+            navigationDestinationWithToolBar="@{viewModel.navigationDestination}"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:background="@color/light_brown"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
-            navigationDestinationWithToolBar="@{viewModel.navigationDestination}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -62,10 +63,10 @@
 
                 <TextView
                     android:id="@+id/fragment_id"
+                    navigationDestination="@{viewModel.navigationDestination}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    navigationDestination="@{viewModel.navigationDestination}"
                     android:textAppearance="@style/title_text_bl" />
 
                 <ImageView
