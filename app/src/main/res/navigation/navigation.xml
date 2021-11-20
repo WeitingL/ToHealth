@@ -19,7 +19,12 @@
         android:id="@+id/joinGroupDialog"
         android:name="com.weiting.tohealth.mygrouppage.dialogs.JoinGroupDialog"
         android:label="dialog_join_group"
-        tools:layout="@layout/dialog_join_group" />
+        tools:layout="@layout/dialog_join_group" >
+        <argument
+            android:name="groupId"
+            app:argType="string"
+            app:nullable="true" />
+    </dialog>
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.weiting.tohealth.homepage.HomeFragment"
@@ -266,4 +271,10 @@
             app:argType="string" />
     </dialog>
     <action android:id="@+id/action_global_QRCodeDialog" app:destination="@id/QRCodeDialog" />
+    <dialog
+        android:id="@+id/QRCodeScanDialog"
+        android:name="com.weiting.tohealth.mygrouppage.dialogs.QRCodeScanDialog"
+        android:label="qrcode_scan_fragment"
+        tools:layout="@layout/qrcode_scan_fragment" />
+    <action android:id="@+id/action_global_QRCodeScanDialog" app:destination="@id/QRCodeScanDialog" />
 </navigation>
