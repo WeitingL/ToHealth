@@ -43,15 +43,19 @@ class MainActivity : AppCompatActivity() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
+        viewModel.isLogin.observe(this){
+            if (it){
+                viewModel.startSetAlarmForTodoList()
+                setAlarmManagerToCheckLogs()
+            }
+        }
+
         viewModel.memberIdList.observe(this) {
             stopService(notificationIntent)
             notificationIntent
                 .putExtra("memberList", it as Serializable)
                 .putExtra("groupList", viewModel.groupList as Serializable)
             startForegroundService(notificationIntent)
-
-            viewModel.startSetAlarmForTodoList()
-            setAlarmManagerToCheckLogs()
         }
 
         val navController = this.findNavController(R.id.myNavHostFragment)
@@ -116,7 +120,7 @@ class MainActivity : AppCompatActivity() {
         val c = Calendar.getInstance()
         c.set(Calendar.HOUR_OF_DAY, 23)
         c.set(Calendar.MINUTE, 59)
-        c.set(Calendar.SECOND, 0)
+        c.set(Calendar.SECOND, 59)
         val time = c.timeInMillis
         Log.i("startWork", "setAlarmManagerToCheckLogs: ${c.time}")
 
@@ -127,7 +131,7 @@ class MainActivity : AppCompatActivity() {
             this,
             0,
             intent,
-            PendingIntent.FLAG_CANCEL_CURRENT
+            PendingIntent.FLAG_UPDATE_CURRENT
         )
 
         val alarmManager = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager

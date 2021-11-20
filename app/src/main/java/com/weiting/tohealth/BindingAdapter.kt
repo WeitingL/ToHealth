@@ -116,7 +116,7 @@ fun bindNavigationDestination(textView: TextView, navigationDestination: Navigat
 fun bindNavigationDestinationWithToolBar(toolbar: Toolbar, navigationDestination: NavigationDestination) {
     toolbar.visibility = when (navigationDestination) {
         GroupFragment -> View.VISIBLE
-        LoginFragment -> View.VISIBLE
+        LoginFragment -> View.GONE
         HomeFragment -> View.VISIBLE
         FastAddFragment -> View.VISIBLE
         MyGroupFragment -> View.VISIBLE
@@ -142,7 +142,7 @@ fun bindNavigationDestination(
 ) {
     bottomNavigationView.visibility = when (navigationDestination) {
         GroupFragment -> View.GONE
-        LoginFragment -> View.VISIBLE
+        LoginFragment -> View.GONE
         HomeFragment -> View.VISIBLE
         FastAddFragment -> View.GONE
         MyGroupFragment -> View.VISIBLE
