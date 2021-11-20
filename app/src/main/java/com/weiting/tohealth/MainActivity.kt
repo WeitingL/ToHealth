@@ -16,6 +16,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
+import com.weiting.tohealth.NavigationDestination.*
 import com.weiting.tohealth.databinding.ActivityMainBinding
 import com.weiting.tohealth.factory.MainActivityViewModelFactory
 import com.weiting.tohealth.receiver.AlarmReceiver
@@ -35,6 +36,9 @@ class MainActivity : AppCompatActivity() {
             MainActivityViewModelFactory(PublicApplication.application.firebaseDataRepository)
         val viewModel = ViewModelProvider(this, factory).get(MainActivityViewModel::class.java)
         val notificationIntent = Intent(this, NotificationService::class.java)
+
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
 
         viewModel.memberIdList.observe(this) {
             stopService(notificationIntent)
@@ -56,37 +60,28 @@ class MainActivity : AppCompatActivity() {
         }
 
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
-            when (navController.currentDestination?.id) {
-                R.id.groupFragment ->{
-                    binding.bottomNavigationView.visibility = View.GONE
-                    binding.toolbar.visibility = View.VISIBLE
+            viewModel.getNavigationDestination(
+                when (navController.currentDestination?.id) {
+                    R.id.groupFragment -> GroupFragment
+                    R.id.loginFragment -> LoginFragment
+                    R.id.homeFragment -> HomeFragment
+                    R.id.fastAddFragment -> FastAddFragment
+                    R.id.myGroupFragment -> MyGroupFragment
+                    R.id.myStatisticFragment -> MyStatisticFragment
+                    R.id.myManageFragment -> MyManageFragment
+                    R.id.itemEditFragment -> ItemEditFragment
+                    R.id.itemUpdateFragment -> ItemUpdateFragment
+                    R.id.editNoteAndCalenderItemFragment -> EditNoteAndReminderFragment
+                    R.id.measureRecordFragment -> MeasureRecordFragment
+                    R.id.careRecordFragment -> CareRecordFragment
+                    R.id.groupMemberStatisticFragment -> GroupMemberStatisticFragment
+                    R.id.groupMemberManageFragment -> GroupMemberMenageFragment
+                    R.id.notificationFragment -> NotificationFragment
+                    else -> OtherFragment
                 }
 
-                R.id.loginFragment -> {
-                    binding.bottomNavigationView.visibility = View.GONE
-                    binding.toolbar.visibility = View.GONE
-                }
-                R.id.itemEditFragment -> {
-                    binding.bottomNavigationView.visibility = View.GONE
-                    binding.toolbar.visibility = View.VISIBLE
-                }
-                R.id.editNoteAndCalenderItemFragment -> {
-                    binding.bottomNavigationView.visibility = View.GONE
-                    binding.toolbar.visibility = View.VISIBLE
-                }
-                R.id.groupMemberManageFragment -> {
-                    binding.bottomNavigationView.visibility = View.GONE
-                    binding.toolbar.visibility = View.GONE
-                }
-                R.id.groupMemberStatisticFragment -> {
-                    binding.bottomNavigationView.visibility = View.GONE
-                    binding.toolbar.visibility = View.GONE
-                }
-                else -> {
-                    binding.bottomNavigationView.visibility = View.VISIBLE
-                    binding.toolbar.visibility = View.VISIBLE
-                }
-            }
+
+            )
         }
     }
 

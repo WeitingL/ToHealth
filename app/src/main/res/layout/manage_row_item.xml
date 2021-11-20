@@ -233,6 +233,7 @@
                         android:max="100"
                         android:progress="20"
                         app:indicatorColor="@color/areo_blue"
+                        app:trackColor="@color/gray"
                         app:indicatorDirectionCircular="counterclockwise"
                         app:indicatorSize="80dp"
                         app:layout_constraintBottom_toBottomOf="parent"
