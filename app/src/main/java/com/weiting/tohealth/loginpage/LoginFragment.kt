@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -21,13 +22,12 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.weiting.tohealth.NavigationDirections
-import com.weiting.tohealth.R
+import com.weiting.tohealth.*
 import com.weiting.tohealth.data.User
 import com.weiting.tohealth.data.UserManager
 import com.weiting.tohealth.databinding.FragmentLoginBinding
 import com.weiting.tohealth.factory.LoginViewModelFactory
-import com.weiting.tohealth.getVmLoginFactory
+import com.weiting.tohealth.factory.MainActivityViewModelFactory
 import java.lang.Exception
 
 class LoginFragment : Fragment() {
@@ -65,9 +65,13 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentLoginBinding.inflate(inflater, container, false)
+        val factory =
+            MainActivityViewModelFactory(PublicApplication.application.firebaseDataRepository)
+        val mainActivityViewModel = ViewModelProvider(requireActivity(), factory).get(MainActivityViewModel::class.java)
 
         viewModel.userInfo.observe(viewLifecycleOwner){
             UserManager.UserInformation = it
+            mainActivityViewModel.getMemberIdList()
             findNavController().navigate(NavigationDirections.actionGlobalHomeFragment())
         }
 

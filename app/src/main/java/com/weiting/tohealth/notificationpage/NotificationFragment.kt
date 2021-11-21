@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.weiting.tohealth.PublicApplication
+import com.weiting.tohealth.R
 import com.weiting.tohealth.databinding.NotificationFragmentBinding
 import com.weiting.tohealth.factory.NotificationRecordViewModelFactory
 
@@ -29,8 +30,13 @@ class NotificationFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         viewModel.notificationList.observe(viewLifecycleOwner){
-            viewModel.transferToNotificationRecord(it)
-
+            if (it.isEmpty()){
+                binding.lavLoagindNotification.visibility = View.VISIBLE
+                binding.lavLoagindNotification.setAnimation(R.raw.empty_box)
+            }else{
+                viewModel.transferToNotificationRecord(it)
+                binding.lavLoagindNotification.visibility = View.GONE
+            }
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner){

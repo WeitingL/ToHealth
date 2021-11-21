@@ -63,8 +63,13 @@ class NotificationService : LifecycleService() {
         val memberIdList = intent?.getIntegerArrayListExtra("memberList") as MutableList<String>
         val groupLIdList = intent.getIntegerArrayListExtra("groupList") as MutableList<String>
 
-        startListenChat(groupLIdList)
-        startListenNotification(memberIdList)
+        if (groupLIdList.isNotEmpty()){
+            startListenChat(groupLIdList)
+        }
+
+        if (memberIdList.isNotEmpty()){
+            startListenNotification(memberIdList)
+        }
         return super.onStartCommand(intent, flags, startId)
     }
 

@@ -1,6 +1,7 @@
 package com.weiting.tohealth.mygrouppage
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -35,6 +36,18 @@ class GroupAdapter(val onClickListener: OnclickListener, val onclickListenerForQ
 
             val memberAdapter = GroupMemberAdapter()
             memberAdapter.submitList(group.member)
+
+            if (getBoardMessageList(
+                    myGroup.group.notes, myGroup.group.calenderItems
+                ).isEmpty()){
+                binding.rvGroupNoteList.visibility = View.GONE
+                binding.tabLayoutForDots.visibility = View.GONE
+                binding.textView.visibility = View.GONE
+            }else{
+                binding.rvGroupNoteList.visibility = View.VISIBLE
+                binding.tabLayoutForDots.visibility = View.VISIBLE
+                binding.textView.visibility = View.VISIBLE
+            }
 
             val noteAdapter = GroupNoteViewPagerAdapter(
                 getBoardMessageList(

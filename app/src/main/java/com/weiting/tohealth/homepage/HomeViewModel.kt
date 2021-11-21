@@ -2,6 +2,8 @@ package com.weiting.tohealth.homepage
 
 import androidx.lifecycle.*
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.weiting.tohealth.*
 import com.weiting.tohealth.data.*
 import com.weiting.tohealth.util.ItemArranger
@@ -44,6 +46,12 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
         _completedTask.value = 0
         _allCompleted.value = false
         _isTheNewbie.value = true
+
+        viewModelScope.launch {
+            if (Firebase.auth.currentUser != null)
+            UserManager.UserInformation = firebaseDataRepository.getUserInfo(UserManager.UserInformation.id!!)
+        }
+
     }
 
     /*
