@@ -85,8 +85,6 @@ class MainActivity : AppCompatActivity() {
                     R.id.notificationFragment -> NotificationFragment
                     else -> OtherFragment
                 }
-
-
             )
         }
     }
@@ -137,6 +135,8 @@ class MainActivity : AppCompatActivity() {
         val alarmManager = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent)
     }
+
+
 
 
 }

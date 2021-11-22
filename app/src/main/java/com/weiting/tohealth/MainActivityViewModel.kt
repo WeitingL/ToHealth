@@ -45,7 +45,7 @@ class MainActivityViewModel(private val firebaseDataRepository: FirebaseReposito
         }
     }
 
-    private fun getMemberIdList() {
+    fun getMemberIdList() {
         viewModelScope.launch {
             val auth = Firebase.auth
 

@@ -16,9 +16,9 @@ android {
     defaultConfig {
         applicationId "com.weiting.tohealth"
         minSdk 26
-        targetSdk 30
-        versionCode 21
-        versionName "2.0"
+        targetSdk 31
+        versionCode 26
+        versionName "5.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

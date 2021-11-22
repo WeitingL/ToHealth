@@ -30,7 +30,18 @@ class BoardFragment() : Fragment() {
 
         viewModel.boardLiveData.observe(viewLifecycleOwner) {
 //            Log.i("list", it.toString())
-            adapter.submitList(it)
+            if(it.isNotEmpty()){
+                adapter.submitList(it)
+                binding.apply {
+                    lavNote.visibility = View.GONE
+                    textView12.visibility = View.GONE
+                }
+            }else{
+                binding.apply {
+                    lavNote.visibility = View.VISIBLE
+                    textView12.visibility = View.VISIBLE
+                }
+            }
         }
 
         binding.fbAddNewMessage.setOnClickListener {
