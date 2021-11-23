@@ -922,7 +922,7 @@ object FirebaseDataSource : FirebaseSource {
     }
 
     override fun getLiveNotificationForService(
-        userIdList: List<String>
+        userId: String
     ): MutableLiveData<List<Notification>> {
         val notificationList = MutableLiveData<List<Notification>>()
 
@@ -931,27 +931,28 @@ object FirebaseDataSource : FirebaseSource {
         c.add(Calendar.DATE, -3)
 
         application.database.collection("notifications")
-            .whereIn("userId", userIdList)
+            .whereEqualTo("userId", userId)
             .orderBy("createdTime", Query.Direction.DESCENDING)
             .whereGreaterThan("createdTime", Timestamp(c.time))
             .addSnapshotListener { value, error ->
 
-                if (error != null) {
-                    Log.e("Listen failed.", error.toString())
-                    return@addSnapshotListener
-                }
-                val list = mutableListOf<Notification>()
+                if (value?.metadata?.hasPendingWrites() != true){
+                    if (error != null) {
+                        Log.e("Listen failed.", error.toString())
+                        return@addSnapshotListener
+                    }
+                    val list = mutableListOf<Notification>()
 
-                for (document in value!!) {
-                    val data = document.toObject(Notification::class.java)
-                    list.add(data)
+                    for (document in value!!) {
+                        val data = document.toObject(Notification::class.java)
+                        list.add(data)
+                    }
+                    notificationList.value = list
+
                 }
-                notificationList.value = list
             }
 
         return notificationList
-
-
     }
 
     override fun getLiveNotification(

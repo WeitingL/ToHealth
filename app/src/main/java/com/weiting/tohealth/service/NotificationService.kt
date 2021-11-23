@@ -27,7 +27,8 @@ class NotificationService : LifecycleService() {
     lateinit var notificationManager: NotificationManager
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
-    val memberList = mutableListOf<String>()
+    private val memberList = mutableListOf<String>()
+    private val groupIdList = mutableListOf<String>()
 
     override fun onCreate() {
         super.onCreate()
@@ -61,6 +62,7 @@ class NotificationService : LifecycleService() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         firebaseDataRepository.getLiveUser(UserManager.UserInformation.id!!).observe(this) {
             if (it.groupList.isNotEmpty()) {
+                
                 startListenChat(it.groupList)
 
                 it.groupList.forEach {
@@ -72,26 +74,17 @@ class NotificationService : LifecycleService() {
     }
 
     //TODO Fix the bug!! it cannot work!
+
     private fun startListenMembers(groupId: String) {
         firebaseDataRepository.getLiveMember(groupId).observe(this@NotificationService) {
             it.forEach {
-                memberList.add(it.userId!!)
-                memberList.distinct()
-            }
-            if (memberList.isNotEmpty()) {
-                getGroupsMembers(memberList)
+                if (it.userId !in memberList){
+                    memberList.add(it.userId?:"")
+                    startListenNotification(it.userId?:"")
+                }
             }
         }
     }
-
-    private fun getGroupsMembers(memberList: List<String>) {
-        Log.i("memberList", memberList.toString())
-        startListenNotification(memberList)
-    }
-
-    /*
-        The Listener will be recreated or not? resolved!!
-     */
 
     private fun startListenChat(groupList: List<String>) {
         firebaseDataRepository.getLiveChatMessageForService(
@@ -107,10 +100,9 @@ class NotificationService : LifecycleService() {
         }
     }
 
-    private fun startListenNotification(list: List<String>) {
-        firebaseDataRepository.getLiveNotificationForService(list)
+    private fun startListenNotification(userId: String) {
+        firebaseDataRepository.getLiveNotificationForService(userId)
             .observe(this) {
-//              Log.i("work", "startListener")
 
                 val notificationList = it.filter {
                     !it.alreadySend.contains(
@@ -118,8 +110,10 @@ class NotificationService : LifecycleService() {
                     )
                 }
 
-                notificationList.forEachIndexed { index, notification ->
-                    showNotification(notification, index)
+                Log.i("work", "$notificationList")
+
+                notificationList.forEach { notification ->
+                    showNotification(notification)
                     firebaseDataRepository.postOnGetNotificationForService(notification)
                 }
             }
@@ -149,7 +143,7 @@ class NotificationService : LifecycleService() {
         }
     }
 
-    private fun showNotification(notification: Notification, int: Int) {
+    private fun showNotification(notification: Notification) {
         coroutineScope.launch {
             val userName = firebaseDataRepository.getUser(notification.userId!!).name
 
