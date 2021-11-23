@@ -94,10 +94,6 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
 
                 drugListByFilter.forEach { drug ->
 
-                    if (isDrugExhausted(drug)) {
-                        postDrugExhausted(drug)
-                    }
-
                     //Get all logs today.
                     drug.drugLogs =
                         firebaseDataRepository.getDrugRecord(drug.id!!, Timestamp.now()).filter {
@@ -546,8 +542,13 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
         finishedLogList.forEach {
             when (it.itemDataType) {
                 is ItemDataType.DrugType -> {
+
+                    if (isDrugExhausted(it.itemDataType.drug.DrugData!!)) {
+                        postDrugExhausted(it.itemDataType.drug.DrugData)
+                    }
+
                     firebaseDataRepository.postDrugRecord(
-                        it.itemDataType.drug.DrugData?.id!!, DrugLog(
+                        it.itemDataType.drug.DrugData.id!!, DrugLog(
                             timeTag = it.itemDataType.timeInt,
                             result = 0,
                             createdTime = Timestamp.now()

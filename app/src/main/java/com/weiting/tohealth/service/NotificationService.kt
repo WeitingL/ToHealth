@@ -5,6 +5,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
@@ -26,6 +27,7 @@ class NotificationService : LifecycleService() {
     lateinit var notificationManager: NotificationManager
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
+    val memberList = mutableListOf<String>()
 
     override fun onCreate() {
         super.onCreate()
@@ -60,30 +62,32 @@ class NotificationService : LifecycleService() {
         firebaseDataRepository.getLiveUser(UserManager.UserInformation.id!!).observe(this) {
             if (it.groupList.isNotEmpty()) {
                 startListenChat(it.groupList)
-                getGroupsMembers(it.groupList)
-            }
-        }
 
-        return super.onStartCommand(intent, flags, startId)
-    }
-
-    private fun getGroupsMembers(groupList: List<String>) {
-        val memberList = MutableLiveData<MutableList<String>>().apply {
-            groupList.forEach {
-                firebaseDataRepository.getLiveMember(it).observe(this@NotificationService) {
-                    it.forEach {
-                        value?.add(it.id!!)
-                    }
+                it.groupList.forEach {
+                    startListenMembers(it)
                 }
             }
         }
-        memberList.observe(this) {
-            if (it.isNotEmpty()) {
-                startListenNotification(it)
+        return super.onStartCommand(intent, flags, startId)
+    }
+
+    //TODO Fix the bug!! it cannot work!
+    private fun startListenMembers(groupId: String) {
+        firebaseDataRepository.getLiveMember(groupId).observe(this@NotificationService) {
+            it.forEach {
+                memberList.add(it.userId!!)
+                memberList.distinct()
+            }
+            if (memberList.isNotEmpty()) {
+                getGroupsMembers(memberList)
             }
         }
     }
 
+    private fun getGroupsMembers(memberList: List<String>) {
+        Log.i("memberList", memberList.toString())
+        startListenNotification(memberList)
+    }
 
     /*
         The Listener will be recreated or not? resolved!!
