@@ -47,22 +47,16 @@ class MainActivity : AppCompatActivity() {
             if (it){
                 viewModel.startSetAlarmForTodoList()
                 setAlarmManagerToCheckLogs()
+                stopService(notificationIntent)
+                startForegroundService(notificationIntent)
             }
-        }
-
-        viewModel.memberIdList.observe(this) {
-            stopService(notificationIntent)
-            notificationIntent
-                .putExtra("memberList", it as Serializable)
-                .putExtra("groupList", viewModel.groupList as Serializable)
-            startForegroundService(notificationIntent)
         }
 
         val navController = this.findNavController(R.id.myNavHostFragment)
         binding.bottomNavigationView.setupWithNavController(navController)
 
         binding.imMoreMotification.setOnClickListener {
-            navController.navigate(NavigationDirections.actionGlobalNotificationFragment(viewModel.memberIdList.value?.toTypedArray()?: arrayOf()))
+            navController.navigate(NavigationDirections.actionGlobalNotificationFragment(viewModel.memberList.toTypedArray()))
         }
 
         navController.addOnDestinationChangedListener { controller, destination, arguments ->

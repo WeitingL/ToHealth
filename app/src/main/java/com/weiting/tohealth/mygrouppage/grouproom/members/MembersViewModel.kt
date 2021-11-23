@@ -17,7 +17,7 @@ class MembersViewModel(
         addSource(liveMembersList){ list ->
             viewModelScope.launch {
                 list.forEach { member ->
-                    member.profilePhoto = firebaseDataRepository.getUserInfo(member.userId!!).userPhoto
+                    member.profilePhoto = firebaseDataRepository.getUser(member.userId!!).userPhoto
                 }
                 value = list
             }

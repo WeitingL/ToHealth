@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -26,7 +25,6 @@ import com.weiting.tohealth.*
 import com.weiting.tohealth.data.User
 import com.weiting.tohealth.data.UserManager
 import com.weiting.tohealth.databinding.FragmentLoginBinding
-import com.weiting.tohealth.factory.LoginViewModelFactory
 import com.weiting.tohealth.factory.MainActivityViewModelFactory
 import java.lang.Exception
 
@@ -45,11 +43,6 @@ class LoginFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         auth = Firebase.auth
-//
-//        if (auth.currentUser != null) {
-//            //user Logged in
-//            viewModel.initialUserManager(auth.uid!!)
-//        }
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.web_client_id))
@@ -71,12 +64,11 @@ class LoginFragment : Fragment() {
 
         viewModel.userInfo.observe(viewLifecycleOwner){
             UserManager.UserInformation = it
-            mainActivityViewModel.getMemberIdList()
+            mainActivityViewModel.loginSuccess()
             findNavController().navigate(NavigationDirections.actionGlobalHomeFragment())
         }
 
-
-        binding.cardView3.setOnClickListener {
+        binding.btLogin.setOnClickListener {
             getGoogleSignInPop()
         }
 
@@ -107,11 +99,11 @@ class LoginFragment : Fragment() {
                 if (task.isSuccessful) {
                     Log.d("firebaseAuthWithGoogle", "signInWithCredential:success")
                     val user = auth.currentUser
-                    updateUI(user)
+                    onGetUserFromFirebase(user)
 
                 } else {
                     Log.w("firebaseAuthWithGoogle", "signInWithCredential:failure", task.exception)
-                    updateUI(null)
+                    onGetUserFromFirebase(null)
                 }
             }
     }
@@ -121,7 +113,7 @@ class LoginFragment : Fragment() {
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
-    private fun updateUI(user: FirebaseUser?) {
+    private fun onGetUserFromFirebase(user: FirebaseUser?) {
         if (user != null) {
             viewModel.signInUserInfo(
                 User(
