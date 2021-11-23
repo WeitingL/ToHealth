@@ -27,8 +27,8 @@ class NotificationService : LifecycleService() {
     lateinit var notificationManager: NotificationManager
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
-    private val memberList = mutableListOf<String>()
-    private val groupIdList = mutableListOf<String>()
+    private val memberListeningList = mutableListOf<String>()
+    private val groupIdListeningList = mutableListOf<String>()
 
     override fun onCreate() {
         super.onCreate()
@@ -62,10 +62,11 @@ class NotificationService : LifecycleService() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         firebaseDataRepository.getLiveUser(UserManager.UserInformation.id!!).observe(this) {
             if (it.groupList.isNotEmpty()) {
-                
-                startListenChat(it.groupList)
-
                 it.groupList.forEach {
+                    if (it !in groupIdListeningList){
+                        startListenChat(it)
+                    }
+                    
                     startListenMembers(it)
                 }
             }
@@ -73,24 +74,19 @@ class NotificationService : LifecycleService() {
         return super.onStartCommand(intent, flags, startId)
     }
 
-    //TODO Fix the bug!! it cannot work!
-
     private fun startListenMembers(groupId: String) {
         firebaseDataRepository.getLiveMember(groupId).observe(this@NotificationService) {
             it.forEach {
-                if (it.userId !in memberList){
-                    memberList.add(it.userId?:"")
+                if (it.userId !in memberListeningList){
+                    memberListeningList.add(it.userId?:"")
                     startListenNotification(it.userId?:"")
                 }
             }
         }
     }
 
-    private fun startListenChat(groupList: List<String>) {
-        firebaseDataRepository.getLiveChatMessageForService(
-            Firebase.auth.currentUser?.uid!!,
-            groupList
-        ).observe(this) {
+    private fun startListenChat(groupId: String) {
+        firebaseDataRepository.getLiveChatMessageForService(groupId).observe(this) {
             it.forEach {
                 if (Firebase.auth.currentUser?.uid !in it.isReadList) {
                     showLatestChat(it)

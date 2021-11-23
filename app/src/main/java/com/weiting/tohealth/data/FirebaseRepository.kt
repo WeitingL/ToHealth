@@ -148,8 +148,7 @@ interface FirebaseRepository {
     fun postOnGetNotificationForService(notification: Notification)
 
     fun getLiveChatMessageForService(
-        userId: String,
-        groupId: List<String>
+        groupId: String
     ): MutableLiveData<List<Chat>>
 
     fun postOnGetChatForService(chat: Chat)

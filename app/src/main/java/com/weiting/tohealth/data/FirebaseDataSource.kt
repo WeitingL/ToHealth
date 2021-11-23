@@ -997,8 +997,7 @@ object FirebaseDataSource : FirebaseSource {
     }
 
     override fun getLiveChatMessageForService(
-        userId: String,
-        groupId: List<String>
+        groupId: String
     ): MutableLiveData<List<Chat>> {
         val chatItemsList = MutableLiveData<List<Chat>>()
 
@@ -1007,7 +1006,7 @@ object FirebaseDataSource : FirebaseSource {
         c.add(Calendar.DATE, -3)
 
         application.database.collection("chats")
-            .whereIn("groupId", groupId)
+            .whereEqualTo("groupId", groupId)
             .orderBy("createdTime", Query.Direction.ASCENDING)
             .whereGreaterThan("createdTime", Timestamp(c.time))
             .limit(50)

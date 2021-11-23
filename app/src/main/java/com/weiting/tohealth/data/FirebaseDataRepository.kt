@@ -235,10 +235,9 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
     }
 
     override fun getLiveChatMessageForService(
-        userId: String,
-        groupId: List<String>
+        groupId: String
     ): MutableLiveData<List<Chat>> {
-        return firebaseSource.getLiveChatMessageForService(userId, groupId)
+        return firebaseSource.getLiveChatMessageForService(groupId)
     }
 
     override fun postOnGetChatForService(chat: Chat) {
