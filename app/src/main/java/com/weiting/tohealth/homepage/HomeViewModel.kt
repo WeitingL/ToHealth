@@ -49,7 +49,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
 
         viewModelScope.launch {
             if (Firebase.auth.currentUser != null)
-            UserManager.UserInformation = firebaseDataRepository.getUserInfo(UserManager.UserInformation.id!!)
+            UserManager.UserInformation = firebaseDataRepository.getUser(UserManager.UserInformation.id!!)
         }
 
     }

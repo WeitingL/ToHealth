@@ -34,11 +34,13 @@ class EditMyMemberInfoDialog : DialogFragment() {
         binding.edtMyNickName.hint = myMemberInfo.nickName
 
         binding.btChange.setOnClickListener {
+
             if (binding.edtMyNickName.editableText.isNullOrEmpty()){
                 myMemberInfo.nickName = myMemberInfo.name
             }else{
                 myMemberInfo.nickName = binding.edtMyNickName.text.toString()
             }
+
             viewModel.postNewNickName(myMemberInfo)
             Toast.makeText(context, "改好囉!", Toast.LENGTH_LONG).show()
             findNavController().popBackStack()

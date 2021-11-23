@@ -24,11 +24,6 @@ class AlarmReceiver : BroadcastReceiver() {
         coroutineScope.launch {
             when {
 
-                //Won't need it
-//                p1.action?.equals("rebuild_plan") == true -> {
-//                    RebuildAlarm().updateNewTodoListToAlarmManager(database)
-//                }
-
                 //23:59:00
                 p1.action?.equals("check_today_unChecked_logs") == true -> {
                     PostUnCheckedLogsWork().checkTodayUnCheckedLogs(database)

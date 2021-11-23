@@ -28,7 +28,7 @@ class BoardViewModel(
             viewModelScope.launch {
                 noteCurrentList.clear()
                 noteList.forEach { note ->
-                    note.editor = firebaseDataRepository.getUserInfo(note.editor!!).name
+                    note.editor = firebaseDataRepository.getUser(note.editor!!).name
                     noteCurrentList.add(note)
                 }
 
@@ -41,7 +41,7 @@ class BoardViewModel(
                 calenderCurrentList.clear()
                 calenderList.forEach { calenderItem ->
                     calenderItem.editor =
-                        firebaseDataRepository.getUserInfo(calenderItem.editor!!).name
+                        firebaseDataRepository.getUser(calenderItem.editor!!).name
                     calenderCurrentList.add(calenderItem)
                 }
                 value = getBoards()

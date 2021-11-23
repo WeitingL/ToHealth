@@ -5,8 +5,8 @@ import com.google.firebase.Timestamp
 
 class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : FirebaseRepository {
 
-    override fun login(userId: String): MutableLiveData<User> {
-        return firebaseSource.login(userId)
+    override fun getLiveUser(userId: String): MutableLiveData<User> {
+        return firebaseSource.getLiveUser(userId)
     }
 
     override suspend fun getUser(userId: String): User {
@@ -209,10 +209,6 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
 
     override fun postChatMessage(chat: Chat) {
         return firebaseSource.postChatMessage(chat)
-    }
-
-    override suspend fun getUserInfo(userId: String): User {
-        return firebaseSource.getUserInfo(userId)
     }
 
     //Reduce the stock when task finished.

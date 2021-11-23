@@ -11,7 +11,7 @@ interface FirebaseSource {
         Login with livedata
      */
 
-    fun login(userId: String): MutableLiveData<User>
+    fun getLiveUser(userId: String): MutableLiveData<User>
 
     suspend fun getUser(userId: String): User
 
@@ -80,7 +80,7 @@ interface FirebaseSource {
         createTime: Timestamp
     ): List<MeasureLog>
 
-    suspend fun getMeasureLog(itemId: String, itemsLogId: String) : MeasureLog
+    suspend fun getMeasureLog(itemId: String, itemsLogId: String): MeasureLog
 
     suspend fun getActivityRecord(
         itemId: String,
@@ -136,8 +136,6 @@ interface FirebaseSource {
     ): MutableLiveData<List<Chat>>
 
     fun postChatMessage(chat: Chat)
-
-    suspend fun getUserInfo(userId: String): User
 
     fun editStock(itemId: String, num: Float)
 

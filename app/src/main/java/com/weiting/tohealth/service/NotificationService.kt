@@ -5,25 +5,21 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
-import com.google.firebase.Timestamp
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.weiting.tohealth.*
 import com.weiting.tohealth.data.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
-import java.util.concurrent.ThreadPoolExecutor
-import kotlin.coroutines.suspendCoroutine
 import kotlin.random.Random
 
-class NotificationService : LifecycleService() {
+const val APP_NAME = "toHealth"
 
+class NotificationService : LifecycleService() {
 
     //foreground service
     lateinit var firebaseDataRepository: FirebaseRepository
@@ -35,20 +31,21 @@ class NotificationService : LifecycleService() {
         super.onCreate()
 
         firebaseDataRepository = PublicApplication.application.firebaseDataRepository
-        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         val channel = NotificationChannel(
-            "toHealth",
-            "toHealth",
+            APP_NAME,
+            APP_NAME,
             NotificationManager.IMPORTANCE_HIGH
         )
         notificationManager.createNotificationChannel(channel)
 
         val mainIntent = Intent(this, MainActivity::class.java)
         val pendingIntent =
-            PendingIntent.getActivity(this, 0, mainIntent, PendingIntent.FLAG_CANCEL_CURRENT)
+            PendingIntent.getActivity(this, 0, mainIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-        val foregroundNotification = NotificationCompat.Builder(this, "toHealth")
+        val foregroundNotification = NotificationCompat.Builder(this, APP_NAME)
             .setSmallIcon(R.drawable.ic_tohealth)
             .setContentTitle("ToHealth 正在監控您的健康數據與群組訊息")
             .setContentText("輕觸可以開啟應用程式")
@@ -60,18 +57,33 @@ class NotificationService : LifecycleService() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val memberIdList = intent?.getIntegerArrayListExtra("memberList") as MutableList<String>
-        val groupLIdList = intent.getIntegerArrayListExtra("groupList") as MutableList<String>
-
-        if (groupLIdList.isNotEmpty()){
-            startListenChat(groupLIdList)
+        firebaseDataRepository.getLiveUser(UserManager.UserInformation.id!!).observe(this) {
+            if (it.groupList.isNotEmpty()) {
+                startListenChat(it.groupList)
+                getGroupsMembers(it.groupList)
+            }
         }
 
-        if (memberIdList.isNotEmpty()){
-            startListenNotification(memberIdList)
-        }
         return super.onStartCommand(intent, flags, startId)
     }
+
+    private fun getGroupsMembers(groupList: List<String>) {
+        val memberList = MutableLiveData<MutableList<String>>().apply {
+            groupList.forEach {
+                firebaseDataRepository.getLiveMember(it).observe(this@NotificationService) {
+                    it.forEach {
+                        value?.add(it.id!!)
+                    }
+                }
+            }
+        }
+        memberList.observe(this) {
+            if (it.isNotEmpty()) {
+                startListenNotification(it)
+            }
+        }
+    }
+
 
     /*
         The Listener will be recreated or not? resolved!!
@@ -83,12 +95,11 @@ class NotificationService : LifecycleService() {
             groupList
         ).observe(this) {
             it.forEach {
-                if ( Firebase.auth.currentUser?.uid !in it.isReadList) {
+                if (Firebase.auth.currentUser?.uid !in it.isReadList) {
                     showLatestChat(it)
                     firebaseDataRepository.postOnGetChatForService(it)
                 }
             }
-
         }
     }
 
@@ -120,7 +131,7 @@ class NotificationService : LifecycleService() {
             chatNotification.setTextViewText(R.id.tv_content, "$userName: ${chat.context}")
 
 
-            val cNotification = NotificationCompat.Builder(this@NotificationService, "toHealth")
+            val cNotification = NotificationCompat.Builder(this@NotificationService, APP_NAME)
                 .setStyle(NotificationCompat.DecoratedCustomViewStyle())
                 .setSmallIcon(R.drawable.user_1)
                 .setOnlyAlertOnce(true)
@@ -134,7 +145,6 @@ class NotificationService : LifecycleService() {
         }
     }
 
-    //TODO get the detail info.
     private fun showNotification(notification: Notification, int: Int) {
         coroutineScope.launch {
             val userName = firebaseDataRepository.getUser(notification.userId!!).name
@@ -156,7 +166,8 @@ class NotificationService : LifecycleService() {
                 }
 
                 5 -> {
-
+                    alertNotification.setTextViewText(R.id.tv_name, "多次未完成 - $userName")
+                    alertNotification.setTextViewText(R.id.tv_content, "昨天多次未完成事項")
                 }
 
                 6 -> {
@@ -170,7 +181,7 @@ class NotificationService : LifecycleService() {
                 }
             }
 
-            val nNotification = NotificationCompat.Builder(this@NotificationService, "toHealth")
+            val nNotification = NotificationCompat.Builder(this@NotificationService, APP_NAME)
                 .setSmallIcon(R.drawable.exclamation_mark)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setStyle(NotificationCompat.DecoratedCustomViewStyle())

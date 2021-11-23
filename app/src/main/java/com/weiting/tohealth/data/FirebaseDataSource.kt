@@ -15,7 +15,7 @@ import kotlin.coroutines.suspendCoroutine
 
 object FirebaseDataSource : FirebaseSource {
 
-    override fun login(userId: String): MutableLiveData<User> {
+    override fun getLiveUser(userId: String): MutableLiveData<User> {
         val database = application.database
         val user = MutableLiveData<User>()
 
@@ -43,24 +43,6 @@ object FirebaseDataSource : FirebaseSource {
 
                 val data = result.toObject(User::class.java)
                 continuation.resume(data ?: User())
-            }
-            .addOnFailureListener { e ->
-                Log.w("Error to get data", e)
-            }
-    }
-
-    override suspend fun getUserInfo(userId: String): User = suspendCoroutine { continuation ->
-
-        application.database.collection("users").document(userId)
-            .get()
-            .addOnSuccessListener { result ->
-                val data = result.toObject(User::class.java)
-
-                if (data != null) {
-                    continuation.resume(data)
-                } else {
-                    continuation.resume(User())
-                }
             }
             .addOnFailureListener { e ->
                 Log.w("Error to get data", e)
