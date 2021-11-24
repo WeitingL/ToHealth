@@ -3,6 +3,7 @@ package com.weiting.tohealth.mygrouppage
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.R
 import com.weiting.tohealth.databinding.MygroupRowNoteBinding
@@ -23,12 +24,12 @@ class GroupNoteViewPagerAdapter(
                 tvNoteTag.apply {
                     when (boardMessage.result) {
                         7 -> {
-                            text = "筆記"
-                            background = context.getDrawable(R.drawable.tag_bg_green)
+                            text = context.getString(R.string.noteTitle)
+                            background = AppCompatResources.getDrawable(context, R.drawable.tag_bg_green)
                         }
                         8 -> {
-                            text = "提醒"
-                            background = context.getDrawable(R.drawable.tag_bg_blue)
+                            text = context.getString(R.string.reminder)
+                            background = AppCompatResources.getDrawable(context, R.drawable.tag_bg_blue)
                         }
                     }
                 }

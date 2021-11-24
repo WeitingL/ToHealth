@@ -45,11 +45,11 @@ class EditNoteAndCalenderItemViewModel(
     }
 
     fun postNote(note: Note){
-        firebaseDataRepository.postNote(note, group.id!!)
+        firebaseDataRepository.postNote(note, group.id?:"")
     }
 
     fun postCalenderItem(calenderItem: CalenderItem){
-        firebaseDataRepository.postCalenderItem(calenderItem, group.id!!)
+        firebaseDataRepository.postCalenderItem(calenderItem, group.id?:"")
     }
 
 

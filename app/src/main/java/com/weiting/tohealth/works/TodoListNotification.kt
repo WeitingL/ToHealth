@@ -20,9 +20,9 @@ class TodoListNotification {
     private val context = PublicApplication.application.applicationContext
 
     suspend fun receiveIntentFromAlarm(timeTag: Int, firebaseDataRepository: FirebaseRepository) {
-        val userId = Firebase.auth.currentUser?.uid
+        val userId = Firebase.auth.currentUser?.uid?:""
 
-        val drugList = firebaseDataRepository.getAllDrugs(userId!!).filter {
+        val drugList = firebaseDataRepository.getAllDrugs(userId).filter {
             ItemArranger().isThatDayNeedToDo(
                 ItemType.DRUG, ItemData(DrugData = it),
                 Timestamp.now()

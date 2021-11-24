@@ -62,6 +62,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
         Identify the finished mission by numbers and created time of ItemLog.
      */
 
+    //TODO Refactor 1st
     private val drugList =
         firebaseDataRepository.getLiveDrugList(UserManager.UserInformation.id ?: "")
     private val measureList =

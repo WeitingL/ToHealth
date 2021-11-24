@@ -12,6 +12,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+const val CHECK_UNCHECKED_LOG = "check_today_unChecked_logs"
+const val POST_NOTIFICATION = "item_notification"
+
 class AlarmReceiver : BroadcastReceiver() {
 
     private val coroutineScope = CoroutineScope(Dispatchers.Default)
@@ -25,11 +28,11 @@ class AlarmReceiver : BroadcastReceiver() {
             when {
 
                 //23:59:00
-                p1.action?.equals("check_today_unChecked_logs") == true -> {
+                p1.action?.equals(CHECK_UNCHECKED_LOG) == true -> {
                     PostUnCheckedLogsWork().checkTodayUnCheckedLogs(database)
                 }
 
-                p1.action?.equals("item_notification") == true -> {
+                p1.action?.equals(POST_NOTIFICATION) == true -> {
                     val timeTag = p1.getIntExtra("timeTag", 0)
                     TodoListNotification().receiveIntentFromAlarm(timeTag, database)
                 }

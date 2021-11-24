@@ -16,8 +16,8 @@ class BoardViewModel(
     val boardList: LiveData<List<BoardType>>
         get() = _boardList
 
-    private val notesLiveList = firebaseDataRepository.getLiveNote(group.id!!)
-    private val calenderLiveItem = firebaseDataRepository.getLiveCalenderItem(group.id!!)
+    private val notesLiveList = firebaseDataRepository.getLiveNote(group.id?:"")
+    private val calenderLiveItem = firebaseDataRepository.getLiveCalenderItem(group.id?:"")
 
     private val noteCurrentList = mutableListOf<Note>()
     private val calenderCurrentList = mutableListOf<CalenderItem>()
@@ -28,7 +28,7 @@ class BoardViewModel(
             viewModelScope.launch {
                 noteCurrentList.clear()
                 noteList.forEach { note ->
-                    note.editor = firebaseDataRepository.getUser(note.editor!!).name
+                    note.editor = firebaseDataRepository.getUser(note.editor?:"").name
                     noteCurrentList.add(note)
                 }
 
@@ -41,7 +41,7 @@ class BoardViewModel(
                 calenderCurrentList.clear()
                 calenderList.forEach { calenderItem ->
                     calenderItem.editor =
-                        firebaseDataRepository.getUser(calenderItem.editor!!).name
+                        firebaseDataRepository.getUser(calenderItem.editor?:"").name
                     calenderCurrentList.add(calenderItem)
                 }
                 value = getBoards()
@@ -77,11 +77,11 @@ class BoardViewModel(
     }
 
     fun deleteNote(note: Note) {
-        firebaseDataRepository.deleteNote(note, group.id!!)
+        firebaseDataRepository.deleteNote(note, group.id?:"")
     }
 
     fun deleteReminder(calenderItem: CalenderItem) {
-        firebaseDataRepository.deleteCalenderItem(calenderItem, group.id!!)
+        firebaseDataRepository.deleteCalenderItem(calenderItem, group.id?:"")
     }
 
 

@@ -7,6 +7,4 @@ enum class ManageType{
 }
 
 class ManageViewModel: ViewModel() {
-
-
 }

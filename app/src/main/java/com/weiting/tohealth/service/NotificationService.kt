@@ -50,8 +50,8 @@ class NotificationService : LifecycleService() {
 
         val foregroundNotification = NotificationCompat.Builder(this, APP_NAME)
             .setSmallIcon(R.drawable.ic_tohealth)
-            .setContentTitle("ToHealth 正在監控您的健康數據與群組訊息")
-            .setContentText("輕觸可以開啟應用程式")
+            .setContentTitle(getString(R.string.foreNotificationTitle))
+            .setContentText(getString(R.string.touchNotificationHint))
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .build()
@@ -106,8 +106,6 @@ class NotificationService : LifecycleService() {
                     )
                 }
 
-                Log.i("work", "$notificationList")
-
                 notificationList.forEach { notification ->
                     showNotification(notification)
                     firebaseDataRepository.postOnGetNotificationForService(notification)
@@ -149,7 +147,7 @@ class NotificationService : LifecycleService() {
                     val measure = firebaseDataRepository.getMeasure(notification.itemId!!)
                     val measureLog = firebaseDataRepository.getMeasureLog(
                         notification.itemId,
-                        notification.logId!!
+                        notification.logId?:""
                     )
 
                     alertNotification.setTextViewText(R.id.tv_name, "測量項目異常 - $userName")

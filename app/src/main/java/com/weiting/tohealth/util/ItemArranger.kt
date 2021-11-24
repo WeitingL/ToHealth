@@ -111,7 +111,6 @@ class ItemArranger() {
 
         // 0 -> Monday
         val weekDay = c.get(Calendar.DAY_OF_WEEK) - 2
-//        Log.i("Taiwan", weekDay.toString())
         val perWeek = data["N"]!!
 
         return when (perWeek == weekDay) {

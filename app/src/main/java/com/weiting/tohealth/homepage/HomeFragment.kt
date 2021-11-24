@@ -45,6 +45,7 @@ class HomeFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
+        //TODO Refactor 2nd
         val adapter = TodayItemAdapter()
         val swipeSet = object : RecyclerViewSwipe() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {

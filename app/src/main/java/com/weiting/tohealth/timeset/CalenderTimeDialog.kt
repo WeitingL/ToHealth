@@ -15,6 +15,13 @@ enum class EditTimeType {
     TIME, DATE, DATEANDTIME
 }
 
+const val GET_TIME_AND_DAY = "GetTimeAndDate"
+const val TIME_AND_DAY = "TimeAndDate"
+const val GET_TIME = "GetTime"
+const val GET_DATE = "GetDate"
+const val TIME = "Time"
+const val DATE = "Date"
+
 class CalenderTimeDialog : DialogFragment() {
 
     override fun onCreateView(
@@ -62,15 +69,15 @@ class CalenderTimeDialog : DialogFragment() {
              */
             when (editTimeType) {
                 EditTimeType.DATE -> {
-                    setFragmentResult("GetDate", bundleOf("Date" to milliTime))
+                    setFragmentResult(GET_TIME, bundleOf(DATE to milliTime))
                 }
 
                 EditTimeType.TIME -> {
-                    setFragmentResult("GetTime", bundleOf("Time" to milliTime))
+                    setFragmentResult(GET_TIME, bundleOf(TIME to milliTime))
                 }
 
                 EditTimeType.DATEANDTIME -> {
-                    setFragmentResult("GetTimeAndDate", bundleOf("TimeAndDate" to milliTime))
+                    setFragmentResult(GET_TIME_AND_DAY, bundleOf(TIME_AND_DAY to milliTime))
                 }
             }
 
@@ -79,6 +86,4 @@ class CalenderTimeDialog : DialogFragment() {
 
         return binding.root
     }
-
-//    1634740570383
 }

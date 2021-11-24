@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
+import com.weiting.tohealth.R
 import com.weiting.tohealth.databinding.GroupFragmentBinding
 
 class GroupRoomFragment: Fragment() {
@@ -15,7 +16,7 @@ class GroupRoomFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = GroupFragmentBinding.inflate(inflater, container, false)
         val group = GroupRoomFragmentArgs.fromBundle(requireArguments()).group
 
@@ -26,9 +27,9 @@ class GroupRoomFragment: Fragment() {
 
         TabLayoutMediator(tabLayout, viewPager){ tab, position ->
             when (position){
-                0 -> tab.text = "看板"
-                1 -> tab.text = "聊天室"
-                2 -> tab.text = "成員"
+                0 -> tab.text = getString(R.string.board)
+                1 -> tab.text = getString(R.string.chatRoom)
+                2 -> tab.text = getString(R.string.members)
             }
         }.attach()
 

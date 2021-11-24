@@ -55,14 +55,6 @@ class GroupAdapter(val onClickListener: OnclickListener, val onclickListenerForQ
                 )
             )
 
-//            val noteAdapter = GroupNoteAdapter()
-//            noteAdapter.submitList(
-//                getBoardMessageList(
-//                    myGroup.group.notes,
-//                    myGroup.group.calenderItems
-//                )
-//            )
-
             binding.apply {
                 tvGroupCode.text = group.id
                 tvGroupName.text = group.groupName
@@ -156,10 +148,10 @@ class GroupAdapter(val onClickListener: OnclickListener, val onclickListenerForQ
                 noteList.forEach { note ->
                     list.add(
                         BoardMessage(
-                            title = note.title!!,
-                            content = note.content!!,
-                            createTime = note.createdTime!!,
-                            editor = note.editor!!,
+                            title = note.title?:"",
+                            content = note.content?:"",
+                            createTime = note.createdTime?: Timestamp.now(),
+                            editor = note.editor?:"",
                             result = 7
                         )
                     )
@@ -168,10 +160,10 @@ class GroupAdapter(val onClickListener: OnclickListener, val onclickListenerForQ
                 calenderItemList.forEach { calenderItem ->
                     list.add(
                         BoardMessage(
-                            title = calenderItem.content!!,
+                            title = calenderItem.content?:"",
                             content = "時間: ${toStringFromTimeStamp(calenderItem.date)}",
-                            createTime = calenderItem.createdTime!!,
-                            editor = calenderItem.editor!!,
+                            createTime = calenderItem.createdTime?: Timestamp.now(),
+                            editor = calenderItem.editor?:"",
                             result = 8
                         )
                     )
@@ -182,9 +174,9 @@ class GroupAdapter(val onClickListener: OnclickListener, val onclickListenerForQ
                 noteList.forEach { note ->
                     list.add(
                         BoardMessage(
-                            title = note.title!!,
-                            content = note.content!!,
-                            createTime = note.createdTime!!,
+                            title = note.title?:"",
+                            content = note.content?:"",
+                            createTime = note.createdTime?: Timestamp.now(),
                             editor = note.editor!!,
                             result = 7
                         )
@@ -195,10 +187,10 @@ class GroupAdapter(val onClickListener: OnclickListener, val onclickListenerForQ
                 calenderItemList.forEach { calenderItem ->
                     list.add(
                         BoardMessage(
-                            title = calenderItem.content!!,
+                            title = calenderItem.content?:"",
                             content = "時間: ${toStringFromTimeStamp(calenderItem.date)}",
-                            createTime = calenderItem.createdTime!!,
-                            editor = calenderItem.editor!!,
+                            createTime = calenderItem.createdTime?: Timestamp.now(),
+                            editor = calenderItem.editor?:"",
                             result = 8
                         )
                     )

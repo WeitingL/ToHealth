@@ -1,13 +1,11 @@
 package com.weiting.tohealth.loginpage
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.weiting.tohealth.data.FirebaseRepository
 import com.weiting.tohealth.data.User
-import com.weiting.tohealth.data.UserManager
 import kotlinx.coroutines.launch
 
 class LoginViewModel(private val firebaseDataRepository: FirebaseRepository) : ViewModel() {
@@ -20,19 +18,18 @@ class LoginViewModel(private val firebaseDataRepository: FirebaseRepository) : V
         viewModelScope.launch {
             val userExist = firebaseDataRepository.getUser(user.id!!)
 
-            if (userExist.id.isNullOrEmpty()){
+            if (userExist.id.isNullOrEmpty()) {
                 firebaseDataRepository.signIn(user)
-                initialUserManager(user.id!!)
-            }else{
-                initialUserManager(user.id!!)
             }
+
+            initialUserManager(user.id!!)
+
         }
     }
 
-    fun initialUserManager(userId: String) {
+    private fun initialUserManager(userId: String) {
         viewModelScope.launch {
             _userInfo.value = firebaseDataRepository.getUser(userId)
-            Log.i("data", UserManager.UserInformation.toString())
         }
     }
 }

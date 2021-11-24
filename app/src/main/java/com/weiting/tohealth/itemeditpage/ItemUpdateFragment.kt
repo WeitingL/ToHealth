@@ -18,6 +18,8 @@ import com.weiting.tohealth.factory.ItemUpdateViewModelFactory
 import com.weiting.tohealth.mymanagepage.ManageDetailTimeAdapter
 import com.weiting.tohealth.mymanagepage.ManageType
 import com.weiting.tohealth.timeset.EditTimeType
+import com.weiting.tohealth.timeset.GET_TIME
+import com.weiting.tohealth.timeset.TIME
 
 class ItemUpdateFragment : Fragment() {
 

@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.firebase.Timestamp
 import com.weiting.tohealth.NavigationDirections
 import com.weiting.tohealth.PublicApplication
+import com.weiting.tohealth.R
 import com.weiting.tohealth.data.CalenderItem
 import com.weiting.tohealth.data.Group
 import com.weiting.tohealth.data.Note
@@ -20,6 +21,8 @@ import com.weiting.tohealth.data.UserManager
 import com.weiting.tohealth.databinding.EditNoteandcalenderitemFragmentBinding
 import com.weiting.tohealth.factory.EditNoteAndCalenderItemViewModelFactory
 import com.weiting.tohealth.timeset.EditTimeType
+import com.weiting.tohealth.timeset.GET_TIME_AND_DAY
+import com.weiting.tohealth.timeset.TIME_AND_DAY
 import java.util.*
 
 class EditNoteAndCalenderItemFragment : Fragment() {
@@ -28,7 +31,7 @@ class EditNoteAndCalenderItemFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = EditNoteandcalenderitemFragmentBinding.inflate(inflater, container, false)
         val group: Group = arguments?.get("group") as Group
         val factory = EditNoteAndCalenderItemViewModelFactory(
@@ -78,8 +81,8 @@ class EditNoteAndCalenderItemFragment : Fragment() {
             }
         }
 
-        setFragmentResultListener("GetTimeAndDate") { requestKey, bundle ->
-            viewModel.getTimeSet(bundle.getLong("TimeAndDate"))
+        setFragmentResultListener(GET_TIME_AND_DAY) { requestKey, bundle ->
+            viewModel.getTimeSet(bundle.getLong(TIME_AND_DAY))
         }
 
         binding.button.setOnClickListener {
@@ -87,7 +90,7 @@ class EditNoteAndCalenderItemFragment : Fragment() {
             when (viewModel.editBoardType.value) {
                 EditBoardType.NOTE -> {
                     if (binding.etvTitle.text.isEmpty() || binding.etvContent.text.isEmpty()) {
-                        Toast.makeText(context, "你有東西沒寫喔!", Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, getString(R.string.SomethingEmpty), Toast.LENGTH_LONG).show()
                     } else {
                         viewModel.postNote(
                             Note(
@@ -98,12 +101,13 @@ class EditNoteAndCalenderItemFragment : Fragment() {
                                 createdTime = Timestamp.now()
                             )
                         )
+                        findNavController().popBackStack()
                     }
                 }
 
                 EditBoardType.REMINDER -> {
                     if (binding.edvReminderTitle.text.isEmpty() || binding.tvEditDate.text.isEmpty()) {
-                        Toast.makeText(context, "你有東西沒寫喔!", Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, getString(R.string.SomethingEmpty), Toast.LENGTH_LONG).show()
                     } else {
                         viewModel.postCalenderItem(
                             CalenderItem(
@@ -114,12 +118,11 @@ class EditNoteAndCalenderItemFragment : Fragment() {
                                 result = 0
                             )
                         )
+                        findNavController().popBackStack()
                     }
                 }
             }
-            findNavController().popBackStack()
         }
-
 
         return binding.root
     }

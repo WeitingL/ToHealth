@@ -23,6 +23,7 @@ import com.weiting.tohealth.NavigationDestination.*
 import com.weiting.tohealth.databinding.ActivityMainBinding
 import com.weiting.tohealth.factory.MainActivityViewModelFactory
 import com.weiting.tohealth.receiver.AlarmReceiver
+import com.weiting.tohealth.receiver.CHECK_UNCHECKED_LOG
 import com.weiting.tohealth.service.NotificationService
 import java.io.Serializable
 import java.sql.Time
@@ -83,30 +84,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setAlarmManagerToRearrangeItem() {
-        Log.i("startWork", "setAlarmManagerToRearrangeItem")
-        val c = Calendar.getInstance()
-        c.time = Timestamp.now().toDate()
-        c.add(Calendar.DAY_OF_YEAR, 1)
-        c.set(Calendar.HOUR_OF_DAY, 0)
-        c.set(Calendar.MINUTE, 0)
-        c.set(Calendar.SECOND, 2)
-        val time = c.timeInMillis
-
-        val intent = Intent(this, AlarmReceiver::class.java)
-        intent.action = "check_today_unChecked_logs"
-
-        val pendingIntent = PendingIntent.getBroadcast(
-            this,
-            0,
-            intent,
-            PendingIntent.FLAG_CANCEL_CURRENT
-        )
-
-        val alarmManager = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent)
-    }
-
     private fun setAlarmManagerToCheckLogs() {
 
         val c = Calendar.getInstance()
@@ -117,7 +94,7 @@ class MainActivity : AppCompatActivity() {
         Log.i("startWork", "setAlarmManagerToCheckLogs: ${c.time}")
 
         val intent = Intent(this, AlarmReceiver::class.java)
-        intent.action = "check_today_unChecked_logs"
+        intent.action = CHECK_UNCHECKED_LOG
 
         val pendingIntent = PendingIntent.getBroadcast(
             this,
@@ -129,8 +106,5 @@ class MainActivity : AppCompatActivity() {
         val alarmManager = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent)
     }
-
-
-
 
 }

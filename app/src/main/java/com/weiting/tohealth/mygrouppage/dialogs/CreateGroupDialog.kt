@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.weiting.tohealth.NavigationDirections
 import com.weiting.tohealth.PublicApplication
+import com.weiting.tohealth.R
 import com.weiting.tohealth.data.Group
 import com.weiting.tohealth.databinding.DialogCreateGroupBinding
 import com.weiting.tohealth.factory.AddGroupViewModelFactory
@@ -34,7 +35,7 @@ class CreateGroupDialog : DialogFragment() {
 
         binding.btEnterName.setOnClickListener {
             when (binding.tilGroupName.editText?.text.isNullOrEmpty()) {
-                true -> Toast.makeText(context, "幫你的群組取名子吧!", Toast.LENGTH_LONG).show()
+                true -> Toast.makeText(context, getString(R.string.namingForGroup), Toast.LENGTH_LONG).show()
                 false -> {
                     viewModel.createGroup(
                         Group(

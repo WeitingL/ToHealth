@@ -18,15 +18,8 @@ import com.weiting.tohealth.data.*
 import com.weiting.tohealth.databinding.ItemEditFragmentBinding
 import com.weiting.tohealth.factory.ItemEditViewModelFactory
 import com.weiting.tohealth.mymanagepage.ManageType
-import com.weiting.tohealth.timeset.EditTimeType
+import com.weiting.tohealth.timeset.*
 import com.weiting.tohealth.toTimeFromTimeStamp
-
-const val GET_TIME = "GetTime"
-const val GET_DATE = "GetDate"
-const val TIME = "Time"
-const val DATE = "Date"
-
-
 
 class ItemEditFragment : Fragment() {
 

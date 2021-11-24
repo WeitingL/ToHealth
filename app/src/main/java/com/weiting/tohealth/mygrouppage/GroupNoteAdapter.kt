@@ -2,6 +2,7 @@ package com.weiting.tohealth.mygrouppage
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -35,12 +36,12 @@ class GroupNoteAdapter() :
                 tvNoteTag.apply {
                     when (boardMessage.result) {
                         7 -> {
-                            text = "筆記"
-                            background = context.getDrawable(R.drawable.tag_bg_green)
+                            text = context.getString(R.string.noteTitle)
+                            background = AppCompatResources.getDrawable(context, R.drawable.tag_bg_green)
                         }
                         8 -> {
-                            text = "提醒"
-                            background = context.getDrawable(R.drawable.tag_bg_blue)
+                            text = context.getString(R.string.reminder)
+                            background = AppCompatResources.getDrawable(context, R.drawable.tag_bg_blue)
                         }
                     }
                 }

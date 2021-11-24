@@ -22,6 +22,21 @@
     <string name="MeasureItem">測量項目</string>
     <string name="CareItem">關懷項目</string>
     <string name="upDateSuccess">已成功更新!</string>
+    <string name="namingForGroup">幫你的群組取名子吧!</string>
+    <string name="checkTheGroupId">請檢查群組號碼輸入是否正確?</string>
+    <string name="alreadyHere">你已經在這個群組了拉!</string>
+    <string name="board">看板</string>
+    <string name="chatRoom">聊天室</string>
+    <string name="members">成員</string>
+    <string name="noteTitle">筆記</string>
+    <string name="reminder">提醒</string>
+    <string name="unLimit">無期限</string>
+    <string name="setTime_empty">設定時間(空)</string>
+    <string name="setTime">設定時間</string>
+    <string name="executedTitle">每天執行</string>
+    <string name="outDate">剩餘天數</string>
+    <string name="foreNotificationTitle">ToHealth 正在監控您的健康數據與群組訊息</string>
+    <string name="touchNotificationHint">輕觸可以開啟應用程式</string>
 
     <string-array name="ItemType">
         <item>藥品</item>

@@ -13,6 +13,8 @@ import java.util.*
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
+//TODO Error handle add.
+
 object FirebaseDataSource : FirebaseSource {
 
     override fun getLiveUser(userId: String): MutableLiveData<User> {

@@ -35,7 +35,7 @@ abstract class RecyclerViewSwipe() :
         return false
     }
 
-    //Delete animation
+    //Delete movement
     override fun onChildDraw(
         c: Canvas,
         recyclerView: RecyclerView,

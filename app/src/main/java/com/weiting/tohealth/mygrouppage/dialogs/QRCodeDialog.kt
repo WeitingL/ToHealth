@@ -17,7 +17,7 @@ class QRCodeDialog : DialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = DialogQrcodeBinding.inflate(inflater, container, false)
         val groupId = QRCodeDialogArgs.fromBundle(requireArguments()).groupId
         val size = 512

@@ -24,17 +24,16 @@ import com.weiting.tohealth.NavigationDirections
 import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.databinding.QrcodeScanFragmentBinding
 
+
+const val REQUEST_CODE = 1
+
 class QRCodeScanDialog : DialogFragment() {
-
-    companion object
-
-    val REQUEST_CODE = 1
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = QrcodeScanFragmentBinding.inflate(inflater, container, false)
         val context = PublicApplication.application.applicationContext
         val viewModel = ViewModelProvider(this).get(QRCodeScanDialogViewModel::class.java)
@@ -77,12 +76,10 @@ class QRCodeScanDialog : DialogFragment() {
 
             override fun receiveDetections(p0: Detector.Detections<Barcode>) {
                 val qrCodes = p0.detectedItems
-                Log.i("code", qrCodes.toString())
                 if (qrCodes.size()!= 0){
                     viewModel.getGroupId(qrCodes.valueAt(0).displayValue)
                 }
             }
-
         })
 
         viewModel.groupIdFromQRCode.observe(viewLifecycleOwner){

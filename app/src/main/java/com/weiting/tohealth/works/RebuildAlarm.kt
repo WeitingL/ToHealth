@@ -14,6 +14,7 @@ import com.weiting.tohealth.data.ItemData
 import com.weiting.tohealth.data.ItemType
 import com.weiting.tohealth.getTimeStampToTimeInt
 import com.weiting.tohealth.receiver.AlarmReceiver
+import com.weiting.tohealth.receiver.POST_NOTIFICATION
 import com.weiting.tohealth.util.ItemArranger
 import java.sql.Time
 import java.util.*
@@ -25,10 +26,10 @@ class RebuildAlarm() {
      */
 
     suspend fun updateNewTodoListToAlarmManager(firebaseDataRepository: FirebaseRepository) {
-        val userId = Firebase.auth.currentUser?.uid
+        val userId = Firebase.auth.currentUser?.uid?:""
         val timeList = mutableListOf<Timestamp>()
 
-        val drugList = firebaseDataRepository.getAllDrugs(userId!!).filter {
+        val drugList = firebaseDataRepository.getAllDrugs(userId).filter {
             ItemArranger().isThatDayNeedToDo(ItemType.DRUG, ItemData(DrugData = it), Timestamp.now())
         }
         drugList.forEach {
@@ -93,7 +94,7 @@ class RebuildAlarm() {
 
             intent.addCategory("$d$h$m")
             intent.putExtra("timeTag", getTimeStampToTimeInt(it))
-            intent.action = "item_notification"
+            intent.action = POST_NOTIFICATION
 
             val pendingIntent = PendingIntent.getBroadcast(
                 PublicApplication.application.applicationContext,

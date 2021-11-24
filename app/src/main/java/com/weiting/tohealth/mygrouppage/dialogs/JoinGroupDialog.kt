@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.firestore.v1.TargetOrBuilder
 import com.weiting.tohealth.NavigationDirections
 import com.weiting.tohealth.PublicApplication
+import com.weiting.tohealth.R
 import com.weiting.tohealth.data.Member
 import com.weiting.tohealth.data.UserManager
 import com.weiting.tohealth.databinding.DialogJoinGroupBinding
@@ -48,13 +49,13 @@ class JoinGroupDialog : DialogFragment() {
             when (it) {
                 true -> {
                     viewModel.checkIsRelationshipExist(
-                        userId = UserManager.UserInformation.id!!,
+                        userId = UserManager.UserInformation.id?:"",
                         groupId = binding.tilGroupName.editText?.text.toString()
                     )
                 }
 
                 false -> {
-                    Toast.makeText(context, "請檢查群組號碼輸入是否正確?", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, getString(R.string.checkTheGroupId), Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -62,13 +63,13 @@ class JoinGroupDialog : DialogFragment() {
         viewModel.isRelationshipExist.observe(viewLifecycleOwner) {
             when (it) {
                 true -> {
-                    Toast.makeText(context, "你已經在這個群組了拉!", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, getString(R.string.alreadyHere), Toast.LENGTH_LONG).show()
                 }
 
                 false -> {
                     viewModel.joinGroup(
                         member = Member(
-                            userId = UserManager.UserInformation.id!!,
+                            userId = UserManager.UserInformation.id?:"",
                             private = 0,
                             name = UserManager.UserInformation.name,
                             nickName = UserManager.UserInformation.name

@@ -1,5 +1,6 @@
 package com.weiting.tohealth.mymanagepage
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +21,7 @@ import kotlinx.coroutines.launch
 class ManageDetailAdapter(private val dataType: ManageType, val onClickListener: OnclickListener) :
     ListAdapter<ItemData, ItemsListViewHolder>(DiffCallBack) {
 
+    val context: Context = PublicApplication.application.applicationContext
     val coroutineScope = CoroutineScope(Dispatchers.Main)
     val database = PublicApplication.application.firebaseDataRepository
 
@@ -36,6 +38,7 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
 
     }
 
+    //TODO Refactor 3rd
     inner class ItemsListViewHolder(private val binding: ManageRowItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ItemData) {
@@ -56,32 +59,37 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
 
                             when (data?.executedTime?.isEmpty()) {
                                 true -> {
-                                    binding.tvTimeTitle.text = "設定時間(空)"
+                                    binding.tvTimeTitle.text =
+                                        context.getString(R.string.setTime_empty)
                                 }
                                 false -> {
-                                    binding.tvTimeTitle.text = "設定時間"
+                                    binding.tvTimeTitle.text = context.getString(R.string.setTime)
                                 }
                             }
 
                             rvTimeList.adapter = adapter
                             tvItemNameManage.text = data?.drugName
                             imItemIcon.setImageResource(setDrugDrawable(data?.unit))
-                            tvPeriod.text = toStringFromPeriod(data?.period!!)
+                            tvPeriod.text = toStringFromPeriod(data?.period ?: mapOf())
                             tvTagManage.text = toStatus(data?.status)
 
                             tvPerTimeTitle.visibility = View.VISIBLE
                             tvDose.visibility = View.VISIBLE
-                            tvDose.text = data.dose.toString()
+                            tvDose.text = data?.dose.toString()
                             tvUnitManage.visibility = View.VISIBLE
-                            tvUnitManage.text = toUnit(data.unit)
+                            tvUnitManage.text = toUnit(data?.unit)
                             tvRatioTitle.text = "剩餘藥量"
 
-                            tvRatioNum.text = "${data.stock}${toUnit(data?.unit)}"
-                            stockProgress(binding, data.stock.toInt(), data.dose.toInt())
+                            "${data?.stock}${toUnit(data?.unit)}".also { tvRatioNum.text = it }
+                            stockProgress(
+                                binding,
+                                (data?.stock ?: 0L).toInt(),
+                                (data?.dose ?: 0L).toInt()
+                            )
 
-                            tvUpdateTime.text = toStringFromTimeStamp(data.lastEditTime)
-                            tvCreatedTime.text = toStringFromTimeStamp(data.createdTime)
-                            tvEditorManage.text = database.getUser(data.editor!!).name
+                            tvUpdateTime.text = toStringFromTimeStamp(data?.lastEditTime)
+                            tvCreatedTime.text = toStringFromTimeStamp(data?.createdTime)
+                            tvEditorManage.text = database.getUser(data?.editor ?: "").name
 
                         }
 
@@ -93,17 +101,18 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
 
                             when (data?.executedTime?.isEmpty()) {
                                 true -> {
-                                    binding.tvTimeTitle.text = "設定時間(空)"
+                                    binding.tvTimeTitle.text =
+                                        context.getString(R.string.setTime_empty)
                                 }
                                 false -> {
-                                    binding.tvTimeTitle.text = "設定時間"
+                                    binding.tvTimeTitle.text = context.getString(R.string.setTime)
                                 }
                             }
 
                             rvTimeList.adapter = adapter
                             tvItemNameManage.text = toMeasureType(data?.type)
                             imItemIcon.setImageResource(setMeasureDrawable(data?.type))
-                            tvPeriod.text = "每天執行"
+                            tvPeriod.text = context.getString(R.string.executedTitle)
 
                             tvTagManage.text = toStatus(data?.status)
 
@@ -112,12 +121,12 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                             tvUnitManage.visibility = View.GONE
                             tvCreatedTime.text = toStringFromTimeStamp(data?.createdTime)
                             tvUpdateTime.text = toStringFromTimeStamp(data?.lastEditTime)
-                            tvRatioTitle.text = "剩餘天數"
-                            tvRatioNum.text = "無期限"
-                            tvStockDayUnit.text = "無期限"
+                            tvRatioTitle.text = context.getString(R.string.outDate)
+                            tvRatioNum.text = context.getString(R.string.unLimit)
+                            tvStockDayUnit.text = context.getString(R.string.unLimit)
                             pbStock.progress = 100
 
-                            tvEditorManage.text = database.getUser(data?.editor!!).name
+                            tvEditorManage.text = database.getUser(data?.editor?:"").name
 
                         }
 
@@ -129,30 +138,31 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
 
                             when (data?.executedTime?.isEmpty()) {
                                 true -> {
-                                    binding.tvTimeTitle.text = "設定時間(空)"
+                                    binding.tvTimeTitle.text =
+                                        context.getString(R.string.setTime_empty)
                                 }
                                 false -> {
-                                    binding.tvTimeTitle.text = "設定時間"
+                                    binding.tvTimeTitle.text = context.getString(R.string.setTime)
                                 }
                             }
 
                             rvTimeList.adapter = adapter
                             tvItemNameManage.text = toActivityType(data?.type)
                             imItemIcon.setImageResource(setActivityType(data?.type))
-                            tvPeriod.text = toStringFromPeriod(data?.period!!)
+                            tvPeriod.text = toStringFromPeriod(data?.period?: mapOf())
                             tvTagManage.text = toStatus(data?.status)
 
                             tvPerTimeTitle.visibility = View.GONE
                             tvDose.visibility = View.GONE
                             tvUnitManage.visibility = View.GONE
                             tvCreatedTime.text = toStringFromTimeStamp(data?.createdTime)
-                            tvUpdateTime.text = toStringFromTimeStamp(data.lastEditTime)
-                            tvRatioTitle.text = "剩餘天數"
-                            tvRatioNum.text = "無期限"
-                            tvStockDayUnit.text = "無期限"
+                            tvUpdateTime.text = toStringFromTimeStamp(data?.lastEditTime)
+                            tvRatioTitle.text = context.getString(R.string.outDate)
+                            tvRatioNum.text = context.getString(R.string.unLimit)
+                            tvStockDayUnit.text = context.getString(R.string.unLimit)
                             pbStock.progress = 100
 
-                            tvEditorManage.text = database.getUser(data.editor!!).name
+                            tvEditorManage.text = database.getUser(data?.editor?:"").name
 
                         }
 
@@ -164,20 +174,21 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
 
                             when (data?.executeTime?.isEmpty()) {
                                 true -> {
-                                    binding.tvTimeTitle.text = "設定時間(空)"
+                                    binding.tvTimeTitle.text =
+                                        context.getString(R.string.setTime_empty)
                                 }
                                 false -> {
-                                    binding.tvTimeTitle.text = "設定時間"
+                                    binding.tvTimeTitle.text = context.getString(R.string.setTime)
                                 }
                             }
 
                             rvTimeList.adapter = adapter
                             tvItemNameManage.text = toCareType(data?.type)
                             imItemIcon.setImageResource(R.drawable.stopwatch)
-                            tvPeriod.text = toStringFromPeriod(data?.period!!)
-                            tvRatioTitle.text = "剩餘天數"
-                            tvRatioNum.text = "無期限"
-                            tvStockDayUnit.text = "無期限"
+                            tvPeriod.text = toStringFromPeriod(data?.period ?: mapOf())
+                            tvRatioTitle.text = context.getString(R.string.outDate)
+                            tvRatioNum.text = context.getString(R.string.unLimit)
+                            tvStockDayUnit.text = context.getString(R.string.unLimit)
                             pbStock.progress = 100
                             tvTagManage.text = toStatus(data?.status)
 
@@ -186,9 +197,9 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                             tvUnitManage.visibility = View.GONE
 
                             tvCreatedTime.text = toStringFromTimeStamp(data?.createdTime)
-                            tvUpdateTime.text = toStringFromTimeStamp(data.lastEditTime)
+                            tvUpdateTime.text = toStringFromTimeStamp(data?.lastEditTime)
 
-                            tvEditorManage.text = database.getUser(data.editor!!).name
+                            tvEditorManage.text = database.getUser(data?.editor ?: "").name
 
                         }
                     }
@@ -220,7 +231,7 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
         binding.apply {
             val stillTime = stock / dose
             val context = PublicApplication.application.applicationContext
-            tvStockDayUnit.text = "可執行\n${stillTime}次"
+            "可執行\n${stillTime}次".also { tvStockDayUnit.text = it }
             pbStock.progress = stillTime
             when {
                 stillTime < 10 -> pbStock.setIndicatorColor(context.getColor(R.color.baby_pink))

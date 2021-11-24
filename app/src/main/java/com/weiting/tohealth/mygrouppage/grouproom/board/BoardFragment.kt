@@ -20,7 +20,7 @@ class BoardFragment() : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = BroadFragmentBinding.inflate(inflater, container, false)
         val group: Group = arguments?.get("group") as Group
         val factory =
@@ -29,7 +29,6 @@ class BoardFragment() : Fragment() {
         val adapter = BoardAdapter(viewModel)
 
         viewModel.boardLiveData.observe(viewLifecycleOwner) {
-//            Log.i("list", it.toString())
             if(it.isNotEmpty()){
                 adapter.submitList(it)
                 binding.apply {

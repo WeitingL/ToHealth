@@ -54,7 +54,7 @@ class TodayItemAdapter() :
             binding.apply {
                 tvName.text = drug?.drugName
                 imageView.setImageResource(setDrugDrawable(drug?.unit))
-                tvUnit.text = drug?.dose.toString() + toUnit(drug?.unit)
+                (drug?.dose.toString() + toUnit(drug?.unit)).also { tvUnit.text = it }
             }
         }
     }
@@ -94,7 +94,7 @@ class TodayItemAdapter() :
 
                 tvName.text = toCareType(care?.type)
                 imageView.setImageResource(R.drawable.stopwatch)
-                tvUnit.text = "提出人$editor"
+                "提出人$editor".also { tvUnit.text = it }
 
             }
         }
@@ -173,6 +173,5 @@ class TodayItemAdapter() :
     }
 
     //TODO Empty space need to add new things.
-
 
 }

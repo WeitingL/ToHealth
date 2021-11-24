@@ -11,9 +11,9 @@ import com.weiting.tohealth.toFooter
 import com.weiting.tohealth.toStringFromTimeStamp
 
 class BoardNotesAdapter(val onclickListener: DeleteOnclickListener) :
-    ListAdapter<Note, BoardNotesAdapter.NoteViewHolder>(Diffcallback) {
+    ListAdapter<Note, BoardNotesAdapter.NoteViewHolder>(DiffCallback) {
 
-    object Diffcallback : DiffUtil.ItemCallback<Note>() {
+    object DiffCallback : DiffUtil.ItemCallback<Note>() {
         override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean =
             oldItem === newItem
 
