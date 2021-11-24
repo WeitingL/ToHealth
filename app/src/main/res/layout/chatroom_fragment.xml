@@ -44,7 +44,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/cursor" />
+            app:srcCompat="@drawable/cursor"
+            android:contentDescription="@string/cd_sent_the_message" />
 
         <EditText
             android:id="@+id/etv_message"
@@ -56,6 +57,7 @@
             android:layout_marginBottom="8dp"
             android:background="@drawable/square_block"
             android:ems="10"
+            android:hint="@null"
             android:inputType="textPersonName"
             android:maxLength="60"
             android:maxLines="10"
@@ -64,7 +66,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/ib_sentMessage"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:importantForAutofill="no" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

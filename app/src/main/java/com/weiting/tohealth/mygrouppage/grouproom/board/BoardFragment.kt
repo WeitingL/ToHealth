@@ -33,12 +33,12 @@ class BoardFragment() : Fragment() {
                 adapter.submitList(it)
                 binding.apply {
                     lavNote.visibility = View.GONE
-                    textView12.visibility = View.GONE
+                    tvNothingToShow.visibility = View.GONE
                 }
             }else{
                 binding.apply {
                     lavNote.visibility = View.VISIBLE
-                    textView12.visibility = View.VISIBLE
+                    tvNothingToShow.visibility = View.VISIBLE
                 }
             }
         }

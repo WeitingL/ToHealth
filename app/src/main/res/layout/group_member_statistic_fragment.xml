@@ -28,10 +28,11 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/imageView5"
+                android:id="@+id/im_photo_statistic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/user_1" />
+                app:srcCompat="@drawable/user_1"
+                android:contentDescription="@string/cd_user_photo" />
         </androidx.cardview.widget.CardView>
 
         <TextView
@@ -39,7 +40,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="TextView"
             android:textAppearance="@style/title_text_bl"
             app:layout_constraintStart_toEndOf="@+id/cardView2"
             app:layout_constraintTop_toTopOf="@+id/cardView2" />
@@ -49,7 +49,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="TextView"
             android:textAppearance="@style/subTitle_text_bl"
             app:layout_constraintStart_toStartOf="@+id/tv_memberName_statistic"
             app:layout_constraintTop_toBottomOf="@+id/tv_memberName_statistic" />
@@ -69,22 +68,22 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="藥物紀錄" />
+            android:text="@string/DrugItem" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="測量記錄" />
+            android:text="@string/MeasureItem" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="活動項目" />
+            android:text="@string/ActivityItem" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="關懷項目" />
+            android:text="@string/CareItem" />
 
     </com.google.android.material.tabs.TabLayout>
 

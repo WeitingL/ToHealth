@@ -32,7 +32,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
 
         val use = Firebase.auth.currentUser
@@ -79,11 +79,11 @@ class HomeFragment : Fragment() {
                                 }
                                 Snackbar.make(
                                     binding.rvHomeCardView,
-                                    getString(R.string.itemskip_text),
+                                    getString(R.string.itemSkip_text),
                                     Snackbar.LENGTH_LONG
                                 )
                                     .setAction(
-                                        getString(R.string.itemswip_undo),
+                                        getString(R.string.itemSwipe_undo),
                                         View.OnClickListener {
                                             viewModel.undoSwipeToSkip()
                                             adapter.notifyItemRangeInserted(position - 1, 2)
@@ -128,11 +128,11 @@ class HomeFragment : Fragment() {
 
                                 Snackbar.make(
                                     binding.rvHomeCardView,
-                                    getString(R.string.itemskip_text),
+                                    getString(R.string.itemSkip_text),
                                     Snackbar.LENGTH_LONG
                                 )
                                     .setAction(
-                                        getString(R.string.itemswip_undo),
+                                        getString(R.string.itemSwipe_undo),
                                         View.OnClickListener {
                                             viewModel.undoSwipeToSkip()
                                             adapter.notifyItemRangeInserted(position - 1, 2)
@@ -176,11 +176,11 @@ class HomeFragment : Fragment() {
 
                                 Snackbar.make(
                                     binding.rvHomeCardView,
-                                    getString(R.string.itemskip_text),
+                                    getString(R.string.itemSkip_text),
                                     Snackbar.LENGTH_LONG
                                 )
                                     .setAction(
-                                        getString(R.string.itemswip_undo),
+                                        getString(R.string.itemSwipe_undo),
                                         View.OnClickListener {
                                             viewModel.undoSwipeToSkip()
                                             adapter.notifyItemRangeInserted(position - 1, 2)
@@ -223,11 +223,11 @@ class HomeFragment : Fragment() {
 
                                 Snackbar.make(
                                     binding.rvHomeCardView,
-                                    getString(R.string.itemskip_text),
+                                    getString(R.string.itemSkip_text),
                                     Snackbar.LENGTH_LONG
                                 )
                                     .setAction(
-                                        getString(R.string.itemswip_undo),
+                                        getString(R.string.itemSwipe_undo),
                                         View.OnClickListener {
                                             viewModel.undoSwipeToSkip()
                                             adapter.notifyItemRangeInserted(position - 1, 2)
@@ -275,11 +275,11 @@ class HomeFragment : Fragment() {
 
                                 Snackbar.make(
                                     binding.rvHomeCardView,
-                                    getString(R.string.itemfinished_text),
+                                    getString(R.string.itemFinished_text),
                                     Snackbar.LENGTH_LONG
                                 )
                                     .setAction(
-                                        getString(R.string.itemswip_undo),
+                                        getString(R.string.itemSwipe_undo),
                                         View.OnClickListener {
                                             viewModel.undoSwipeToLog()
                                             adapter.notifyItemRangeInserted(position - 1, 2)
@@ -333,11 +333,11 @@ class HomeFragment : Fragment() {
 
                                 Snackbar.make(
                                     binding.rvHomeCardView,
-                                    getString(R.string.itemfinished_text),
+                                    getString(R.string.itemFinished_text),
                                     Snackbar.LENGTH_LONG
                                 )
                                     .setAction(
-                                        getString(R.string.itemswip_undo),
+                                        getString(R.string.itemSwipe_undo),
                                         View.OnClickListener {
                                             viewModel.undoSwipeToLog()
                                             adapter.notifyItemRangeInserted(position - 1, 2)

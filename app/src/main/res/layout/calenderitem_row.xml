@@ -78,6 +78,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_delete_outline_24"
-        android:contentDescription="@string/delete_function" />
+        android:contentDescription="@string/cd_delete_function" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

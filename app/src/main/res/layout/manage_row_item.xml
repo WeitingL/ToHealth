@@ -24,14 +24,15 @@
             android:padding="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/pills" />
+            app:srcCompat="@drawable/pills"
+            android:contentDescription="@string/cd_item_icon" />
 
         <TextView
             android:id="@+id/tv_itemName_manage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="項目名稱"
+            android:text="@string/itemType"
             android:textAppearance="@style/title_text_bl"
             app:layout_constraintStart_toEndOf="@+id/im_itemIcon"
             app:layout_constraintTop_toTopOf="@+id/im_itemIcon" />
@@ -87,7 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="每次"
+            android:text="@string/perTimeTitle"
             android:textAppearance="@style/content_text_bl"
             app:layout_constraintStart_toStartOf="@+id/tv_period"
             app:layout_constraintTop_toBottomOf="@+id/tv_period" />
@@ -135,7 +136,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:text="上次編輯資訊"
+                android:text="@string/lastEditTitle"
                 android:textAppearance="@style/subTitle_text_bl"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_CreatedTime" />
@@ -157,7 +158,7 @@
                 android:id="@+id/tv_timeTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="設定時間"
+                android:text="@string/setTime"
                 android:textAppearance="@style/subTitle_text_bl"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -167,7 +168,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="項目起始時間"
+                android:text="@string/startTimeTitle"
                 android:textAppearance="@style/subTitle_text_bl"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rv_timeList" />
@@ -223,7 +224,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
-                        android:text="目前儲量"
+                        android:text="@string/stockTitle"
                         android:textAppearance="@style/content_text_bl"
                         app:layout_constraintBottom_toBottomOf="@+id/pb_stock"
                         app:layout_constraintEnd_toStartOf="@+id/pb_stock"
@@ -282,7 +283,7 @@
             android:layout_height="30sp"
             android:layout_marginEnd="8dp"
             android:background="@drawable/button_main_color"
-            android:text="編輯"
+            android:text="@string/editTitle"
             android:textAppearance="@style/content_text_bl"
             app:layout_constraintBottom_toBottomOf="@+id/im_itemIcon"
             app:layout_constraintEnd_toEndOf="parent" />

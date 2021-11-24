@@ -7,27 +7,27 @@
     tools:context="com.weiting.tohealth.mygrouppage.dialogs.QRCodeDialog">
 
     <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/im_qrCode"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/cd_qr_code"
+        app:layout_constraintEnd_toEndOf="@+id/tv_qrCodeTitle"
+        app:layout_constraintStart_toStartOf="@+id/tv_qrCodeTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tv_qrCodeTitle"
         app:srcCompat="@drawable/square_block" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/tv_qrCodeTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:text="群組條碼"
+        android:layout_marginTop="8dp"
+        android:text="@string/qrCodeTitle"
         android:textAppearance="@style/title_text_bl"
-        app:layout_constraintBottom_toTopOf="@+id/imageView8"
-        app:layout_constraintEnd_toEndOf="@+id/imageView8"
-        app:layout_constraintStart_toStartOf="@+id/imageView8" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

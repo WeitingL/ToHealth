@@ -25,7 +25,7 @@ class GroupMemberStatisticFragment : Fragment() {
         val tabLayout = binding.tabLayout
         binding.tvMemberNickNameStatistic.text = "聊天室暱稱: ${memberInfo.nickName}"
         binding.tvMemberNameStatistic.text = memberInfo.name
-        transferCircleImage(binding.imageView5, memberInfo.profilePhoto)
+        transferCircleImage(binding.imPhotoStatistic, memberInfo.profilePhoto)
 
         viewPager.isUserInputEnabled = false
         viewPager.adapter = MyStatisticAdapter(

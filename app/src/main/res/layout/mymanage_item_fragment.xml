@@ -28,7 +28,8 @@
         app:backgroundTint="@color/pink_brown"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_baseline_edit_24" />
+        app:srcCompat="@drawable/ic_baseline_edit_24"
+        android:contentDescription="@string/cd_add_new_things"/>
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lav_emptyItems"

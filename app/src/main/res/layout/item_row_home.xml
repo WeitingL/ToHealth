@@ -11,7 +11,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Aspirin"
         android:textAppearance="@style/subTitle_text_bl"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/imageView"
@@ -22,7 +21,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="1顆"
         android:textAppearance="@style/content_text_bl"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
@@ -42,7 +40,8 @@
         app:layout_constraintStart_toEndOf="@+id/im_swipeToCheckIcon"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/pills" />
+        app:srcCompat="@drawable/pills"
+        android:contentDescription="@string/cd_item_icon" />
 
     <ImageView
         android:id="@+id/im_swipeToCheckIcon"
@@ -53,7 +52,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_check_circle_outline_24" />
+        app:srcCompat="@drawable/ic_baseline_check_circle_outline_24"
+        android:contentDescription="@string/cd_check" />
 
     <ImageView
         android:id="@+id/im_swipeToSkipIcon"
@@ -65,7 +65,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_arrow_circle_down_24" />
+        app:srcCompat="@drawable/ic_baseline_arrow_circle_down_24"
+        android:contentDescription="@string/cd_skip" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

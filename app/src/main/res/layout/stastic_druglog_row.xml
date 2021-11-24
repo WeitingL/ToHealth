@@ -13,7 +13,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/success" />
+        app:srcCompat="@drawable/success"
+        android:contentDescription="@string/cd_status"/>
 
     <TextView
         android:id="@+id/tv_text"

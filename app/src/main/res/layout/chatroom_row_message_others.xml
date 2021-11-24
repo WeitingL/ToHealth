@@ -13,7 +13,8 @@
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/user_1" />
+        app:srcCompat="@drawable/user_1"
+        android:contentDescription="@string/cd_others_photo" />
 
     <TextView
         android:id="@+id/tv_othersMessage"

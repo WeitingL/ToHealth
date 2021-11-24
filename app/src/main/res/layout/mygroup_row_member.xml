@@ -16,7 +16,8 @@
         app:layout_constraintEnd_toEndOf="@+id/tv_member_name"
         app:layout_constraintStart_toStartOf="@+id/tv_member_name"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/user_1" />
+        app:srcCompat="@drawable/user_1"
+        android:contentDescription="@string/cd_user_photo" />
 
     <TextView
         android:id="@+id/tv_member_name"

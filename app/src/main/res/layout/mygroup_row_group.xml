@@ -20,7 +20,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="我最愛的家人"
             android:textAppearance="@style/title_text_bl"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,12 +31,12 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:textAppearance="@style/title_text_bl"
-            android:drawableRight="@drawable/ic_baseline_navigate_next_24"
-            android:text="進入群組"
+            android:text="@string/enterGroup"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_groupName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_groupName" />
+            app:layout_constraintTop_toTopOf="@+id/tv_groupName"
+            app:drawableRightCompat="@drawable/ic_baseline_navigate_next_24" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_group_memberList"
@@ -67,7 +66,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="AWSGOOD"
             app:layout_constraintStart_toStartOf="@+id/tv_groupName"
             app:layout_constraintTop_toBottomOf="@+id/tv_groupName" />
 
@@ -78,7 +76,8 @@
             android:layout_marginTop="8dp"
             android:background="@color/brown_black"
             android:paddingStart="8dp"
-            android:text="群組訊息"
+            android:paddingEnd="8dp"
+            android:text="@string/groupMessage"
             android:textAppearance="@style/subTitle_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -107,7 +106,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/tv_groupName"
             app:layout_constraintStart_toEndOf="@+id/tv_groupName"
             app:layout_constraintTop_toTopOf="@+id/tv_groupName"
-            app:srcCompat="@drawable/ic_baseline_qr_code_24" />
+            app:srcCompat="@drawable/ic_baseline_qr_code_24"
+            android:contentDescription="@string/cd_qr_code"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

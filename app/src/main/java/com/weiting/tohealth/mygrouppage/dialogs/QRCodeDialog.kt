@@ -30,7 +30,7 @@ class QRCodeDialog : DialogFragment() {
                 }
             }
         }
-        binding.imageView8.setImageBitmap(imageRQCode)
+        binding.imQrCode.setImageBitmap(imageRQCode)
 
         return binding.root
     }
@@ -38,8 +38,8 @@ class QRCodeDialog : DialogFragment() {
     override fun onStart() {
         super.onStart()
 
-        val width = (resources.displayMetrics.widthPixels * 0.8).toInt()
-        dialog!!.window?.setLayout(width, width)
+        val width = (resources.displayMetrics.widthPixels * 0.2).toInt()
+        dialog!!.window?.setLayout(width * 4, width * 5)
 
     }
 

@@ -202,7 +202,8 @@
             android:visibility="@{viewModel.isTheNewbie ? View.GONE : View.VISIBLE}"
             app:backgroundTint="@color/pink_brown"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/cd_fast_add" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

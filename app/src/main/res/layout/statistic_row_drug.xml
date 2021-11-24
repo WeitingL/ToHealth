@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="項目名稱"
+            android:text="@string/itemType"
             android:textAppearance="@style/title_text_bl"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -36,63 +36,51 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2"
+            app:layout_constraintTop_toBottomOf="@+id/im_checked_ex_statistic"
             tools:listitem="@layout/statistic_drug_time_row" />
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:drawableRight="@drawable/ic_baseline_navigate_next_24"
-            android:gravity="center"
-            android:text="詳細資訊"
-            android:visibility="invisible"
-            android:textAppearance="@style/subTitle_text_bl"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_itemName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_itemName" />
-
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/im_checked_ex_statistic"
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="@+id/tv_itemName"
             app:layout_constraintTop_toBottomOf="@+id/tv_itemName"
-            app:srcCompat="@drawable/circle_check_green" />
+            app:srcCompat="@drawable/circle_check_green"
+            android:contentDescription="@string/cd_check" />
 
         <TextView
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="預期之內完成了!"
+            android:text="@string/finished"
             android:textAppearance="@style/content_text_bl"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-            app:layout_constraintStart_toEndOf="@+id/imageView2"
-            app:layout_constraintTop_toTopOf="@+id/imageView2" />
+            app:layout_constraintBottom_toBottomOf="@+id/im_checked_ex_statistic"
+            app:layout_constraintStart_toEndOf="@+id/im_checked_ex_statistic"
+            app:layout_constraintTop_toTopOf="@+id/im_checked_ex_statistic" />
 
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/im_fastAdd_ed_statistic"
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:layout_marginStart="16dp"
             app:layout_constraintBottom_toBottomOf="@+id/textView6"
             app:layout_constraintStart_toEndOf="@+id/textView6"
             app:layout_constraintTop_toTopOf="@+id/textView6"
-            app:srcCompat="@drawable/circle_check_blue" />
+            app:srcCompat="@drawable/circle_check_blue"
+            android:contentDescription="@string/cd_fast_add"/>
 
         <TextView
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="快速完成"
+            android:text="@string/fastAdd"
             android:textAppearance="@style/content_text_bl"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView4"
-            app:layout_constraintStart_toEndOf="@+id/imageView4"
-            app:layout_constraintTop_toTopOf="@+id/imageView4" />
+            app:layout_constraintBottom_toBottomOf="@+id/im_fastAdd_ed_statistic"
+            app:layout_constraintStart_toEndOf="@+id/im_fastAdd_ed_statistic"
+            app:layout_constraintTop_toTopOf="@+id/im_fastAdd_ed_statistic" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

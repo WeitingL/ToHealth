@@ -61,5 +61,6 @@
         android:src="@drawable/ic_baseline_qr_code_scanner_24"
         app:layout_constraintBottom_toBottomOf="@+id/til_GroupName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/til_GroupName" />
+        app:layout_constraintTop_toTopOf="@+id/til_GroupName"
+        android:contentDescription="@string/cd_scan_qr_code" />
 </androidx.constraintlayout.widget.ConstraintLayout>

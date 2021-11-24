@@ -29,10 +29,11 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/im_photo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/user_1" />
+                app:srcCompat="@drawable/user_1"
+                android:contentDescription="@string/cd_user_photo" />
         </androidx.cardview.widget.CardView>
 
         <TextView
@@ -40,7 +41,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="TextView"
             android:textAppearance="@style/title_text_bl"
             app:layout_constraintBottom_toBottomOf="@+id/cardView"
             app:layout_constraintStart_toEndOf="@+id/cardView"
@@ -52,7 +52,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="TextView"
             android:textAppearance="@style/subTitle_text_bl"
             app:layout_constraintStart_toStartOf="@+id/tv_memberName_manage"
             app:layout_constraintTop_toBottomOf="@+id/tv_memberName_manage" />
@@ -66,7 +65,8 @@
             android:src="@drawable/ic_baseline_edit_24_black"
             app:layout_constraintBottom_toBottomOf="@+id/tv_memberNickName"
             app:layout_constraintStart_toEndOf="@+id/tv_memberNickName"
-            app:layout_constraintTop_toTopOf="@+id/tv_memberNickName" />
+            app:layout_constraintTop_toTopOf="@+id/tv_memberNickName"
+            android:contentDescription="@string/cd_edit_nick_name" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
