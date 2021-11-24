@@ -10,6 +10,18 @@
     <string name="itemfinished_text">完成</string>
     <string name="newbieSlogan_homepage">您還沒有項目喔!\n快去項目管理中新增項目吧!</string>
     <string name="finished_todayList">你好棒!! 今天的健康項目都做完了!</string>
+    <string name="suspendDayTitle">暫停幾天</string>
+    <string name="executeDayTitle">執行幾天</string>
+    <string name="weekTitle">禮拜</string>
+    <string name="dayTitle">天</string>
+    <string name="addSuccessToast">新增完成!</string>
+    <string name="SomethingEmpty">有東西還沒填喔!</string>
+    <string name="addRepeatTime">重複添加囉!</string>
+    <string name="DrugItem">藥品品項</string>
+    <string name="ActivityItem">活動項目</string>
+    <string name="MeasureItem">測量項目</string>
+    <string name="CareItem">關懷項目</string>
+    <string name="upDateSuccess">已成功更新!</string>
 
     <string-array name="ItemType">
         <item>藥品</item>

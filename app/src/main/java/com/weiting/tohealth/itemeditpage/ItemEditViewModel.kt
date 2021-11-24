@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.Timestamp
 import com.weiting.tohealth.PublicApplication
+import com.weiting.tohealth.R
 import com.weiting.tohealth.data.*
 import com.weiting.tohealth.databinding.ItemEditFragmentBinding
 import com.weiting.tohealth.toDateFromMilliTime
@@ -70,7 +71,7 @@ class ItemEditViewModel(
         if ((c.get(Calendar.HOUR_OF_DAY) * 100 + c.get(Calendar.MINUTE)) in timeList) {
             Toast.makeText(
                 PublicApplication.application.applicationContext,
-                "重複添加囉!",
+                PublicApplication.application.applicationContext.getString(R.string.addRepeatTime),
                 Toast.LENGTH_LONG
             ).show()
         } else {
@@ -110,7 +111,7 @@ class ItemEditViewModel(
                         "N" to binding.spOngoingDay.selectedItemPosition,
                         "X" to binding.spSuspendDay.selectedItemPosition
                     ),
-                    executedTime = timePointSet.value?: listOf(),
+                    executedTime = timePointSet.value ?: listOf(),
                     lastEditTime = Timestamp.now(),
                     stock = binding.etvStock.text.toString().toFloat(),
                     editor = UserManager.UserInformation.id,

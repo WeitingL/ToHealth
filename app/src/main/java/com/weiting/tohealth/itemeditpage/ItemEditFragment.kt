@@ -1,8 +1,6 @@
 package com.weiting.tohealth.itemeditpage
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +20,13 @@ import com.weiting.tohealth.factory.ItemEditViewModelFactory
 import com.weiting.tohealth.mymanagepage.ManageType
 import com.weiting.tohealth.timeset.EditTimeType
 import com.weiting.tohealth.toTimeFromTimeStamp
+
+const val GET_TIME = "GetTime"
+const val GET_DATE = "GetDate"
+const val TIME = "Time"
+const val DATE = "Date"
+
+
 
 class ItemEditFragment : Fragment() {
 
@@ -177,7 +182,7 @@ class ItemEditFragment : Fragment() {
                     }
                     1 -> {
                         tvOngoingDay.visibility = View.VISIBLE
-                        tvOngoingDay.text = "天"
+                        tvOngoingDay.text = getString(R.string.dayTitle)
                         spOngoingDay.visibility = View.VISIBLE
                         spOngoingDay.adapter = ArrayAdapter.createFromResource(
                             PublicApplication.application.applicationContext,
@@ -190,7 +195,7 @@ class ItemEditFragment : Fragment() {
 
                     2 -> {
                         tvOngoingDay.visibility = View.VISIBLE
-                        tvOngoingDay.text = "禮拜"
+                        tvOngoingDay.text = getString(R.string.weekTitle)
                         spOngoingDay.visibility = View.VISIBLE
                         spOngoingDay.adapter = ArrayAdapter.createFromResource(
                             PublicApplication.application.applicationContext,
@@ -202,7 +207,7 @@ class ItemEditFragment : Fragment() {
                     }
                     3 -> {
                         tvOngoingDay.visibility = View.VISIBLE
-                        tvOngoingDay.text = "執行幾天"
+                        tvOngoingDay.text = getString(R.string.executeDayTitle)
                         spOngoingDay.visibility = View.VISIBLE
                         spOngoingDay.adapter = ArrayAdapter.createFromResource(
                             PublicApplication.application.applicationContext,
@@ -210,7 +215,7 @@ class ItemEditFragment : Fragment() {
                             android.R.layout.simple_spinner_dropdown_item
                         )
                         tvSuspendDay.visibility = View.VISIBLE
-                        tvSuspendDay.text = "暫停幾天"
+                        tvSuspendDay.text = getString(R.string.suspendDayTitle)
                         spSuspendDay.visibility = View.VISIBLE
                     }
                     4 -> {
@@ -225,7 +230,6 @@ class ItemEditFragment : Fragment() {
 
         //Get timeSet spinner selected to change views
         viewModel.timePointSet.observe(viewLifecycleOwner) {
-//            Log.i("DataDate", it.toString())
             val adapter = TimeSetAdapter(
                 TimeSetAdapter.OnclickListener {
                     viewModel.removeTimeSet(it)
@@ -242,12 +246,12 @@ class ItemEditFragment : Fragment() {
             binding.tvFirstDateSelected.text = it
         }
 
-        setFragmentResultListener("GetTime") { requestKey, bundle ->
-            viewModel.getTimeSet(bundle.getLong("Time"))
+        setFragmentResultListener(GET_TIME) { requestKey, bundle ->
+            viewModel.getTimeSet(bundle.getLong(TIME))
         }
 
-        setFragmentResultListener("GetDate") { requestKey, bundle ->
-            viewModel.getDateSet(bundle.getLong("Date"))
+        setFragmentResultListener(GET_DATE) { requestKey, bundle ->
+            viewModel.getDateSet(bundle.getLong(DATE))
         }
 
         binding.btTimeSet.setOnClickListener {
@@ -271,10 +275,10 @@ class ItemEditFragment : Fragment() {
                 true -> {
                     viewModel.postData(binding)
                     viewModel.startSetAlarmForTodoList()
-                    Toast.makeText(context, "新增完成!", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, getString(R.string.addSuccessToast), Toast.LENGTH_LONG).show()
                     findNavController().popBackStack()
                 }
-                false -> Toast.makeText(context, "有東西還沒填喔!", Toast.LENGTH_LONG).show()
+                false -> Toast.makeText(context, getString(R.string.SomethingEmpty), Toast.LENGTH_LONG).show()
             }
         }
 
@@ -340,7 +344,5 @@ class ItemEditFragment : Fragment() {
             }
             else -> true
         }
-
-
     }
 }

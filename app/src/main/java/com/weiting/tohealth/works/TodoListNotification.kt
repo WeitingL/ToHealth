@@ -13,6 +13,8 @@ import com.weiting.tohealth.*
 import com.weiting.tohealth.data.*
 import com.weiting.tohealth.util.ItemArranger
 
+const val CHANNEL_ID = "toHealth"
+
 class TodoListNotification {
 
     private val context = PublicApplication.application.applicationContext
@@ -81,8 +83,8 @@ class TodoListNotification {
         context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     private val channel = NotificationChannel(
-        "toHealth",
-        "toHealth",
+        CHANNEL_ID,
+        CHANNEL_ID,
         NotificationManager.IMPORTANCE_HIGH
     )
     private val mainIntent = Intent(context, MainActivity::class.java)
@@ -94,7 +96,7 @@ class TodoListNotification {
 
         when (itemsDataType) {
             is Drug -> {
-                val notification = NotificationCompat.Builder(context, "toHealth")
+                val notification = NotificationCompat.Builder(context, CHANNEL_ID)
                     .setSmallIcon(R.drawable.hospital_sign)
                     .setContentTitle("已經${toTimeFromTimeStamp(Timestamp.now())}  該吃藥囉!")
                     .setContentText(
@@ -108,7 +110,7 @@ class TodoListNotification {
             }
 
             is Measure -> {
-                val notification = NotificationCompat.Builder(context, "toHealth")
+                val notification = NotificationCompat.Builder(context, CHANNEL_ID)
                     .setSmallIcon(R.drawable.hospital_sign)
                     .setContentTitle("已經${toTimeFromTimeStamp(Timestamp.now())}囉!")
                     .setContentText(
@@ -122,7 +124,7 @@ class TodoListNotification {
             }
 
             is Care -> {
-                val notification = NotificationCompat.Builder(context, "toHealth")
+                val notification = NotificationCompat.Builder(context, CHANNEL_ID)
                     .setSmallIcon(R.drawable.hospital_sign)
                     .setContentTitle("已經${toTimeFromTimeStamp(Timestamp.now())}囉!")
                     .setContentText(
@@ -135,7 +137,7 @@ class TodoListNotification {
                 notificationManager.notify(timestamp.nanoseconds + 2, notification)
             }
             is Activity -> {
-                val notification = NotificationCompat.Builder(context, "toHealth")
+                val notification = NotificationCompat.Builder(context, CHANNEL_ID)
                     .setSmallIcon(R.drawable.hospital_sign)
                     .setContentTitle("已經${toTimeFromTimeStamp(Timestamp.now())}囉!")
                     .setContentText(

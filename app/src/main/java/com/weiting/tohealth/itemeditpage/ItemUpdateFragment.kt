@@ -47,7 +47,7 @@ class ItemUpdateFragment : Fragment() {
         binding.apply {
             when (manageType) {
                 ManageType.DRUG -> {
-                    tvItemTypeTitleUpdate.text = "藥品品項"
+                    tvItemTypeTitleUpdate.text = getString(R.string.DrugItem)
                     tvItemNameUpdate.text = itemData.DrugData?.drugName
                     tvStartTimeUpdate.text = toDateFromTimeStamp(itemData.DrugData?.startDate)
                     spUnitUpdate.setSelection(itemData.DrugData?.unit!!)
@@ -68,7 +68,7 @@ class ItemUpdateFragment : Fragment() {
                 }
 
                 ManageType.ACTIVITY -> {
-                    tvItemTypeTitleUpdate.text = "活動項目"
+                    tvItemTypeTitleUpdate.text = getString(R.string.ActivityItem)
                     tvItemNameUpdate.text = toActivityType(itemData.ActivityData?.type)
                     tvStartTimeUpdate.text = toDateFromTimeStamp(itemData.ActivityData?.startDate)
                     clUnitUpdate.visibility = View.GONE
@@ -83,7 +83,7 @@ class ItemUpdateFragment : Fragment() {
                 }
 
                 ManageType.MEASURE -> {
-                    tvItemTypeTitleUpdate.text = "測量項目"
+                    tvItemTypeTitleUpdate.text = getString(R.string.MeasureItem)
                     tvItemNameUpdate.text = toMeasureType(itemData.MeasureData?.type)
                     tvStartTimeUpdate.text = toDateFromTimeStamp(itemData.MeasureData?.createdTime)
                     clUnitUpdate.visibility = View.GONE
@@ -95,7 +95,7 @@ class ItemUpdateFragment : Fragment() {
                 }
 
                 ManageType.CARE -> {
-                    tvItemTypeTitleUpdate.text = "關懷項目"
+                    tvItemTypeTitleUpdate.text = getString(R.string.CareItem)
                     tvItemNameUpdate.text = toCareType(itemData.CareData?.type)
                     tvStartTimeUpdate.text = toDateFromTimeStamp(itemData.CareData?.startDate)
                     tvOriginPeriod.text =
@@ -136,7 +136,7 @@ class ItemUpdateFragment : Fragment() {
                     2 -> {
                         tvOngoingDayUpdate.visibility = View.VISIBLE
                         spOngoingDayUpdate.visibility = View.VISIBLE
-                        tvOngoingDayUpdate.text = "禮拜日"
+                        tvOngoingDayUpdate.text = getString(R.string.weekTitle)
                         spOngoingDayUpdate.adapter = ArrayAdapter.createFromResource(
                             PublicApplication.application.applicationContext,
                             R.array.week,
@@ -154,7 +154,7 @@ class ItemUpdateFragment : Fragment() {
                     3 -> {
                         tvOngoingDayUpdate.visibility = View.VISIBLE
                         spOngoingDayUpdate.visibility = View.VISIBLE
-                        tvOngoingDayUpdate.text = "執行幾天"
+                        tvOngoingDayUpdate.text = getString(R.string.executeDayTitle)
                         spOngoingDayUpdate.adapter = ArrayAdapter.createFromResource(
                             PublicApplication.application.applicationContext,
                             R.array.cycle_day,
@@ -163,7 +163,7 @@ class ItemUpdateFragment : Fragment() {
 
                         tvSuspendDayUpdate.visibility = View.VISIBLE
                         spSuspendDayUpdate.visibility = View.VISIBLE
-                        tvSuspendDayUpdate.text = "暫停幾天"
+                        tvSuspendDayUpdate.text = getString(R.string.suspendDayTitle)
                         spSuspendDayUpdate.adapter = ArrayAdapter.createFromResource(
                             PublicApplication.application.applicationContext,
                             R.array.cycle_day,
@@ -214,7 +214,7 @@ class ItemUpdateFragment : Fragment() {
         binding.btUpdateItem.setOnClickListener {
             viewModel.updateItem(binding)
             viewModel.startSetAlarmForTodoList()
-            Toast.makeText(context, "已成功更新!", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, getString(R.string.upDateSuccess), Toast.LENGTH_LONG).show()
             findNavController().popBackStack()
         }
 
@@ -226,8 +226,8 @@ class ItemUpdateFragment : Fragment() {
             timeSetAdapter.submitList(it)
             binding.rvTimeChoseUpdate.adapter = timeSetAdapter
         }
-        setFragmentResultListener("GetTime") { requestKey, bundle ->
-            viewModel.getTimeSet(bundle.getLong("Time"))
+        setFragmentResultListener(GET_TIME) { requestKey, bundle ->
+            viewModel.getTimeSet(bundle.getLong(TIME))
         }
         binding.btTimeSetUpdate.setOnClickListener {
             findNavController().navigate(
@@ -251,20 +251,18 @@ class ItemUpdateFragment : Fragment() {
                     when (itemData.DrugData?.period?.get("type")) {
                         1 -> {
                             spOngoingDayUpdate.setSelection(itemData.DrugData.period["N"]!!)
-                            tvOriginN.text = "原先設定: ${toDay(itemData.DrugData.period["N"]!!)}"
+                            "原先設定: ${toDay(itemData.DrugData.period["N"]!!)}".also { tvOriginN.text = it }
                         }
                         2 -> {
                             spOngoingDayUpdate.setSelection(itemData.DrugData.period["N"]!!)
-                            tvOriginN.text = "原先設定: ${toWeek(itemData.DrugData.period["N"]!!)}"
+                            "原先設定: ${toWeek(itemData.DrugData.period["N"]!!)}".also { tvOriginN.text = it }
                         }
                         3 -> {
                             spOngoingDayUpdate.setSelection(itemData.DrugData.period["N"]!!)
-                            tvOriginN.text =
-                                "原先設定: ${toCycleValue(itemData.DrugData.period["N"]!!)}"
+                            "原先設定: ${toCycleValue(itemData.DrugData.period["N"]!!)}".also { tvOriginN.text = it }
 
                             spSuspendDayUpdate.setSelection(itemData.DrugData.period["X"]!!)
-                            tvOriginX.text =
-                                "原先設定: ${toCycleValue(itemData.DrugData.period["X"]!!)}"
+                            "原先設定: ${toCycleValue(itemData.DrugData.period["X"]!!)}".also { tvOriginX.text = it }
                         }
                     }
                 }
@@ -272,20 +270,18 @@ class ItemUpdateFragment : Fragment() {
                     when (itemData.ActivityData?.period?.get("type")) {
                         1 -> {
                             spOngoingDayUpdate.setSelection(itemData.ActivityData.period["N"]!!)
-                            tvOriginN.text = "原先設定: ${toDay(itemData.ActivityData.period["N"]!!)}"
+                            "原先設定: ${toDay(itemData.ActivityData.period["N"]!!)}".also { tvOriginN.text = it }
                         }
                         2 -> {
                             spOngoingDayUpdate.setSelection(itemData.ActivityData.period["N"]!!)
-                            tvOriginN.text = "原先設定: ${toWeek(itemData.ActivityData.period["N"]!!)}"
+                            "原先設定: ${toWeek(itemData.ActivityData.period["N"]!!)}".also { tvOriginN.text = it }
                         }
                         3 -> {
                             spOngoingDayUpdate.setSelection(itemData.ActivityData.period["N"]!!)
-                            tvOriginN.text =
-                                "原先設定: ${toCycleValue(itemData.ActivityData.period["N"]!!)}"
+                            "原先設定: ${toCycleValue(itemData.ActivityData.period["N"]!!)}".also { tvOriginN.text = it }
 
                             spSuspendDayUpdate.setSelection(itemData.ActivityData.period["X"]!!)
-                            tvOriginX.text =
-                                "原先設定: ${toCycleValue(itemData.ActivityData.period["X"]!!)}"
+                            "原先設定: ${toCycleValue(itemData.ActivityData.period["X"]!!)}".also { tvOriginX.text = it }
                         }
                     }
                 }
@@ -293,20 +289,18 @@ class ItemUpdateFragment : Fragment() {
                     when (itemData.CareData?.period?.get("type")) {
                         1 -> {
                             spOngoingDayUpdate.setSelection(itemData.CareData.period["N"]!!)
-                            tvOriginN.text = "原先設定: ${toDay(itemData.CareData.period["N"]!!)}"
+                            "原先設定: ${toDay(itemData.CareData.period["N"]!!)}".also { tvOriginN.text = it }
                         }
                         2 -> {
                             spOngoingDayUpdate.setSelection(itemData.CareData.period["N"]!!)
-                            tvOriginN.text = "原先設定: ${toWeek(itemData.CareData.period["N"]!!)}"
+                            "原先設定: ${toWeek(itemData.CareData.period["N"]!!)}".also { tvOriginN.text = it }
                         }
                         3 -> {
                             spOngoingDayUpdate.setSelection(itemData.CareData.period["N"]!!)
-                            tvOriginN.text =
-                                "原先設定: ${toCycleValue(itemData.CareData.period["N"]!!)}"
+                            "原先設定: ${toCycleValue(itemData.CareData.period["N"]!!)}".also { tvOriginN.text = it }
 
                             spSuspendDayUpdate.setSelection(itemData.CareData.period["X"]!!)
-                            tvOriginX.text =
-                                "原先設定: ${toCycleValue(itemData.CareData.period["X"]!!)}"
+                            "原先設定: ${toCycleValue(itemData.CareData.period["X"]!!)}".also { tvOriginX.text = it }
                         }
                     }
                 }

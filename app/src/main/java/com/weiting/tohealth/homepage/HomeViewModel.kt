@@ -49,7 +49,8 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
 
         viewModelScope.launch {
             if (Firebase.auth.currentUser != null)
-            UserManager.UserInformation = firebaseDataRepository.getUser(UserManager.UserInformation.id!!)
+                UserManager.UserInformation =
+                    firebaseDataRepository.getUser(UserManager.UserInformation.id!!)
         }
 
     }
@@ -96,11 +97,14 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
 
                     //Get all logs today.
                     drug.drugLogs =
-                        firebaseDataRepository.getDrugRecord(drug.id!!, Timestamp.now()).filter {
-                            getTimeStampToDateInt(it.createdTime!!) == getTimeStampToDateInt(
-                                Timestamp.now()
-                            )
-                        }
+                        firebaseDataRepository.getDrugRecord(drug.id ?: "", Timestamp.now())
+                            .filter {
+                                getTimeStampToDateInt(
+                                    it.createdTime ?: Timestamp.now()
+                                ) == getTimeStampToDateInt(
+                                    Timestamp.now()
+                                )
+                            }
 
                     drug.drugLogs.forEach { drugLog ->
                         todayLogCreateTimeIntList.add(drugLog.timeTag!!)
@@ -137,6 +141,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                             } else {
                                 _completedTask.value = _completedTask.value?.plus(1)
                             }
+
                         }
                     }
                 }
