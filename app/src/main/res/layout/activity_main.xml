@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <fragment
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/myNavHostFragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="0dp"
@@ -50,7 +50,7 @@
             navigationDestinationWithToolBar="@{viewModel.navigationDestination}"
             android:layout_width="0dp"
             android:layout_height="60dp"
-            android:background="@color/light_brown"
+            android:background="@color/pink_brown"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             app:layout_constraintEnd_toEndOf="parent"

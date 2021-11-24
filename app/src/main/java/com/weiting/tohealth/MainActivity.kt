@@ -15,6 +15,8 @@ import android.view.View
 import android.widget.AdapterView
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.Timestamp
@@ -53,7 +55,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val navController = this.findNavController(R.id.myNavHostFragment)
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.myNavHostFragment) as NavHostFragment
+        val navController = navHostFragment.navController
         binding.bottomNavigationView.setupWithNavController(navController)
 
         binding.imMoreMotification.setOnClickListener {
