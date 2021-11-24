@@ -19,7 +19,7 @@ import com.weiting.tohealth.databinding.ItemEditFragmentBinding
 import com.weiting.tohealth.factory.ItemEditViewModelFactory
 import com.weiting.tohealth.mymanagepage.ManageType
 import com.weiting.tohealth.timeset.*
-import com.weiting.tohealth.toTimeFromTimeStamp
+import com.weiting.tohealth.util.Util.toTimeFromTimeStamp
 
 class ItemEditFragment : Fragment() {
 

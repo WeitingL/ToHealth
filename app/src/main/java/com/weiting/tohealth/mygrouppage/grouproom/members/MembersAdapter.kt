@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.data.Member
 import com.weiting.tohealth.databinding.MemberRowBinding
-import com.weiting.tohealth.transferCircleImage
+import com.weiting.tohealth.util.Util.transferCircleImage
 
 class MembersAdapter(val onClickListener: EditOnclickListener, val onclickListener: ViewOnclickListener) :
     ListAdapter<Member, MembersAdapter.MemberViewHolder>(DiffCallback) {

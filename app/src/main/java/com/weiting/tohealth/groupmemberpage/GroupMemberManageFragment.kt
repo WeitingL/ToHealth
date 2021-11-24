@@ -12,7 +12,7 @@ import com.weiting.tohealth.data.User
 import com.weiting.tohealth.data.UserManager
 import com.weiting.tohealth.databinding.GroupMemberManagementFragmentBinding
 import com.weiting.tohealth.mymanagepage.MyManageAdapter
-import com.weiting.tohealth.transferCircleImage
+import com.weiting.tohealth.util.Util.transferCircleImage
 
 class GroupMemberManageFragment : Fragment() {
 

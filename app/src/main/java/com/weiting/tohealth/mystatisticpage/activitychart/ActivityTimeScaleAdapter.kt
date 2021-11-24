@@ -8,8 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.databinding.StatisticDrugTimeRowBinding
 import com.weiting.tohealth.mystatisticpage.ResultInDate
 import com.weiting.tohealth.mystatisticpage.drugchart.DrugResultScaleAdapter
-import com.weiting.tohealth.mystatisticpage.drugchart.DrugTimeScaleAdapter
-import com.weiting.tohealth.toDateWithoutYearFromTimeStamp
+import com.weiting.tohealth.util.Util.toDateWithoutYearFromTimeStamp
 
 class ActivityTimeScaleAdapter :
     ListAdapter<ResultInDate, ActivityTimeScaleAdapter.DateTimeLineViewHolder>(DiffCallback) {

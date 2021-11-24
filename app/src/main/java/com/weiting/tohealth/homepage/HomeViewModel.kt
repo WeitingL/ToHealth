@@ -8,6 +8,9 @@ import com.weiting.tohealth.*
 import com.weiting.tohealth.data.*
 import com.weiting.tohealth.util.ItemArranger
 import com.weiting.tohealth.util.NotificationGenerator
+import com.weiting.tohealth.util.Util.getTimeStampToDateInt
+import com.weiting.tohealth.util.Util.getTimeStampToTimeInt
+import com.weiting.tohealth.util.Util.toTimeFromTimeStamp
 import kotlinx.coroutines.*
 
 class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : ViewModel(),

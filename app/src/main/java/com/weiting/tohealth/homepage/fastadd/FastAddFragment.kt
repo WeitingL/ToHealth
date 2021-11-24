@@ -15,7 +15,7 @@ import com.weiting.tohealth.data.ActivityLog
 import com.weiting.tohealth.data.DrugLog
 import com.weiting.tohealth.databinding.FastAddFragmentBinding
 import com.weiting.tohealth.factory.FastAddViewModelFactory
-import com.weiting.tohealth.getTimeStampToTimeInt
+import com.weiting.tohealth.util.Util.getTimeStampToTimeInt
 
 class FastAddFragment : Fragment() {
     override fun onCreateView(

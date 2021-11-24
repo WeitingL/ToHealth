@@ -59,7 +59,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/tv_unit_stock_update"
                 app:layout_constraintStart_toEndOf="@+id/tv_stock_edit_update"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:importantForAutofill="no" />
 
             <TextView
                 android:id="@+id/tv_stock_edit_update"
@@ -268,7 +269,8 @@
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toEndOf="@+id/tv_dose_edit_update"
                 app:layout_constraintTop_toBottomOf="@+id/sp_unit_update"
-                app:layout_constraintVertical_bias="0.875" />
+                app:layout_constraintVertical_bias="0.875"
+                android:importantForAutofill="no" />
 
             <TextView
                 android:id="@+id/tv_originUnit"

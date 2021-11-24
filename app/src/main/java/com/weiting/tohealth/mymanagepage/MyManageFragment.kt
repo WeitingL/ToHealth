@@ -34,10 +34,10 @@ class MyManageFragment : Fragment(R.layout.fragment_mymanage) {
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             when (position) {
-                0 -> tab.text = "藥物項目"
-                1 -> tab.text = "測量項目"
-                2 -> tab.text = "活動項目"
-                3 -> tab.text = "關懷項目"
+                0 -> tab.text = context?.getString(R.string.DrugItem)
+                1 -> tab.text = context?.getString(R.string.MeasureItem)
+                2 -> tab.text = context?.getString(R.string.ActivityItem)
+                3 -> tab.text = context?.getString(R.string.CareItem)
             }
         }.attach()
 

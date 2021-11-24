@@ -2,10 +2,10 @@ package com.weiting.tohealth.mystatisticpage.drugchart
 
 import com.google.firebase.Timestamp
 import com.weiting.tohealth.data.Drug
-import com.weiting.tohealth.getTimeStampToDateInt
 import com.weiting.tohealth.mystatisticpage.LogItem
 import com.weiting.tohealth.mystatisticpage.ResultInDate
-import com.weiting.tohealth.toTimeFromTimeStamp
+import com.weiting.tohealth.util.Util.getTimeStampToDateInt
+import com.weiting.tohealth.util.Util.toTimeFromTimeStamp
 
 class AnalyzeDrugLog {
 
@@ -32,7 +32,6 @@ class AnalyzeDrugLog {
             resultInDateList.add(ResultInDate(date = allDateInTimestamp[index], resultList))
             resultList = mutableListOf()
         }
-//        Log.i("data", "${LogItem.DrugLogItem(drug.drugName!!, resultInDateList)}")
         return LogItem.DrugLogItem(drug.drugName!!, resultInDateList)
     }
 
@@ -41,7 +40,6 @@ class AnalyzeDrugLog {
             if (getTimeStampToDateInt(it.createdTime!!) !in allDateInInt) {
                 allDateInInt.add(getTimeStampToDateInt(it.createdTime))
                 allDateInTimestamp.add(it.createdTime)
-//                Log.i("data", allDateInInt.toString())
             }
         }
     }

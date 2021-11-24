@@ -7,9 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.databinding.StatisticDrugTimeRowBinding
 import com.weiting.tohealth.mystatisticpage.ResultInDate
-import com.weiting.tohealth.toDateFromTimeStamp
-import com.weiting.tohealth.toDateWithoutYearFromTimeStamp
-import com.weiting.tohealth.toTimeFromTimeStamp
+import com.weiting.tohealth.util.Util.toDateWithoutYearFromTimeStamp
 
 class DrugTimeScaleAdapter :
     ListAdapter<ResultInDate, DrugTimeScaleAdapter.DateTimeLineViewHolder>(DiffCallback) {

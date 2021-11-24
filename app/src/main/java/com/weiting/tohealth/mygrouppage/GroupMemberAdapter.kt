@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.data.Member
 import com.weiting.tohealth.databinding.MygroupRowMemberBinding
-import com.weiting.tohealth.transferCircleImage
+import com.weiting.tohealth.util.Util.transferCircleImage
 
 
 class GroupMemberAdapter() : ListAdapter<Member, GroupMemberAdapter.GroupMemberViewHolder>(DiffCallback) {

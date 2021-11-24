@@ -10,6 +10,12 @@ import com.weiting.tohealth.*
 import com.weiting.tohealth.data.*
 import com.weiting.tohealth.databinding.ItemRowBinding
 import com.weiting.tohealth.homepage.ItemDataType
+import com.weiting.tohealth.util.Util.setActivityType
+import com.weiting.tohealth.util.Util.setDrugDrawable
+import com.weiting.tohealth.util.Util.setMeasureDrawable
+import com.weiting.tohealth.util.Util.toActivityType
+import com.weiting.tohealth.util.Util.toMeasureType
+import com.weiting.tohealth.util.Util.toUnit
 import java.lang.ClassCastException
 
 const val FASTADD_VIEWTYPE_DRUG = 0

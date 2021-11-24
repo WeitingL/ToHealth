@@ -10,7 +10,7 @@ import com.weiting.tohealth.R
 import com.weiting.tohealth.data.Note
 import com.weiting.tohealth.databinding.MygroupRowNoteBinding
 import com.weiting.tohealth.mygrouppage.GroupAdapter.*
-import com.weiting.tohealth.toStringFromTimeStamp
+import com.weiting.tohealth.util.Util.toStringFromTimeStamp
 
 class GroupNoteAdapter() :
     ListAdapter<BoardMessage, GroupNoteAdapter.NoteViewHolder>(DiffCallback) {

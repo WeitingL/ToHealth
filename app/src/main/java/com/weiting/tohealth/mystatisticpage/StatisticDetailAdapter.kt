@@ -14,10 +14,9 @@ import com.anychart.enums.*
 import com.weiting.tohealth.databinding.*
 import com.weiting.tohealth.mystatisticpage.activitychart.ActivityTimeScaleAdapter
 import com.weiting.tohealth.mystatisticpage.drugchart.DrugTimeScaleAdapter
-import com.weiting.tohealth.toDateWithoutYearFromTimeStamp
-import com.weiting.tohealth.toMeasureType
-import com.weiting.tohealth.toStringFromTimeStamp
-import com.weiting.tohealth.toUnitForMeasure
+import com.weiting.tohealth.util.Util.toMeasureType
+import com.weiting.tohealth.util.Util.toStringFromTimeStamp
+import com.weiting.tohealth.util.Util.toUnitForMeasure
 import java.lang.ClassCastException
 
 const val STATISTIC_VIEWTYPE_DRUGLOGITEM = 0

@@ -1,12 +1,9 @@
 package com.weiting.tohealth.util
 
-import android.util.Log
-import android.util.TimeUtils
 import com.google.firebase.Timestamp
 import com.weiting.tohealth.data.ItemData
 import com.weiting.tohealth.data.ItemType
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 class ItemArranger() {
 

@@ -10,9 +10,8 @@ import com.google.firebase.Timestamp
 import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.data.*
 import com.weiting.tohealth.databinding.ItemUpdateFragmentBinding
-import com.weiting.tohealth.getTimeStampToTimeInt
 import com.weiting.tohealth.mymanagepage.ManageType
-import com.weiting.tohealth.toTimeFromTimeStamp
+import com.weiting.tohealth.util.Util.getTimeStampToTimeInt
 import com.weiting.tohealth.works.RebuildAlarm
 import kotlinx.coroutines.launch
 import java.util.*

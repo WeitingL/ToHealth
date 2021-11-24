@@ -5,9 +5,9 @@ import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.weiting.tohealth.data.*
-import com.weiting.tohealth.getTimeStampToDateInt
-import com.weiting.tohealth.getTimeStampToTimeInt
 import com.weiting.tohealth.util.ItemArranger
+import com.weiting.tohealth.util.Util.getTimeStampToDateInt
+import com.weiting.tohealth.util.Util.getTimeStampToTimeInt
 import java.util.*
 
 class PostUnCheckedLogsWork() {

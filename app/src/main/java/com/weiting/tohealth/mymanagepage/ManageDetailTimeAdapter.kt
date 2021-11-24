@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.Timestamp
 import com.weiting.tohealth.databinding.RowManageTimeBinding
-import com.weiting.tohealth.toTimeFromTimeStamp
+import com.weiting.tohealth.util.Util.toTimeFromTimeStamp
 
 class ManageDetailTimeAdapter :
     ListAdapter<Timestamp, ManageDetailTimeAdapter.TimeTagViewHolder>(DiffCallBack) {

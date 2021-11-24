@@ -10,7 +10,7 @@ import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.R
 import com.weiting.tohealth.data.*
 import com.weiting.tohealth.databinding.ItemEditFragmentBinding
-import com.weiting.tohealth.toDateFromMilliTime
+import com.weiting.tohealth.util.Util.toDateFromMilliTime
 import com.weiting.tohealth.works.RebuildAlarm
 import kotlinx.coroutines.launch
 import java.util.*

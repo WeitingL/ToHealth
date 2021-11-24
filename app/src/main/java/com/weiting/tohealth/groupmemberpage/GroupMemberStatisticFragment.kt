@@ -9,8 +9,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.weiting.tohealth.data.User
 import com.weiting.tohealth.databinding.GroupMemberStatisticFragmentBinding
 import com.weiting.tohealth.mystatisticpage.MyStatisticAdapter
-import com.weiting.tohealth.mystatisticpage.StatisticDetailAdapter
-import com.weiting.tohealth.transferCircleImage
+import com.weiting.tohealth.util.Util.transferCircleImage
 
 class GroupMemberStatisticFragment : Fragment() {
 

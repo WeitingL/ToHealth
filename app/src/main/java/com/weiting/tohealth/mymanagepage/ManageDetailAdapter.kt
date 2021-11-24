@@ -14,6 +14,17 @@ import com.weiting.tohealth.data.ItemData
 import com.weiting.tohealth.data.UserManager
 import com.weiting.tohealth.databinding.ManageRowItemBinding
 import com.weiting.tohealth.mymanagepage.ManageDetailAdapter.ItemsListViewHolder
+import com.weiting.tohealth.util.Util.getTimeStampToTimeInt
+import com.weiting.tohealth.util.Util.setActivityType
+import com.weiting.tohealth.util.Util.setDrugDrawable
+import com.weiting.tohealth.util.Util.setMeasureDrawable
+import com.weiting.tohealth.util.Util.toActivityType
+import com.weiting.tohealth.util.Util.toCareType
+import com.weiting.tohealth.util.Util.toMeasureType
+import com.weiting.tohealth.util.Util.toStatus
+import com.weiting.tohealth.util.Util.toStringFromPeriod
+import com.weiting.tohealth.util.Util.toStringFromTimeStamp
+import com.weiting.tohealth.util.Util.toUnit
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

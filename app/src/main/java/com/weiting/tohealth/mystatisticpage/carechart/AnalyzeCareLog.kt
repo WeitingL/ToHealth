@@ -4,7 +4,7 @@ import com.google.firebase.Timestamp
 import com.weiting.tohealth.data.Care
 import com.weiting.tohealth.mystatisticpage.LogItem
 import com.weiting.tohealth.mystatisticpage.ResultInDateForCare
-import com.weiting.tohealth.toCareType
+import com.weiting.tohealth.util.Util.toCareType
 
 class AnalyzeCareLog {
 

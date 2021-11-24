@@ -1,12 +1,10 @@
 package com.weiting.tohealth.notificationpage
 
-import android.util.Log
 import androidx.lifecycle.*
-import com.google.firebase.Timestamp
 import com.weiting.tohealth.data.FirebaseRepository
 import com.weiting.tohealth.data.Notification
-import com.weiting.tohealth.toNotificationTextForMeasureLog
-import com.weiting.tohealth.toStringFromTimeStamp
+import com.weiting.tohealth.util.Util.toNotificationTextForMeasureLog
+import com.weiting.tohealth.util.Util.toStringFromTimeStamp
 import kotlinx.coroutines.launch
 
 class NotificationViewModel(

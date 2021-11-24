@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.data.Note
 import com.weiting.tohealth.databinding.NoteRowBinding
-import com.weiting.tohealth.toFooter
-import com.weiting.tohealth.toStringFromTimeStamp
+import com.weiting.tohealth.util.Util.toFooter
+import com.weiting.tohealth.util.Util.toStringFromTimeStamp
 
 class BoardNotesAdapter(val onclickListener: DeleteOnclickListener) :
     ListAdapter<Note, BoardNotesAdapter.NoteViewHolder>(DiffCallback) {

@@ -9,9 +9,8 @@ import com.weiting.tohealth.data.Chat
 import com.weiting.tohealth.data.Member
 import com.weiting.tohealth.databinding.ChatroomRowMessageOthersBinding
 import com.weiting.tohealth.databinding.ChatroomRowMessageSelfBinding
-import com.weiting.tohealth.toStringFromTimeStamp
-import com.weiting.tohealth.toTimeFromTimeStamp
-import com.weiting.tohealth.transferCircleImage
+import com.weiting.tohealth.util.Util.toTimeFromTimeStamp
+import com.weiting.tohealth.util.Util.transferCircleImage
 import java.lang.ClassCastException
 
 const val CHAT_VIEWTYPE_SELF = 0

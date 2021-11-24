@@ -19,6 +19,7 @@ import com.weiting.tohealth.homepage.ItemDataType
 import com.weiting.tohealth.homepage.TodayItemAdapter
 import com.weiting.tohealth.notificationpage.NotificationRecord
 import com.weiting.tohealth.notificationpage.NotificationRecordAdapter
+import com.weiting.tohealth.util.Util.getTimeStampToTimeInt
 
 @BindingAdapter("TimeStampForWelcomeSlogan")
 fun bindTimeStampForWelcomeSlogan(textView: TextView, timestamp: Timestamp) {

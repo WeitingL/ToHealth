@@ -1,13 +1,12 @@
 package com.weiting.tohealth.mygrouppage
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.R
 import com.weiting.tohealth.databinding.MygroupRowNoteBinding
-import com.weiting.tohealth.toStringFromTimeStamp
+import com.weiting.tohealth.util.Util.toStringFromTimeStamp
 
 class GroupNoteViewPagerAdapter(
     private val list: List<GroupAdapter.BoardMessage>

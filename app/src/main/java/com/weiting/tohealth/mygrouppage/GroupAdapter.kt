@@ -12,7 +12,7 @@ import com.weiting.tohealth.data.CalenderItem
 import com.weiting.tohealth.data.Note
 import com.weiting.tohealth.databinding.CardviewBottombuttonRowBinding
 import com.weiting.tohealth.databinding.MygroupRowGroupBinding
-import com.weiting.tohealth.toStringFromTimeStamp
+import com.weiting.tohealth.util.Util.toStringFromTimeStamp
 import java.lang.ClassCastException
 
 const val GROUP_VIEWTYPE_GROUP = 0

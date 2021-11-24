@@ -20,6 +20,16 @@ import com.weiting.tohealth.mymanagepage.ManageType
 import com.weiting.tohealth.timeset.EditTimeType
 import com.weiting.tohealth.timeset.GET_TIME
 import com.weiting.tohealth.timeset.TIME
+import com.weiting.tohealth.util.Util.getTimeStampToTimeInt
+import com.weiting.tohealth.util.Util.toActivityType
+import com.weiting.tohealth.util.Util.toCareType
+import com.weiting.tohealth.util.Util.toCycleValue
+import com.weiting.tohealth.util.Util.toDateFromTimeStamp
+import com.weiting.tohealth.util.Util.toDay
+import com.weiting.tohealth.util.Util.toMeasureType
+import com.weiting.tohealth.util.Util.toPeriod
+import com.weiting.tohealth.util.Util.toUnit
+import com.weiting.tohealth.util.Util.toWeek
 
 class ItemUpdateFragment : Fragment() {
 
@@ -100,8 +110,7 @@ class ItemUpdateFragment : Fragment() {
                     tvItemTypeTitleUpdate.text = getString(R.string.CareItem)
                     tvItemNameUpdate.text = toCareType(itemData.CareData?.type)
                     tvStartTimeUpdate.text = toDateFromTimeStamp(itemData.CareData?.startDate)
-                    tvOriginPeriod.text =
-                        "原先設定: ${toPeriod(itemData.CareData?.period?.get("type")!!)}"
+                    "原先設定: ${toPeriod(itemData.CareData?.period?.get("type")!!)}".also { tvOriginPeriod.text = it }
                     clUnitUpdate.visibility = View.GONE
                     clStockUpdate.visibility = View.GONE
 

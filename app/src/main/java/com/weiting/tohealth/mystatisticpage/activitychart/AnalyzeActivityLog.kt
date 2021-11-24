@@ -2,11 +2,11 @@ package com.weiting.tohealth.mystatisticpage.activitychart
 
 import com.google.firebase.Timestamp
 import com.weiting.tohealth.data.Activity
-import com.weiting.tohealth.getTimeStampToDateInt
 import com.weiting.tohealth.mystatisticpage.LogItem
 import com.weiting.tohealth.mystatisticpage.ResultInDate
-import com.weiting.tohealth.toActivityType
-import com.weiting.tohealth.toTimeFromTimeStamp
+import com.weiting.tohealth.util.Util.getTimeStampToDateInt
+import com.weiting.tohealth.util.Util.toActivityType
+import com.weiting.tohealth.util.Util.toTimeFromTimeStamp
 
 class AnalyzeActivityLog {
 

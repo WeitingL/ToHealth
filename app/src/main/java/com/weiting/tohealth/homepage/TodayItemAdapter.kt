@@ -12,6 +12,13 @@ import com.weiting.tohealth.data.*
 import com.weiting.tohealth.databinding.ItemRowBinding
 import com.weiting.tohealth.databinding.ItemRowHomeBinding
 import com.weiting.tohealth.databinding.TimeRowBinding
+import com.weiting.tohealth.util.Util.setActivityType
+import com.weiting.tohealth.util.Util.setDrugDrawable
+import com.weiting.tohealth.util.Util.setMeasureDrawable
+import com.weiting.tohealth.util.Util.toActivityType
+import com.weiting.tohealth.util.Util.toCareType
+import com.weiting.tohealth.util.Util.toMeasureType
+import com.weiting.tohealth.util.Util.toUnit
 import java.lang.ClassCastException
 
 const val ITEM_VIEWTYPE_TIME = 0

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
+import com.weiting.tohealth.R
 import com.weiting.tohealth.data.User
 import com.weiting.tohealth.data.UserManager
 import com.weiting.tohealth.databinding.FragmentMystatisticBinding
@@ -35,10 +36,10 @@ class MyStatisticFragment : Fragment() {
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             when (position) {
-                0 -> tab.text = "藥物紀錄"
-                1 -> tab.text = "測量記錄"
-                2 -> tab.text = "活動項目"
-                3 -> tab.text = "關懷項目"
+                0 -> tab.text = getString(R.string.drugLogs)
+                1 -> tab.text = getString(R.string.measureLogs)
+                2 -> tab.text = getString(R.string.activityLogs)
+                3 -> tab.text = getString(R.string.careLogs)
             }
         }.attach()
 

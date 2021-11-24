@@ -12,6 +12,12 @@ import com.google.firebase.ktx.Firebase
 import com.weiting.tohealth.*
 import com.weiting.tohealth.data.*
 import com.weiting.tohealth.util.ItemArranger
+import com.weiting.tohealth.util.Util.getTimeStampToTimeInt
+import com.weiting.tohealth.util.Util.toActivityType
+import com.weiting.tohealth.util.Util.toCareType
+import com.weiting.tohealth.util.Util.toMeasureType
+import com.weiting.tohealth.util.Util.toTimeFromTimeStamp
+import com.weiting.tohealth.util.Util.toUnit
 
 const val CHANNEL_ID = "toHealth"
 

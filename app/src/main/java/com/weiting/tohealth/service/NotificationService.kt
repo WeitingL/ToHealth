@@ -5,16 +5,15 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.weiting.tohealth.*
 import com.weiting.tohealth.data.*
+import com.weiting.tohealth.util.Util.toNotificationTextForMeasureLog
+import com.weiting.tohealth.util.Util.toUnit
 import kotlinx.coroutines.*
 import kotlin.random.Random
 

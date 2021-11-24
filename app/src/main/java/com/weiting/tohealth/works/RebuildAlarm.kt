@@ -12,11 +12,10 @@ import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.data.FirebaseRepository
 import com.weiting.tohealth.data.ItemData
 import com.weiting.tohealth.data.ItemType
-import com.weiting.tohealth.getTimeStampToTimeInt
 import com.weiting.tohealth.receiver.AlarmReceiver
 import com.weiting.tohealth.receiver.POST_NOTIFICATION
 import com.weiting.tohealth.util.ItemArranger
-import java.sql.Time
+import com.weiting.tohealth.util.Util.getTimeStampToTimeInt
 import java.util.*
 
 class RebuildAlarm() {

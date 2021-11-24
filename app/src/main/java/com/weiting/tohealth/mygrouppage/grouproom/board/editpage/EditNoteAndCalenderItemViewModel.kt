@@ -7,7 +7,7 @@ import com.weiting.tohealth.data.CalenderItem
 import com.weiting.tohealth.data.FirebaseRepository
 import com.weiting.tohealth.data.Group
 import com.weiting.tohealth.data.Note
-import com.weiting.tohealth.toDateAndTimeFromMilliTime
+import com.weiting.tohealth.util.Util.toDateAndTimeFromMilliTime
 
 enum class EditBoardType {
     NOTE, REMINDER

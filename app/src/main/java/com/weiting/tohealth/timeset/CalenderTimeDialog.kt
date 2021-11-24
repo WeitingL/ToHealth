@@ -8,8 +8,8 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
-import com.weiting.tohealth.*
 import com.weiting.tohealth.databinding.DialogCalendertimeBinding
+import com.weiting.tohealth.util.Util.toTimeInMilliFromPicker
 
 enum class EditTimeType {
     TIME, DATE, DATEANDTIME

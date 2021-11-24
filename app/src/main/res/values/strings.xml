@@ -106,6 +106,10 @@
     <string name="StopDoIt">中止執行(不再執行，僅保留執行紀錄)</string>
     <string name="enterGroup">進入群組</string>
     <string name="groupMessage">群組訊息</string>
+    <string name="drugLogs">藥物紀錄</string>
+    <string name="measureLogs">測量記錄</string>
+    <string name="activityLogs">活動項目</string>
+    <string name="careLogs">關懷項目</string>
 
     <string-array name="ItemType">
         <item>藥品</item>

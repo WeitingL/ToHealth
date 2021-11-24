@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.data.CalenderItem
 import com.weiting.tohealth.databinding.CalenderitemRowBinding
-import com.weiting.tohealth.toStringFromTimeStamp
+import com.weiting.tohealth.util.Util.toStringFromTimeStamp
 
 class BoardCalenderItemsAdapter (val onclickListener: DeleteOnclickListener) :
     ListAdapter<CalenderItem, BoardCalenderItemsAdapter.CalenderItemViewHolder>(DiffCallback) {
