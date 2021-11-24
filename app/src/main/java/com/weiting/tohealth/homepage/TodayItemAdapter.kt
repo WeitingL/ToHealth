@@ -27,7 +27,7 @@ const val ITEM_VIEWTYPE_MEASURE = 2
 const val ITEM_VIEWTYPE_ACTIVITY = 3
 const val ITEM_VIEWTYPE_CARE = 4
 
-class TodayItemAdapter() :
+class TodayItemAdapter :
     ListAdapter<ItemDataType, RecyclerView.ViewHolder>(DiffCallback) {
 
     object DiffCallback : DiffUtil.ItemCallback<ItemDataType>() {

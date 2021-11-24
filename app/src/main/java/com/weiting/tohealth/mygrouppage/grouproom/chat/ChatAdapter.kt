@@ -13,10 +13,10 @@ import com.weiting.tohealth.util.Util.toTimeFromTimeStamp
 import com.weiting.tohealth.util.Util.transferCircleImage
 import java.lang.ClassCastException
 
-const val CHAT_VIEWTYPE_SELF = 0
-const val CHAT_VIEWTYPE_OTHERS = 1
+const val CHAT_VIEW_TYPE_SELF = 0
+const val CHAT_VIEW_TYPE_OTHERS = 1
 
-class ChatAdapter() : ListAdapter<WhoseMessage, RecyclerView.ViewHolder>(DiffCallback) {
+class ChatAdapter : ListAdapter<WhoseMessage, RecyclerView.ViewHolder>(DiffCallback) {
 
     object DiffCallback : DiffUtil.ItemCallback<WhoseMessage>() {
         override fun areItemsTheSame(oldItem: WhoseMessage, newItem: WhoseMessage): Boolean =
@@ -52,20 +52,20 @@ class ChatAdapter() : ListAdapter<WhoseMessage, RecyclerView.ViewHolder>(DiffCal
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
-            is WhoseMessage.SelfMessage -> CHAT_VIEWTYPE_SELF
-            is WhoseMessage.OthersMessage -> CHAT_VIEWTYPE_OTHERS
+            is WhoseMessage.SelfMessage -> CHAT_VIEW_TYPE_SELF
+            is WhoseMessage.OthersMessage -> CHAT_VIEW_TYPE_OTHERS
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            CHAT_VIEWTYPE_SELF -> SelfMessageViewHolder(
+            CHAT_VIEW_TYPE_SELF -> SelfMessageViewHolder(
                 ChatroomRowMessageSelfBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
                 )
             )
 
-            CHAT_VIEWTYPE_OTHERS -> OthersMessageViewHolder(
+            CHAT_VIEW_TYPE_OTHERS -> OthersMessageViewHolder(
                 ChatroomRowMessageOthersBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
                 )

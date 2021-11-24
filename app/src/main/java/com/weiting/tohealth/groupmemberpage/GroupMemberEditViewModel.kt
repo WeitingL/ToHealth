@@ -9,7 +9,7 @@ import com.weiting.tohealth.data.Member
 
 class GroupMemberEditViewModel(
     private val firebaseDataRepository: FirebaseRepository,
-    private val member: Member,
+    member: Member,
     private val groupId: String
 ) : ViewModel() {
 

@@ -16,7 +16,7 @@ import com.weiting.tohealth.data.User
 import com.weiting.tohealth.databinding.MymanageItemFragmentBinding
 import com.weiting.tohealth.factory.ManageDetailViewModelFactory
 
-class ManageDetailFragment() : Fragment() {
+class ManageDetailFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,

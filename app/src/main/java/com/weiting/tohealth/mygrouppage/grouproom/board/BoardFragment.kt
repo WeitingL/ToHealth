@@ -14,7 +14,7 @@ import com.weiting.tohealth.data.Group
 import com.weiting.tohealth.databinding.BroadFragmentBinding
 import com.weiting.tohealth.factory.BoardViewModelFactory
 
-class BoardFragment() : Fragment() {
+class BoardFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,

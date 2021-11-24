@@ -901,7 +901,7 @@ object FirebaseDataSource : FirebaseSource {
         application.database.collection("drugs").document(itemId)
             .update("stock", num)
             .addOnSuccessListener { documentReference ->
-                Log.d("update success", "DocumentSnapshot with ID: ${itemId}")
+                Log.d("update success", "DocumentSnapshot with ID: $itemId")
             }
             .addOnFailureListener { e ->
                 Log.w("update failure", "Error update document", e)

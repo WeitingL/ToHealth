@@ -74,10 +74,8 @@ class GroupAdapter(val onClickListener: OnclickListener, val onclickListenerForQ
         }
     }
 
-    inner class AddGroupViewHolder(private val binding: CardviewBottombuttonRowBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-    }
+    inner class AddGroupViewHolder(binding: CardviewBottombuttonRowBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {

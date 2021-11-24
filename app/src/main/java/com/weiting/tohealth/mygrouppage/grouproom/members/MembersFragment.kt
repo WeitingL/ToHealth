@@ -13,7 +13,7 @@ import com.weiting.tohealth.data.Group
 import com.weiting.tohealth.databinding.MembersFragmentBinding
 import com.weiting.tohealth.factory.MembersViewModelFactory
 
-class MembersFragment() : Fragment() {
+class MembersFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,

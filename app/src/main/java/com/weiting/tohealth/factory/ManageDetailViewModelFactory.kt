@@ -17,7 +17,7 @@ class ManageDetailViewModelFactory(
         with(modelClass) {
             when {
                 isAssignableFrom(ManageDetailViewModel::class.java) ->
-                    ManageDetailViewModel(firebaseDataRepository, manageType, user)
+                    ManageDetailViewModel(firebaseDataRepository, user)
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }

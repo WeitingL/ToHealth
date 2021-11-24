@@ -12,7 +12,7 @@ import com.weiting.tohealth.databinding.DialogCalendertimeBinding
 import com.weiting.tohealth.util.Util.toTimeInMilliFromPicker
 
 enum class EditTimeType {
-    TIME, DATE, DATEANDTIME
+    TIME, DATE, DATE_AND_TIME
 }
 
 const val GET_TIME_AND_DAY = "GetTimeAndDate"
@@ -46,7 +46,7 @@ class CalenderTimeDialog : DialogFragment() {
                     clTimePicker.visibility = View.VISIBLE
                 }
 
-                EditTimeType.DATEANDTIME -> {
+                EditTimeType.DATE_AND_TIME -> {
                     clDatePicker.visibility = View.VISIBLE
                     clTimePicker.visibility = View.VISIBLE
                 }
@@ -76,7 +76,7 @@ class CalenderTimeDialog : DialogFragment() {
                     setFragmentResult(GET_TIME, bundleOf(TIME to milliTime))
                 }
 
-                EditTimeType.DATEANDTIME -> {
+                EditTimeType.DATE_AND_TIME -> {
                     setFragmentResult(GET_TIME_AND_DAY, bundleOf(TIME_AND_DAY to milliTime))
                 }
             }

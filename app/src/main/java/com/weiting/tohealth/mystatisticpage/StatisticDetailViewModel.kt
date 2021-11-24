@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 class StatisticDetailViewModel(
     private val firebaseDataRepository: FirebaseRepository,
     private val userId: String,
-    private val statisticType: StatisticType
+    statisticType: StatisticType
 ) : ViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>()

@@ -16,7 +16,7 @@ import com.weiting.tohealth.data.UserManager
 import com.weiting.tohealth.databinding.ChatroomFragmentBinding
 import com.weiting.tohealth.factory.ChatViewModelFactory
 
-class ChatFragment() : Fragment() {
+class ChatFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,

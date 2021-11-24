@@ -210,7 +210,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:autoSizePresetSizes="@array/autosize_text"
                         android:autoSizeTextType="uniform"
                         android:gravity="center"
                         android:text="82顆"

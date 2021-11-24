@@ -1,8 +1,6 @@
 package com.weiting.tohealth.data
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.common.io.LittleEndianDataInputStream
 import com.google.firebase.Timestamp
 
 interface FirebaseSource {

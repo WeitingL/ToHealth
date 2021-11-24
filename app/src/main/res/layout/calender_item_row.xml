@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_calenderTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:maxWidth="300dp"
+        android:maxLines="5"
+        android:textAppearance="@style/title_text_bl"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/ib_deleteReminder"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_dateCalenderTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textAppearance="@style/content_text_bl"
+        app:layout_constraintStart_toStartOf="@+id/tv_calenderTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tv_calenderTitle" />
+
+    <TextView
+        android:id="@+id/tv_editorTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:textAppearance="@style/content_text_bl"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tv_dateCalenderTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tv_dateCalenderTitle" />
+
+    <TextView
+        android:id="@+id/tv_dateCalender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:textAppearance="@style/content_text_bl"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_dateCalenderTitle"
+        app:layout_constraintStart_toEndOf="@+id/tv_dateCalenderTitle"
+        app:layout_constraintTop_toTopOf="@+id/tv_dateCalenderTitle" />
+
+    <TextView
+        android:id="@+id/tv_editor_calender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:textAppearance="@style/content_text_bl"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_editorTitle"
+        app:layout_constraintStart_toEndOf="@+id/tv_editorTitle"
+        app:layout_constraintTop_toTopOf="@+id/tv_editorTitle" />
+
+    <TextView
+        android:id="@+id/tv_createTime_calender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/content_text_bl"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_editor_calender" />
+
+    <ImageButton
+        android:id="@+id/ib_deleteReminder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_delete_outline_24"
+        android:contentDescription="@string/cd_delete_function" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

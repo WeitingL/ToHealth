@@ -600,7 +600,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
     }
 }
 
-sealed class ItemDataType() {
+sealed class ItemDataType {
 
     data class TimeType(val time: String, val timeInt: Int) : ItemDataType()
     data class DrugType(val drug: ItemData, val timeInt: Int) : ItemDataType()

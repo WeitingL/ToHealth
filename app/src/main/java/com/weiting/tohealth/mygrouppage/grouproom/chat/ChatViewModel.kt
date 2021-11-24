@@ -9,7 +9,7 @@ import kotlin.system.measureTimeMillis
 
 class ChatViewModel(
     private val firebaseDataRepository: FirebaseRepository,
-    private val group: Group
+    group: Group
 ) : ViewModel() {
 
     private val memberList = group.member

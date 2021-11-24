@@ -18,7 +18,7 @@ import com.weiting.tohealth.util.ItemArranger
 import com.weiting.tohealth.util.Util.getTimeStampToTimeInt
 import java.util.*
 
-class RebuildAlarm() {
+class RebuildAlarm {
 
     /*
         Only apply the alarm with timeStamp

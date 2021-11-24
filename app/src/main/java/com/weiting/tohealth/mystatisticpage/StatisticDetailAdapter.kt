@@ -11,6 +11,8 @@ import com.anychart.chart.common.dataentry.DataEntry
 import com.anychart.chart.common.dataentry.ValueDataEntry
 import com.anychart.data.Set
 import com.anychart.enums.*
+import com.weiting.tohealth.PublicApplication
+import com.weiting.tohealth.R
 import com.weiting.tohealth.databinding.*
 import com.weiting.tohealth.mystatisticpage.activitychart.ActivityTimeScaleAdapter
 import com.weiting.tohealth.mystatisticpage.drugchart.DrugTimeScaleAdapter
@@ -26,6 +28,8 @@ const val STATISTIC_VIEWTYPE_CARELOGITEM = 3
 const val STATISTIC_VIEWTYPE_BUTTON = 4
 
 class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(DiffCallback) {
+
+    private val context = PublicApplication.application.applicationContext
 
     object DiffCallback : DiffUtil.ItemCallback<LogItem>() {
         override fun areItemsTheSame(oldItem: LogItem, newItem: LogItem): Boolean =
@@ -113,7 +117,7 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
 
                 barChart.yScale().stackMode(ScaleStackMode.VALUE)
 
-                barChart.yAxis(0).title("${toUnitForMeasure(item.type)}")
+                barChart.yAxis(0).title(toUnitForMeasure(item.type))
                 barChart.xAxis(0).overlapMode(LabelsOverlapMode.NO_OVERLAP)
 
                 barChart.tooltip()
@@ -182,7 +186,7 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
     inner class ExportLogDataViewHolder(private val binding: CardviewBottombuttonRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind() {
-            binding.tvBottomButton.text = "資料輸出(Coming Soon)"
+            binding.tvBottomButton.text = context.getString(R.string.dataExtract)
         }
     }
 

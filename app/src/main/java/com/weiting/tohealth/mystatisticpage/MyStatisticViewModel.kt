@@ -6,6 +6,4 @@ enum class StatisticType{
     DRUG, MEASURE, ACTIVITY, CARE
 }
 
-class StatisticViewModel : ViewModel() {
-
-}
+class StatisticViewModel : ViewModel()

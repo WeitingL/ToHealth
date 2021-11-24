@@ -13,7 +13,7 @@ import com.weiting.tohealth.data.User
 import com.weiting.tohealth.databinding.MystatisticItemFagmentBinding
 import com.weiting.tohealth.factory.StatisticDetailViewModelFactory
 
-class StatisticDetailFragment() : Fragment() {
+class StatisticDetailFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.firebase.Timestamp
 import com.weiting.tohealth.NavigationDirections
 import com.weiting.tohealth.PublicApplication
+import com.weiting.tohealth.R
 import com.weiting.tohealth.data.MeasureLog
 import com.weiting.tohealth.databinding.MeasureRecordFragmentBinding
 import com.weiting.tohealth.factory.RecordViewModelFactory
@@ -37,7 +38,7 @@ class MeasureRecordFragment : Fragment() {
                     edtSystolic.visibility = View.VISIBLE
                     edtDiastolic.visibility = View.VISIBLE
 
-                    tvTitle.text = "心搏"
+                    tvTitle.text = getString(R.string.heartBeatTitle)
                 }
                 1 -> {
                     tvDiastolic.visibility = View.GONE
@@ -46,7 +47,7 @@ class MeasureRecordFragment : Fragment() {
                     edtSystolic.visibility = View.GONE
                     edtDiastolic.visibility = View.GONE
 
-                    tvTitle.text = "飯前血糖"
+                    tvTitle.text = getString(R.string.bloodSugarBeforeMeal)
 
                 }
                 2 -> {
@@ -56,7 +57,7 @@ class MeasureRecordFragment : Fragment() {
                     edtSystolic.visibility = View.GONE
                     edtDiastolic.visibility = View.GONE
 
-                    tvTitle.text = "飯後血糖"
+                    tvTitle.text = getString(R.string.bloodSugarAfterMeal)
                 }
                 3 -> {
                     tvDiastolic.visibility = View.GONE
@@ -65,7 +66,7 @@ class MeasureRecordFragment : Fragment() {
                     edtSystolic.visibility = View.GONE
                     edtDiastolic.visibility = View.GONE
 
-                    tvTitle.text = "血氧(SpO2)"
+                    tvTitle.text = getString(R.string.spo2)
                 }
                 4 -> {
                     tvDiastolic.visibility = View.GONE
@@ -74,7 +75,7 @@ class MeasureRecordFragment : Fragment() {
                     edtSystolic.visibility = View.GONE
                     edtDiastolic.visibility = View.GONE
 
-                    tvTitle.text = "體重(Kg, 公斤)"
+                    tvTitle.text = getString(R.string.bodyWeight)
                 }
                 5 -> {
                     tvDiastolic.visibility = View.GONE
@@ -83,7 +84,7 @@ class MeasureRecordFragment : Fragment() {
                     edtSystolic.visibility = View.GONE
                     edtDiastolic.visibility = View.GONE
 
-                    tvTitle.text = "體溫(C, 攝氏)"
+                    tvTitle.text = getString(R.string.temperture)
                 }
             }
 
@@ -91,7 +92,7 @@ class MeasureRecordFragment : Fragment() {
                 when (measureData.type) {
                     0 -> {
                         viewModel.postMeasureLog(
-                            itemId = measureData.id!!,
+                            itemId = measureData.id?:"",
                             measureLog = MeasureLog(
                                 timeTag = timeTag,
                                 result = 0,
@@ -107,7 +108,7 @@ class MeasureRecordFragment : Fragment() {
                     }
                     else -> {
                         viewModel.postMeasureLog(
-                            itemId = measureData.id!!,
+                            itemId = measureData.id?:"",
                             measureLog = MeasureLog(
                                 timeTag = timeTag,
                                 result = 0,
@@ -118,11 +119,11 @@ class MeasureRecordFragment : Fragment() {
                                     "Y" to null,
                                     "Z" to null
                                 )
-                            ), measureData.type!!
+                            ), measureData.type?:0
                         )
                     }
                 }
-                Toast.makeText(context, "完成登錄!", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, getString(R.string.logFinished), Toast.LENGTH_LONG).show()
                 findNavController().navigate(NavigationDirections.actionGlobalHomeFragment())
             }
 

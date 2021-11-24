@@ -1,6 +1,5 @@
 package com.weiting.tohealth.itemeditpage
 
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -19,8 +18,7 @@ import java.util.*
 class ItemUpdateViewModel(
     private val firebaseDataRepository: FirebaseRepository,
     private val itemData: ItemData,
-    private val manageType: ManageType,
-    private val user: User
+    private val manageType: ManageType
 ) : ViewModel() {
 
     private val _periodType = MutableLiveData<Int>()

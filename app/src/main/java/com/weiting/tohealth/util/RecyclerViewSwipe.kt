@@ -7,7 +7,7 @@ import com.weiting.tohealth.R
 import com.weiting.tohealth.homepage.*
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
-abstract class RecyclerViewSwipe() :
+abstract class RecyclerViewSwipe :
     ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT) {
 
     private val skipIcon = R.drawable.ic_baseline_notifications_off_24

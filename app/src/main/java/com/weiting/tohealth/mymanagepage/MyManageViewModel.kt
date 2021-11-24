@@ -6,5 +6,4 @@ enum class ManageType{
     DRUG, MEASURE, ACTIVITY, CARE
 }
 
-class ManageViewModel: ViewModel() {
-}
+class ManageViewModel: ViewModel()

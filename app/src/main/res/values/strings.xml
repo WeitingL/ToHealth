@@ -110,6 +110,14 @@
     <string name="measureLogs">測量記錄</string>
     <string name="activityLogs">活動項目</string>
     <string name="careLogs">關懷項目</string>
+    <string name="heartBeatTitle">心搏</string>
+    <string name="bloodSugarBeforeMeal">飯前血糖</string>
+    <string name="bloodSugarAfterMeal">飯後血糖</string>
+    <string name="spo2">血氧(SpO2)</string>
+    <string name="bodyWeight">體重(Kg, 公斤)</string>
+    <string name="temperture">體溫(C, 攝氏)</string>
+    <string name="logFinished">完成登錄!</string>
+    <string name="dataExtract">資料輸出(Coming Soon)</string>
 
     <string-array name="ItemType">
         <item>藥品</item>

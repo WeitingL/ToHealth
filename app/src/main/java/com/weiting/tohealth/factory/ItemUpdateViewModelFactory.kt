@@ -19,7 +19,7 @@ class ItemUpdateViewModelFactory(
         with(modelClass) {
             when {
                 isAssignableFrom(ItemUpdateViewModel::class.java) ->
-                    ItemUpdateViewModel(firebaseDataRepository, itemData, manageType, user)
+                    ItemUpdateViewModel(firebaseDataRepository, itemData, manageType)
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }

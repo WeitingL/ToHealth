@@ -5,7 +5,7 @@ import com.weiting.tohealth.data.ItemData
 import com.weiting.tohealth.data.ItemType
 import java.util.*
 
-class ItemArranger() {
+class ItemArranger {
 
     fun isThatDayNeedToDo(itemType: ItemType, itemData: ItemData, day: Timestamp): Boolean {
 

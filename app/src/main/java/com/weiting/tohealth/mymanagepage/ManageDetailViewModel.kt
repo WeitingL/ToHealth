@@ -3,15 +3,11 @@ package com.weiting.tohealth.mymanagepage
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.weiting.tohealth.data.*
-import com.weiting.tohealth.works.RebuildAlarm
-import kotlinx.coroutines.launch
 
 class ManageDetailViewModel(
-    private val firebaseDataRepository: FirebaseRepository,
-    private val manageType: ManageType,
-    private val user: User
+    firebaseDataRepository: FirebaseRepository,
+    user: User
 ) : ViewModel() {
 
     private val _isTheNewBie = MutableLiveData<Boolean>()

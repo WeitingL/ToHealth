@@ -10,7 +10,7 @@ import com.weiting.tohealth.util.Util.getTimeStampToDateInt
 import com.weiting.tohealth.util.Util.getTimeStampToTimeInt
 import java.util.*
 
-class PostUnCheckedLogsWork() {
+class PostUnCheckedLogsWork {
 
     /*
         Check today undo item and post the undo log ->

@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 
 class MembersViewModel(
     private val firebaseDataRepository: FirebaseRepository,
-    private val group: Group
+    group: Group
 ) : ViewModel() {
 
     private val liveMembersList = firebaseDataRepository.getLiveMember(groupId = group.id!!)

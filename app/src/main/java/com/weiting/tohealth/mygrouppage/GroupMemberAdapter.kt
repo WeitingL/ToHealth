@@ -11,7 +11,7 @@ import com.weiting.tohealth.databinding.MygroupRowMemberBinding
 import com.weiting.tohealth.util.Util.transferCircleImage
 
 
-class GroupMemberAdapter() : ListAdapter<Member, GroupMemberAdapter.GroupMemberViewHolder>(DiffCallback) {
+class GroupMemberAdapter : ListAdapter<Member, GroupMemberAdapter.GroupMemberViewHolder>(DiffCallback) {
 
     object DiffCallback : DiffUtil.ItemCallback<Member>() {
         override fun areItemsTheSame(oldItem: Member, newItem: Member): Boolean =

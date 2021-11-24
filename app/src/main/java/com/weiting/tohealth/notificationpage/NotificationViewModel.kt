@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 
 class NotificationViewModel(
     private val firebaseDataRepository: FirebaseRepository,
-    private val memberList: List<String>
+    memberList: List<String>
 ) : ViewModel() {
 
     val list = when(memberList.isEmpty()){

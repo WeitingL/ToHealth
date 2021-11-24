@@ -13,7 +13,7 @@ enum class HowToAddGroup {
 
 class AddGroupViewModel(
     private val firebaseRepository: FirebaseRepository,
-    private val howToAddGroup: HowToAddGroup
+    howToAddGroup: HowToAddGroup
 ) : ViewModel() {
 
     private val _newGroupId = MutableLiveData<String>()

@@ -124,10 +124,6 @@ data class CareLog(
     val createdTime: Timestamp? = null
 ) : Parcelable, ItemsLogType
 
-interface ItemsDataType{
+interface ItemsDataType
 
-}
-
-interface ItemsLogType{
-
-}
+interface ItemsLogType

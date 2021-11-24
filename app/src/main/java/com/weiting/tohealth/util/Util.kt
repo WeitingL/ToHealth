@@ -28,15 +28,6 @@ object Util {
         }
     }
 
-    fun toEndDate(map: Map<String, Int?>?): String {
-        return when (map?.get("type")) {
-            0 -> "無期限"
-            1 -> "還有 ${map["day"]} 天"
-            2 -> "還有 ${map["day"]} 天"
-            else -> "無期限"
-        }
-    }
-
     fun toStatus(int: Int?): String {
         return when (int) {
             0 -> "執行中"
@@ -159,7 +150,6 @@ object Util {
     }
 
     fun toTimeFromTimeStamp(timestamp: Timestamp?): String {
-//    Log.i("Time", timestamp.toString())
         return SimpleDateFormat("HH:mm", Locale.TAIWAN).format(timestamp!!.toDate()).toString()
     }
 
@@ -170,26 +160,17 @@ object Util {
         time.set(Calendar.DAY_OF_MONTH, d)
         time.set(Calendar.HOUR_OF_DAY, h)
         time.set(Calendar.MINUTE, m)
-//    Log.i("Time? FromDateAndTime", "${Timestamp(Date(time.timeInMillis)).toDate()}")
         return time.timeInMillis
     }
 
     fun toDateAndTimeFromMilliTime(millis: Long): String {
-        val Format = SimpleDateFormat("yyyy/MM/dd hh:mm", Locale.TAIWAN)
-//    Log.i("date", "${Formate.format(Date(millis))}")
-        return Format.format(Date(millis))
+        val format = SimpleDateFormat("yyyy/MM/dd hh:mm", Locale.TAIWAN)
+        return format.format(Date(millis))
     }
 
     fun toDateFromMilliTime(millis: Long): String {
-        val Format = SimpleDateFormat("yyyy/MM/dd", Locale.TAIWAN)
-//    Log.i("date", "${Formate.format(Date(millis))}")
-        return Format.format(Date(millis))
-    }
-
-    fun toTimeFromMilliTime(millis: Long): String {
-        val Format = SimpleDateFormat("hh:mm", Locale.TAIWAN)
-//    Log.i("date", "${Formate.format(Date(millis))}")
-        return Format.format(Date(millis))
+        val format = SimpleDateFormat("yyyy/MM/dd", Locale.TAIWAN)
+        return format.format(Date(millis))
     }
 
     fun toStringFromPeriod(data: Map<String, Int?>): String {

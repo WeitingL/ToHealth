@@ -11,8 +11,8 @@ import com.weiting.tohealth.databinding.BoardRowCalenderitemBinding
 import com.weiting.tohealth.databinding.BoardRowNoteBinding
 import java.lang.ClassCastException
 
-const val BOARD_VIEWTYPE_NOTE = 0
-const val BOARD_VIEWTYPE_CALENDER = 1
+const val BOARD_VIEW_TYPE_NOTE = 0
+const val BOARD_VIEW_TYPE_CALENDER = 1
 
 class BoardAdapter(val viewModel: BoardViewModel) :
     ListAdapter<BoardType, RecyclerView.ViewHolder>(DiffCallBack) {
@@ -52,14 +52,14 @@ class BoardAdapter(val viewModel: BoardViewModel) :
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
-            is BoardType.Notes -> BOARD_VIEWTYPE_NOTE
-            is BoardType.CalenderItems -> BOARD_VIEWTYPE_CALENDER
+            is BoardType.Notes -> BOARD_VIEW_TYPE_NOTE
+            is BoardType.CalenderItems -> BOARD_VIEW_TYPE_CALENDER
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            BOARD_VIEWTYPE_NOTE -> NotesViewHolder(
+            BOARD_VIEW_TYPE_NOTE -> NotesViewHolder(
                 BoardRowNoteBinding.inflate(
                     LayoutInflater.from(
                         parent.context
@@ -67,7 +67,7 @@ class BoardAdapter(val viewModel: BoardViewModel) :
                 )
             )
 
-            BOARD_VIEWTYPE_CALENDER -> CalenderViewHolder(
+            BOARD_VIEW_TYPE_CALENDER -> CalenderViewHolder(
                 (BoardRowCalenderitemBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
                 ))

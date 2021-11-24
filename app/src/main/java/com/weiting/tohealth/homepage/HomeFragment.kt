@@ -84,7 +84,7 @@ class HomeFragment : Fragment() {
                                 )
                                     .setAction(
                                         getString(R.string.itemSwipe_undo),
-                                        View.OnClickListener {
+                                        {
                                             viewModel.undoSwipeToSkip()
                                             adapter.notifyItemRangeInserted(position - 1, 2)
                                         })
@@ -133,7 +133,7 @@ class HomeFragment : Fragment() {
                                 )
                                     .setAction(
                                         getString(R.string.itemSwipe_undo),
-                                        View.OnClickListener {
+                                        {
                                             viewModel.undoSwipeToSkip()
                                             adapter.notifyItemRangeInserted(position - 1, 2)
                                         })
@@ -181,7 +181,7 @@ class HomeFragment : Fragment() {
                                 )
                                     .setAction(
                                         getString(R.string.itemSwipe_undo),
-                                        View.OnClickListener {
+                                        {
                                             viewModel.undoSwipeToSkip()
                                             adapter.notifyItemRangeInserted(position - 1, 2)
                                         })
@@ -228,7 +228,7 @@ class HomeFragment : Fragment() {
                                 )
                                     .setAction(
                                         getString(R.string.itemSwipe_undo),
-                                        View.OnClickListener {
+                                        {
                                             viewModel.undoSwipeToSkip()
                                             adapter.notifyItemRangeInserted(position - 1, 2)
                                         })
@@ -280,7 +280,7 @@ class HomeFragment : Fragment() {
                                 )
                                     .setAction(
                                         getString(R.string.itemSwipe_undo),
-                                        View.OnClickListener {
+                                        {
                                             viewModel.undoSwipeToLog()
                                             adapter.notifyItemRangeInserted(position - 1, 2)
                                         })
@@ -338,7 +338,7 @@ class HomeFragment : Fragment() {
                                 )
                                     .setAction(
                                         getString(R.string.itemSwipe_undo),
-                                        View.OnClickListener {
+                                        {
                                             viewModel.undoSwipeToLog()
                                             adapter.notifyItemRangeInserted(position - 1, 2)
                                         })
@@ -422,21 +422,19 @@ class HomeFragment : Fragment() {
 }
 
 class WrapContentLinearLayoutManager : LinearLayoutManager {
-    constructor(context: Context?) : super(context) {}
+    constructor(context: Context?) : super(context)
     constructor(context: Context?, orientation: Int, reverseLayout: Boolean) : super(
         context,
         orientation,
         reverseLayout
-    ) {
-    }
+    )
 
     constructor(
         context: Context?,
         attrs: AttributeSet?,
         defStyleAttr: Int,
         defStyleRes: Int
-    ) : super(context, attrs, defStyleAttr, defStyleRes) {
-    }
+    ) : super(context, attrs, defStyleAttr, defStyleRes)
 
     override fun onLayoutChildren(recycler: Recycler, state: RecyclerView.State) {
         try {

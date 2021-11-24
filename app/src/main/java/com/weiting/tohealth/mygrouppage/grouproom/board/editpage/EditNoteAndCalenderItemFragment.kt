@@ -53,7 +53,7 @@ class EditNoteAndCalenderItemFragment : Fragment() {
         binding.tvEditDate.setOnClickListener {
             findNavController().navigate(
                 NavigationDirections.actionGlobalCalenderTimeDialog(
-                    EditTimeType.DATEANDTIME
+                    EditTimeType.DATE_AND_TIME
                 )
             )
         }
