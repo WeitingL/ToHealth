@@ -18,7 +18,10 @@ import java.lang.ClassCastException
 const val GROUP_VIEWTYPE_GROUP = 0
 const val GROUP_VIEWTYPE_ADDGROUP = 1
 
-class GroupAdapter(val onClickListener: OnclickListener, val onclickListenerForQR: OnclickListenerForQR) :
+class GroupAdapter(
+    val onClickListener: OnclickListener,
+    val onclickListenerForQR: OnclickListenerForQR
+) :
     ListAdapter<GroupPageItem, RecyclerView.ViewHolder>(DiffCallback) {
 
     object DiffCallback : DiffUtil.ItemCallback<GroupPageItem>() {
@@ -39,11 +42,12 @@ class GroupAdapter(val onClickListener: OnclickListener, val onclickListenerForQ
 
             if (getBoardMessageList(
                     myGroup.group.notes, myGroup.group.calenderItems
-                ).isEmpty()){
+                ).isEmpty()
+            ) {
                 binding.rvGroupNoteList.visibility = View.GONE
                 binding.tabLayoutForDots.visibility = View.GONE
                 binding.textView.visibility = View.GONE
-            }else{
+            } else {
                 binding.rvGroupNoteList.visibility = View.VISIBLE
                 binding.tabLayoutForDots.visibility = View.VISIBLE
                 binding.textView.visibility = View.VISIBLE
@@ -67,9 +71,8 @@ class GroupAdapter(val onClickListener: OnclickListener, val onclickListenerForQ
                     onclickListenerForQR.onClickForQR(myGroup.group.id!!)
                 }
 
-                TabLayoutMediator(tabLayoutForDots, rvGroupNoteList){ tab, position ->
+                TabLayoutMediator(tabLayoutForDots, rvGroupNoteList) { tab, position ->
                 }.attach()
-
             }
         }
     }
@@ -90,7 +93,8 @@ class GroupAdapter(val onClickListener: OnclickListener, val onclickListenerForQ
                 MygroupRowGroupBinding.inflate(
                     LayoutInflater.from(
                         parent.context
-                    ), parent, false
+                    ),
+                    parent, false
                 )
             )
 
@@ -146,10 +150,10 @@ class GroupAdapter(val onClickListener: OnclickListener, val onclickListenerForQ
                 noteList.forEach { note ->
                     list.add(
                         BoardMessage(
-                            title = note.title?:"",
-                            content = note.content?:"",
-                            createTime = note.createdTime?: Timestamp.now(),
-                            editor = note.editor?:"",
+                            title = note.title ?: "",
+                            content = note.content ?: "",
+                            createTime = note.createdTime ?: Timestamp.now(),
+                            editor = note.editor ?: "",
                             result = 7
                         )
                     )
@@ -158,10 +162,10 @@ class GroupAdapter(val onClickListener: OnclickListener, val onclickListenerForQ
                 calenderItemList.forEach { calenderItem ->
                     list.add(
                         BoardMessage(
-                            title = calenderItem.content?:"",
+                            title = calenderItem.content ?: "",
                             content = "時間: ${toStringFromTimeStamp(calenderItem.date)}",
-                            createTime = calenderItem.createdTime?: Timestamp.now(),
-                            editor = calenderItem.editor?:"",
+                            createTime = calenderItem.createdTime ?: Timestamp.now(),
+                            editor = calenderItem.editor ?: "",
                             result = 8
                         )
                     )
@@ -172,9 +176,9 @@ class GroupAdapter(val onClickListener: OnclickListener, val onclickListenerForQ
                 noteList.forEach { note ->
                     list.add(
                         BoardMessage(
-                            title = note.title?:"",
-                            content = note.content?:"",
-                            createTime = note.createdTime?: Timestamp.now(),
+                            title = note.title ?: "",
+                            content = note.content ?: "",
+                            createTime = note.createdTime ?: Timestamp.now(),
                             editor = note.editor!!,
                             result = 7
                         )
@@ -185,10 +189,10 @@ class GroupAdapter(val onClickListener: OnclickListener, val onclickListenerForQ
                 calenderItemList.forEach { calenderItem ->
                     list.add(
                         BoardMessage(
-                            title = calenderItem.content?:"",
+                            title = calenderItem.content ?: "",
                             content = "時間: ${toStringFromTimeStamp(calenderItem.date)}",
-                            createTime = calenderItem.createdTime?: Timestamp.now(),
-                            editor = calenderItem.editor?:"",
+                            createTime = calenderItem.createdTime ?: Timestamp.now(),
+                            editor = calenderItem.editor ?: "",
                             result = 8
                         )
                     )
@@ -198,5 +202,4 @@ class GroupAdapter(val onClickListener: OnclickListener, val onclickListenerForQ
 
         return list
     }
-
 }

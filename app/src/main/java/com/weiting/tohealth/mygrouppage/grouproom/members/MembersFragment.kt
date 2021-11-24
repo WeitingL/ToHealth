@@ -31,9 +31,10 @@ class MembersFragment : Fragment() {
             },
             MembersAdapter.ViewOnclickListener {
                 findNavController().navigate(NavigationDirections.actionGlobalGroupMemberStatisticFragment(it))
-            })
+            }
+        )
 
-        viewModel.memberLive.observe(viewLifecycleOwner){
+        viewModel.memberLive.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
 

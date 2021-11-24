@@ -1,22 +1,15 @@
 package com.weiting.tohealth
 
-import android.app.Notification
-import android.util.Log
 import android.view.View
-import android.view.ViewTreeObserver
 import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.firebase.Timestamp
 import com.weiting.tohealth.NavigationDestination.*
-import com.weiting.tohealth.homepage.ItemDataType
-import com.weiting.tohealth.homepage.TodayItemAdapter
 import com.weiting.tohealth.notificationpage.NotificationRecord
 import com.weiting.tohealth.notificationpage.NotificationRecordAdapter
 import com.weiting.tohealth.util.Util.getTimeStampToTimeInt
@@ -114,7 +107,10 @@ fun bindNavigationDestination(textView: TextView, navigationDestination: Navigat
 }
 
 @BindingAdapter("navigationDestinationWithToolBar")
-fun bindNavigationDestinationWithToolBar(toolbar: Toolbar, navigationDestination: NavigationDestination) {
+fun bindNavigationDestinationWithToolBar(
+    toolbar: Toolbar,
+    navigationDestination: NavigationDestination
+) {
     toolbar.visibility = when (navigationDestination) {
         GroupFragment -> View.VISIBLE
         LoginFragment -> View.GONE
@@ -133,7 +129,6 @@ fun bindNavigationDestinationWithToolBar(toolbar: Toolbar, navigationDestination
         NotificationFragment -> View.VISIBLE
         OtherFragment -> View.VISIBLE
     }
-
 }
 
 @BindingAdapter("navigationDestination")
@@ -159,5 +154,4 @@ fun bindNavigationDestination(
         NotificationFragment -> View.GONE
         OtherFragment -> View.VISIBLE
     }
-
 }

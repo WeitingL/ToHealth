@@ -11,7 +11,10 @@ import com.weiting.tohealth.data.Member
 import com.weiting.tohealth.databinding.MemberRowBinding
 import com.weiting.tohealth.util.Util.transferCircleImage
 
-class MembersAdapter(val onClickListener: EditOnclickListener, val onclickListener: ViewOnclickListener) :
+class MembersAdapter(
+    val onClickListener: EditOnclickListener,
+    val onclickListener: ViewOnclickListener
+) :
     ListAdapter<Member, MembersAdapter.MemberViewHolder>(DiffCallback) {
 
     object DiffCallback : DiffUtil.ItemCallback<Member>() {
@@ -20,7 +23,6 @@ class MembersAdapter(val onClickListener: EditOnclickListener, val onclickListen
 
         override fun areContentsTheSame(oldItem: Member, newItem: Member): Boolean =
             oldItem == newItem
-
     }
 
     inner class MemberViewHolder(private val binding: MemberRowBinding) :
@@ -35,20 +37,18 @@ class MembersAdapter(val onClickListener: EditOnclickListener, val onclickListen
 
                 btEditMember.setOnClickListener {
                     val context = PublicApplication.application.applicationContext
-                    when(member.private){
+                    when (member.private) {
                         1 -> Toast.makeText(context, "使用者拒絕群組編輯", Toast.LENGTH_LONG).show()
                         3 -> Toast.makeText(context, "使用者拒絕群組編輯", Toast.LENGTH_LONG).show()
                         else -> onClickListener.onClick(member)
                     }
-
                 }
                 btStastisticMember.setOnClickListener {
                     val context = PublicApplication.application.applicationContext
-                    when(member.private){
+                    when (member.private) {
                         3 -> Toast.makeText(context, "使用者拒絕群組查看", Toast.LENGTH_LONG).show()
                         else -> onclickListener.onClick(member)
                     }
-
                 }
             }
         }
@@ -75,5 +75,4 @@ class MembersAdapter(val onClickListener: EditOnclickListener, val onclickListen
     class ViewOnclickListener(val clickListener: (member: Member) -> Unit) {
         fun onClick(member: Member) = clickListener(member)
     }
-
 }

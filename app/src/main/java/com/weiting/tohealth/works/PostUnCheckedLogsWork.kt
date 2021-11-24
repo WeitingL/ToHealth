@@ -18,7 +18,7 @@ class PostUnCheckedLogsWork {
      */
 
     suspend fun checkTodayUnCheckedLogs(firebaseDataRepository: FirebaseRepository) {
-        val userId = Firebase.auth.currentUser?.uid?:""
+        val userId = Firebase.auth.currentUser?.uid ?: ""
         val itemList = mutableListOf<ItemsDataType>()
 
         Log.i("startWork", "checkTodayUnCheckedLogs")
@@ -55,7 +55,7 @@ class PostUnCheckedLogsWork {
         }
         measureList.forEach {
             it.measureLogs.filter {
-                getTimeStampToDateInt(it.createdTime?: Timestamp.now()) == getTimeStampToDateInt(
+                getTimeStampToDateInt(it.createdTime ?: Timestamp.now()) == getTimeStampToDateInt(
                     Timestamp(yesterday)
                 )
             }
@@ -71,8 +71,8 @@ class PostUnCheckedLogsWork {
         }
         careList.forEach {
             it.careLogs =
-                firebaseDataRepository.getCareRecord(it.id?:"", Timestamp.now()).filter {
-                    getTimeStampToDateInt(it.createdTime?: Timestamp.now()) == getTimeStampToDateInt(
+                firebaseDataRepository.getCareRecord(it.id ?: "", Timestamp.now()).filter {
+                    getTimeStampToDateInt(it.createdTime ?: Timestamp.now()) == getTimeStampToDateInt(
                         Timestamp(yesterday)
                     )
                 }
@@ -88,8 +88,8 @@ class PostUnCheckedLogsWork {
         }
         activityList.forEach {
             it.activityLogs =
-                firebaseDataRepository.getActivityRecord(it.id?:"", Timestamp.now()).filter {
-                    getTimeStampToDateInt(it.createdTime?: Timestamp.now()) == getTimeStampToDateInt(
+                firebaseDataRepository.getActivityRecord(it.id ?: "", Timestamp.now()).filter {
+                    getTimeStampToDateInt(it.createdTime ?: Timestamp.now()) == getTimeStampToDateInt(
                         Timestamp(yesterday)
                     )
                 }
@@ -97,7 +97,6 @@ class PostUnCheckedLogsWork {
         }
 
         getUncheckLogs(itemList, firebaseDataRepository)
-
     }
 
     private suspend fun getUncheckLogs(
@@ -117,12 +116,13 @@ class PostUnCheckedLogsWork {
             when (itemData) {
                 is Drug -> {
                     itemData.drugLogs.forEach { drugLog ->
-                        timeTags.add(drugLog.timeTag?:0)
+                        timeTags.add(drugLog.timeTag ?: 0)
                     }
                     itemData.executedTime.forEach { timeStamp ->
                         if (getTimeStampToTimeInt(timeStamp) !in timeTags) {
                             firebaseDataRepository.postDrugRecord(
-                                itemData.id?:"", DrugLog(
+                                itemData.id ?: "",
+                                DrugLog(
                                     timeTag = getTimeStampToTimeInt(timeStamp),
                                     result = 3,
                                     createdTime = time
@@ -135,12 +135,13 @@ class PostUnCheckedLogsWork {
 
                 is Activity -> {
                     itemData.activityLogs.forEach { activityLog ->
-                        timeTags.add(activityLog.timeTag?:0)
+                        timeTags.add(activityLog.timeTag ?: 0)
                     }
                     itemData.executedTime.forEach { timeStamp ->
                         if (getTimeStampToTimeInt(timeStamp) !in timeTags) {
                             firebaseDataRepository.postActivityRecord(
-                                itemData.id?:"", ActivityLog(
+                                itemData.id ?: "",
+                                ActivityLog(
                                     timeTag = getTimeStampToTimeInt(timeStamp),
                                     result = 3,
                                     createdTime = time,
@@ -153,14 +154,14 @@ class PostUnCheckedLogsWork {
 
                 is Measure -> {
                     itemData.measureLogs.forEach { measureLog ->
-                        timeTags.add(measureLog.timeTag?:0)
+                        timeTags.add(measureLog.timeTag ?: 0)
                     }
                     itemData.executedTime.forEach { timeStamp ->
                         if (getTimeStampToTimeInt(timeStamp) !in timeTags) {
                             firebaseDataRepository.postMeasureRecord(
-                                itemData.id?:"",
+                                itemData.id ?: "",
                                 MeasureLog(
-                                    id = firebaseDataRepository.getMeasureRecordId(itemData.id?:""),
+                                    id = firebaseDataRepository.getMeasureRecordId(itemData.id ?: ""),
                                     timeTag = getTimeStampToTimeInt(timeStamp),
                                     result = 3,
                                     createdTime = time
@@ -173,12 +174,12 @@ class PostUnCheckedLogsWork {
 
                 is Care -> {
                     itemData.careLogs.forEach { careLog ->
-                        timeTags.add(careLog.timeTag?:0)
+                        timeTags.add(careLog.timeTag ?: 0)
                     }
                     itemData.executeTime.forEach { timeStamp ->
                         if (getTimeStampToTimeInt(timeStamp) !in timeTags) {
                             firebaseDataRepository.postCareRecord(
-                                itemData.id?:"",
+                                itemData.id ?: "",
                                 CareLog(
                                     timeTag = getTimeStampToTimeInt(timeStamp),
                                     result = 3,
@@ -192,5 +193,4 @@ class PostUnCheckedLogsWork {
             }
         }
     }
-
 }

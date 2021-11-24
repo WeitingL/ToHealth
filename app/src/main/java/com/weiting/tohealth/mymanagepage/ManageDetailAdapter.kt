@@ -4,14 +4,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.anychart.charts.Stock
 import com.weiting.tohealth.*
 import com.weiting.tohealth.data.ItemData
-import com.weiting.tohealth.data.UserManager
 import com.weiting.tohealth.databinding.ManageRowItemBinding
 import com.weiting.tohealth.mymanagepage.ManageDetailAdapter.ItemsListViewHolder
 import com.weiting.tohealth.util.Util.getTimeStampToTimeInt
@@ -46,10 +43,9 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
             oldItem: ItemData,
             newItem: ItemData
         ): Boolean = oldItem == newItem
-
     }
 
-    //TODO Refactor 3rd
+    // TODO Refactor 3rd
     inner class ItemsListViewHolder(private val binding: ManageRowItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ItemData) {
@@ -64,9 +60,11 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                     when (dataType) {
                         ManageType.DRUG -> {
                             val data = item.DrugData
-                            adapter.submitList(data?.executedTime?.sortedBy {
-                                getTimeStampToTimeInt(it)
-                            })
+                            adapter.submitList(
+                                data?.executedTime?.sortedBy {
+                                    getTimeStampToTimeInt(it)
+                                }
+                            )
 
                             when (data?.executedTime?.isEmpty()) {
                                 true -> {
@@ -101,14 +99,15 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                             tvUpdateTime.text = toStringFromTimeStamp(data?.lastEditTime)
                             tvCreatedTime.text = toStringFromTimeStamp(data?.createdTime)
                             tvEditorManage.text = database.getUser(data?.editor ?: "").name
-
                         }
 
                         ManageType.MEASURE -> {
                             val data = item.MeasureData
-                            adapter.submitList(data?.executedTime?.sortedBy {
-                                getTimeStampToTimeInt(it)
-                            })
+                            adapter.submitList(
+                                data?.executedTime?.sortedBy {
+                                    getTimeStampToTimeInt(it)
+                                }
+                            )
 
                             when (data?.executedTime?.isEmpty()) {
                                 true -> {
@@ -137,15 +136,16 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                             tvStockDayUnit.text = context.getString(R.string.unLimit)
                             pbStock.progress = 100
 
-                            tvEditorManage.text = database.getUser(data?.editor?:"").name
-
+                            tvEditorManage.text = database.getUser(data?.editor ?: "").name
                         }
 
                         ManageType.ACTIVITY -> {
                             val data = item.ActivityData
-                            adapter.submitList(data?.executedTime?.sortedBy {
-                                getTimeStampToTimeInt(it)
-                            })
+                            adapter.submitList(
+                                data?.executedTime?.sortedBy {
+                                    getTimeStampToTimeInt(it)
+                                }
+                            )
 
                             when (data?.executedTime?.isEmpty()) {
                                 true -> {
@@ -160,7 +160,7 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                             rvTimeList.adapter = adapter
                             tvItemNameManage.text = toActivityType(data?.type)
                             imItemIcon.setImageResource(setActivityType(data?.type))
-                            tvPeriod.text = toStringFromPeriod(data?.period?: mapOf())
+                            tvPeriod.text = toStringFromPeriod(data?.period ?: mapOf())
                             tvTagManage.text = toStatus(data?.status)
 
                             tvPerTimeTitle.visibility = View.GONE
@@ -173,15 +173,16 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                             tvStockDayUnit.text = context.getString(R.string.unLimit)
                             pbStock.progress = 100
 
-                            tvEditorManage.text = database.getUser(data?.editor?:"").name
-
+                            tvEditorManage.text = database.getUser(data?.editor ?: "").name
                         }
 
                         ManageType.CARE -> {
                             val data = item.CareData
-                            adapter.submitList(data?.executeTime?.sortedBy {
-                                getTimeStampToTimeInt(it)
-                            })
+                            adapter.submitList(
+                                data?.executeTime?.sortedBy {
+                                    getTimeStampToTimeInt(it)
+                                }
+                            )
 
                             when (data?.executeTime?.isEmpty()) {
                                 true -> {
@@ -211,7 +212,6 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                             tvUpdateTime.text = toStringFromTimeStamp(data?.lastEditTime)
 
                             tvEditorManage.text = database.getUser(data?.editor ?: "").name
-
                         }
                     }
                 }
@@ -252,4 +252,3 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
         }
     }
 }
-

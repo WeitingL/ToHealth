@@ -19,7 +19,7 @@ interface FirebaseRepository {
        Items operation
      */
 
-    //Get Items list
+    // Get Items list
     suspend fun getAllDrugs(userId: String): List<Drug>
 
     suspend fun getDrug(itemId: String): Drug
@@ -40,7 +40,7 @@ interface FirebaseRepository {
 
     fun getLiveCareList(userId: String): MutableLiveData<List<Care>>
 
-    //Post Item
+    // Post Item
     fun postDrug(drug: Drug)
 
     fun postMeasure(measure: Measure)
@@ -49,7 +49,7 @@ interface FirebaseRepository {
 
     fun postCare(care: Care)
 
-    //Update Item
+    // Update Item
     fun updateDrug(drug: Drug)
 
     fun updateMeasure(measure: Measure)
@@ -58,7 +58,7 @@ interface FirebaseRepository {
 
     fun updateCare(care: Care)
 
-    //Post Item record
+    // Post Item record
     fun postDrugRecord(id: String, drugLog: DrugLog)
 
     suspend fun getMeasureRecordId(itemId: String): String
@@ -69,27 +69,21 @@ interface FirebaseRepository {
 
     fun postCareRecord(id: String, careLog: CareLog)
 
-    //Get Item Log
-    suspend fun getDrugRecord(itemId: String, createTime: Timestamp): List<DrugLog>
+    // Get Item Log
+    suspend fun getDrugRecord(itemId: String): List<DrugLog>
 
-    suspend fun getMeasureRecord(
-        itemId: String,
-        createTime: Timestamp
-    ): List<MeasureLog>
+    suspend fun getMeasureRecord(itemId: String): List<MeasureLog>
 
     suspend fun getMeasureLog(itemId: String, itemsLogId: String): MeasureLog
 
-    suspend fun getActivityRecord(
-        itemId: String,
-        createTime: Timestamp
-    ): List<ActivityLog>
+    suspend fun getActivityRecord(itemId: String): List<ActivityLog>
 
-    suspend fun getCareRecord(itemId: String, createTime: Timestamp): List<CareLog>
+    suspend fun getCareRecord(itemId: String): List<CareLog>
     /*
        Group operation
      */
 
-    //Post Group
+    // Post Group
     fun createGroup(group: Group)
 
     fun getNewGroupId(): String
@@ -97,7 +91,7 @@ interface FirebaseRepository {
     // Get group Id
     suspend fun checkIsGroupExist(groupId: String): Boolean
 
-    //Join Group
+    // Join Group
     fun joinGroup(member: Member, groupId: String)
 
     suspend fun checkIsRelationExist(userId: String, groupId: String): Boolean
@@ -152,5 +146,4 @@ interface FirebaseRepository {
     ): MutableLiveData<List<Chat>>
 
     fun postOnGetChatForService(chat: Chat)
-
 }

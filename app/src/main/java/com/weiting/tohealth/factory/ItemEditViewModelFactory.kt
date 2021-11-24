@@ -5,13 +5,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.weiting.tohealth.data.FirebaseRepository
 import com.weiting.tohealth.data.User
 import com.weiting.tohealth.itemeditpage.ItemEditViewModel
-import com.weiting.tohealth.mymanagepage.ManageDetailViewModel
-import com.weiting.tohealth.mymanagepage.ManageType
 
 class ItemEditViewModelFactory(
     private val firebaseDataRepository: FirebaseRepository,
     private val user: User
-):ViewModelProvider.Factory {
+) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>) =
         with(modelClass) {

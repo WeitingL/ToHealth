@@ -23,15 +23,16 @@ class BoardAdapter(val viewModel: BoardViewModel) :
 
         override fun areContentsTheSame(oldItem: BoardType, newItem: BoardType): Boolean =
             oldItem == newItem
-
     }
 
     inner class NotesViewHolder(private val binding: BoardRowNoteBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(list: List<Note>) {
-            val adapter = BoardNotesAdapter(BoardNotesAdapter.DeleteOnclickListener {
-                viewModel.deleteNote(it)
-            })
+            val adapter = BoardNotesAdapter(
+                BoardNotesAdapter.DeleteOnclickListener {
+                    viewModel.deleteNote(it)
+                }
+            )
             adapter.submitList(list)
             binding.rvNotes.adapter = adapter
         }
@@ -41,13 +42,14 @@ class BoardAdapter(val viewModel: BoardViewModel) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(list: List<CalenderItem>) {
             val adapter =
-                BoardCalenderItemsAdapter(BoardCalenderItemsAdapter.DeleteOnclickListener {
-                    viewModel.deleteReminder(it)
-                })
+                BoardCalenderItemsAdapter(
+                    BoardCalenderItemsAdapter.DeleteOnclickListener {
+                        viewModel.deleteReminder(it)
+                    }
+                )
             adapter.submitList(list)
             binding.rvCalenderItems.adapter = adapter
         }
-
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -63,14 +65,17 @@ class BoardAdapter(val viewModel: BoardViewModel) :
                 BoardRowNoteBinding.inflate(
                     LayoutInflater.from(
                         parent.context
-                    ), parent, false
+                    ),
+                    parent, false
                 )
             )
 
             BOARD_VIEW_TYPE_CALENDER -> CalenderViewHolder(
-                (BoardRowCalenderitemBinding.inflate(
-                    LayoutInflater.from(parent.context), parent, false
-                ))
+                (
+                    BoardRowCalenderitemBinding.inflate(
+                        LayoutInflater.from(parent.context), parent, false
+                    )
+                    )
             )
 
             else -> throw ClassCastException("Unknown view type $viewType")

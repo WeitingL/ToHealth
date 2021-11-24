@@ -18,5 +18,4 @@ class HomeViewModelFactory(
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
         } as T
-
 }

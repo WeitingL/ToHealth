@@ -3,7 +3,6 @@ package com.weiting.tohealth.factory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.weiting.tohealth.data.FirebaseRepository
-import com.weiting.tohealth.mygrouppage.MyGroupViewModel
 import com.weiting.tohealth.mystatisticpage.StatisticDetailViewModel
 import com.weiting.tohealth.mystatisticpage.StatisticType
 
@@ -22,5 +21,4 @@ class StatisticDetailViewModelFactory(
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
         } as T
-
 }

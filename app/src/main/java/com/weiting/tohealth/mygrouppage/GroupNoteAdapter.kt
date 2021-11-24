@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.R
-import com.weiting.tohealth.data.Note
 import com.weiting.tohealth.databinding.MygroupRowNoteBinding
 import com.weiting.tohealth.mygrouppage.GroupAdapter.*
 import com.weiting.tohealth.util.Util.toStringFromTimeStamp
@@ -22,7 +21,6 @@ class GroupNoteAdapter :
 
         override fun areContentsTheSame(oldItem: BoardMessage, newItem: BoardMessage): Boolean =
             oldItem == newItem
-
     }
 
     inner class NoteViewHolder(private val binding: MygroupRowNoteBinding) :
@@ -62,5 +60,4 @@ class GroupNoteAdapter :
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         return holder.bind(getItem(position))
     }
-
 }

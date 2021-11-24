@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.weiting.tohealth.NavigationDirections
 import com.weiting.tohealth.databinding.DialogAddGroupBinding
 
-class AddGroupDialog: DialogFragment() {
+class AddGroupDialog : DialogFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,8 +36,5 @@ class AddGroupDialog: DialogFragment() {
 
         val width = (resources.displayMetrics.widthPixels * 0.5).toInt()
         dialog!!.window?.setLayout(width * 2, width)
-
     }
-
-
 }

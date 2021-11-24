@@ -113,7 +113,7 @@ class EditNoteAndCalenderItemFragment : Fragment() {
                             CalenderItem(
                                 editor = UserManager.UserInformation.id,
                                 content = binding.edvReminderTitle.text.toString(),
-                                date= Timestamp(Date(viewModel.longTime.value!!)),
+                                date = Timestamp(Date(viewModel.longTime.value!!)),
                                 createdTime = Timestamp.now(),
                                 result = 0
                             )
@@ -126,5 +126,4 @@ class EditNoteAndCalenderItemFragment : Fragment() {
 
         return binding.root
     }
-
 }

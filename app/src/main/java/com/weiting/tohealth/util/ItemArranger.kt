@@ -28,7 +28,6 @@ class ItemArranger {
                     4 -> false
                     else -> false
                 }
-
             }
             ItemType.CARE -> {
 
@@ -95,7 +94,6 @@ class ItemArranger {
             true -> true
             false -> false
         }
-
     }
 
     private fun typeWeekToDo(
@@ -139,6 +137,4 @@ class ItemArranger {
             false -> false
         }
     }
-
-
 }

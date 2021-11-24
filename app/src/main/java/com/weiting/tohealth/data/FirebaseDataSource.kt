@@ -13,7 +13,7 @@ import java.util.*
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-//TODO Error handle add.
+// TODO Error handle add.
 
 object FirebaseDataSource : FirebaseSource {
 
@@ -61,7 +61,6 @@ object FirebaseDataSource : FirebaseSource {
             .addOnFailureListener { e ->
                 Log.w("store failure", "Error adding document", e)
             }
-
     }
 
     override suspend fun getAllDrugs(userId: String): List<Drug> =
@@ -265,7 +264,6 @@ object FirebaseDataSource : FirebaseSource {
         return careList
     }
 
-
     override fun postDrug(drug: Drug) {
 
         val database = application.database
@@ -389,7 +387,6 @@ object FirebaseDataSource : FirebaseSource {
             .document().id
 
         it.resume(id)
-
     }
 
     override fun postMeasureRecord(id: String, measureLog: MeasureLog) {
@@ -436,7 +433,7 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
-    override suspend fun getDrugRecord(itemId: String, createTime: Timestamp): List<DrugLog> =
+    override suspend fun getDrugRecord(itemId: String): List<DrugLog> =
         suspendCoroutine { continuation ->
             val list = mutableListOf<DrugLog>()
             val database = application.database
@@ -457,7 +454,7 @@ object FirebaseDataSource : FirebaseSource {
                 }
         }
 
-    override suspend fun getMeasureRecord(itemId: String, createTime: Timestamp): List<MeasureLog> =
+    override suspend fun getMeasureRecord(itemId: String): List<MeasureLog> =
         suspendCoroutine { continuation ->
             val list = mutableListOf<MeasureLog>()
             val database = application.database
@@ -493,11 +490,7 @@ object FirebaseDataSource : FirebaseSource {
                 }
         }
 
-
-    override suspend fun getActivityRecord(
-        itemId: String,
-        createTime: Timestamp
-    ): List<ActivityLog> =
+    override suspend fun getActivityRecord(itemId: String): List<ActivityLog> =
         suspendCoroutine { continuation ->
             val list = mutableListOf<ActivityLog>()
             val database = application.database
@@ -518,8 +511,7 @@ object FirebaseDataSource : FirebaseSource {
                 }
         }
 
-
-    override suspend fun getCareRecord(itemId: String, createTime: Timestamp): List<CareLog> =
+    override suspend fun getCareRecord(itemId: String): List<CareLog> =
         suspendCoroutine { continuation ->
             val list = mutableListOf<CareLog>()
             val database = application.database
@@ -551,7 +543,6 @@ object FirebaseDataSource : FirebaseSource {
             .addOnFailureListener { e ->
                 Log.w("store failure", "Error adding document", e)
             }
-
     }
 
     override fun getNewGroupId(): String {
@@ -601,8 +592,6 @@ object FirebaseDataSource : FirebaseSource {
                         true -> continuation.resume(true)
                         false -> continuation.resume(false)
                     }
-
-
                 }
         }
 
@@ -879,7 +868,6 @@ object FirebaseDataSource : FirebaseSource {
                 chatItemsList.value = list
             }
         return chatItemsList
-
     }
 
     override fun postChatMessage(chat: Chat) {
@@ -938,7 +926,7 @@ object FirebaseDataSource : FirebaseSource {
             .whereGreaterThan("createdTime", Timestamp(c.time))
             .addSnapshotListener { value, error ->
 
-                if (value?.metadata?.hasPendingWrites() != true){
+                if (value?.metadata?.hasPendingWrites() != true) {
                     if (error != null) {
                         Log.e("Listen failed.", error.toString())
                         return@addSnapshotListener
@@ -950,10 +938,8 @@ object FirebaseDataSource : FirebaseSource {
                         list.add(data)
                     }
                     notificationList.value = list
-
                 }
             }
-
         return notificationList
     }
 
@@ -1044,6 +1030,4 @@ object FirebaseDataSource : FirebaseSource {
                 Log.w("store failure", "Error adding document", e)
             }
     }
-
-
 }

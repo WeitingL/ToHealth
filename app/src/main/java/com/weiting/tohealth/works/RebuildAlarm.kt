@@ -25,7 +25,7 @@ class RebuildAlarm {
      */
 
     suspend fun updateNewTodoListToAlarmManager(firebaseDataRepository: FirebaseRepository) {
-        val userId = Firebase.auth.currentUser?.uid?:""
+        val userId = Firebase.auth.currentUser?.uid ?: ""
         val timeList = mutableListOf<Timestamp>()
 
         val drugList = firebaseDataRepository.getAllDrugs(userId).filter {
@@ -33,7 +33,7 @@ class RebuildAlarm {
         }
         drugList.forEach {
             it.executedTime.forEach {
-                if (getTimeStampToTimeInt(it) > getTimeStampToTimeInt(Timestamp.now())){
+                if (getTimeStampToTimeInt(it) > getTimeStampToTimeInt(Timestamp.now())) {
                     timeList.add(it)
                 }
             }
@@ -44,7 +44,7 @@ class RebuildAlarm {
         }
         measureLog.forEach {
             it.executedTime.forEach {
-                if (getTimeStampToTimeInt(it) > getTimeStampToTimeInt(Timestamp.now())){
+                if (getTimeStampToTimeInt(it) > getTimeStampToTimeInt(Timestamp.now())) {
                     timeList.add(it)
                 }
             }
@@ -55,7 +55,7 @@ class RebuildAlarm {
         }
         activityList.forEach {
             it.executedTime.forEach {
-                if (getTimeStampToTimeInt(it) > getTimeStampToTimeInt(Timestamp.now())){
+                if (getTimeStampToTimeInt(it) > getTimeStampToTimeInt(Timestamp.now())) {
                     timeList.add(it)
                 }
             }
@@ -66,7 +66,7 @@ class RebuildAlarm {
         }
         careList.forEach {
             it.executeTime.forEach {
-                if (getTimeStampToTimeInt(it) > getTimeStampToTimeInt(Timestamp.now())){
+                if (getTimeStampToTimeInt(it) > getTimeStampToTimeInt(Timestamp.now())) {
                     timeList.add(it)
                 }
             }

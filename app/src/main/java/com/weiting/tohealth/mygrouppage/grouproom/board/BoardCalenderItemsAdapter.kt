@@ -18,7 +18,6 @@ class BoardCalenderItemsAdapter(val onclickListener: DeleteOnclickListener) :
 
         override fun areContentsTheSame(oldItem: CalenderItem, newItem: CalenderItem): Boolean =
             oldItem == newItem
-
     }
 
     inner class CalenderItemViewHolder(private val binding: CalenderItemRowBinding) :
@@ -53,6 +52,4 @@ class BoardCalenderItemsAdapter(val onclickListener: DeleteOnclickListener) :
     class DeleteOnclickListener(val clickListener: (calenderItem: CalenderItem) -> Unit) {
         fun onClick(calenderItem: CalenderItem) = clickListener(calenderItem)
     }
-
-
 }

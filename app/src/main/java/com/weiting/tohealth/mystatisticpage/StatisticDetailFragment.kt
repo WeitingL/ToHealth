@@ -1,7 +1,6 @@
 package com.weiting.tohealth.mystatisticpage
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +21,7 @@ class StatisticDetailFragment : Fragment() {
     ): View? {
         val binding = MystatisticItemFagmentBinding.inflate(inflater, container, false)
 
-        //Get the type from MyStatisticAdapter.
+        // Get the type from MyStatisticAdapter.
         val statisticType = arguments?.get("type") as StatisticType
         val user = arguments?.get("user") as User
         val factory =
@@ -35,11 +34,11 @@ class StatisticDetailFragment : Fragment() {
         val adapter = StatisticDetailAdapter()
 
         viewModel.logList.observe(viewLifecycleOwner) {
-            if (it.isNotEmpty()){
+            if (it.isNotEmpty()) {
                 adapter.submitList(it)
                 binding.lavEmptyList.visibility = View.GONE
                 binding.tvEmptyList.visibility = View.GONE
-            }else{
+            } else {
                 binding.lavEmptyList.visibility = View.VISIBLE
                 binding.lavEmptyList.setAnimation(R.raw.filling_list)
                 binding.tvEmptyList.visibility = View.VISIBLE
@@ -49,5 +48,4 @@ class StatisticDetailFragment : Fragment() {
         binding.rvStatisticDataList.adapter = adapter
         return binding.root
     }
-
 }

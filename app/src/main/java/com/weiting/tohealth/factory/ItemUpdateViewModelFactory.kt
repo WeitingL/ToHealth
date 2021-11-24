@@ -13,7 +13,7 @@ class ItemUpdateViewModelFactory(
     private val itemData: ItemData,
     private val manageType: ManageType,
     private val user: User
-):ViewModelProvider.Factory {
+) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>) =
         with(modelClass) {

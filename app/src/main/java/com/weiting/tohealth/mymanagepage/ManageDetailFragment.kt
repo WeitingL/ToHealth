@@ -1,7 +1,6 @@
 package com.weiting.tohealth.mymanagepage
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,16 +33,16 @@ class ManageDetailFragment : Fragment() {
         )
         val viewModel = ViewModelProvider(this, factory).get(ManageDetailViewModel::class.java)
 
-        if (private == 2){
+        if (private == 2) {
             binding.btAddItem.visibility = View.GONE
         }
 
         val adapter = ManageDetailAdapter(
             manageType,
             ManageDetailAdapter.OnclickListener { itemData, itemType ->
-                when(private == 2){
+                when (private == 2) {
                     true -> Toast.makeText(context, "使用者限制您的編輯", Toast.LENGTH_LONG).show()
-                    false ->{
+                    false -> {
                         findNavController().navigate(
                             NavigationDirections.actionGlobalItemUpdateFragment(
                                 itemData = itemData,
@@ -53,7 +52,8 @@ class ManageDetailFragment : Fragment() {
                         )
                     }
                 }
-            })
+            }
+        )
 
         when (manageType) {
             ManageType.DRUG -> {
@@ -134,5 +134,4 @@ class ManageDetailFragment : Fragment() {
         }
         return binding.root
     }
-
 }

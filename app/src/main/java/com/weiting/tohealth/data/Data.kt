@@ -4,7 +4,7 @@ import android.os.Parcelable
 import com.google.firebase.Timestamp
 import kotlinx.parcelize.Parcelize
 
-//Use this data class to hold all type of item.
+// Use this data class to hold all type of item.
 @Parcelize
 data class ItemData(
     val DrugData: Drug? = null,

@@ -28,7 +28,8 @@ class GroupMemberStatisticFragment : Fragment() {
 
         viewPager.isUserInputEnabled = false
         viewPager.adapter = MyStatisticAdapter(
-            this, User(
+            this,
+            User(
                 id = memberInfo.userId,
                 name = memberInfo.name
             )
@@ -45,5 +46,4 @@ class GroupMemberStatisticFragment : Fragment() {
 
         return binding.root
     }
-
 }

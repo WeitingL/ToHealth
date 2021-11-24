@@ -20,13 +20,13 @@ abstract class RecyclerViewSwipe :
         viewHolder: RecyclerView.ViewHolder
     ): Int {
 
-        //If the viewHolder is timeViewHolder, the swipe function is not support.
+        // If the viewHolder is timeViewHolder, the swipe function is not support.
         if (viewHolder.itemViewType == ITEM_VIEWTYPE_TIME) return 0
 
         return super.getMovementFlags(recyclerView, viewHolder)
     }
 
-    //We won't move the holder up and down: return false.
+    // We won't move the holder up and down: return false.
     override fun onMove(
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder,
@@ -35,7 +35,7 @@ abstract class RecyclerViewSwipe :
         return false
     }
 
-    //Delete movement
+    // Delete movement
     override fun onChildDraw(
         c: Canvas,
         recyclerView: RecyclerView,

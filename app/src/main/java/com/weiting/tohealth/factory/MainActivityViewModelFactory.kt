@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.weiting.tohealth.MainActivityViewModel
 import com.weiting.tohealth.data.FirebaseRepository
-import com.weiting.tohealth.mygrouppage.MyGroupViewModel
 
 class MainActivityViewModelFactory(
     private val firebaseDataRepository: FirebaseRepository
@@ -19,5 +18,4 @@ class MainActivityViewModelFactory(
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
         } as T
-
 }

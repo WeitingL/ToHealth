@@ -1,7 +1,6 @@
 package com.weiting.tohealth.notificationpage
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,27 +28,24 @@ class NotificationFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        viewModel.notificationList.observe(viewLifecycleOwner){
-            if (it.isEmpty()){
+        viewModel.notificationList.observe(viewLifecycleOwner) {
+            if (it.isEmpty()) {
                 binding.lavLoagindNotification.visibility = View.VISIBLE
                 binding.lavLoagindNotification.setAnimation(R.raw.empty_box)
-            }else{
+            } else {
                 viewModel.transferToNotificationRecord(it)
                 binding.lavLoagindNotification.visibility = View.GONE
             }
         }
 
-        viewModel.isLoading.observe(viewLifecycleOwner){
-            if(it){
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it) {
                 binding.lavLoagindNotification.visibility = View.VISIBLE
-            }else{
+            } else {
                 binding.lavLoagindNotification.visibility = View.GONE
             }
         }
 
-
         return binding.root
     }
-
-
 }

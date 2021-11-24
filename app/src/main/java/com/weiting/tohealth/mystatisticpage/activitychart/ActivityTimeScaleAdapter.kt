@@ -19,7 +19,6 @@ class ActivityTimeScaleAdapter :
 
         override fun areContentsTheSame(oldItem: ResultInDate, newItem: ResultInDate): Boolean =
             oldItem == newItem
-
     }
 
     inner class DateTimeLineViewHolder(private val binding: StatisticDrugTimeRowBinding) :
@@ -45,5 +44,4 @@ class ActivityTimeScaleAdapter :
     override fun onBindViewHolder(holder: DateTimeLineViewHolder, position: Int) {
         return holder.bind(getItem(position))
     }
-
 }

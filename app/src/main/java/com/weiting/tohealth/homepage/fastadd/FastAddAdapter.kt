@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.*
 import com.weiting.tohealth.data.*
 import com.weiting.tohealth.databinding.ItemRowBinding
-import com.weiting.tohealth.homepage.ItemDataType
 import com.weiting.tohealth.util.Util.setActivityType
 import com.weiting.tohealth.util.Util.setDrugDrawable
 import com.weiting.tohealth.util.Util.setMeasureDrawable
@@ -73,7 +72,6 @@ class FastAddAdapter(val onClickListener: OnclickListener) :
                 imageView.setImageResource(setActivityType(activity?.type))
                 tvUnit.visibility = View.GONE
                 tvStock.visibility = View.GONE
-
             }
         }
     }
@@ -134,5 +132,4 @@ class FastAddAdapter(val onClickListener: OnclickListener) :
     class OnclickListener(val clickListener: (fastAddItem: FastAddItem) -> Unit) {
         fun onClick(fastAddItem: FastAddItem) = clickListener(fastAddItem)
     }
-
 }

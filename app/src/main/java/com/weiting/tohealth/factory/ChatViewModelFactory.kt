@@ -4,9 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.weiting.tohealth.data.FirebaseRepository
 import com.weiting.tohealth.data.Group
-import com.weiting.tohealth.mygrouppage.MyGroupViewModel
 import com.weiting.tohealth.mygrouppage.grouproom.chat.ChatViewModel
-import com.weiting.tohealth.mygrouppage.grouproom.members.MembersViewModel
 
 class ChatViewModelFactory(
     private val firebaseDataRepository: FirebaseRepository,
@@ -22,5 +20,4 @@ class ChatViewModelFactory(
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
         } as T
-
 }

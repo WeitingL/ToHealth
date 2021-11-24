@@ -18,7 +18,6 @@ class ManageDetailTimeAdapter :
 
         override fun areContentsTheSame(oldItem: Timestamp, newItem: Timestamp): Boolean =
             oldItem == newItem
-
     }
 
     inner class TimeTagViewHolder(private val binding: RowManageTimeBinding) :

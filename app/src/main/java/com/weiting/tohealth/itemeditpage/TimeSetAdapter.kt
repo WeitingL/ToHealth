@@ -17,7 +17,6 @@ class TimeSetAdapter(val onClickListener: OnclickListener) : ListAdapter<Timesta
 
         override fun areContentsTheSame(oldItem: Timestamp, newItem: Timestamp): Boolean =
             oldItem == newItem
-
     }
 
     inner class TimeEditViewHolder(private val binding: EditTimeRowBinding) :
@@ -47,5 +46,4 @@ class TimeSetAdapter(val onClickListener: OnclickListener) : ListAdapter<Timesta
     class OnclickListener(val clickListener: (position: Int) -> Unit) {
         fun onClick(position: Int) = clickListener(position)
     }
-
 }

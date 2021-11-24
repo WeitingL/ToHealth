@@ -147,5 +147,4 @@ class CareRecordFragment : Fragment() {
         }
         return binding.root
     }
-
 }

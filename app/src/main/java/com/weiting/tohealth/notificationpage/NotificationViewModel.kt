@@ -12,7 +12,7 @@ class NotificationViewModel(
     memberList: List<String>
 ) : ViewModel() {
 
-    val list = when(memberList.isEmpty()){
+    val list = when (memberList.isEmpty()) {
         true -> listOf("")
         false -> memberList
     }
@@ -49,10 +49,10 @@ class NotificationViewModel(
                                 title = "數據異常",
                                 type = 4,
                                 itemName = "${user.name} ${
-                                    toNotificationTextForMeasureLog(
-                                        measure,
-                                        measureLog
-                                    )
+                                toNotificationTextForMeasureLog(
+                                    measure,
+                                    measureLog
+                                )
                                 }",
                                 createdTime = toStringFromTimeStamp(it.createdTime)
                             )
@@ -75,7 +75,7 @@ class NotificationViewModel(
                                 title = "藥物儲量警報",
                                 type = 6,
                                 itemName = "${user.name} 的 ${drug.drugName} 快要用完了!" +
-                                        "\n剩下 ${(drug.stock / drug.dose).toInt()} 次的服藥",
+                                    "\n剩下 ${(drug.stock / drug.dose).toInt()} 次的服藥",
                                 createdTime = toStringFromTimeStamp(it.createdTime)
                             )
                         )
@@ -88,7 +88,6 @@ class NotificationViewModel(
         }
     }
 }
-
 
 data class NotificationRecord(
     val title: String,

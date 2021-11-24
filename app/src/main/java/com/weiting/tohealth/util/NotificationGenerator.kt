@@ -1,6 +1,5 @@
 package com.weiting.tohealth.util
 
-import android.text.BoringLayout
 import com.weiting.tohealth.data.Drug
 import com.weiting.tohealth.data.MeasureLog
 
@@ -17,10 +16,9 @@ interface NotificationGenerator {
             true -> true
             false -> false
         }
-
     }
 
-    //How to process the empty value?
+    // How to process the empty value?
     fun isBloodPressureAbnormal(measureLog: MeasureLog): Boolean {
         val systolicPressure = measureLog.record["X"] ?: 0
         val diastolicPressure = measureLog.record["Y"] ?: 0
@@ -45,7 +43,6 @@ interface NotificationGenerator {
             value < 60 -> true
             else -> false
         }
-
     }
 
     fun isAfterMealBloodSugarAbnormal(measureLog: MeasureLog): Boolean {
@@ -57,7 +54,6 @@ interface NotificationGenerator {
             value < 60 -> true
             else -> false
         }
-
     }
 
     fun isSPO2Abnormal(measureLog: MeasureLog): Boolean {
@@ -67,7 +63,6 @@ interface NotificationGenerator {
             sPO2 < 93 -> true
             else -> false
         }
-
     }
 
     fun isBodyTemperatureAbnormal(measureLog: MeasureLog): Boolean {
@@ -78,9 +73,5 @@ interface NotificationGenerator {
             tm > 38 -> true
             else -> false
         }
-
-
     }
-
-
 }

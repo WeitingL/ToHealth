@@ -2,9 +2,7 @@ package com.weiting.tohealth.factory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.weiting.tohealth.MainActivityViewModel
 import com.weiting.tohealth.data.FirebaseRepository
-import com.weiting.tohealth.mygrouppage.MyGroupViewModel
 import com.weiting.tohealth.notificationpage.NotificationViewModel
 
 class NotificationRecordViewModelFactory(
@@ -21,5 +19,4 @@ class NotificationRecordViewModelFactory(
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
         } as T
-
 }

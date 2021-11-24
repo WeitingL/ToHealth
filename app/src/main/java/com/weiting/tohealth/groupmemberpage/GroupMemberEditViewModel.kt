@@ -3,7 +3,6 @@ package com.weiting.tohealth.groupmemberpage
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.weiting.tohealth.data.FirebaseDataRepository
 import com.weiting.tohealth.data.FirebaseRepository
 import com.weiting.tohealth.data.Member
 
@@ -26,9 +25,7 @@ class GroupMemberEditViewModel(
         firebaseDataRepository.updateMemberInfo(groupId, member)
     }
 
-    fun getNewPrivateSet(int: Int){
+    fun getNewPrivateSet(int: Int) {
         _privateSet.value = int
     }
-
-
 }

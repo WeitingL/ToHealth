@@ -9,7 +9,7 @@ class AnalyzeMeasureLog {
 
     private val resultInDateList = mutableListOf<ResultInDateForMeasure>()
 
-    fun revertToResultInDateList(measure: Measure): LogItem.MeasureLogItem{
+    fun revertToResultInDateList(measure: Measure): LogItem.MeasureLogItem {
 
         measure.measureLogs.forEach {
             resultInDateList.add(ResultInDateForMeasure(it.createdTime!!, it.result!!, it.record))

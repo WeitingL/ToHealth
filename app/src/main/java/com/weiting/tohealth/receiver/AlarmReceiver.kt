@@ -4,9 +4,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import com.weiting.tohealth.works.PostUnCheckedLogsWork
 import com.weiting.tohealth.PublicApplication
-import com.weiting.tohealth.works.RebuildAlarm
+import com.weiting.tohealth.works.PostUnCheckedLogsWork
 import com.weiting.tohealth.works.TodoListNotification
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,7 +26,7 @@ class AlarmReceiver : BroadcastReceiver() {
         coroutineScope.launch {
             when {
 
-                //23:59:00
+                // 23:59:00
                 p1.action?.equals(CHECK_UNCHECKED_LOG) == true -> {
                     PostUnCheckedLogsWork().checkTodayUnCheckedLogs(database)
                 }

@@ -14,7 +14,7 @@ class MembersViewModel(
     private val liveMembersList = firebaseDataRepository.getLiveMember(groupId = group.id!!)
 
     val memberLive = MediatorLiveData<List<Member>>().apply {
-        addSource(liveMembersList){ list ->
+        addSource(liveMembersList) { list ->
             viewModelScope.launch {
                 list.forEach { member ->
                     member.profilePhoto = firebaseDataRepository.getUser(member.userId!!).userPhoto
@@ -23,6 +23,4 @@ class MembersViewModel(
             }
         }
     }
-
-
 }

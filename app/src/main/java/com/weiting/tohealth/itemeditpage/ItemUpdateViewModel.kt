@@ -12,8 +12,8 @@ import com.weiting.tohealth.databinding.ItemUpdateFragmentBinding
 import com.weiting.tohealth.mymanagepage.ManageType
 import com.weiting.tohealth.util.Util.getTimeStampToTimeInt
 import com.weiting.tohealth.works.RebuildAlarm
-import kotlinx.coroutines.launch
 import java.util.*
+import kotlinx.coroutines.launch
 
 class ItemUpdateViewModel(
     private val firebaseDataRepository: FirebaseRepository,
@@ -29,7 +29,7 @@ class ItemUpdateViewModel(
     val statusSelected: LiveData<Int>
         get() = _statusSelected
 
-    //TimeSet
+    // TimeSet
     private val _timePointSet = MutableLiveData<MutableList<Timestamp>>()
     val timePointSet: LiveData<MutableList<Timestamp>>
         get() = _timePointSet
@@ -45,7 +45,7 @@ class ItemUpdateViewModel(
         dateList.removeAt(position)
         timestampList.removeAt(position)
         timestampList.sortBy {
-           getTimeStampToTimeInt(it)
+            getTimeStampToTimeInt(it)
         }
         dateList.sort()
         _timePointSet.value = timestampList
@@ -55,14 +55,13 @@ class ItemUpdateViewModel(
         val c = Calendar.getInstance()
         c.time = Date(time ?: 0)
 
-        //Repeat check
+        // Repeat check
         if ((c.get(Calendar.HOUR_OF_DAY) * 100 + c.get(Calendar.MINUTE)) in dateList) {
             Toast.makeText(
                 PublicApplication.application.applicationContext,
                 "重複添加囉!",
                 Toast.LENGTH_LONG
             ).show()
-
         } else {
             dateList.add(c.get(Calendar.HOUR_OF_DAY) * 100 + c.get(Calendar.MINUTE))
             timestampList.add(Timestamp(Date(time ?: 0)))
@@ -153,6 +152,4 @@ class ItemUpdateViewModel(
             RebuildAlarm().updateNewTodoListToAlarmManager(firebaseDataRepository)
         }
     }
-
-
 }

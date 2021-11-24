@@ -62,7 +62,7 @@ class LoginFragment : Fragment() {
             MainActivityViewModelFactory(PublicApplication.application.firebaseDataRepository)
         val mainActivityViewModel = ViewModelProvider(requireActivity(), factory).get(MainActivityViewModel::class.java)
 
-        viewModel.userInfo.observe(viewLifecycleOwner){
+        viewModel.userInfo.observe(viewLifecycleOwner) {
             UserManager.UserInformation = it
             mainActivityViewModel.loginSuccess()
             findNavController().navigate(NavigationDirections.actionGlobalHomeFragment())
@@ -100,7 +100,6 @@ class LoginFragment : Fragment() {
                     Log.d("firebaseAuthWithGoogle", "signInWithCredential:success")
                     val user = auth.currentUser
                     onGetUserFromFirebase(user)
-
                 } else {
                     Log.w("firebaseAuthWithGoogle", "signInWithCredential:failure", task.exception)
                     onGetUserFromFirebase(null)

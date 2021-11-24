@@ -2,8 +2,8 @@ package com.weiting.tohealth.mymanagepage
 
 import androidx.lifecycle.ViewModel
 
-enum class ManageType{
+enum class ManageType {
     DRUG, MEASURE, ACTIVITY, CARE
 }
 
-class ManageViewModel: ViewModel()
+class ManageViewModel : ViewModel()

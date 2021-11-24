@@ -1,6 +1,5 @@
 package com.weiting.tohealth.mystatisticpage.drugchart
 
-import android.icu.number.IntegerWidth
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -18,14 +17,12 @@ class DrugResultScaleAdapter :
 
         override fun areContentsTheSame(oldItem: Map<String, String>, newItem: Map<String, String>): Boolean =
             oldItem == newItem
-
     }
-
 
     inner class DrugResultViewHolder(private val binding: StasticDruglogRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(map: Map<String, String>) {
-            when(map["result"]!!.toInt()){
+            when (map["result"]!!.toInt()) {
                 0 -> {
                     binding.apply {
                         imLog.setImageResource(R.drawable.circle_check_green)
@@ -44,7 +41,7 @@ class DrugResultScaleAdapter :
                         tvText.text = map["time"]
                     }
                 }
-                3 ->{
+                3 -> {
                     binding.apply {
                         imLog.setImageResource(R.drawable.warning)
                         tvText.text = "無紀錄"
@@ -67,5 +64,4 @@ class DrugResultScaleAdapter :
     override fun onBindViewHolder(holder: DrugResultViewHolder, position: Int) {
         return holder.bind(getItem(position))
     }
-
 }

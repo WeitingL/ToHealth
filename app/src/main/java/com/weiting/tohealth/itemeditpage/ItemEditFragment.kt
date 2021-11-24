@@ -35,7 +35,7 @@ class ItemEditFragment : Fragment() {
             ItemEditViewModelFactory(PublicApplication.application.firebaseDataRepository, user)
         val viewModel = ViewModelProvider(this, factory).get(ItemEditViewModel::class.java)
 
-        //User is navigated from which menagePage of items to create new one.
+        // User is navigated from which menagePage of items to create new one.
         val position = when (manageType) {
             ManageType.DRUG -> 0
             ManageType.MEASURE -> 1
@@ -44,7 +44,7 @@ class ItemEditFragment : Fragment() {
         }
         binding.spItemType.setSelection(position)
 
-        //Listen the spinner item selected
+        // Listen the spinner item selected
         binding.spItemType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 viewModel.getSelectedItemType(p2)
@@ -59,7 +59,6 @@ class ItemEditFragment : Fragment() {
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {}
-
         }
 
         binding.spPeriod.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -68,10 +67,9 @@ class ItemEditFragment : Fragment() {
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {}
-
         }
 
-        //Get editType spinner selected to change views
+        // Get editType spinner selected to change views
         viewModel.editItemType.observe(viewLifecycleOwner) {
             binding.apply {
                 when (it) {
@@ -116,7 +114,6 @@ class ItemEditFragment : Fragment() {
                         clEndDate.visibility = View.VISIBLE
                         clPeriod.visibility = View.VISIBLE
                         clStock.visibility = View.GONE
-
                     }
 
                     ItemType.CARE -> {
@@ -140,7 +137,7 @@ class ItemEditFragment : Fragment() {
             }
         }
 
-        //Get endDate spinner selected to change views
+        // Get endDate spinner selected to change views
         viewModel.endDateSelected.observe(viewLifecycleOwner) {
 
             binding.apply {
@@ -163,7 +160,7 @@ class ItemEditFragment : Fragment() {
             }
         }
 
-        //Get periodType spinner selected to change views.
+        // Get periodType spinner selected to change views.
         viewModel.currentPeriodType.observe(viewLifecycleOwner) {
             binding.apply {
                 when (it) {
@@ -221,7 +218,7 @@ class ItemEditFragment : Fragment() {
             }
         }
 
-        //Get timeSet spinner selected to change views
+        // Get timeSet spinner selected to change views
         viewModel.timePointSet.observe(viewLifecycleOwner) {
             val adapter = TimeSetAdapter(
                 TimeSetAdapter.OnclickListener {

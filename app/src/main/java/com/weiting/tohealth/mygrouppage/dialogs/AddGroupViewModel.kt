@@ -53,7 +53,8 @@ class AddGroupViewModel(
                 private = 0,
                 name = UserManager.UserInformation.name,
                 nickName = UserManager.UserInformation.name
-            ), group.id!!
+            ),
+            group.id!!
         )
     }
 
@@ -71,9 +72,11 @@ class AddGroupViewModel(
         groupId: String
     ) {
         viewModelScope.launch {
-            when (firebaseRepository.checkIsRelationExist(
-                userId, groupId
-            )) {
+            when (
+                firebaseRepository.checkIsRelationExist(
+                    userId, groupId
+                )
+            ) {
                 true -> _isRelationshipExist.value = true
                 false -> _isRelationshipExist.value = false
             }
@@ -89,6 +92,4 @@ class AddGroupViewModel(
             groupId
         )
     }
-
-
 }

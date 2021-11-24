@@ -1,11 +1,8 @@
 package com.weiting.tohealth.mygrouppage.grouproom.chat
 
-import android.util.Log
 import androidx.lifecycle.*
-import com.google.firebase.Timestamp
 import com.weiting.tohealth.data.*
 import kotlinx.coroutines.launch
-import kotlin.system.measureTimeMillis
 
 class ChatViewModel(
     private val firebaseDataRepository: FirebaseRepository,
@@ -16,8 +13,7 @@ class ChatViewModel(
     private val newList = mutableListOf<WhoseMessage>()
 
     private val chatList =
-        firebaseDataRepository.getLiveChatMessage(UserManager.UserInformation.id?:"", group.id?:"")
-
+        firebaseDataRepository.getLiveChatMessage(UserManager.UserInformation.id ?: "", group.id ?: "")
 
     val chatMediatorLiveData = MediatorLiveData<MutableList<WhoseMessage>>().apply {
         addSource(chatList) {
@@ -39,12 +35,11 @@ class ChatViewModel(
         }
     }
 
-
     private fun createOthersMessages(chat: Chat): WhoseMessage {
         var data = Member()
 
         memberList.forEach {
-            if (chat.creator == it.userId){
+            if (chat.creator == it.userId) {
                 data = it
             }
         }
@@ -55,7 +50,7 @@ class ChatViewModel(
         var data = Member()
 
         memberList.forEach {
-            if (chat.creator == it.userId){
+            if (chat.creator == it.userId) {
                 data = it
             }
         }
@@ -72,5 +67,4 @@ sealed class WhoseMessage {
     data class SelfMessage(val chat: Chat, val member: Member) : WhoseMessage()
 
     data class OthersMessage(val chat: Chat, val member: Member) : WhoseMessage()
-
 }

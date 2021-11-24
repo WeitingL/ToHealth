@@ -14,14 +14,14 @@ import com.weiting.tohealth.*
 import com.weiting.tohealth.data.*
 import com.weiting.tohealth.util.Util.toNotificationTextForMeasureLog
 import com.weiting.tohealth.util.Util.toUnit
-import kotlinx.coroutines.*
 import kotlin.random.Random
+import kotlinx.coroutines.*
 
 const val APP_NAME = "toHealth"
 
 class NotificationService : LifecycleService() {
 
-    //foreground service
+    // foreground service
     lateinit var firebaseDataRepository: FirebaseRepository
     lateinit var notificationManager: NotificationManager
 
@@ -62,10 +62,10 @@ class NotificationService : LifecycleService() {
         firebaseDataRepository.getLiveUser(UserManager.UserInformation.id!!).observe(this) {
             if (it.groupList.isNotEmpty()) {
                 it.groupList.forEach {
-                    if (it !in groupIdListeningList){
+                    if (it !in groupIdListeningList) {
                         startListenChat(it)
                     }
-                    
+
                     startListenMembers(it)
                 }
             }
@@ -76,9 +76,9 @@ class NotificationService : LifecycleService() {
     private fun startListenMembers(groupId: String) {
         firebaseDataRepository.getLiveMember(groupId).observe(this@NotificationService) {
             it.forEach {
-                if (it.userId !in memberListeningList){
-                    memberListeningList.add(it.userId?:"")
-                    startListenNotification(it.userId?:"")
+                if (it.userId !in memberListeningList) {
+                    memberListeningList.add(it.userId ?: "")
+                    startListenNotification(it.userId ?: "")
                 }
             }
         }
@@ -121,7 +121,6 @@ class NotificationService : LifecycleService() {
             chatNotification.setTextViewText(R.id.tv_name, "群組: $groupName")
             chatNotification.setTextViewText(R.id.tv_content, "$userName: ${chat.context}")
 
-
             val cNotification = NotificationCompat.Builder(this@NotificationService, APP_NAME)
                 .setStyle(NotificationCompat.DecoratedCustomViewStyle())
                 .setSmallIcon(R.drawable.user_1)
@@ -146,7 +145,7 @@ class NotificationService : LifecycleService() {
                     val measure = firebaseDataRepository.getMeasure(notification.itemId!!)
                     val measureLog = firebaseDataRepository.getMeasureLog(
                         notification.itemId,
-                        notification.logId?:""
+                        notification.logId ?: ""
                     )
 
                     alertNotification.setTextViewText(R.id.tv_name, "測量項目異常 - $userName")
@@ -167,7 +166,7 @@ class NotificationService : LifecycleService() {
                     alertNotification.setTextViewText(
                         R.id.tv_content,
                         "剩餘服藥次數: ${drugItem.stock / drugItem.dose} 次" +
-                                "\n剩餘量: ${drugItem.stock} ${toUnit(drugItem.unit)} "
+                            "\n剩餘量: ${drugItem.stock} ${toUnit(drugItem.unit)} "
                     )
                 }
             }
@@ -184,7 +183,4 @@ class NotificationService : LifecycleService() {
             notificationManager.notify(id, nNotification)
         }
     }
-
-
 }
-

@@ -12,8 +12,8 @@ import com.weiting.tohealth.data.*
 import com.weiting.tohealth.databinding.ItemEditFragmentBinding
 import com.weiting.tohealth.util.Util.toDateFromMilliTime
 import com.weiting.tohealth.works.RebuildAlarm
-import kotlinx.coroutines.launch
 import java.util.*
+import kotlinx.coroutines.launch
 
 class ItemEditViewModel(
     private val firebaseDataRepository: FirebaseRepository,
@@ -42,7 +42,7 @@ class ItemEditViewModel(
 
     private val timestampList = mutableListOf<Timestamp>()
 
-    //To check the double time set: 13:00 -> 1300
+    // To check the double time set: 13:00 -> 1300
     private val timeList = mutableListOf<Int>()
 
     private var startDateInLong = 0L
@@ -79,7 +79,6 @@ class ItemEditViewModel(
             timestampList.add(Timestamp(Date(time ?: 0)))
             _timePointSet.value = timestampList
         }
-
     }
 
     fun removeTimeSet(position: Int) {
@@ -124,7 +123,7 @@ class ItemEditViewModel(
                 val data = Measure(
                     userId = user.id,
                     type = binding.spItemName.selectedItemPosition,
-                    executedTime = timePointSet.value!!,
+                    executedTime = timePointSet.value ?: listOf(),
                     editor = UserManager.UserInformation.id,
                     createdTime = Timestamp.now(),
                     lastEditTime = Timestamp.now(),
@@ -147,7 +146,7 @@ class ItemEditViewModel(
                         "N" to binding.spOngoingDay.selectedItemPosition,
                         "X" to binding.spSuspendDay.selectedItemPosition,
                     ),
-                    executedTime = timePointSet.value!!,
+                    executedTime = timePointSet.value ?: listOf(),
                     editor = UserManager.UserInformation.id,
                     createdTime = Timestamp.now(),
                     lastEditTime = Timestamp.now(),
@@ -170,7 +169,7 @@ class ItemEditViewModel(
                         "N" to binding.spOngoingDay.selectedItemPosition,
                         "X" to binding.spSuspendDay.selectedItemPosition,
                     ),
-                    executeTime = timePointSet.value!!,
+                    executeTime = timePointSet.value ?: listOf(),
                     editor = UserManager.UserInformation.id,
                     createdTime = Timestamp.now(),
                     lastEditTime = Timestamp.now(),
@@ -189,5 +188,4 @@ class ItemEditViewModel(
             RebuildAlarm().updateNewTodoListToAlarmManager(firebaseDataRepository)
         }
     }
-
 }

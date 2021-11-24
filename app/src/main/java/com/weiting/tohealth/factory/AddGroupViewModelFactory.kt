@@ -6,7 +6,6 @@ import com.weiting.tohealth.data.FirebaseRepository
 import com.weiting.tohealth.mygrouppage.dialogs.AddGroupViewModel
 import com.weiting.tohealth.mygrouppage.dialogs.HowToAddGroup
 
-
 class AddGroupViewModelFactory(
     private val firebaseDataRepository: FirebaseRepository,
     private val howToAddGroup: HowToAddGroup
@@ -21,5 +20,4 @@ class AddGroupViewModelFactory(
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
         } as T
-
 }

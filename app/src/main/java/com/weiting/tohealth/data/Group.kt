@@ -41,5 +41,4 @@ data class CalenderItem(
     val date: Timestamp? = null,
     val createdTime: Timestamp? = null,
     val result: Int? = null
-):Parcelable
-
+) : Parcelable

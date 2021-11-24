@@ -27,32 +27,51 @@ class FastAddFragment : Fragment() {
         val factory = FastAddViewModelFactory(PublicApplication.application.firebaseDataRepository)
         val viewModel = ViewModelProvider(this, factory).get(FastAddViewModel::class.java)
 
-        val adapter = FastAddAdapter(FastAddAdapter.OnclickListener {
-            when (it) {
-                is FastAddItem.DrugItem -> {
-                    viewModel.postDrugLog(it.drug.id!!, DrugLog(
-                        timeTag = getTimeStampToTimeInt(Timestamp.now()),
-                        result = 2,
-                        createdTime = Timestamp.now()
-                    ), it.drug)
-                    Toast.makeText(context, "已登錄紀錄", Toast.LENGTH_LONG).show()
-                    findNavController().navigate(NavigationDirections.actionGlobalHomeFragment())
+        val adapter = FastAddAdapter(
+            FastAddAdapter.OnclickListener {
+                when (it) {
+                    is FastAddItem.DrugItem -> {
+                        viewModel.postDrugLog(
+                            it.drug.id!!,
+                            DrugLog(
+                                timeTag = getTimeStampToTimeInt(Timestamp.now()),
+                                result = 2,
+                                createdTime = Timestamp.now()
+                            ),
+                            it.drug
+                        )
+                        Toast.makeText(context, "已登錄紀錄", Toast.LENGTH_LONG).show()
+                        findNavController().navigate(
+                            NavigationDirections.actionGlobalHomeFragment()
+                        )
+                    }
+                    is FastAddItem.ActivityItem -> {
+                        viewModel.postActivity(
+                            it.activity.id!!,
+                            ActivityLog(
+                                timeTag = getTimeStampToTimeInt(
+                                    Timestamp.now()
+                                ),
+                                result = 2,
+                                createdTime = Timestamp.now()
+                            )
+                        )
+                        Toast.makeText(context, "已登錄紀錄", Toast.LENGTH_LONG).show()
+                        findNavController().navigate(
+                            NavigationDirections.actionGlobalHomeFragment()
+                        )
+                    }
+                    is FastAddItem.MeasureItem -> {
+                        findNavController().navigate(
+                            NavigationDirections.actionGlobalMeasureRecordFragment(
+                                it.measure,
+                                9999
+                            )
+                        )
+                    }
                 }
-                is FastAddItem.ActivityItem -> {
-                    viewModel.postActivity(it.activity.id!!, ActivityLog(
-                        timeTag = getTimeStampToTimeInt(Timestamp.now()),
-                        result = 2,
-                        createdTime = Timestamp.now()
-                    ))
-                    Toast.makeText(context, "已登錄紀錄", Toast.LENGTH_LONG).show()
-                    findNavController().navigate(NavigationDirections.actionGlobalHomeFragment())
-                }
-                is FastAddItem.MeasureItem -> {
-                    findNavController().navigate(NavigationDirections.actionGlobalMeasureRecordFragment(it.measure, 9999))
-                }
-
             }
-        })
+        )
 
         viewModel.itemDataMediator.observe(viewLifecycleOwner) {
             adapter.submitList(it)

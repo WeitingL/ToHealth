@@ -20,7 +20,7 @@ class AnalyzeActivityLog {
         getAllDate(activity)
         allDateInInt.forEachIndexed { index, it ->
             activity.activityLogs.forEach { activityLog ->
-                if (getTimeStampToDateInt(activityLog.createdTime?: Timestamp.now()) == it) {
+                if (getTimeStampToDateInt(activityLog.createdTime ?: Timestamp.now()) == it) {
                     resultList.add(
                         mapOf(
                             "result" to activityLog.result.toString(),
@@ -43,5 +43,4 @@ class AnalyzeActivityLog {
             }
         }
     }
-
 }

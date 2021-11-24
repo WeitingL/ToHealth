@@ -10,14 +10,13 @@ object FirebaseLocator {
     @Volatile
     var firebaseRepository: FirebaseRepository? = null
 
-    fun provideRepository(context: Context): FirebaseRepository{
-        synchronized(this){
-            return firebaseRepository?: createRepository(context)
+    fun provideRepository(context: Context): FirebaseRepository {
+        synchronized(this) {
+            return firebaseRepository ?: createRepository(context)
         }
     }
 
-    private fun createRepository(context: Context): FirebaseRepository{
+    private fun createRepository(context: Context): FirebaseRepository {
         return FirebaseDataRepository(FirebaseDataSource)
     }
-
 }

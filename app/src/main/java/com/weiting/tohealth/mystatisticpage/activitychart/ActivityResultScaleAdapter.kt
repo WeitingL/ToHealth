@@ -7,9 +7,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.R
 import com.weiting.tohealth.databinding.StasticDruglogRowBinding
-import com.weiting.tohealth.mystatisticpage.drugchart.DrugResultScaleAdapter
 
-class ActivityResultScaleAdapter:
+class ActivityResultScaleAdapter :
     ListAdapter<Int, ActivityResultScaleAdapter.ActivityResultViewHolder>(DiffCallback) {
 
     object DiffCallback : DiffUtil.ItemCallback<Int>() {
@@ -18,14 +17,12 @@ class ActivityResultScaleAdapter:
 
         override fun areContentsTheSame(oldItem: Int, newItem: Int): Boolean =
             oldItem == newItem
-
     }
-
 
     inner class ActivityResultViewHolder(private val binding: StasticDruglogRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(int: Int) {
-            when(int){
+            when (int) {
                 0 -> binding.imLog.setImageResource(R.drawable.success)
                 1 -> binding.imLog.setImageResource(R.drawable.error)
                 2 -> binding.imLog.setImageResource(R.drawable.warning)
@@ -46,5 +43,4 @@ class ActivityResultScaleAdapter:
     override fun onBindViewHolder(holder: ActivityResultViewHolder, position: Int) {
         return holder.bind(getItem(position))
     }
-
 }

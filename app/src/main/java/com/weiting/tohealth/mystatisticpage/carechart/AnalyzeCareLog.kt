@@ -30,7 +30,6 @@ class AnalyzeCareLog {
                     )
                 )
             }
-
         }
         return LogItem.CareLogItem(toCareType(care.type), resultInDateList)
     }

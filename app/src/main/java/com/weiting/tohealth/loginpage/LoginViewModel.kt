@@ -23,7 +23,6 @@ class LoginViewModel(private val firebaseDataRepository: FirebaseRepository) : V
             }
 
             initialUserManager(user.id!!)
-
         }
     }
 

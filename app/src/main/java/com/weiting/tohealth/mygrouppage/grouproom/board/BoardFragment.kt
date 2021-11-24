@@ -1,7 +1,6 @@
 package com.weiting.tohealth.mygrouppage.grouproom.board
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,13 +28,13 @@ class BoardFragment : Fragment() {
         val adapter = BoardAdapter(viewModel)
 
         viewModel.boardLiveData.observe(viewLifecycleOwner) {
-            if(it.isNotEmpty()){
+            if (it.isNotEmpty()) {
                 adapter.submitList(it)
                 binding.apply {
                     lavNote.visibility = View.GONE
                     tvNothingToShow.visibility = View.GONE
                 }
-            }else{
+            } else {
                 binding.apply {
                     lavNote.visibility = View.VISIBLE
                     tvNothingToShow.visibility = View.VISIBLE
@@ -54,5 +53,4 @@ class BoardFragment : Fragment() {
         binding.rvBoard.adapter = adapter
         return binding.root
     }
-
 }

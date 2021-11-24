@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
-import com.google.firestore.v1.TargetOrBuilder
 import com.weiting.tohealth.NavigationDirections
 import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.R
@@ -33,7 +31,7 @@ class JoinGroupDialog : DialogFragment() {
         val groupId = JoinGroupDialogArgs.fromBundle(requireArguments()).groupId
         val viewModel = ViewModelProvider(this, factory).get(AddGroupViewModel::class.java)
 
-        if (groupId != null){
+        if (groupId != null) {
             binding.tilGroupName.editText?.setText(groupId)
         }
 
@@ -49,7 +47,7 @@ class JoinGroupDialog : DialogFragment() {
             when (it) {
                 true -> {
                     viewModel.checkIsRelationshipExist(
-                        userId = UserManager.UserInformation.id?:"",
+                        userId = UserManager.UserInformation.id ?: "",
                         groupId = binding.tilGroupName.editText?.text.toString()
                     )
                 }
@@ -69,7 +67,7 @@ class JoinGroupDialog : DialogFragment() {
                 false -> {
                     viewModel.joinGroup(
                         member = Member(
-                            userId = UserManager.UserInformation.id?:"",
+                            userId = UserManager.UserInformation.id ?: "",
                             private = 0,
                             name = UserManager.UserInformation.name,
                             nickName = UserManager.UserInformation.name
@@ -88,7 +86,5 @@ class JoinGroupDialog : DialogFragment() {
 
         val width = (resources.displayMetrics.widthPixels * 0.5).toInt()
         dialog!!.window?.setLayout(width * 2, width)
-
     }
-
 }

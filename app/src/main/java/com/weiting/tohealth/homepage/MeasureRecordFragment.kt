@@ -48,7 +48,6 @@ class MeasureRecordFragment : Fragment() {
                     edtDiastolic.visibility = View.GONE
 
                     tvTitle.text = getString(R.string.bloodSugarBeforeMeal)
-
                 }
                 2 -> {
                     tvDiastolic.visibility = View.GONE
@@ -92,7 +91,7 @@ class MeasureRecordFragment : Fragment() {
                 when (measureData.type) {
                     0 -> {
                         viewModel.postMeasureLog(
-                            itemId = measureData.id?:"",
+                            itemId = measureData.id ?: "",
                             measureLog = MeasureLog(
                                 timeTag = timeTag,
                                 result = 0,
@@ -103,12 +102,13 @@ class MeasureRecordFragment : Fragment() {
                                     "Z" to binding.editTextNumber.editableText.toString()
                                         .toInt()
                                 )
-                            ), measureData.type
+                            ),
+                            measureData.type
                         )
                     }
                     else -> {
                         viewModel.postMeasureLog(
-                            itemId = measureData.id?:"",
+                            itemId = measureData.id ?: "",
                             measureLog = MeasureLog(
                                 timeTag = timeTag,
                                 result = 0,
@@ -119,7 +119,8 @@ class MeasureRecordFragment : Fragment() {
                                     "Y" to null,
                                     "Z" to null
                                 )
-                            ), measureData.type?:0
+                            ),
+                            measureData.type ?: 0
                         )
                     }
                 }
@@ -133,6 +134,4 @@ class MeasureRecordFragment : Fragment() {
         }
         return binding.root
     }
-
-
 }

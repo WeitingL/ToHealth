@@ -2,33 +2,20 @@ package com.weiting.tohealth
 
 import android.app.AlarmManager
 import android.app.PendingIntent
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.ServiceConnection
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.IBinder
 import android.util.Log
-import android.view.MenuItem
-import android.view.View
-import android.widget.AdapterView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.Timestamp
-import com.google.firebase.auth.FirebaseAuth
 import com.weiting.tohealth.NavigationDestination.*
 import com.weiting.tohealth.databinding.ActivityMainBinding
 import com.weiting.tohealth.factory.MainActivityViewModelFactory
 import com.weiting.tohealth.receiver.AlarmReceiver
 import com.weiting.tohealth.receiver.CHECK_UNCHECKED_LOG
 import com.weiting.tohealth.service.NotificationService
-import java.io.Serializable
-import java.sql.Time
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -46,8 +33,8 @@ class MainActivity : AppCompatActivity() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-        viewModel.isLogin.observe(this){
-            if (it){
+        viewModel.isLogin.observe(this) {
+            if (it) {
                 viewModel.startSetAlarmForTodoList()
                 setAlarmManagerToCheckLogs()
                 stopService(notificationIntent)
@@ -109,5 +96,4 @@ class MainActivity : AppCompatActivity() {
         val alarmManager = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent)
     }
-
 }

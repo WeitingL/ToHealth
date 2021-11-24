@@ -22,7 +22,6 @@ class NotificationRecordAdapter :
             oldItem: NotificationRecord,
             newItem: NotificationRecord
         ): Boolean = oldItem == newItem
-
     }
 
     inner class NotificationRecordViewHolder(private val binding: NotificationRowBinding) :
@@ -44,6 +43,4 @@ class NotificationRecordAdapter :
     override fun onBindViewHolder(holder: NotificationRecordViewHolder, position: Int) {
         return holder.bind(getItem(position))
     }
-
-
 }

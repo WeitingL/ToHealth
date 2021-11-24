@@ -33,7 +33,7 @@ class CalenderTimeDialog : DialogFragment() {
         binding.timePicker.setIs24HourView(true)
         val editTimeType = CalenderTimeDialogArgs.fromBundle(requireArguments()).timeEditType
 
-        //Control the picker needed.
+        // Control the picker needed.
         binding.apply {
             when (editTimeType) {
                 EditTimeType.DATE -> {

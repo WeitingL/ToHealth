@@ -5,8 +5,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.weiting.tohealth.data.FirebaseRepository
 import com.weiting.tohealth.data.Group
 import com.weiting.tohealth.mygrouppage.grouproom.board.BoardViewModel
-import com.weiting.tohealth.mymanagepage.ManageDetailViewModel
-import com.weiting.tohealth.mymanagepage.ManageType
 
 class BoardViewModelFactory(
     private val firebaseDataRepository: FirebaseRepository,

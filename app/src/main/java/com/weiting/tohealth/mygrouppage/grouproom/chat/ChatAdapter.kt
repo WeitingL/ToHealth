@@ -24,7 +24,6 @@ class ChatAdapter : ListAdapter<WhoseMessage, RecyclerView.ViewHolder>(DiffCallb
 
         override fun areContentsTheSame(oldItem: WhoseMessage, newItem: WhoseMessage): Boolean =
             oldItem == newItem
-
     }
 
     inner class SelfMessageViewHolder(private val binding: ChatroomRowMessageSelfBinding) :

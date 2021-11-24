@@ -41,17 +41,14 @@ class EditNoteAndCalenderItemViewModel(
 
     fun getTimeSet(time: Long?) {
         _timeSet.value = toDateAndTimeFromMilliTime(time ?: 0)
-        longTime.value = time?:0
+        longTime.value = time ?: 0
     }
 
-    fun postNote(note: Note){
-        firebaseDataRepository.postNote(note, group.id?:"")
+    fun postNote(note: Note) {
+        firebaseDataRepository.postNote(note, group.id ?: "")
     }
 
-    fun postCalenderItem(calenderItem: CalenderItem){
-        firebaseDataRepository.postCalenderItem(calenderItem, group.id?:"")
+    fun postCalenderItem(calenderItem: CalenderItem) {
+        firebaseDataRepository.postCalenderItem(calenderItem, group.id ?: "")
     }
-
-
-
 }

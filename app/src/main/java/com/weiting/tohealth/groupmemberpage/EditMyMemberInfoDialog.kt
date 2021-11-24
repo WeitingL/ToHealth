@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.R
-import com.weiting.tohealth.data.Member
 import com.weiting.tohealth.databinding.DialogEditMyNicknameBinding
 import com.weiting.tohealth.factory.GroupMemberEditViewModelFactory
 
@@ -35,9 +34,9 @@ class EditMyMemberInfoDialog : DialogFragment() {
 
         binding.btChange.setOnClickListener {
 
-            if (binding.edtMyNickName.editableText.isNullOrEmpty()){
+            if (binding.edtMyNickName.editableText.isNullOrEmpty()) {
                 myMemberInfo.nickName = myMemberInfo.name
-            }else{
+            } else {
                 myMemberInfo.nickName = binding.edtMyNickName.text.toString()
             }
 
@@ -47,7 +46,7 @@ class EditMyMemberInfoDialog : DialogFragment() {
         }
 
         binding.radioGroup.setOnCheckedChangeListener { radioGroup, i ->
-            when(i){
+            when (i) {
                 R.id.private_all -> viewModel.getNewPrivateSet(0)
                 R.id.private_readLog -> viewModel.getNewPrivateSet(1)
                 R.id.private_onlyRead -> viewModel.getNewPrivateSet(2)
@@ -65,13 +64,10 @@ class EditMyMemberInfoDialog : DialogFragment() {
         return binding.root
     }
 
-
     override fun onStart() {
         super.onStart()
 
         val width = (resources.displayMetrics.widthPixels * 0.3).toInt()
         dialog!!.window?.setLayout(width * 3, width * 4)
-
     }
-
 }

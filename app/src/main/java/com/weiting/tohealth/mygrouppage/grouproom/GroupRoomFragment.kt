@@ -1,7 +1,6 @@
 package com.weiting.tohealth.mygrouppage.grouproom
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.weiting.tohealth.R
 import com.weiting.tohealth.databinding.GroupFragmentBinding
 
-class GroupRoomFragment: Fragment() {
+class GroupRoomFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,8 +24,8 @@ class GroupRoomFragment: Fragment() {
 
         viewPager.adapter = GroupRoomAdapter(this, group)
 
-        TabLayoutMediator(tabLayout, viewPager){ tab, position ->
-            when (position){
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            when (position) {
                 0 -> tab.text = getString(R.string.board)
                 1 -> tab.text = getString(R.string.chatRoom)
                 2 -> tab.text = getString(R.string.members)
@@ -35,5 +34,4 @@ class GroupRoomFragment: Fragment() {
 
         return binding.root
     }
-
 }

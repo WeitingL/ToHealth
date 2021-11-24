@@ -28,10 +28,9 @@ class ManageDetailViewModel(
     val careList = firebaseDataRepository.getLiveCareList(user.id!!)
 
     fun putInDetailList(list: List<ItemData>) {
-        if (!list.isNullOrEmpty()){
+        if (!list.isNullOrEmpty()) {
             _isTheNewBie.value = false
         }
         _manageDetailList.value = list
     }
-
 }

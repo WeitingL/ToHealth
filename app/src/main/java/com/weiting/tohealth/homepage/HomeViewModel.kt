@@ -4,16 +4,16 @@ import androidx.lifecycle.*
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.weiting.tohealth.*
 import com.weiting.tohealth.data.*
 import com.weiting.tohealth.util.ItemArranger
 import com.weiting.tohealth.util.NotificationGenerator
-import com.weiting.tohealth.util.Util.getTimeStampToDateInt
 import com.weiting.tohealth.util.Util.getTimeStampToTimeInt
+import com.weiting.tohealth.util.Util.isToday
 import com.weiting.tohealth.util.Util.toTimeFromTimeStamp
 import kotlinx.coroutines.*
 
-class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : ViewModel(),
+class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
+    ViewModel(),
     NotificationGenerator {
 
     /*
@@ -55,7 +55,6 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                 UserManager.UserInformation =
                     firebaseDataRepository.getUser(UserManager.UserInformation.id!!)
         }
-
     }
 
     /*
@@ -65,7 +64,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
         Identify the finished mission by numbers and created time of ItemLog.
      */
 
-    //TODO Refactor 1st
+    // TODO Refactor 1st
     private val drugList =
         firebaseDataRepository.getLiveDrugList(UserManager.UserInformation.id ?: "")
     private val measureList =
@@ -79,6 +78,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
     private val measureCurrentList = mutableListOf<ItemDataType>()
     private val activityCurrentList = mutableListOf<ItemDataType>()
     private val careCurrentList = mutableListOf<ItemDataType>()
+
     private val timeCurrentList = mutableListOf<ItemDataType>()
     private val timeIntList = mutableListOf<Int>()
 
@@ -87,31 +87,19 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
             viewModelScope.launch {
 
                 drugCurrentList.clear()
-                if (drugList.isNotEmpty()) {
-                    isNotNewBie()
-                }
+                isNotNewBie(drugList)
 
                 val todayLogCreateTimeIntList = mutableListOf<Int>()
-                val drugListByFilter = drugList.filter {
-                    //Executing
-                    it.status == 0
-                }
 
-                drugListByFilter.forEach { drug ->
-
-                    //Get all logs today.
+                val ongoingDrugList = drugList.filter { it.status == 0 }
+                ongoingDrugList.forEach { drug ->
+                    // Get all logs today.
                     drug.drugLogs =
-                        firebaseDataRepository.getDrugRecord(drug.id ?: "", Timestamp.now())
-                            .filter {
-                                getTimeStampToDateInt(
-                                    it.createdTime ?: Timestamp.now()
-                                ) == getTimeStampToDateInt(
-                                    Timestamp.now()
-                                )
-                            }
+                        firebaseDataRepository.getDrugRecord(drug.id ?: "")
+                            .filter { isToday(it.createdTime) }
 
                     drug.drugLogs.forEach { drugLog ->
-                        todayLogCreateTimeIntList.add(drugLog.timeTag!!)
+                        todayLogCreateTimeIntList.add(drugLog.timeTag?:0)
                         todayLogCreateTimeIntList.sort()
                     }
 
@@ -124,7 +112,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                         drug.executedTime.forEach {
                             _totalTask.value = _totalTask.value?.plus(1)
 
-                            //Skip the item log that time tag is the same with exist time tag.
+                            // Skip the item log that time tag is the same with exist time tag.
                             if (getTimeStampToTimeInt(it) !in todayLogCreateTimeIntList) {
                                 drugCurrentList.add(
                                     ItemDataType.DrugType(
@@ -145,19 +133,10 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                             } else {
                                 _completedTask.value = _completedTask.value?.plus(1)
                             }
-
                         }
                     }
                 }
-
-                value = arrangeTodoList(
-                    timeIntList,
-                    timeCurrentList,
-                    drugCurrentList,
-                    measureCurrentList,
-                    activityCurrentList,
-                    careCurrentList
-                )
+                value = reAssignValue()
             }
         }
 
@@ -165,9 +144,8 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
             viewModelScope.launch {
 
                 measureCurrentList.clear()
-                if (measureList.isNotEmpty()) {
-                    isNotNewBie()
-                }
+                isNotNewBie(measureList)
+
 
                 val measureListByFilter = measureList.filter {
                     it.status == 0
@@ -176,12 +154,8 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                 measureListByFilter.forEach { measure ->
 
                     measure.measureLogs =
-                        firebaseDataRepository.getMeasureRecord(measure.id!!, Timestamp.now())
-                            .filter {
-                                getTimeStampToDateInt(it.createdTime!!) == getTimeStampToDateInt(
-                                    Timestamp.now()
-                                )
-                            }
+                        firebaseDataRepository.getMeasureRecord(measure.id ?: "")
+                            .filter { isToday(it.createdTime) }
 
                     val todayLogCreateTimeIntList = mutableListOf<Int>()
                     measure.measureLogs.forEach { measureLog ->
@@ -220,24 +194,15 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                         }
                     }
                 }
-                value = arrangeTodoList(
-                    timeIntList,
-                    timeCurrentList,
-                    drugCurrentList,
-                    measureCurrentList,
-                    activityCurrentList,
-                    careCurrentList
-                )
+                value = reAssignValue()
             }
         }
 
         addSource(activityList) { activityList ->
             viewModelScope.launch {
                 activityCurrentList.clear()
+                isNotNewBie(activityList)
 
-                if (activityList.isNotEmpty()) {
-                    isNotNewBie()
-                }
 
                 val activityListByFilter = activityList.filter {
                     it.status == 0
@@ -246,11 +211,8 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                 activityListByFilter.forEach { activity ->
 
                     activity.activityLogs =
-                        firebaseDataRepository.getActivityRecord(activity.id!!, Timestamp.now())
-                            .filter {
-                                getTimeStampToDateInt(it.createdTime!!) ==
-                                        getTimeStampToDateInt(Timestamp.now())
-                            }
+                        firebaseDataRepository.getActivityRecord(activity.id ?: "")
+                            .filter { isToday(it.createdTime) }
 
                     val todayLogCreateTimeIntList = mutableListOf<Int>()
                     activity.activityLogs.forEach { activityLog ->
@@ -289,24 +251,15 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                         }
                     }
                 }
-                value = arrangeTodoList(
-                    timeIntList,
-                    timeCurrentList,
-                    drugCurrentList,
-                    measureCurrentList,
-                    activityCurrentList,
-                    careCurrentList
-                )
+                value = reAssignValue()
             }
         }
 
         addSource(careList) { careList ->
             viewModelScope.launch {
                 careCurrentList.clear()
+                isNotNewBie(careList)
 
-                if (careList.isNotEmpty()) {
-                    isNotNewBie()
-                }
 
                 val careListByFilter = careList.filter {
                     it.status == 0
@@ -315,10 +268,8 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                 careListByFilter.forEach { care ->
 
                     care.careLogs =
-                        firebaseDataRepository.getCareRecord(care.id!!, Timestamp.now()).filter {
-                            getTimeStampToDateInt(it.createdTime!!) ==
-                                    getTimeStampToDateInt(Timestamp.now())
-                        }
+                        firebaseDataRepository.getCareRecord(care.id ?: "")
+                            .filter { isToday(it.createdTime) }
 
                     val todayLogCreateTimeIntList = mutableListOf<Int>()
                     care.careLogs.forEach { careLog ->
@@ -357,16 +308,20 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                         }
                     }
                 }
-                value = arrangeTodoList(
-                    timeIntList,
-                    timeCurrentList,
-                    drugCurrentList,
-                    measureCurrentList,
-                    activityCurrentList,
-                    careCurrentList
-                )
+                value = reAssignValue()
             }
         }
+    }
+
+    private fun reAssignValue(): MutableList<ItemDataType> {
+        return arrangeTodoList(
+            timeIntList,
+            timeCurrentList,
+            drugCurrentList,
+            measureCurrentList,
+            activityCurrentList,
+            careCurrentList
+        )
     }
 
     private fun arrangeTodoList(
@@ -416,8 +371,10 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
         return list
     }
 
-    private fun isNotNewBie() {
-        _isTheNewbie.value = false
+    private fun isNotNewBie(list: List<ItemsDataType>) {
+        if (list.isEmpty()) {
+            _isTheNewbie.value = false
+        }
     }
 
     /*
@@ -468,7 +425,8 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                 when (it.itemDataType) {
                     is ItemDataType.DrugType -> {
                         firebaseDataRepository.postDrugRecord(
-                            it.itemDataType.drug.DrugData?.id!!, DrugLog(
+                            it.itemDataType.drug.DrugData?.id!!,
+                            DrugLog(
                                 timeTag = it.itemDataType.timeInt,
                                 result = 1,
                                 createdTime = Timestamp.now()
@@ -478,7 +436,8 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
 
                     is ItemDataType.MeasureType -> {
                         firebaseDataRepository.postMeasureRecord(
-                            it.itemDataType.measure.MeasureData?.id!!, MeasureLog(
+                            it.itemDataType.measure.MeasureData?.id!!,
+                            MeasureLog(
                                 id = firebaseDataRepository
                                     .getMeasureRecordId(it.itemDataType.measure.MeasureData.id!!),
                                 timeTag = it.itemDataType.timeInt,
@@ -490,7 +449,8 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
 
                     is ItemDataType.CareType -> {
                         firebaseDataRepository.postCareRecord(
-                            it.itemDataType.care.CareData?.id!!, CareLog(
+                            it.itemDataType.care.CareData?.id!!,
+                            CareLog(
                                 timeTag = it.itemDataType.timeInt,
                                 result = 1,
                                 createdTime = Timestamp.now()
@@ -500,7 +460,8 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
 
                     is ItemDataType.ActivityType -> {
                         firebaseDataRepository.postActivityRecord(
-                            it.itemDataType.activity.ActivityData?.id!!, ActivityLog(
+                            it.itemDataType.activity.ActivityData?.id!!,
+                            ActivityLog(
                                 timeTag = it.itemDataType.timeInt,
                                 result = 1,
                                 createdTime = Timestamp.now()
@@ -557,7 +518,8 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                     }
 
                     firebaseDataRepository.postDrugRecord(
-                        it.itemDataType.drug.DrugData.id!!, DrugLog(
+                        it.itemDataType.drug.DrugData.id!!,
+                        DrugLog(
                             timeTag = it.itemDataType.timeInt,
                             result = 0,
                             createdTime = Timestamp.now()
@@ -575,7 +537,8 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
 
                 is ItemDataType.ActivityType -> {
                     firebaseDataRepository.postActivityRecord(
-                        it.itemDataType.activity.ActivityData?.id!!, ActivityLog(
+                        it.itemDataType.activity.ActivityData?.id!!,
+                        ActivityLog(
                             timeTag = it.itemDataType.timeInt,
                             result = 0,
                             createdTime = Timestamp.now()

@@ -12,7 +12,7 @@ class AnalyzeDrugLog {
     private val resultInDateList = mutableListOf<ResultInDate>()
     private var resultList = mutableListOf<Map<String, String>>()
 
-    //Get the Date Range. It's the ResultInDate count.
+    // Get the Date Range. It's the ResultInDate count.
     private val allDateInInt = mutableListOf<Int>()
     private val allDateInTimestamp = mutableListOf<Timestamp>()
 

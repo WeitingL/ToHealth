@@ -1,3 +1,4 @@
+
 package com.weiting.tohealth.data
 
 import android.os.Parcelable
@@ -13,4 +14,4 @@ data class Chat(
     val createdTime: Timestamp? = null,
     @JvmField
     val isReadList: MutableList<String> = mutableListOf()
-):Parcelable
+) : Parcelable

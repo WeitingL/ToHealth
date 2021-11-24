@@ -1,6 +1,5 @@
 package com.weiting.tohealth.homepage
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.*
 import com.weiting.tohealth.data.*
-import com.weiting.tohealth.databinding.ItemRowBinding
 import com.weiting.tohealth.databinding.ItemRowHomeBinding
 import com.weiting.tohealth.databinding.TimeRowBinding
 import com.weiting.tohealth.util.Util.setActivityType
@@ -84,7 +82,6 @@ class TodayItemAdapter :
                 tvName.text = toActivityType(activity?.type)
                 imageView.setImageResource(setActivityType(activity?.type))
                 tvUnit.visibility = View.GONE
-
             }
         }
     }
@@ -93,16 +90,15 @@ class TodayItemAdapter :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(care: Care?) {
             binding.apply {
-                val editor = if (care?.editor == UserManager.UserInformation.id){
+                val editor = if (care?.editor == UserManager.UserInformation.id) {
                     "${UserManager.UserInformation.name}"
-                }else{
+                } else {
                     "others"
                 }
 
                 tvName.text = toCareType(care?.type)
                 imageView.setImageResource(R.drawable.stopwatch)
                 "提出人$editor".also { tvUnit.text = it }
-
             }
         }
     }
@@ -179,6 +175,5 @@ class TodayItemAdapter :
         }
     }
 
-    //TODO Empty space need to add new things.
-
+    // TODO Empty space need to add new things.
 }

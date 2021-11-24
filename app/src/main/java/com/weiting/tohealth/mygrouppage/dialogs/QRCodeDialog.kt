@@ -40,8 +40,5 @@ class QRCodeDialog : DialogFragment() {
 
         val width = (resources.displayMetrics.widthPixels * 0.2).toInt()
         dialog!!.window?.setLayout(width * 4, width * 5)
-
     }
-
-
 }

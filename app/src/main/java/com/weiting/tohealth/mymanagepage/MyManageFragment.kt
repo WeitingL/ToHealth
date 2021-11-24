@@ -25,12 +25,14 @@ class MyManageFragment : Fragment(R.layout.fragment_mymanage) {
         val tabLayout = binding.tlManagerItem
 
         viewPager.adapter = MyManageAdapter(
-            this, User(
+            this,
+            User(
                 name = UserManager.UserInformation.name,
                 id = UserManager.UserInformation.id,
                 groupList = UserManager.UserInformation.groupList
-            )
-        , 0)
+            ),
+            0
+        )
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             when (position) {

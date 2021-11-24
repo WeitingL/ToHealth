@@ -1,6 +1,5 @@
 package com.weiting.tohealth.mystatisticpage
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -66,7 +65,7 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
 //            Log.i("holder", item.toString())
             binding.acMainChart.setProgressBar(binding.progressBar3)
 
-            //Get the dataList
+            // Get the dataList
             val list = mutableListOf<DataEntry>()
             item.list.forEach {
                 list.add(
@@ -79,7 +78,7 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
                 )
             }
 
-            //Blood Pressure chart
+            // Blood Pressure chart
             if (item.type == 0) {
                 val cartesian = AnyChart.cartesian()
                 val set = Set.instantiate()
@@ -104,7 +103,7 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
                 cartesian.xScroller().allowRangeChange(false)
                 binding.acMainChart.setChart(cartesian)
 
-                //Others chart
+                // Others chart
             } else {
                 val barChart = AnyChart.column()
                 val set = Set.instantiate()

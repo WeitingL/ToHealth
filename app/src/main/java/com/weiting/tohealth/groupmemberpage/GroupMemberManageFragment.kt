@@ -31,19 +31,24 @@ class GroupMemberManageFragment : Fragment() {
         "聊天室暱稱: ${memberInfo.nickName}".also { binding.tvMemberNickName.text = it }
         transferCircleImage(binding.imPhoto, memberInfo.profilePhoto)
 
-        if (memberInfo.userId != UserManager.UserInformation.id){
+        if (memberInfo.userId != UserManager.UserInformation.id) {
             binding.ibEditNickName.visibility = View.GONE
         }
 
-        //Give the OwnMemberInfo
+        // Give the OwnMemberInfo
         binding.ibEditNickName.setOnClickListener {
-            findNavController().navigate(NavigationDirections.actionGlobalEditMyNickNameDialog(memberInfo, groupId))
+            findNavController().navigate(
+                NavigationDirections.actionGlobalEditMyNickNameDialog(memberInfo, groupId))
         }
 
-        viewPager.adapter = MyManageAdapter(this, User(
-            id = memberInfo.userId,
-            name = memberInfo.name,
-        ), memberInfo.private!!)
+        viewPager.adapter = MyManageAdapter(
+            this,
+            User(
+                id = memberInfo.userId,
+                name = memberInfo.name,
+            ),
+            memberInfo.private!!
+        )
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             when (position) {

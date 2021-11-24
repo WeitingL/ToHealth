@@ -1,7 +1,6 @@
 package com.weiting.tohealth.mygrouppage
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -62,5 +61,4 @@ class MyGroupFragment : Fragment() {
         binding.rvGroupList.adapter = adapter
         return binding.root
     }
-
 }

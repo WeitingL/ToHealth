@@ -57,6 +57,4 @@ class CreateGroupDialog : DialogFragment() {
         val width = (resources.displayMetrics.widthPixels)
         dialog!!.window?.setLayout(width, width)
     }
-
-
 }

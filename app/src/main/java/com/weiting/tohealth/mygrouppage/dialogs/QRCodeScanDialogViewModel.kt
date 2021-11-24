@@ -12,11 +12,9 @@ class QRCodeScanDialogViewModel : ViewModel() {
     val groupIdFromQRCode: LiveData<String>
         get() = _groupIdFromQRCode
 
-    fun getGroupId(groupId: String){
+    fun getGroupId(groupId: String) {
         viewModelScope.launch {
             _groupIdFromQRCode.value = groupId
         }
     }
-
-
 }

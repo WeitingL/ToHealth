@@ -51,6 +51,4 @@ class GroupNoteViewPagerAdapter(
     }
 
     override fun getItemCount(): Int = list.size
-
-
 }

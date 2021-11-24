@@ -5,7 +5,6 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.weiting.tohealth.data.User
-import io.grpc.internal.DnsNameResolver
 
 class MyStatisticAdapter(fragment: Fragment, private val user: User) : FragmentStateAdapter(fragment) {
 
@@ -21,7 +20,7 @@ class MyStatisticAdapter(fragment: Fragment, private val user: User) : FragmentS
         }
     }
 
-    //Can't use the fragment constructor to transport the data, it make app crash when configuration change happens.
+    // Can't use the fragment constructor to transport the data, it make app crash when configuration change happens.
     private fun getInstance(bundle: Bundle): StatisticDetailFragment {
         val fragment = StatisticDetailFragment()
         fragment.arguments = bundle

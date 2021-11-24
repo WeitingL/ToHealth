@@ -1,6 +1,5 @@
 package com.weiting.tohealth
 
-import android.text.BoringLayout
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.weiting.tohealth.data.FirebaseRepository
-import com.weiting.tohealth.data.UserManager
 import com.weiting.tohealth.works.RebuildAlarm
 import kotlinx.coroutines.launch
 
@@ -23,7 +21,6 @@ class MainActivityViewModel(private val firebaseDataRepository: FirebaseReposito
     val navigationDestination: LiveData<NavigationDestination>
         get() = _navigationDestination
 
-
     val memberList = mutableListOf<String>()
     val groupList = mutableListOf<String>()
 
@@ -31,7 +28,7 @@ class MainActivityViewModel(private val firebaseDataRepository: FirebaseReposito
         if (Firebase.auth.currentUser?.uid != null) {
             getMemberIdList()
             _isLogin.value = true
-        }else{
+        } else {
             _isLogin.value = false
         }
     }
@@ -65,7 +62,6 @@ class MainActivityViewModel(private val firebaseDataRepository: FirebaseReposito
     fun getNavigationDestination(navigationDestination: NavigationDestination) {
         _navigationDestination.value = navigationDestination
     }
-
 }
 
 enum class NavigationDestination(val title: String) {
@@ -85,5 +81,4 @@ enum class NavigationDestination(val title: String) {
     NotificationFragment("警告消息"),
     LoginFragment("登錄頁面"),
     OtherFragment("toHealth")
-
 }

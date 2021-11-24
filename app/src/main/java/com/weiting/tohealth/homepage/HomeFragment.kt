@@ -45,13 +45,13 @@ class HomeFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        //TODO Refactor 2nd
+        // TODO Refactor 2nd
         val adapter = TodayItemAdapter()
         val swipeSet = object : RecyclerViewSwipe() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
                 when (direction) {
-                    //Skip
+                    // Skip
                     ItemTouchHelper.LEFT -> {
                         when (viewHolder.itemViewType) {
                             ITEM_VIEWTYPE_DRUG -> {
@@ -66,7 +66,7 @@ class HomeFragment : Fragment() {
                                 viewModel.itemDataMediator.value?.removeAt(position)
                                 adapter.notifyItemRemoved(position)
 
-                                //At this moment the list position has changed!
+                                // At this moment the list position has changed!
                                 if (isLastInTimePoint(position, adapter)) {
                                     viewModel.removeTimeHeader(
                                         SwipeData(
@@ -83,25 +83,24 @@ class HomeFragment : Fragment() {
                                     Snackbar.LENGTH_LONG
                                 )
                                     .setAction(
-                                        getString(R.string.itemSwipe_undo),
-                                        {
-                                            viewModel.undoSwipeToSkip()
-                                            adapter.notifyItemRangeInserted(position - 1, 2)
-                                        })
+                                        getString(R.string.itemSwipe_undo)
+                                    ) {
+                                        viewModel.undoSwipeToSkip()
+                                        adapter.notifyItemRangeInserted(position - 1, 2)
+                                    }
                                     .addCallback(object :
-                                        BaseTransientBottomBar.BaseCallback<Snackbar>() {
-                                        override fun onDismissed(
-                                            transientBottomBar: Snackbar?,
-                                            event: Int
-                                        ) {
-                                            super.onDismissed(transientBottomBar, event)
-                                            if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
-                                                viewModel.postSkipLog()
+                                            BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                                            override fun onDismissed(
+                                                transientBottomBar: Snackbar?,
+                                                event: Int
+                                            ) {
+                                                super.onDismissed(transientBottomBar, event)
+                                                if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
+                                                    viewModel.postSkipLog()
+                                                }
                                             }
-                                        }
-                                    })
+                                        })
                                     .show()
-
                             }
                             ITEM_VIEWTYPE_MEASURE -> {
 
@@ -132,23 +131,23 @@ class HomeFragment : Fragment() {
                                     Snackbar.LENGTH_LONG
                                 )
                                     .setAction(
-                                        getString(R.string.itemSwipe_undo),
-                                        {
-                                            viewModel.undoSwipeToSkip()
-                                            adapter.notifyItemRangeInserted(position - 1, 2)
-                                        })
+                                        getString(R.string.itemSwipe_undo)
+                                    ) {
+                                        viewModel.undoSwipeToSkip()
+                                        adapter.notifyItemRangeInserted(position - 1, 2)
+                                    }
                                     .addCallback(object :
-                                        BaseTransientBottomBar.BaseCallback<Snackbar>() {
-                                        override fun onDismissed(
-                                            transientBottomBar: Snackbar?,
-                                            event: Int
-                                        ) {
-                                            super.onDismissed(transientBottomBar, event)
-                                            if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
-                                                viewModel.postSkipLog()
+                                            BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                                            override fun onDismissed(
+                                                transientBottomBar: Snackbar?,
+                                                event: Int
+                                            ) {
+                                                super.onDismissed(transientBottomBar, event)
+                                                if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
+                                                    viewModel.postSkipLog()
+                                                }
                                             }
-                                        }
-                                    }).show()
+                                        }).show()
                             }
                             ITEM_VIEWTYPE_ACTIVITY -> {
 
@@ -180,23 +179,23 @@ class HomeFragment : Fragment() {
                                     Snackbar.LENGTH_LONG
                                 )
                                     .setAction(
-                                        getString(R.string.itemSwipe_undo),
-                                        {
-                                            viewModel.undoSwipeToSkip()
-                                            adapter.notifyItemRangeInserted(position - 1, 2)
-                                        })
+                                        getString(R.string.itemSwipe_undo)
+                                    ) {
+                                        viewModel.undoSwipeToSkip()
+                                        adapter.notifyItemRangeInserted(position - 1, 2)
+                                    }
                                     .addCallback(object :
-                                        BaseTransientBottomBar.BaseCallback<Snackbar>() {
-                                        override fun onDismissed(
-                                            transientBottomBar: Snackbar?,
-                                            event: Int
-                                        ) {
-                                            super.onDismissed(transientBottomBar, event)
-                                            if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
-                                                viewModel.postSkipLog()
+                                            BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                                            override fun onDismissed(
+                                                transientBottomBar: Snackbar?,
+                                                event: Int
+                                            ) {
+                                                super.onDismissed(transientBottomBar, event)
+                                                if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
+                                                    viewModel.postSkipLog()
+                                                }
                                             }
-                                        }
-                                    }).show()
+                                        }).show()
                             }
                             ITEM_VIEWTYPE_CARE -> {
 
@@ -227,28 +226,28 @@ class HomeFragment : Fragment() {
                                     Snackbar.LENGTH_LONG
                                 )
                                     .setAction(
-                                        getString(R.string.itemSwipe_undo),
-                                        {
-                                            viewModel.undoSwipeToSkip()
-                                            adapter.notifyItemRangeInserted(position - 1, 2)
-                                        })
+                                        getString(R.string.itemSwipe_undo)
+                                    ) {
+                                        viewModel.undoSwipeToSkip()
+                                        adapter.notifyItemRangeInserted(position - 1, 2)
+                                    }
                                     .addCallback(object :
-                                        BaseTransientBottomBar.BaseCallback<Snackbar>() {
-                                        override fun onDismissed(
-                                            transientBottomBar: Snackbar?,
-                                            event: Int
-                                        ) {
-                                            super.onDismissed(transientBottomBar, event)
-                                            if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
-                                                viewModel.postSkipLog()
+                                            BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                                            override fun onDismissed(
+                                                transientBottomBar: Snackbar?,
+                                                event: Int
+                                            ) {
+                                                super.onDismissed(transientBottomBar, event)
+                                                if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
+                                                    viewModel.postSkipLog()
+                                                }
                                             }
-                                        }
-                                    }).show()
+                                        }).show()
                             }
                         }
                     }
 
-                    //Log
+                    // Log
                     ItemTouchHelper.RIGHT -> {
                         when (viewHolder.itemViewType) {
                             ITEM_VIEWTYPE_DRUG -> {
@@ -279,32 +278,35 @@ class HomeFragment : Fragment() {
                                     Snackbar.LENGTH_LONG
                                 )
                                     .setAction(
-                                        getString(R.string.itemSwipe_undo),
-                                        {
-                                            viewModel.undoSwipeToLog()
-                                            adapter.notifyItemRangeInserted(position - 1, 2)
-                                        })
+                                        getString(R.string.itemSwipe_undo)
+                                    ) {
+                                        viewModel.undoSwipeToLog()
+                                        adapter.notifyItemRangeInserted(position - 1, 2)
+                                    }
                                     .addCallback(object :
-                                        BaseTransientBottomBar.BaseCallback<Snackbar>() {
-                                        override fun onDismissed(
-                                            transientBottomBar: Snackbar?,
-                                            event: Int
-                                        ) {
-                                            super.onDismissed(transientBottomBar, event)
-                                            if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
-                                                viewModel.postFinishDrugAndActivityLog()
+                                            BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                                            override fun onDismissed(
+                                                transientBottomBar: Snackbar?,
+                                                event: Int
+                                            ) {
+                                                super.onDismissed(transientBottomBar, event)
+                                                if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
+                                                    viewModel.postFinishDrugAndActivityLog()
+                                                }
                                             }
-                                        }
-                                    }).show()
-
+                                        }).show()
                             }
                             ITEM_VIEWTYPE_MEASURE -> {
                                 findNavController().navigate(
                                     NavigationDirections.actionGlobalMeasureRecordFragment(
-                                        (adapter.currentList[position] as
-                                                ItemDataType.MeasureType).measure.MeasureData!!,
-                                        (adapter.currentList[position] as
-                                                ItemDataType.MeasureType).timeInt
+                                        (
+                                            adapter.currentList[position] as
+                                                ItemDataType.MeasureType
+                                            ).measure.MeasureData!!,
+                                        (
+                                            adapter.currentList[position] as
+                                                ItemDataType.MeasureType
+                                            ).timeInt
                                     )
                                 )
                             }
@@ -337,31 +339,35 @@ class HomeFragment : Fragment() {
                                     Snackbar.LENGTH_LONG
                                 )
                                     .setAction(
-                                        getString(R.string.itemSwipe_undo),
-                                        {
-                                            viewModel.undoSwipeToLog()
-                                            adapter.notifyItemRangeInserted(position - 1, 2)
-                                        })
+                                        getString(R.string.itemSwipe_undo)
+                                    ) {
+                                        viewModel.undoSwipeToLog()
+                                        adapter.notifyItemRangeInserted(position - 1, 2)
+                                    }
                                     .addCallback(object :
-                                        BaseTransientBottomBar.BaseCallback<Snackbar>() {
-                                        override fun onDismissed(
-                                            transientBottomBar: Snackbar?,
-                                            event: Int
-                                        ) {
-                                            super.onDismissed(transientBottomBar, event)
-                                            if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
-                                                viewModel.postFinishDrugAndActivityLog()
+                                            BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                                            override fun onDismissed(
+                                                transientBottomBar: Snackbar?,
+                                                event: Int
+                                            ) {
+                                                super.onDismissed(transientBottomBar, event)
+                                                if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
+                                                    viewModel.postFinishDrugAndActivityLog()
+                                                }
                                             }
-                                        }
-                                    }).show()
+                                        }).show()
                             }
                             ITEM_VIEWTYPE_CARE -> {
                                 findNavController().navigate(
                                     NavigationDirections.actionGlobalCareRecordFragment(
-                                        (adapter.currentList[position] as
-                                                ItemDataType.CareType).care.CareData!!,
-                                        (adapter.currentList[position] as
-                                                ItemDataType.CareType).timeInt
+                                        (
+                                            adapter.currentList[position] as
+                                                ItemDataType.CareType
+                                            ).care.CareData!!,
+                                        (
+                                            adapter.currentList[position] as
+                                                ItemDataType.CareType
+                                            ).timeInt
                                     )
                                 )
                             }
@@ -374,18 +380,17 @@ class HomeFragment : Fragment() {
         val touchHelper = ItemTouchHelper(swipeSet)
         touchHelper.attachToRecyclerView(binding.rvHomeCardView)
 
-        viewModel.itemDataMediator.observe(viewLifecycleOwner){
+        viewModel.itemDataMediator.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
 
-
-        viewModel.totalTask.observe(viewLifecycleOwner){
+        viewModel.totalTask.observe(viewLifecycleOwner) {
             viewModel.taskCompleted()
 
             binding.progressBar.max = it
         }
 
-        viewModel.completedTask.observe(viewLifecycleOwner){
+        viewModel.completedTask.observe(viewLifecycleOwner) {
             viewModel.taskCompleted()
 
             binding.progressBar.progress = it

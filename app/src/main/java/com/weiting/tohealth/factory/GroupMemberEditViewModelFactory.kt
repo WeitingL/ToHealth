@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.weiting.tohealth.data.FirebaseRepository
 import com.weiting.tohealth.data.Member
 import com.weiting.tohealth.groupmemberpage.GroupMemberEditViewModel
-import com.weiting.tohealth.mygrouppage.MyGroupViewModel
 
 class GroupMemberEditViewModelFactory(
     private val firebaseDataRepository: FirebaseRepository,
@@ -22,5 +21,4 @@ class GroupMemberEditViewModelFactory(
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
         } as T
-
 }

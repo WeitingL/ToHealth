@@ -233,14 +233,14 @@ object Util {
         }
     }
 
-    //0000 -> 2359
+    // 0000 -> 2359
     fun getTimeStampToTimeInt(timestamp: Timestamp): Int {
         val c = Calendar.getInstance()
         c.time = timestamp.toDate()
         return (c.get(Calendar.HOUR_OF_DAY) * 100 + c.get(Calendar.MINUTE))
     }
 
-    //0101 -> 1231
+    // 0101 -> 1231
     fun getTimeStampToDateInt(timestamp: Timestamp): Int {
         val c = Calendar.getInstance()
         c.time = timestamp.toDate()
@@ -290,7 +290,6 @@ object Util {
                 .circleCrop()
                 .into(imgView)
         }
-
     }
 
     fun toNotificationTextForMeasureLog(measure: Measure, measureLog: MeasureLog): String {
@@ -317,5 +316,10 @@ object Util {
 
             else -> "未知測量項目異常"
         }
+    }
+
+    fun isToday(timestamp: Timestamp?): Boolean {
+        return getTimeStampToDateInt(timestamp ?: Timestamp.now()) ==
+            getTimeStampToDateInt(Timestamp.now())
     }
 }

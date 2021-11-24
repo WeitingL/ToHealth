@@ -1,6 +1,5 @@
 package com.weiting.tohealth.mygrouppage
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -9,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.data.Member
 import com.weiting.tohealth.databinding.MygroupRowMemberBinding
 import com.weiting.tohealth.util.Util.transferCircleImage
-
 
 class GroupMemberAdapter : ListAdapter<Member, GroupMemberAdapter.GroupMemberViewHolder>(DiffCallback) {
 

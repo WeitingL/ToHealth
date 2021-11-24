@@ -69,5 +69,4 @@ sealed class GroupPageItem {
 
     data class MyGroups(val group: Group) : GroupPageItem()
     object AddGroups : GroupPageItem()
-
 }

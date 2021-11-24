@@ -3,7 +3,6 @@ package com.weiting.tohealth.factory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.weiting.tohealth.data.FirebaseRepository
-import com.weiting.tohealth.homepage.HomeViewModel
 import com.weiting.tohealth.homepage.RecordViewModel
 
 class RecordViewModelFactory(
@@ -19,5 +18,4 @@ class RecordViewModelFactory(
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
         } as T
-
 }

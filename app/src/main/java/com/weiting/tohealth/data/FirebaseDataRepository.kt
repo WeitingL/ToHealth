@@ -109,27 +109,24 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.postCareRecord(id, careLog)
     }
 
-    override suspend fun getDrugRecord(itemId: String, createTime: Timestamp): List<DrugLog> {
-        return firebaseSource.getDrugRecord(itemId, createTime)
+    override suspend fun getDrugRecord(itemId: String): List<DrugLog> {
+        return firebaseSource.getDrugRecord(itemId)
     }
 
-    override suspend fun getMeasureRecord(itemId: String, createTime: Timestamp): List<MeasureLog> {
-        return firebaseSource.getMeasureRecord(itemId, createTime)
+    override suspend fun getMeasureRecord(itemId: String): List<MeasureLog> {
+        return firebaseSource.getMeasureRecord(itemId)
     }
 
     override suspend fun getMeasureLog(itemId: String, itemsLogId: String): MeasureLog {
         return firebaseSource.getMeasureLog(itemId, itemsLogId)
     }
 
-    override suspend fun getActivityRecord(
-        itemId: String,
-        createTime: Timestamp
-    ): List<ActivityLog> {
-        return firebaseSource.getActivityRecord(itemId, createTime)
+    override suspend fun getActivityRecord(itemId: String): List<ActivityLog> {
+        return firebaseSource.getActivityRecord(itemId)
     }
 
-    override suspend fun getCareRecord(itemId: String, createTime: Timestamp): List<CareLog> {
-        return firebaseSource.getCareRecord(itemId, createTime)
+    override suspend fun getCareRecord(itemId: String): List<CareLog> {
+        return firebaseSource.getCareRecord(itemId)
     }
 
     override fun createGroup(group: Group) {
@@ -211,7 +208,7 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.postChatMessage(chat)
     }
 
-    //Reduce the stock when task finished.
+    // Reduce the stock when task finished.
     override fun editStock(itemId: String, num: Float) {
         return firebaseSource.editStock(itemId, num)
     }
@@ -226,7 +223,8 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.getLiveNotificationForService(userId)
     }
 
-    override fun getLiveNotification(userIdList: List<String>): MutableLiveData<List<Notification>> {
+    override fun getLiveNotification(userIdList: List<String>):
+            MutableLiveData<List<Notification>> {
         return firebaseSource.getLiveNotification(userIdList)
     }
 
@@ -243,6 +241,4 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
     override fun postOnGetChatForService(chat: Chat) {
         return firebaseSource.postOnGetChatForService(chat)
     }
-
-
 }

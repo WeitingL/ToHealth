@@ -19,7 +19,6 @@ class BoardNotesAdapter(val onclickListener: DeleteOnclickListener) :
 
         override fun areContentsTheSame(oldItem: Note, newItem: Note): Boolean =
             newItem == oldItem
-
     }
 
     inner class NoteViewHolder(private val binding: NoteRowBinding) :
@@ -55,5 +54,4 @@ class BoardNotesAdapter(val onclickListener: DeleteOnclickListener) :
     class DeleteOnclickListener(val clickListener: (note: Note) -> Unit) {
         fun onClick(note: Note) = clickListener(note)
     }
-
 }
