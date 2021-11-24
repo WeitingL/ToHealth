@@ -13,7 +13,6 @@
         android:layout_marginEnd="16dp"
         android:maxWidth="300dp"
         android:maxLines="5"
-        android:text="行事曆標題"
         android:textAppearance="@style/title_text_bl"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/ib_deleteReminder"
@@ -26,7 +25,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="排定時間 : "
         android:textAppearance="@style/content_text_bl"
         app:layout_constraintStart_toStartOf="@+id/tv_calenderTitle"
         app:layout_constraintTop_toBottomOf="@+id/tv_calenderTitle" />
@@ -37,7 +35,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
-        android:text="編輯者 : "
         android:textAppearance="@style/content_text_bl"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tv_dateCalenderTitle"
@@ -48,7 +45,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:text="2021.12.25 12:12"
         android:textAppearance="@style/content_text_bl"
         app:layout_constraintBottom_toBottomOf="@+id/tv_dateCalenderTitle"
         app:layout_constraintStart_toEndOf="@+id/tv_dateCalenderTitle"
@@ -59,7 +55,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:text="尉庭"
         android:textAppearance="@style/content_text_bl"
         app:layout_constraintBottom_toBottomOf="@+id/tv_editorTitle"
         app:layout_constraintStart_toEndOf="@+id/tv_editorTitle"
@@ -69,7 +64,6 @@
         android:id="@+id/tv_createTime_calender"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2021.10.20 13:58"
         android:textAppearance="@style/content_text_bl"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_editior_calender" />
@@ -83,6 +77,7 @@
         android:background="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_delete_outline_24" />
+        app:srcCompat="@drawable/ic_baseline_delete_outline_24"
+        android:contentDescription="@string/delete_function" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

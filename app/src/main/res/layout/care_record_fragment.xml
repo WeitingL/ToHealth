@@ -18,7 +18,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/ib_soso"
         app:layout_constraintTop_toTopOf="@+id/ib_soso"
-        app:srcCompat="@drawable/sad" />
+        app:srcCompat="@drawable/sad"
+        android:contentDescription="@string/cd_sad" />
 
     <ImageButton
         android:id="@+id/ib_smile"
@@ -32,7 +33,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/ib_happy"
         app:layout_constraintTop_toTopOf="@+id/ib_happy"
-        app:srcCompat="@drawable/happy" />
+        app:srcCompat="@drawable/happy"
+        android:contentDescription="@string/cd_smile" />
 
     <ImageButton
         android:id="@+id/ib_cry"
@@ -46,7 +48,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/ib_littleSick"
         app:layout_constraintTop_toTopOf="@+id/ib_littleSick"
-        app:srcCompat="@drawable/emoji__1_" />
+        app:srcCompat="@drawable/emoji_1"
+        android:contentDescription="@string/cd_cry" />
 
     <ImageButton
         android:id="@+id/ib_happy"
@@ -60,7 +63,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title_care"
-        app:srcCompat="@drawable/happy_1" />
+        app:srcCompat="@drawable/happy_1"
+        android:contentDescription="@string/cd_happy" />
 
     <EditText
         android:id="@+id/editTextTextPersonName"
@@ -68,14 +72,16 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="我想說..."
+        android:hint="@string/i_want_to_say"
         android:inputType="textMultiLine|textPersonName"
+        android:minHeight="48dp"
         android:singleLine="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/ib_goingtody"
         app:layout_constraintStart_toStartOf="@+id/ib_littleSick"
         app:layout_constraintTop_toBottomOf="@+id/ib_littleSick"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:importantForAutofill="no" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/bt_cancelCareLog"
@@ -87,7 +93,7 @@
         android:drawableTop="@drawable/ic_baseline_delete_outline_24"
         android:gravity="center"
         android:paddingVertical="20dp"
-        android:text="取消"
+        android:text="@string/cancel"
         android:textAppearance="@style/title_text_bl"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/bt_enterCareLog"
@@ -104,7 +110,7 @@
         android:background="@color/pink_brown"
         android:drawableTop="@drawable/ic_baseline_done_24"
         android:paddingVertical="20dp"
-        android:text="輸入"
+        android:text="@string/enter"
         android:textAppearance="@style/title_text_bl"
         app:layout_constraintBottom_toBottomOf="@+id/bt_cancelCareLog"
         app:layout_constraintEnd_toEndOf="parent"
@@ -125,7 +131,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/ib_sick"
         app:layout_constraintTop_toTopOf="@+id/ib_sick"
-        app:srcCompat="@drawable/dead" />
+        app:srcCompat="@drawable/dead"
+        android:contentDescription="@string/cd_goingtody" />
 
     <ImageButton
         android:id="@+id/ib_littleSick"
@@ -139,7 +146,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ib_happy"
-        app:srcCompat="@drawable/sick" />
+        app:srcCompat="@drawable/sick"
+        android:contentDescription="@string/cd_little_sick" />
 
     <ImageButton
         android:id="@+id/ib_soso"
@@ -153,7 +161,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/ib_smile"
         app:layout_constraintTop_toTopOf="@+id/ib_smile"
-        app:srcCompat="@drawable/neutral" />
+        app:srcCompat="@drawable/neutral"
+        android:contentDescription="@string/cd_soso_feel" />
 
     <TextView
         android:id="@+id/tv_title_care"
@@ -161,7 +170,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:gravity="center"
-        android:text="關心項目"
         android:textAppearance="@style/title_text"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -180,6 +188,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/ib_cry"
         app:layout_constraintTop_toTopOf="@+id/ib_cry"
-        app:srcCompat="@drawable/sick__1_" />
+        app:srcCompat="@drawable/sick_1"
+        android:contentDescription="@string/cd_sick" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

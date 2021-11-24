@@ -79,7 +79,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_baseline_notifications_24" />
+                    app:srcCompat="@drawable/ic_baseline_notifications_24"
+                    android:contentDescription="@string/cd_more_button" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

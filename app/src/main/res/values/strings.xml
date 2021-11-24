@@ -37,6 +37,20 @@
     <string name="outDate">剩餘天數</string>
     <string name="foreNotificationTitle">ToHealth 正在監控您的健康數據與群組訊息</string>
     <string name="touchNotificationHint">輕觸可以開啟應用程式</string>
+    <string name="cd_more_button">Get more information button</string>
+    <string name="cd_add_new_things">Add new things.</string>
+    <string name="cd_delete_function">delete function</string>
+    <string name="cd_sad">sad select</string>
+    <string name="cd_smile">smile select</string>
+    <string name="cd_cry">cry select</string>
+    <string name="cd_happy">happy select</string>
+    <string name="i_want_to_say">我想說…</string>
+    <string name="cancel">取消</string>
+    <string name="enter">輸入</string>
+    <string name="cd_goingtody">goingtody select</string>
+    <string name="cd_little_sick">little sick select</string>
+    <string name="cd_soso_feel">soso select</string>
+    <string name="cd_sick">sick select</string>
 
     <string-array name="ItemType">
         <item>藥品</item>
