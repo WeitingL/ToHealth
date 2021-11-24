@@ -1,6 +1,5 @@
 package com.weiting.tohealth.mygrouppage
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,7 +17,7 @@ class MyGroupViewModel(private val firebaseDataRepository: FirebaseRepository) :
     val loading: LiveData<Boolean>
         get() = _loading
 
-    val userData = firebaseDataRepository.login(UserManager.UserInformation.id!!)
+    val userData = firebaseDataRepository.getLiveUser(UserManager.UserInformation.id!!)
 
     private val currentGroupList = mutableListOf<GroupPageItem>()
 
@@ -42,18 +41,18 @@ class MyGroupViewModel(private val firebaseDataRepository: FirebaseRepository) :
                         it.member += firebaseDataRepository.getMember(it.id!!)
                         it.member.forEach { member ->
                             member.profilePhoto =
-                                firebaseDataRepository.getUserInfo(member.userId!!).userPhoto
+                                firebaseDataRepository.getUser(member.userId!!).userPhoto
                         }
 
                         it.notes += firebaseDataRepository.getNote(it.id!!)
                         it.notes.forEach { note ->
-                            note.editor = firebaseDataRepository.getUserInfo(note.editor!!).name
+                            note.editor = firebaseDataRepository.getUser(note.editor!!).name
                         }
 
                         it.calenderItems += firebaseDataRepository.getCalenderItem(it.id!!)
                         it.calenderItems.forEach { calenderItem ->
                             calenderItem.editor =
-                                firebaseDataRepository.getUserInfo(calenderItem.editor!!).name
+                                firebaseDataRepository.getUser(calenderItem.editor!!).name
                         }
                         currentGroupList.add(GroupPageItem.MyGroups(it))
                     }

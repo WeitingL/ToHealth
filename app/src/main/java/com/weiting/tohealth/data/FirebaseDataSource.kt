@@ -15,7 +15,7 @@ import kotlin.coroutines.suspendCoroutine
 
 object FirebaseDataSource : FirebaseSource {
 
-    override fun login(userId: String): MutableLiveData<User> {
+    override fun getLiveUser(userId: String): MutableLiveData<User> {
         val database = application.database
         val user = MutableLiveData<User>()
 
@@ -43,24 +43,6 @@ object FirebaseDataSource : FirebaseSource {
 
                 val data = result.toObject(User::class.java)
                 continuation.resume(data ?: User())
-            }
-            .addOnFailureListener { e ->
-                Log.w("Error to get data", e)
-            }
-    }
-
-    override suspend fun getUserInfo(userId: String): User = suspendCoroutine { continuation ->
-
-        application.database.collection("users").document(userId)
-            .get()
-            .addOnSuccessListener { result ->
-                val data = result.toObject(User::class.java)
-
-                if (data != null) {
-                    continuation.resume(data)
-                } else {
-                    continuation.resume(User())
-                }
             }
             .addOnFailureListener { e ->
                 Log.w("Error to get data", e)
@@ -940,7 +922,7 @@ object FirebaseDataSource : FirebaseSource {
     }
 
     override fun getLiveNotificationForService(
-        userIdList: List<String>
+        userId: String
     ): MutableLiveData<List<Notification>> {
         val notificationList = MutableLiveData<List<Notification>>()
 
@@ -949,27 +931,28 @@ object FirebaseDataSource : FirebaseSource {
         c.add(Calendar.DATE, -3)
 
         application.database.collection("notifications")
-            .whereIn("userId", userIdList)
+            .whereEqualTo("userId", userId)
             .orderBy("createdTime", Query.Direction.DESCENDING)
             .whereGreaterThan("createdTime", Timestamp(c.time))
             .addSnapshotListener { value, error ->
 
-                if (error != null) {
-                    Log.e("Listen failed.", error.toString())
-                    return@addSnapshotListener
-                }
-                val list = mutableListOf<Notification>()
+                if (value?.metadata?.hasPendingWrites() != true){
+                    if (error != null) {
+                        Log.e("Listen failed.", error.toString())
+                        return@addSnapshotListener
+                    }
+                    val list = mutableListOf<Notification>()
 
-                for (document in value!!) {
-                    val data = document.toObject(Notification::class.java)
-                    list.add(data)
+                    for (document in value!!) {
+                        val data = document.toObject(Notification::class.java)
+                        list.add(data)
+                    }
+                    notificationList.value = list
+
                 }
-                notificationList.value = list
             }
 
         return notificationList
-
-
     }
 
     override fun getLiveNotification(
@@ -1014,8 +997,7 @@ object FirebaseDataSource : FirebaseSource {
     }
 
     override fun getLiveChatMessageForService(
-        userId: String,
-        groupId: List<String>
+        groupId: String
     ): MutableLiveData<List<Chat>> {
         val chatItemsList = MutableLiveData<List<Chat>>()
 
@@ -1024,7 +1006,7 @@ object FirebaseDataSource : FirebaseSource {
         c.add(Calendar.DATE, -3)
 
         application.database.collection("chats")
-            .whereIn("groupId", groupId)
+            .whereEqualTo("groupId", groupId)
             .orderBy("createdTime", Query.Direction.ASCENDING)
             .whereGreaterThan("createdTime", Timestamp(c.time))
             .limit(50)

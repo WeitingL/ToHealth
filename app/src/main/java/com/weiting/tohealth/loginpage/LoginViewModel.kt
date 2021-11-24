@@ -18,7 +18,7 @@ class LoginViewModel(private val firebaseDataRepository: FirebaseRepository) : V
 
     fun signInUserInfo(user: User) {
         viewModelScope.launch {
-            val userExist = firebaseDataRepository.getUserInfo(user.id!!)
+            val userExist = firebaseDataRepository.getUser(user.id!!)
 
             if (userExist.id.isNullOrEmpty()){
                 firebaseDataRepository.signIn(user)
@@ -31,7 +31,7 @@ class LoginViewModel(private val firebaseDataRepository: FirebaseRepository) : V
 
     fun initialUserManager(userId: String) {
         viewModelScope.launch {
-            _userInfo.value = firebaseDataRepository.getUserInfo(userId)
+            _userInfo.value = firebaseDataRepository.getUser(userId)
             Log.i("data", UserManager.UserInformation.toString())
         }
     }

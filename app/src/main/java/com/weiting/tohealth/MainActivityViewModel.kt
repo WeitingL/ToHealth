@@ -1,6 +1,7 @@
 package com.weiting.tohealth
 
 import android.text.BoringLayout
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,10 +15,6 @@ import kotlinx.coroutines.launch
 
 class MainActivityViewModel(private val firebaseDataRepository: FirebaseRepository) : ViewModel() {
 
-    private val _memberIdList = MutableLiveData<MutableList<String>>()
-    val memberIdList: LiveData<MutableList<String>>
-        get() = _memberIdList
-
     private val _isLogin = MutableLiveData<Boolean>()
     val isLogin: LiveData<Boolean>
         get() = _isLogin
@@ -27,7 +24,7 @@ class MainActivityViewModel(private val firebaseDataRepository: FirebaseReposito
         get() = _navigationDestination
 
 
-    private val memberList = mutableListOf<String>()
+    val memberList = mutableListOf<String>()
     val groupList = mutableListOf<String>()
 
     init {
@@ -45,10 +42,13 @@ class MainActivityViewModel(private val firebaseDataRepository: FirebaseReposito
         }
     }
 
-    fun getMemberIdList() {
+    fun loginSuccess() {
+        _isLogin.value = true
+    }
+
+    private fun getMemberIdList() {
         viewModelScope.launch {
             val auth = Firebase.auth
-
             val user = firebaseDataRepository.getUser(auth.currentUser?.uid!!)
             val groupIdList = user.groupList
 
@@ -56,9 +56,9 @@ class MainActivityViewModel(private val firebaseDataRepository: FirebaseReposito
                 groupList.add(it)
                 firebaseDataRepository.getMember(it).forEach { member ->
                     memberList.add(member.userId!!)
+                    Log.i("memberList", memberList.toString())
                 }
             }
-            _memberIdList.value = memberList
         }
     }
 

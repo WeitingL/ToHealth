@@ -49,7 +49,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
 
         viewModelScope.launch {
             if (Firebase.auth.currentUser != null)
-            UserManager.UserInformation = firebaseDataRepository.getUserInfo(UserManager.UserInformation.id!!)
+            UserManager.UserInformation = firebaseDataRepository.getUser(UserManager.UserInformation.id!!)
         }
 
     }
@@ -93,10 +93,6 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                 }
 
                 drugListByFilter.forEach { drug ->
-
-                    if (isDrugExhausted(drug)) {
-                        postDrugExhausted(drug)
-                    }
 
                     //Get all logs today.
                     drug.drugLogs =
@@ -546,8 +542,13 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
         finishedLogList.forEach {
             when (it.itemDataType) {
                 is ItemDataType.DrugType -> {
+
+                    if (isDrugExhausted(it.itemDataType.drug.DrugData!!)) {
+                        postDrugExhausted(it.itemDataType.drug.DrugData)
+                    }
+
                     firebaseDataRepository.postDrugRecord(
-                        it.itemDataType.drug.DrugData?.id!!, DrugLog(
+                        it.itemDataType.drug.DrugData.id!!, DrugLog(
                             timeTag = it.itemDataType.timeInt,
                             result = 0,
                             createdTime = Timestamp.now()

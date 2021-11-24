@@ -9,7 +9,7 @@ interface FirebaseRepository {
     Login with livedata
  */
 
-    fun login(userId: String): MutableLiveData<User>
+    fun getLiveUser(userId: String): MutableLiveData<User>
 
     suspend fun getUser(userId: String): User
 
@@ -133,14 +133,12 @@ interface FirebaseRepository {
 
     fun postChatMessage(chat: Chat)
 
-    suspend fun getUserInfo(userId: String): User
-
     fun editStock(itemId: String, num: Float)
 
     fun postNotification(notification: Notification)
 
     fun getLiveNotificationForService(
-        userIdList: List<String>
+        userId: String
     ): MutableLiveData<List<Notification>>
 
     fun getLiveNotification(
@@ -150,8 +148,7 @@ interface FirebaseRepository {
     fun postOnGetNotificationForService(notification: Notification)
 
     fun getLiveChatMessageForService(
-        userId: String,
-        groupId: List<String>
+        groupId: String
     ): MutableLiveData<List<Chat>>
 
     fun postOnGetChatForService(chat: Chat)
