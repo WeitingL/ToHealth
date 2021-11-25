@@ -16,26 +16,27 @@ import com.weiting.tohealth.util.Util.toMeasureType
 import com.weiting.tohealth.util.Util.toUnit
 import java.lang.ClassCastException
 
-const val FASTADD_VIEWTYPE_DRUG = 0
-const val FASTADD_VIEWTYPE_MEASURE = 1
-const val FASTADD_VIEWTYPE_ACTIVITY = 2
+const val VIEW_TYPE_DRUG = 0
+const val VIEW_TYPE_MEASURE = 1
+const val VIEW_TYPE_EVENT = 2
 
 class FastAddAdapter(val onClickListener: OnclickListener) :
-    ListAdapter<FastAddItem, RecyclerView.ViewHolder>(DiffCallback) {
+    ListAdapter<ItemData, RecyclerView.ViewHolder>(DiffCallback) {
 
-    object DiffCallback : DiffUtil.ItemCallback<FastAddItem>() {
-        override fun areItemsTheSame(oldItem: FastAddItem, newItem: FastAddItem): Boolean =
+    object DiffCallback : DiffUtil.ItemCallback<ItemData>() {
+        override fun areItemsTheSame(oldItem: ItemData, newItem: ItemData): Boolean =
             oldItem === newItem
 
-        override fun areContentsTheSame(oldItem: FastAddItem, newItem: FastAddItem): Boolean =
+        override fun areContentsTheSame(oldItem: ItemData, newItem: ItemData): Boolean =
             oldItem == newItem
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when (getItem(position)) {
-            is FastAddItem.DrugItem -> FASTADD_VIEWTYPE_DRUG
-            is FastAddItem.MeasureItem -> FASTADD_VIEWTYPE_MEASURE
-            is FastAddItem.ActivityItem -> FASTADD_VIEWTYPE_ACTIVITY
+        return when (getItem(position).itemType) {
+            ItemType.DRUG -> VIEW_TYPE_DRUG
+            ItemType.MEASURE -> VIEW_TYPE_MEASURE
+            ItemType.EVENT -> VIEW_TYPE_EVENT
+            else -> throw Exception("Something wrong")
         }
     }
 
@@ -45,8 +46,8 @@ class FastAddAdapter(val onClickListener: OnclickListener) :
             binding.apply {
                 tvName.text = drug?.drugName
                 imageView.setImageResource(setDrugDrawable(drug?.unit))
-                tvUnit.text = drug?.dose.toString() + toUnit(drug?.unit)
-                tvStock.text = "剩餘" + drug?.stock.toString() + toUnit(drug?.unit)
+                (drug?.dose.toString() + toUnit(drug?.unit)).also { tvUnit.text = it }
+                ("剩餘" + drug?.stock.toString() + toUnit(drug?.unit)).also { tvStock.text = it }
             }
         }
     }
@@ -77,7 +78,7 @@ class FastAddAdapter(val onClickListener: OnclickListener) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            FASTADD_VIEWTYPE_DRUG -> DrugViewHolder(
+            VIEW_TYPE_DRUG -> DrugViewHolder(
                 ItemRowBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
@@ -85,7 +86,7 @@ class FastAddAdapter(val onClickListener: OnclickListener) :
                 )
             )
 
-            FASTADD_VIEWTYPE_MEASURE -> MeasureViewHolder(
+            VIEW_TYPE_MEASURE -> MeasureViewHolder(
                 ItemRowBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
@@ -93,7 +94,7 @@ class FastAddAdapter(val onClickListener: OnclickListener) :
                 )
             )
 
-            FASTADD_VIEWTYPE_ACTIVITY -> ActivityViewHolder(
+            VIEW_TYPE_EVENT -> ActivityViewHolder(
                 ItemRowBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
@@ -108,27 +109,27 @@ class FastAddAdapter(val onClickListener: OnclickListener) :
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is DrugViewHolder -> {
-                holder.bind((getItem(position) as FastAddItem.DrugItem).drug)
+                holder.bind((getItem(position).DrugData))
                 holder.itemView.setOnClickListener {
-                    onClickListener.onClick((getItem(position) as FastAddItem.DrugItem))
+                    onClickListener.onClick((getItem(position)))
                 }
             }
             is MeasureViewHolder -> {
-                holder.bind((getItem(position) as FastAddItem.MeasureItem).measure)
+                holder.bind((getItem(position).MeasureData))
                 holder.itemView.setOnClickListener {
-                    onClickListener.onClick((getItem(position) as FastAddItem.MeasureItem))
+                    onClickListener.onClick((getItem(position)))
                 }
             }
             is ActivityViewHolder -> {
-                holder.bind((getItem(position) as FastAddItem.ActivityItem).event)
+                holder.bind((getItem(position).EventData))
                 holder.itemView.setOnClickListener {
-                    onClickListener.onClick((getItem(position) as FastAddItem.ActivityItem))
+                    onClickListener.onClick((getItem(position)))
                 }
             }
         }
     }
 
-    class OnclickListener(val clickListener: (fastAddItem: FastAddItem) -> Unit) {
-        fun onClick(fastAddItem: FastAddItem) = clickListener(fastAddItem)
+    class OnclickListener(val clickListener: (itemData: ItemData) -> Unit) {
+        fun onClick(itemData: ItemData) = clickListener(itemData)
     }
 }

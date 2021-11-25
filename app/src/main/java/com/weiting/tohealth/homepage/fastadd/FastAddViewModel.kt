@@ -6,40 +6,40 @@ import com.weiting.tohealth.data.*
 
 class FastAddViewModel(private val firebaseDataRepository: FirebaseRepository) : ViewModel() {
 
-    private val drugList = firebaseDataRepository
+    private val drugs = firebaseDataRepository
         .getLiveDrugs(UserManager.UserInfo.id!!)
 
-    private val measureList = firebaseDataRepository
+    private val measures = firebaseDataRepository
         .getLiveMeasures(UserManager.UserInfo.id!!)
 
-    private val activityList = firebaseDataRepository
+    private val events = firebaseDataRepository
         .getLiveEvents(UserManager.UserInfo.id!!)
 
-    private val drugCurrentList = mutableListOf<FastAddItem>()
-    private val measureCurrentList = mutableListOf<FastAddItem>()
-    private val activityCurrentList = mutableListOf<FastAddItem>()
+    private val drugCurrentList = mutableListOf<ItemData>()
+    private val measureCurrentList = mutableListOf<ItemData>()
+    private val eventCurrentList = mutableListOf<ItemData>()
 
-    val itemDataMediator = MediatorLiveData<MutableList<FastAddItem>>().apply {
-        addSource(drugList) {
+    val itemDataMediator = MediatorLiveData<MutableList<ItemData>>().apply {
+        addSource(drugs) {
             drugCurrentList.clear()
             it.forEach {
-                drugCurrentList.add(FastAddItem.DrugItem(it))
+                drugCurrentList.add(ItemData(DrugData = it))
             }
-            value = (drugCurrentList + measureCurrentList + activityCurrentList).toMutableList()
+            value = (drugCurrentList + measureCurrentList + eventCurrentList).toMutableList()
         }
-        addSource(measureList) {
+        addSource(measures) {
             measureCurrentList.clear()
             it.forEach {
-                measureCurrentList.add(FastAddItem.MeasureItem(it))
+                measureCurrentList.add(ItemData(MeasureData = it))
             }
-            value = (drugCurrentList + measureCurrentList + activityCurrentList).toMutableList()
+            value = (drugCurrentList + measureCurrentList + eventCurrentList).toMutableList()
         }
-        addSource(activityList) {
-            activityCurrentList.clear()
+        addSource(events) {
+            eventCurrentList.clear()
             it.forEach {
-                activityCurrentList.add(FastAddItem.ActivityItem(it))
+                eventCurrentList.add(ItemData(EventData = it))
             }
-            value = (drugCurrentList + measureCurrentList + activityCurrentList).toMutableList()
+            value = (drugCurrentList + measureCurrentList + eventCurrentList).toMutableList()
         }
     }
 
@@ -49,16 +49,10 @@ class FastAddViewModel(private val firebaseDataRepository: FirebaseRepository) :
         val originStock = drug.stock
         val updateStock = originStock - drug.dose
 
-        firebaseDataRepository.editStock(drug.id!!, updateStock)
+        firebaseDataRepository.editStock(drug.id?:"", updateStock)
     }
 
     fun postActivity(itemId: String, eventLog: EventLog) {
         firebaseDataRepository.postEventLog(itemId, eventLog)
     }
-}
-
-sealed class FastAddItem {
-    data class DrugItem(val drug: Drug) : FastAddItem()
-    data class MeasureItem(val measure: Measure) : FastAddItem()
-    data class ActivityItem(val event: Event) : FastAddItem()
 }

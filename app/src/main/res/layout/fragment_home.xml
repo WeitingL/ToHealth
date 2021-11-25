@@ -197,7 +197,7 @@
             android:layout_marginBottom="16dp"
             android:background="@color/pink_brown"
             android:clickable="true"
-            app:elevation="30dp"
+            app:elevation="50dp"
             android:src="@drawable/ic_baseline_done_24"
             android:visibility="@{viewModel.isTheNewbie ? View.GONE : View.VISIBLE}"
             app:backgroundTint="@color/pink_brown"

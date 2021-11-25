@@ -11,8 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.firebase.Timestamp
 import com.weiting.tohealth.NavigationDirections
 import com.weiting.tohealth.PublicApplication
-import com.weiting.tohealth.data.EventLog
-import com.weiting.tohealth.data.DrugLog
+import com.weiting.tohealth.data.*
 import com.weiting.tohealth.databinding.FastAddFragmentBinding
 import com.weiting.tohealth.factory.FastAddViewModelFactory
 import com.weiting.tohealth.util.Util.getTimeStampToTimeInt
@@ -22,32 +21,32 @@ class FastAddFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = FastAddFragmentBinding.inflate(inflater, container, false)
         val factory = FastAddViewModelFactory(PublicApplication.application.firebaseDataRepository)
         val viewModel = ViewModelProvider(this, factory).get(FastAddViewModel::class.java)
 
         val adapter = FastAddAdapter(
             FastAddAdapter.OnclickListener {
-                when (it) {
-                    is FastAddItem.DrugItem -> {
+                when (it.itemType) {
+                    ItemType.DRUG -> {
                         viewModel.postDrugLog(
-                            it.drug.id!!,
+                            it.DrugData?.id?:"",
                             DrugLog(
                                 timeTag = getTimeStampToTimeInt(Timestamp.now()),
                                 result = 2,
                                 createdTime = Timestamp.now()
                             ),
-                            it.drug
+                            it.DrugData?: Drug()
                         )
                         Toast.makeText(context, "已登錄紀錄", Toast.LENGTH_LONG).show()
                         findNavController().navigate(
                             NavigationDirections.actionGlobalHomeFragment()
                         )
                     }
-                    is FastAddItem.ActivityItem -> {
+                    ItemType.EVENT -> {
                         viewModel.postActivity(
-                            it.event.id!!,
+                            it.EventData?.id?:"",
                             EventLog(
                                 timeTag = getTimeStampToTimeInt(
                                     Timestamp.now()
@@ -61,20 +60,24 @@ class FastAddFragment : Fragment() {
                             NavigationDirections.actionGlobalHomeFragment()
                         )
                     }
-                    is FastAddItem.MeasureItem -> {
+                    ItemType.MEASURE -> {
                         findNavController().navigate(
                             NavigationDirections.actionGlobalMeasureRecordFragment(
-                                it.measure,
+                                it.MeasureData?: Measure(),
                                 9999
                             )
                         )
                     }
+                    else -> throw Exception("Something Wrong!")
                 }
             }
         )
 
         viewModel.itemDataMediator.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
+            if (it.isNotEmpty()){
+                binding.lavLoading.visibility = View.GONE
+                adapter.submitList(it)
+            }
         }
 
         binding.rvFastAdd.adapter = adapter

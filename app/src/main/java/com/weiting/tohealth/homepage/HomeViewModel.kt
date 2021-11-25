@@ -347,7 +347,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
     }
 
     private fun isNewBie(list: List<Any>) {
-        if (list.isEmpty()) {
+        if (list.isNotEmpty()) {
             _isTheNewbie.value = false
         }
     }
