@@ -12,19 +12,22 @@ import com.anychart.data.Set
 import com.anychart.enums.*
 import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.R
+import com.weiting.tohealth.data.X
+import com.weiting.tohealth.data.Y
+import com.weiting.tohealth.data.Z
 import com.weiting.tohealth.databinding.*
-import com.weiting.tohealth.mystatisticpage.activitychart.ActivityTimeScaleAdapter
+import com.weiting.tohealth.mystatisticpage.activitychart.EventTimeScaleAdapter
 import com.weiting.tohealth.mystatisticpage.drugchart.DrugTimeScaleAdapter
 import com.weiting.tohealth.util.Util.toMeasureType
 import com.weiting.tohealth.util.Util.toStringFromTimeStamp
 import com.weiting.tohealth.util.Util.toUnitForMeasure
 import java.lang.ClassCastException
 
-const val STATISTIC_VIEWTYPE_DRUGLOGITEM = 0
-const val STATISTIC_VIEWTYPE_MEASURELOGITEM = 1
-const val STATISTIC_VIEWTYPE_ACTIVITYLOGITEM = 2
-const val STATISTIC_VIEWTYPE_CARELOGITEM = 3
-const val STATISTIC_VIEWTYPE_BUTTON = 4
+const val VIEW_TYPE_DRUG_LOG = 0
+const val VIEW_TYPE_MEASURE_LOG = 1
+const val VIEW_TYPE_EVENT_LOG = 2
+const val VIEW_TYPE_CARE_LOG = 3
+const val VIEW_TYPE_BUTTON = 4
 
 class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(DiffCallback) {
 
@@ -40,19 +43,19 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
-            is LogItem.DrugLogItem -> STATISTIC_VIEWTYPE_DRUGLOGITEM
-            is LogItem.Bottom -> STATISTIC_VIEWTYPE_BUTTON
-            is LogItem.CareLogItem -> STATISTIC_VIEWTYPE_CARELOGITEM
-            is LogItem.ActivityLogItem -> STATISTIC_VIEWTYPE_ACTIVITYLOGITEM
-            is LogItem.MeasureLogItem -> STATISTIC_VIEWTYPE_MEASURELOGITEM
+            is LogItem.DrugLogItem -> VIEW_TYPE_DRUG_LOG
+            is LogItem.Bottom -> VIEW_TYPE_BUTTON
+            is LogItem.CareLogItem -> VIEW_TYPE_CARE_LOG
+            is LogItem.EventLogItem -> VIEW_TYPE_EVENT_LOG
+            is LogItem.MeasureLogItem -> VIEW_TYPE_MEASURE_LOG
         }
     }
 
-    inner class ActivityLogItemViewHolder(private val binding: StatisticRowActivityBinding) :
+    inner class ActivityLogItemViewHolder(private val binding: StatisticRowEventBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: LogItem.ActivityLogItem) {
+        fun bind(item: LogItem.EventLogItem) {
             binding.tvItemName.text = item.itemName
-            val adapter = ActivityTimeScaleAdapter()
+            val adapter = EventTimeScaleAdapter()
             adapter.submitList(item.list)
             binding.rvActivityTimeLine.adapter = adapter
         }
@@ -71,9 +74,9 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
                 list.add(
                     MeasureValueEntry(
                         toStringFromTimeStamp(it.createTime),
-                        it.record["X"],
-                        it.record["Y"],
-                        it.record["Z"]
+                        it.record[X],
+                        it.record[Y],
+                        it.record[Z]
                     )
                 )
             }
@@ -191,33 +194,33 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            STATISTIC_VIEWTYPE_DRUGLOGITEM -> DrugLogItemViewHolder(
+            VIEW_TYPE_DRUG_LOG -> DrugLogItemViewHolder(
                 StatisticRowDrugBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
                 )
             )
 
-            STATISTIC_VIEWTYPE_CARELOGITEM -> CareLogItemViewHolder(
+            VIEW_TYPE_CARE_LOG -> CareLogItemViewHolder(
                 StatisticRowCareBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
                 )
             )
 
-            STATISTIC_VIEWTYPE_BUTTON -> ExportLogDataViewHolder(
+            VIEW_TYPE_BUTTON -> ExportLogDataViewHolder(
                 CardviewBottombuttonRowBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
                 )
             )
 
-            STATISTIC_VIEWTYPE_ACTIVITYLOGITEM -> ActivityLogItemViewHolder(
-                StatisticRowActivityBinding.inflate(
+            VIEW_TYPE_EVENT_LOG -> ActivityLogItemViewHolder(
+                StatisticRowEventBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
                 )
             )
 
-            STATISTIC_VIEWTYPE_MEASURELOGITEM -> MeasureLogItemViewHolder(
+            VIEW_TYPE_MEASURE_LOG -> MeasureLogItemViewHolder(
                 StatisticRowMeasureBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
@@ -240,7 +243,7 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
             }
 
             is ActivityLogItemViewHolder -> {
-                holder.bind(getItem(position) as LogItem.ActivityLogItem)
+                holder.bind(getItem(position) as LogItem.EventLogItem)
             }
 
             is CareLogItemViewHolder -> {

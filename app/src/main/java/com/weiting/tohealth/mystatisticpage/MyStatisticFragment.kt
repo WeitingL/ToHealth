@@ -17,7 +17,7 @@ class MyStatisticFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = FragmentMystatisticBinding.inflate(
             inflater, container, false
         )

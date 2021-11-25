@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.Timestamp
 import com.weiting.tohealth.data.FirebaseRepository
+import com.weiting.tohealth.data.ItemType
 import com.weiting.tohealth.mystatisticpage.activitychart.AnalyzeActivityLog
 import com.weiting.tohealth.mystatisticpage.carechart.AnalyzeCareLog
 import com.weiting.tohealth.mystatisticpage.drugchart.AnalyzeDrugLog
@@ -15,7 +16,7 @@ import kotlinx.coroutines.launch
 class StatisticDetailViewModel(
     private val firebaseDataRepository: FirebaseRepository,
     private val userId: String,
-    statisticType: StatisticType
+    itemType: ItemType
 ) : ViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>()
@@ -29,16 +30,16 @@ class StatisticDetailViewModel(
     private val logItemList = mutableListOf<LogItem>()
 
     init {
-        when (statisticType) {
-            StatisticType.DRUG -> getDrugLogs()
-            StatisticType.CARE -> getCareLogs()
-            StatisticType.ACTIVITY -> getActivityLogs()
-            StatisticType.MEASURE -> getMeasureLogs()
+        when (itemType) {
+            ItemType.DRUG -> getDrugLogs()
+            ItemType.CARE -> getCareLogs()
+            ItemType.EVENT -> getEventLogs()
+            ItemType.MEASURE -> getMeasureLogs()
         }
         _isLoading.value = true
     }
 
-    fun loadingFinished() {
+    private fun loadingFinished() {
         _isLoading.value = false
     }
 
@@ -72,10 +73,10 @@ class StatisticDetailViewModel(
         }
     }
 
-    private fun getActivityLogs() {
+    private fun getEventLogs() {
         viewModelScope.launch {
-            val activityList = firebaseDataRepository.getAllEvents(userId)
-            activityList.forEach {
+            val events = firebaseDataRepository.getAllEvents(userId)
+            events.forEach {
                 it.eventLogs = firebaseDataRepository.getEventLogs(it.id?:"")
                 if (it.eventLogs.isNotEmpty()) {
                     logItemList.add(AnalyzeActivityLog().revertToResultInDateList(it))
@@ -106,7 +107,7 @@ class StatisticDetailViewModel(
 sealed class LogItem {
     data class DrugLogItem(val itemName: String, val list: List<ResultInDate>) : LogItem()
     data class CareLogItem(val itemName: String, val list: List<ResultInDateForCare>) : LogItem()
-    data class ActivityLogItem(val itemName: String, val list: List<ResultInDate>) : LogItem()
+    data class EventLogItem(val itemName: String, val list: List<ResultInDate>) : LogItem()
     data class MeasureLogItem(
         val itemName: String,
         val type: Int,
@@ -116,7 +117,7 @@ sealed class LogItem {
     object Bottom : LogItem()
 }
 
-// DrugLogData and CareLogData
+// DrugLogData and EventLogData
 data class ResultInDate(
     val date: Timestamp,
     val results: List<Map<String, String>>

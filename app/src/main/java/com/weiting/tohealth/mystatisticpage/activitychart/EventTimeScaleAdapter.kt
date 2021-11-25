@@ -10,8 +10,8 @@ import com.weiting.tohealth.mystatisticpage.ResultInDate
 import com.weiting.tohealth.mystatisticpage.drugchart.DrugResultScaleAdapter
 import com.weiting.tohealth.util.Util.toDateWithoutYearFromTimeStamp
 
-class ActivityTimeScaleAdapter :
-    ListAdapter<ResultInDate, ActivityTimeScaleAdapter.DateTimeLineViewHolder>(DiffCallback) {
+class EventTimeScaleAdapter :
+    ListAdapter<ResultInDate, EventTimeScaleAdapter.DateTimeLineViewHolder>(DiffCallback) {
 
     object DiffCallback : DiffUtil.ItemCallback<ResultInDate>() {
         override fun areItemsTheSame(oldItem: ResultInDate, newItem: ResultInDate): Boolean =

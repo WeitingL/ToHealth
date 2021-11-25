@@ -1,5 +1,6 @@
 package com.weiting.tohealth.mystatisticpage.measurechart
 
+import com.google.firebase.Timestamp
 import com.weiting.tohealth.data.Measure
 import com.weiting.tohealth.mystatisticpage.LogItem
 import com.weiting.tohealth.mystatisticpage.ResultInDateForMeasure
@@ -12,9 +13,15 @@ class AnalyzeMeasureLog {
     fun revertToResultInDateList(measure: Measure): LogItem.MeasureLogItem {
 
         measure.measureLogs.forEach {
-            resultInDateList.add(ResultInDateForMeasure(it.createdTime!!, it.result!!, it.record))
+            resultInDateList.add(
+                ResultInDateForMeasure(
+                    it.createdTime ?: Timestamp.now(),
+                    it.result ?:0,
+                    it.record
+                )
+            )
         }
 
-        return LogItem.MeasureLogItem(toMeasureType(measure.type), measure.type!!, resultInDateList)
+        return LogItem.MeasureLogItem(toMeasureType(measure.type), measure.type?:0, resultInDateList)
     }
 }

@@ -22,7 +22,7 @@ class DrugResultScaleAdapter :
     inner class DrugResultViewHolder(private val binding: StasticDruglogRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(map: Map<String, String>) {
-            when (map["result"]!!.toInt()) {
+            when (map["result"]?:"0".toInt()) {
                 0 -> {
                     binding.apply {
                         imLog.setImageResource(R.drawable.circle_check_green)

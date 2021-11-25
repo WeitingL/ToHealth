@@ -20,7 +20,7 @@ class AnalyzeDrugLog {
         getAllDate(drug)
         allDateInInt.forEachIndexed { index, it ->
             drug.drugLogs.forEach { drugLog ->
-                if (getTimeStampToDateInt(drugLog.createdTime!!) == it) {
+                if (getTimeStampToDateInt(drugLog.createdTime ?: Timestamp.now()) == it) {
                     resultList.add(
                         mapOf(
                             "result" to drugLog.result.toString(),
@@ -32,14 +32,14 @@ class AnalyzeDrugLog {
             resultInDateList.add(ResultInDate(date = allDateInTimestamp[index], resultList))
             resultList = mutableListOf()
         }
-        return LogItem.DrugLogItem(drug.drugName!!, resultInDateList)
+        return LogItem.DrugLogItem(drug.drugName ?: "", resultInDateList)
     }
 
     private fun getAllDate(drug: Drug) {
         drug.drugLogs.forEach {
-            if (getTimeStampToDateInt(it.createdTime!!) !in allDateInInt) {
-                allDateInInt.add(getTimeStampToDateInt(it.createdTime))
-                allDateInTimestamp.add(it.createdTime)
+            if (getTimeStampToDateInt(it.createdTime ?: Timestamp.now()) !in allDateInInt) {
+                allDateInInt.add(getTimeStampToDateInt(it.createdTime ?: Timestamp.now()))
+                allDateInTimestamp.add(it.createdTime ?: Timestamp.now())
             }
         }
     }

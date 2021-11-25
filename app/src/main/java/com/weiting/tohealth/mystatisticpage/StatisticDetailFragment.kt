@@ -8,9 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.R
+import com.weiting.tohealth.data.ItemType
 import com.weiting.tohealth.data.User
 import com.weiting.tohealth.databinding.MystatisticItemFagmentBinding
 import com.weiting.tohealth.factory.StatisticDetailViewModelFactory
+import com.weiting.tohealth.mymanagepage.ITEM_TYPE
+import com.weiting.tohealth.mymanagepage.USER
 
 class StatisticDetailFragment : Fragment() {
 
@@ -18,16 +21,16 @@ class StatisticDetailFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = MystatisticItemFagmentBinding.inflate(inflater, container, false)
 
         // Get the type from MyStatisticAdapter.
-        val statisticType = arguments?.get("type") as StatisticType
-        val user = arguments?.get("user") as User
+        val statisticType = arguments?.get(ITEM_TYPE) as ItemType
+        val user = arguments?.get(USER) as User
         val factory =
             StatisticDetailViewModelFactory(
                 PublicApplication.application.firebaseDataRepository,
-                user.id!!,
+                user.id?:"",
                 statisticType
             )
         val viewModel = ViewModelProvider(this, factory).get(StatisticDetailViewModel::class.java)

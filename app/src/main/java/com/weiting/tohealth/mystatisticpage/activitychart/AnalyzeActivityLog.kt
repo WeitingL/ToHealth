@@ -16,7 +16,7 @@ class AnalyzeActivityLog {
     private val allDateInInt = mutableListOf<Int>()
     private val allDateInTimeStamp = mutableListOf<Timestamp>()
 
-    fun revertToResultInDateList(event: Event): LogItem.ActivityLogItem {
+    fun revertToResultInDateList(event: Event): LogItem.EventLogItem {
         getAllDate(event)
         allDateInInt.forEachIndexed { index, it ->
             event.eventLogs.forEach { activityLog ->
@@ -32,7 +32,7 @@ class AnalyzeActivityLog {
             resultInDateList.add(ResultInDate(allDateInTimeStamp[index], resultList))
             resultList = mutableListOf()
         }
-        return LogItem.ActivityLogItem(toEventType(event.type), resultInDateList)
+        return LogItem.EventLogItem(toEventType(event.type), resultInDateList)
     }
 
     private fun getAllDate(event: Event) {
