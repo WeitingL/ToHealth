@@ -3,7 +3,6 @@ package com.weiting.tohealth.works
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
@@ -12,7 +11,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.weiting.tohealth.*
 import com.weiting.tohealth.data.*
-import com.weiting.tohealth.homepage.ItemDataType
 import com.weiting.tohealth.util.ItemArranger
 import com.weiting.tohealth.util.Util.getTimeStampToTimeInt
 import com.weiting.tohealth.util.Util.toEventType
@@ -63,7 +61,7 @@ class TodoListNotification {
             }
         }
 
-        val eventList = firebaseDataRepository.getAllActivities(userId).filter {
+        val eventList = firebaseDataRepository.getAllEvents(userId).filter {
             ItemArranger().isThatDayNeedToDo(ItemData(EventData = it), Timestamp.now())
         }
         eventList.forEach { event ->

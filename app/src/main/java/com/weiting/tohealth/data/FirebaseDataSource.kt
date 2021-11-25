@@ -119,7 +119,7 @@ object FirebaseDataSource : FirebaseSource {
                 }
         }
 
-    override suspend fun getAllActivities(userId: String): List<Event> =
+    override suspend fun getAllEvents(userId: String): List<Event> =
         suspendCoroutine { continuation ->
             val list = mutableListOf<Event>()
             val database = application.database
@@ -173,7 +173,7 @@ object FirebaseDataSource : FirebaseSource {
                 }
         }
 
-    override fun getLiveDrugList(userId: String): MutableLiveData<List<Drug>> {
+    override fun getLiveDrugs(userId: String): MutableLiveData<List<Drug>> {
 
         val drugList = MutableLiveData<List<Drug>>()
 
@@ -195,7 +195,7 @@ object FirebaseDataSource : FirebaseSource {
         return drugList
     }
 
-    override fun getLiveMeasureList(userId: String): MutableLiveData<List<Measure>> {
+    override fun getLiveMeasures(userId: String): MutableLiveData<List<Measure>> {
         val measureList = MutableLiveData<List<Measure>>()
 
         application.database.collection("measures")
@@ -218,7 +218,7 @@ object FirebaseDataSource : FirebaseSource {
         return measureList
     }
 
-    override fun getLiveActivityList(userId: String): MutableLiveData<List<Event>> {
+    override fun getLiveEvents(userId: String): MutableLiveData<List<Event>> {
         val activityList = MutableLiveData<List<Event>>()
 
         application.database.collection("activity")
@@ -241,7 +241,7 @@ object FirebaseDataSource : FirebaseSource {
         return activityList
     }
 
-    override fun getLiveCareList(userId: String): MutableLiveData<List<Care>> {
+    override fun getLiveCares(userId: String): MutableLiveData<List<Care>> {
         val careList = MutableLiveData<List<Care>>()
 
         application.database.collection("cares")
@@ -293,7 +293,7 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
-    override fun postActivity(event: Event) {
+    override fun postEvent(event: Event) {
         val database = application.database
 
         event.id = database.collection("activity").document().id
@@ -343,7 +343,7 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
-    override fun updateActivity(event: Event) {
+    override fun updateEvent(event: Event) {
         application.database.collection("activity").document(event.id!!)
             .set(event, SetOptions.merge())
             .addOnSuccessListener { documentReference ->
@@ -365,7 +365,7 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
-    override fun postDrugRecord(id: String, drugLog: DrugLog) {
+    override fun postDrugLog(id: String, drugLog: DrugLog) {
 
         val database = application.database
 
@@ -380,7 +380,7 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
-    override suspend fun getMeasureRecordId(itemId: String): String = suspendCoroutine {
+    override suspend fun getMeasureLogId(itemId: String): String = suspendCoroutine {
 
         val database = application.database
         val id = database.collection("measures").document(itemId).collection("measuresLogs")
@@ -389,7 +389,7 @@ object FirebaseDataSource : FirebaseSource {
         it.resume(id)
     }
 
-    override fun postMeasureRecord(id: String, measureLog: MeasureLog) {
+    override fun postMeasureLog(id: String, measureLog: MeasureLog) {
         val database = application.database
 
         database.collection("measures").document(id).collection("measuresLogs")
@@ -403,7 +403,7 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
-    override fun postActivityRecord(id: String, eventLog: EventLog) {
+    override fun postEventLog(id: String, eventLog: EventLog) {
         val database = application.database
 
         eventLog.id =
@@ -419,7 +419,7 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
-    override fun postCareRecord(id: String, careLog: CareLog) {
+    override fun postCareLog(id: String, careLog: CareLog) {
         val database = application.database
 
         careLog.id = database.collection("cares").document(id).collection("careLogs").document().id
@@ -433,7 +433,7 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
-    override suspend fun getDrugRecord(itemId: String): List<DrugLog> =
+    override suspend fun getDrugLogs(itemId: String): List<DrugLog> =
         suspendCoroutine { continuation ->
             val list = mutableListOf<DrugLog>()
             val database = application.database
@@ -454,7 +454,7 @@ object FirebaseDataSource : FirebaseSource {
                 }
         }
 
-    override suspend fun getMeasureRecord(itemId: String): List<MeasureLog> =
+    override suspend fun getMeasureLogs(itemId: String): List<MeasureLog> =
         suspendCoroutine { continuation ->
             val list = mutableListOf<MeasureLog>()
             val database = application.database
@@ -490,7 +490,7 @@ object FirebaseDataSource : FirebaseSource {
                 }
         }
 
-    override suspend fun getActivityRecord(itemId: String): List<EventLog> =
+    override suspend fun getActivityLogs(itemId: String): List<EventLog> =
         suspendCoroutine { continuation ->
             val list = mutableListOf<EventLog>()
             val database = application.database
@@ -511,7 +511,7 @@ object FirebaseDataSource : FirebaseSource {
                 }
         }
 
-    override suspend fun getCareRecord(itemId: String): List<CareLog> =
+    override suspend fun getCareLogs(itemId: String): List<CareLog> =
         suspendCoroutine { continuation ->
             val list = mutableListOf<CareLog>()
             val database = application.database
@@ -632,7 +632,7 @@ object FirebaseDataSource : FirebaseSource {
                 }
         }
 
-    override suspend fun getMember(groupId: String): List<Member> =
+    override suspend fun getMembers(groupId: String): List<Member> =
         suspendCoroutine { continuation ->
             val list = mutableListOf<Member>()
             val database = application.database
@@ -653,7 +653,7 @@ object FirebaseDataSource : FirebaseSource {
                 }
         }
 
-    override suspend fun getNote(groupId: String): List<Note> = suspendCoroutine { continuation ->
+    override suspend fun getNotes(groupId: String): List<Note> = suspendCoroutine { continuation ->
         val list = mutableListOf<Note>()
         val database = application.database
 
@@ -674,9 +674,9 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
-    override suspend fun getCalenderItem(groupId: String): List<CalenderItem> =
+    override suspend fun getCalenderItems(groupId: String): List<Reminder> =
         suspendCoroutine { continuation ->
-            val list = mutableListOf<CalenderItem>()
+            val list = mutableListOf<Reminder>()
             val database = application.database
 
             database.collection("groups").document(groupId)
@@ -685,7 +685,7 @@ object FirebaseDataSource : FirebaseSource {
                 .get()
                 .addOnSuccessListener { result ->
 
-                    val dataList = result.toObjects(CalenderItem::class.java)
+                    val dataList = result.toObjects(Reminder::class.java)
                     list += dataList
 
 //                    Log.i("CalenderItemList", list.toString())
@@ -696,7 +696,7 @@ object FirebaseDataSource : FirebaseSource {
                 }
         }
 
-    override fun getLiveMember(groupId: String): MutableLiveData<List<Member>> {
+    override fun getLiveMembers(groupId: String): MutableLiveData<List<Member>> {
         val memberList = MutableLiveData<List<Member>>()
 
         application.database.collection("groups").document(groupId)
@@ -733,7 +733,7 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
-    override fun getLiveNote(groupId: String): MutableLiveData<List<Note>> {
+    override fun getLiveNotes(groupId: String): MutableLiveData<List<Note>> {
         val notesList = MutableLiveData<List<Note>>()
 
         application.database.collection("groups").document(groupId)
@@ -756,8 +756,8 @@ object FirebaseDataSource : FirebaseSource {
         return notesList
     }
 
-    override fun getLiveCalenderItem(groupId: String): MutableLiveData<List<CalenderItem>> {
-        val calenderItemsList = MutableLiveData<List<CalenderItem>>()
+    override fun getLiveCalenderItems(groupId: String): MutableLiveData<List<Reminder>> {
+        val calenderItemsList = MutableLiveData<List<Reminder>>()
 
         application.database.collection("groups").document(groupId)
             .collection("calenderItems")
@@ -767,10 +767,10 @@ object FirebaseDataSource : FirebaseSource {
                     return@addSnapshotListener
                 }
 
-                val list = mutableListOf<CalenderItem>()
+                val list = mutableListOf<Reminder>()
 
                 for (document in value!!) {
-                    val data = document.toObject(CalenderItem::class.java)
+                    val data = document.toObject(Reminder::class.java)
                     list.add(data)
                 }
 
@@ -796,17 +796,17 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
-    override fun postCalenderItem(calenderItem: CalenderItem, groupId: String) {
+    override fun postCalenderItem(reminder: Reminder, groupId: String) {
         val database = application.database
 
-        calenderItem.id = database.collection("groups")
+        reminder.id = database.collection("groups")
             .document(groupId).collection("calenderItems").document().id
 
         database.collection("groups").document(groupId)
-            .collection("calenderItems").document(calenderItem.id!!)
-            .set(calenderItem)
+            .collection("calenderItems").document(reminder.id!!)
+            .set(reminder)
             .addOnSuccessListener { documentReference ->
-                Log.d("store success", "DocumentSnapshot added with ID: ${calenderItem.id}")
+                Log.d("store success", "DocumentSnapshot added with ID: ${reminder.id}")
             }
             .addOnFailureListener { e ->
                 Log.w("store failure", "Error adding document", e)
@@ -826,9 +826,9 @@ object FirebaseDataSource : FirebaseSource {
             .addOnFailureListener { e -> Log.w("Delete failure", "Error deleting document", e) }
     }
 
-    override fun deleteCalenderItem(calenderItem: CalenderItem, groupId: String) {
+    override fun deleteCalenderItem(reminder: Reminder, groupId: String) {
         application.database.collection("groups").document(groupId)
-            .collection("calenderItems").document(calenderItem.id!!)
+            .collection("calenderItems").document(reminder.id!!)
             .delete()
             .addOnSuccessListener {
                 Log.d(
@@ -839,7 +839,7 @@ object FirebaseDataSource : FirebaseSource {
             .addOnFailureListener { e -> Log.w("Delete failure", "Error deleting document", e) }
     }
 
-    override fun getLiveChatMessage(
+    override fun getLiveChatMessages(
         userId: String,
         groupId: String
     ): MutableLiveData<List<Chat>> {
@@ -911,7 +911,7 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
-    override fun getLiveNotificationForService(
+    override fun getLiveNotificationsForService(
         userId: String
     ): MutableLiveData<List<Notification>> {
         val notificationList = MutableLiveData<List<Notification>>()
@@ -943,7 +943,7 @@ object FirebaseDataSource : FirebaseSource {
         return notificationList
     }
 
-    override fun getLiveNotification(
+    override fun getLiveNotifications(
         userIdList: List<String>
     ): MutableLiveData<List<Notification>> {
         val notificationList = MutableLiveData<List<Notification>>()
@@ -984,7 +984,7 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
-    override fun getLiveChatMessageForService(
+    override fun getLiveChatMessagesForService(
         groupId: String
     ): MutableLiveData<List<Chat>> {
         val chatItemsList = MutableLiveData<List<Chat>>()

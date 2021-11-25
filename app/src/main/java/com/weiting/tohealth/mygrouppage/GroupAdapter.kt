@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.Timestamp
-import com.weiting.tohealth.data.CalenderItem
+import com.weiting.tohealth.data.Reminder
 import com.weiting.tohealth.data.Note
 import com.weiting.tohealth.databinding.CardviewBottombuttonRowBinding
 import com.weiting.tohealth.databinding.MygroupRowGroupBinding
@@ -41,7 +41,7 @@ class GroupAdapter(
             memberAdapter.submitList(group.member)
 
             if (getBoardMessageList(
-                    myGroup.group.notes, myGroup.group.calenderItems
+                    myGroup.group.notes, myGroup.group.reminders
                 ).isEmpty()
             ) {
                 binding.rvGroupNoteList.visibility = View.GONE
@@ -55,7 +55,7 @@ class GroupAdapter(
 
             val noteAdapter = GroupNoteViewPagerAdapter(
                 getBoardMessageList(
-                    myGroup.group.notes, myGroup.group.calenderItems
+                    myGroup.group.notes, myGroup.group.reminders
                 )
             )
 
@@ -141,12 +141,12 @@ class GroupAdapter(
 
     private fun getBoardMessageList(
         noteList: List<Note>,
-        calenderItemList: List<CalenderItem>
+        reminderList: List<Reminder>
     ): List<BoardMessage> {
         val list = mutableListOf<BoardMessage>()
 
         when {
-            noteList.isNotEmpty() && calenderItemList.isNotEmpty() -> {
+            noteList.isNotEmpty() && reminderList.isNotEmpty() -> {
                 noteList.forEach { note ->
                     list.add(
                         BoardMessage(
@@ -159,7 +159,7 @@ class GroupAdapter(
                     )
                 }
 
-                calenderItemList.forEach { calenderItem ->
+                reminderList.forEach { calenderItem ->
                     list.add(
                         BoardMessage(
                             title = calenderItem.content ?: "",
@@ -185,8 +185,8 @@ class GroupAdapter(
                     )
                 }
             }
-            calenderItemList.isNotEmpty() -> {
-                calenderItemList.forEach { calenderItem ->
+            reminderList.isNotEmpty() -> {
+                reminderList.forEach { calenderItem ->
                     list.add(
                         BoardMessage(
                             title = calenderItem.content ?: "",

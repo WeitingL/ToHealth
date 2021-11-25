@@ -49,7 +49,7 @@ class RebuildAlarm {
             }
         }
 
-        val eventList = firebaseDataRepository.getAllActivities(userId).filter {
+        val eventList = firebaseDataRepository.getAllEvents(userId).filter {
             ItemArranger().isThatDayNeedToDo(ItemData(EventData = it), Timestamp.now())
         }
         eventList.forEach {

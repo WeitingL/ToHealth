@@ -14,7 +14,7 @@ import com.google.firebase.Timestamp
 import com.weiting.tohealth.NavigationDirections
 import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.R
-import com.weiting.tohealth.data.CalenderItem
+import com.weiting.tohealth.data.Reminder
 import com.weiting.tohealth.data.Group
 import com.weiting.tohealth.data.Note
 import com.weiting.tohealth.data.UserManager
@@ -110,7 +110,7 @@ class EditNoteAndCalenderItemFragment : Fragment() {
                         Toast.makeText(context, getString(R.string.SomethingEmpty), Toast.LENGTH_LONG).show()
                     } else {
                         viewModel.postCalenderItem(
-                            CalenderItem(
+                            Reminder(
                                 editor = UserManager.UserInformation.id,
                                 content = binding.edvReminderTitle.text.toString(),
                                 date = Timestamp(Date(viewModel.longTime.value!!)),

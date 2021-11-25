@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.weiting.tohealth.data.CalenderItem
+import com.weiting.tohealth.data.Reminder
 import com.weiting.tohealth.data.Note
 import com.weiting.tohealth.databinding.BoardRowCalenderitemBinding
 import com.weiting.tohealth.databinding.BoardRowNoteBinding
@@ -40,7 +40,7 @@ class BoardAdapter(val viewModel: BoardViewModel) :
 
     inner class CalenderViewHolder(private val binding: BoardRowCalenderitemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(list: List<CalenderItem>) {
+        fun bind(list: List<Reminder>) {
             val adapter =
                 BoardCalenderItemsAdapter(
                     BoardCalenderItemsAdapter.DeleteOnclickListener {

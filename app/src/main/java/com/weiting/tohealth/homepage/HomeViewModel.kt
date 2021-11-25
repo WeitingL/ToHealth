@@ -67,13 +67,13 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
     // TODO Refactor 1st
     //LiveData from firebase
     private val drugList =
-        firebaseDataRepository.getLiveDrugList(UserManager.UserInformation.id ?: "")
+        firebaseDataRepository.getLiveDrugs(UserManager.UserInformation.id ?: "")
     private val measureList =
-        firebaseDataRepository.getLiveMeasureList(UserManager.UserInformation.id ?: "")
+        firebaseDataRepository.getLiveMeasures(UserManager.UserInformation.id ?: "")
     private val activityList =
-        firebaseDataRepository.getLiveActivityList(UserManager.UserInformation.id ?: "")
+        firebaseDataRepository.getLiveEvents(UserManager.UserInformation.id ?: "")
     private val careList =
-        firebaseDataRepository.getLiveCareList(UserManager.UserInformation.id ?: "")
+        firebaseDataRepository.getLiveCares(UserManager.UserInformation.id ?: "")
 
     //Isolate the todolist and store separately.
     private val drugCurrentList = mutableListOf<ItemDataType>()
@@ -96,7 +96,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
 
                     // Get all logs and filter to be created today.
                     drug.drugLogs =
-                        firebaseDataRepository.getDrugRecord(drug.id ?: "")
+                        firebaseDataRepository.getDrugLogs(drug.id ?: "")
                             .filter { isToday(it.createdTime) }
 
                     drug.drugLogs.forEach { drugLog ->
@@ -153,7 +153,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
                 ongoingMeasures.forEach { measure ->
 
                     measure.measureLogs =
-                        firebaseDataRepository.getMeasureRecord(measure.id ?: "")
+                        firebaseDataRepository.getMeasureLogs(measure.id ?: "")
                             .filter { isToday(it.createdTime) }
 
                     measure.measureLogs.forEach { measureLog ->
@@ -210,7 +210,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
                 activityListByFilter.forEach { event ->
 
                     event.eventLogs =
-                        firebaseDataRepository.getActivityRecord(event.id ?: "")
+                        firebaseDataRepository.getEventLogs(event.id ?: "")
                             .filter { isToday(it.createdTime) }
 
                     event.eventLogs.forEach { activityLog ->
@@ -266,7 +266,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
                 careListByFilter.forEach { care ->
 
                     care.careLogs =
-                        firebaseDataRepository.getCareRecord(care.id ?: "")
+                        firebaseDataRepository.getCareLogs(care.id ?: "")
                             .filter { isToday(it.createdTime) }
 
 
@@ -399,7 +399,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
             skipList.forEach {
                 when (it.itemDataType) {
                     is ItemDataType.DrugType -> {
-                        firebaseDataRepository.postDrugRecord(
+                        firebaseDataRepository.postDrugLog(
                             it.itemDataType.drug.DrugData?.id!!,
                             DrugLog(
                                 timeTag = it.itemDataType.timeInt,
@@ -410,11 +410,11 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
                     }
 
                     is ItemDataType.MeasureType -> {
-                        firebaseDataRepository.postMeasureRecord(
+                        firebaseDataRepository.postMeasureLog(
                             it.itemDataType.measure.MeasureData?.id!!,
                             MeasureLog(
                                 id = firebaseDataRepository
-                                    .getMeasureRecordId(it.itemDataType.measure.MeasureData.id!!),
+                                    .getMeasureLogId(it.itemDataType.measure.MeasureData.id!!),
                                 timeTag = it.itemDataType.timeInt,
                                 result = 1,
                                 createdTime = Timestamp.now()
@@ -423,7 +423,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
                     }
 
                     is ItemDataType.CareType -> {
-                        firebaseDataRepository.postCareRecord(
+                        firebaseDataRepository.postCareLog(
                             it.itemDataType.care.CareData?.id!!,
                             CareLog(
                                 timeTag = it.itemDataType.timeInt,
@@ -434,7 +434,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
                     }
 
                     is ItemDataType.EventType -> {
-                        firebaseDataRepository.postActivityRecord(
+                        firebaseDataRepository.postEventLog(
                             it.itemDataType.Event.EventData?.id!!,
                             EventLog(
                                 timeTag = it.itemDataType.timeInt,
@@ -492,7 +492,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
                         postDrugExhausted(it.itemDataType.drug.DrugData)
                     }
 
-                    firebaseDataRepository.postDrugRecord(
+                    firebaseDataRepository.postDrugLog(
                         it.itemDataType.drug.DrugData.id!!,
                         DrugLog(
                             timeTag = it.itemDataType.timeInt,
@@ -511,7 +511,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
                 }
 
                 is ItemDataType.EventType -> {
-                    firebaseDataRepository.postActivityRecord(
+                    firebaseDataRepository.postEventLog(
                         it.itemDataType.Event.EventData?.id!!,
                         EventLog(
                             timeTag = it.itemDataType.timeInt,

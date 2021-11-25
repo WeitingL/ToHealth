@@ -28,8 +28,8 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.getAllMeasures(userId)
     }
 
-    override suspend fun getAllActivities(userId: String): List<Event> {
-        return firebaseSource.getAllActivities(userId)
+    override suspend fun getAllEvents(userId: String): List<Event> {
+        return firebaseSource.getAllEvents(userId)
     }
 
     override suspend fun getAllCares(userId: String): List<Care> {
@@ -40,20 +40,20 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.getMeasure(itemId)
     }
 
-    override fun getLiveDrugList(userId: String): MutableLiveData<List<Drug>> {
-        return firebaseSource.getLiveDrugList(userId)
+    override fun getLiveDrugs(userId: String): MutableLiveData<List<Drug>> {
+        return firebaseSource.getLiveDrugs(userId)
     }
 
-    override fun getLiveMeasureList(userId: String): MutableLiveData<List<Measure>> {
-        return firebaseSource.getLiveMeasureList(userId)
+    override fun getLiveMeasures(userId: String): MutableLiveData<List<Measure>> {
+        return firebaseSource.getLiveMeasures(userId)
     }
 
-    override fun getLiveActivityList(userId: String): MutableLiveData<List<Event>> {
-        return firebaseSource.getLiveActivityList(userId)
+    override fun getLiveEvents(userId: String): MutableLiveData<List<Event>> {
+        return firebaseSource.getLiveEvents(userId)
     }
 
-    override fun getLiveCareList(userId: String): MutableLiveData<List<Care>> {
-        return firebaseSource.getLiveCareList(userId)
+    override fun getLiveCares(userId: String): MutableLiveData<List<Care>> {
+        return firebaseSource.getLiveCares(userId)
     }
 
     override fun postDrug(drug: Drug) {
@@ -64,8 +64,8 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.postMeasure(measure)
     }
 
-    override fun postActivity(event: Event) {
-        return firebaseSource.postActivity(event)
+    override fun postEvent(event: Event) {
+        return firebaseSource.postEvent(event)
     }
 
     override fun postCare(care: Care) {
@@ -80,52 +80,52 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.updateMeasure(measure)
     }
 
-    override fun updateActivity(event: Event) {
-        return firebaseSource.updateActivity(event)
+    override fun updateEvent(event: Event) {
+        return firebaseSource.updateEvent(event)
     }
 
     override fun updateCare(care: Care) {
         return firebaseSource.updateCare(care)
     }
 
-    override fun postDrugRecord(id: String, drugLog: DrugLog) {
-        return firebaseSource.postDrugRecord(id, drugLog)
+    override fun postDrugLog(id: String, drugLog: DrugLog) {
+        return firebaseSource.postDrugLog(id, drugLog)
     }
 
-    override suspend fun getMeasureRecordId(itemId: String): String {
-        return firebaseSource.getMeasureRecordId(itemId)
+    override suspend fun getMeasureLogId(itemId: String): String {
+        return firebaseSource.getMeasureLogId(itemId)
     }
 
-    override fun postMeasureRecord(id: String, measureLog: MeasureLog) {
-        return firebaseSource.postMeasureRecord(id, measureLog)
+    override fun postMeasureLog(id: String, measureLog: MeasureLog) {
+        return firebaseSource.postMeasureLog(id, measureLog)
     }
 
-    override fun postActivityRecord(id: String, eventLog: EventLog) {
-        return firebaseSource.postActivityRecord(id, eventLog)
+    override fun postEventLog(id: String, eventLog: EventLog) {
+        return firebaseSource.postEventLog(id, eventLog)
     }
 
-    override fun postCareRecord(id: String, careLog: CareLog) {
-        return firebaseSource.postCareRecord(id, careLog)
+    override fun postCareLog(id: String, careLog: CareLog) {
+        return firebaseSource.postCareLog(id, careLog)
     }
 
-    override suspend fun getDrugRecord(itemId: String): List<DrugLog> {
-        return firebaseSource.getDrugRecord(itemId)
+    override suspend fun getDrugLogs(itemId: String): List<DrugLog> {
+        return firebaseSource.getDrugLogs(itemId)
     }
 
-    override suspend fun getMeasureRecord(itemId: String): List<MeasureLog> {
-        return firebaseSource.getMeasureRecord(itemId)
+    override suspend fun getMeasureLogs(itemId: String): List<MeasureLog> {
+        return firebaseSource.getMeasureLogs(itemId)
     }
 
     override suspend fun getMeasureLog(itemId: String, itemsLogId: String): MeasureLog {
         return firebaseSource.getMeasureLog(itemId, itemsLogId)
     }
 
-    override suspend fun getActivityRecord(itemId: String): List<EventLog> {
-        return firebaseSource.getActivityRecord(itemId)
+    override suspend fun getEventLogs(itemId: String): List<EventLog> {
+        return firebaseSource.getActivityLogs(itemId)
     }
 
-    override suspend fun getCareRecord(itemId: String): List<CareLog> {
-        return firebaseSource.getCareRecord(itemId)
+    override suspend fun getCareLogs(itemId: String): List<CareLog> {
+        return firebaseSource.getCareLogs(itemId)
     }
 
     override fun createGroup(group: Group) {
@@ -152,55 +152,55 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.getGroups(groupId)
     }
 
-    override suspend fun getMember(groupId: String): List<Member> {
-        return firebaseSource.getMember(groupId)
+    override suspend fun getMembers(groupId: String): List<Member> {
+        return firebaseSource.getMembers(groupId)
     }
 
-    override suspend fun getNote(groupId: String): List<Note> {
-        return firebaseSource.getNote(groupId)
+    override suspend fun getNotes(groupId: String): List<Note> {
+        return firebaseSource.getNotes(groupId)
     }
 
-    override suspend fun getCalenderItem(groupId: String): List<CalenderItem> {
-        return firebaseSource.getCalenderItem(groupId)
+    override suspend fun getReminders(groupId: String): List<Reminder> {
+        return firebaseSource.getCalenderItems(groupId)
     }
 
-    override fun getLiveMember(groupId: String): MutableLiveData<List<Member>> {
-        return firebaseSource.getLiveMember(groupId)
+    override fun getLiveMembers(groupId: String): MutableLiveData<List<Member>> {
+        return firebaseSource.getLiveMembers(groupId)
     }
 
     override fun updateMemberInfo(groupId: String, member: Member) {
         return firebaseSource.updateMemberInfo(groupId, member)
     }
 
-    override fun getLiveNote(groupId: String): MutableLiveData<List<Note>> {
-        return firebaseSource.getLiveNote(groupId)
+    override fun getLiveNotes(groupId: String): MutableLiveData<List<Note>> {
+        return firebaseSource.getLiveNotes(groupId)
     }
 
-    override fun getLiveCalenderItem(groupId: String): MutableLiveData<List<CalenderItem>> {
-        return firebaseSource.getLiveCalenderItem(groupId)
+    override fun getLiveReminders(groupId: String): MutableLiveData<List<Reminder>> {
+        return firebaseSource.getLiveCalenderItems(groupId)
     }
 
     override fun postNote(note: Note, groupId: String) {
         return firebaseSource.postNote(note, groupId)
     }
 
-    override fun postCalenderItem(calenderItem: CalenderItem, groupId: String) {
-        return firebaseSource.postCalenderItem(calenderItem, groupId)
+    override fun postCalenderItem(reminder: Reminder, groupId: String) {
+        return firebaseSource.postCalenderItem(reminder, groupId)
     }
 
     override fun deleteNote(note: Note, groupId: String) {
         return firebaseSource.deleteNote(note, groupId)
     }
 
-    override fun deleteCalenderItem(calenderItem: CalenderItem, groupId: String) {
-        return firebaseSource.deleteCalenderItem(calenderItem, groupId)
+    override fun deleteReminder(reminder: Reminder, groupId: String) {
+        return firebaseSource.deleteCalenderItem(reminder, groupId)
     }
 
-    override fun getLiveChatMessage(
+    override fun getLiveChatMessages(
         userId: String,
         groupId: String
     ): MutableLiveData<List<Chat>> {
-        return firebaseSource.getLiveChatMessage(userId, groupId)
+        return firebaseSource.getLiveChatMessages(userId, groupId)
     }
 
     override fun postChatMessage(chat: Chat) {
@@ -216,25 +216,25 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.postNotification(notification)
     }
 
-    override fun getLiveNotificationForService(
+    override fun getLiveNotificationsForService(
         userId: String
     ): MutableLiveData<List<Notification>> {
-        return firebaseSource.getLiveNotificationForService(userId)
+        return firebaseSource.getLiveNotificationsForService(userId)
     }
 
-    override fun getLiveNotification(userIdList: List<String>):
+    override fun getLiveNotifications(userIdList: List<String>):
             MutableLiveData<List<Notification>> {
-        return firebaseSource.getLiveNotification(userIdList)
+        return firebaseSource.getLiveNotifications(userIdList)
     }
 
     override fun postOnGetNotificationForService(notification: Notification) {
         return firebaseSource.postOnGetNotificationForService(notification)
     }
 
-    override fun getLiveChatMessageForService(
+    override fun getLiveChatMessagesForService(
         groupId: String
     ): MutableLiveData<List<Chat>> {
-        return firebaseSource.getLiveChatMessageForService(groupId)
+        return firebaseSource.getLiveChatMessagesForService(groupId)
     }
 
     override fun postOnGetChatForService(chat: Chat) {

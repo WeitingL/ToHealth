@@ -1,7 +1,7 @@
 package com.weiting.tohealth.mygrouppage.grouproom.board
 
 import androidx.lifecycle.*
-import com.weiting.tohealth.data.CalenderItem
+import com.weiting.tohealth.data.Reminder
 import com.weiting.tohealth.data.FirebaseRepository
 import com.weiting.tohealth.data.Group
 import com.weiting.tohealth.data.Note
@@ -16,11 +16,11 @@ class BoardViewModel(
     val boardList: LiveData<List<BoardType>>
         get() = _boardList
 
-    private val notesLiveList = firebaseDataRepository.getLiveNote(group.id ?: "")
-    private val calenderLiveItem = firebaseDataRepository.getLiveCalenderItem(group.id ?: "")
+    private val notesLiveList = firebaseDataRepository.getLiveNotes(group.id ?: "")
+    private val calenderLiveItem = firebaseDataRepository.getLiveReminders(group.id ?: "")
 
     private val noteCurrentList = mutableListOf<Note>()
-    private val calenderCurrentList = mutableListOf<CalenderItem>()
+    private val calenderCurrentList = mutableListOf<Reminder>()
 
     val boardLiveData = MediatorLiveData<MutableList<BoardType>>().apply {
 
@@ -79,8 +79,8 @@ class BoardViewModel(
         firebaseDataRepository.deleteNote(note, group.id ?: "")
     }
 
-    fun deleteReminder(calenderItem: CalenderItem) {
-        firebaseDataRepository.deleteCalenderItem(calenderItem, group.id ?: "")
+    fun deleteReminder(reminder: Reminder) {
+        firebaseDataRepository.deleteReminder(reminder, group.id ?: "")
     }
 }
 
@@ -88,5 +88,5 @@ sealed class BoardType {
 
     data class Notes(val list: List<Note>) : BoardType()
 
-    data class CalenderItems(val list: List<CalenderItem>) : BoardType()
+    data class CalenderItems(val list: List<Reminder>) : BoardType()
 }

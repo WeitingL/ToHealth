@@ -153,7 +153,7 @@ class ItemEditViewModel(
                     status = 0
                 )
 
-                firebaseDataRepository.postActivity(data)
+                firebaseDataRepository.postEvent(data)
             }
             ItemType.CARE -> {
                 val data = Care(

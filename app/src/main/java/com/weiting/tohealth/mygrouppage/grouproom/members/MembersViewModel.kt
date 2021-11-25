@@ -11,7 +11,7 @@ class MembersViewModel(
     group: Group
 ) : ViewModel() {
 
-    private val liveMembersList = firebaseDataRepository.getLiveMember(groupId = group.id!!)
+    private val liveMembersList = firebaseDataRepository.getLiveMembers(groupId = group.id!!)
 
     val memberLive = MediatorLiveData<List<Member>>().apply {
         addSource(liveMembersList) { list ->

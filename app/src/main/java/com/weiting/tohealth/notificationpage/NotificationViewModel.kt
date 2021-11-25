@@ -17,7 +17,7 @@ class NotificationViewModel(
         false -> memberList
     }
 
-    val notificationList = firebaseDataRepository.getLiveNotification(list)
+    val notificationList = firebaseDataRepository.getLiveNotifications(list)
 
     private val _notificationRecordList = MutableLiveData<MutableList<NotificationRecord>>()
     val notificationRecordList: LiveData<MutableList<NotificationRecord>>

@@ -10,7 +10,7 @@ data class Group(
     val groupName: String? = null,
     var member: List<Member> = listOf(),
     var notes: List<Note> = listOf(),
-    var calenderItems: List<CalenderItem> = listOf()
+    var reminders: List<Reminder> = listOf()
 ) : Parcelable
 
 @Parcelize
@@ -34,7 +34,7 @@ data class Note(
 ) : Parcelable
 
 @Parcelize
-data class CalenderItem(
+data class Reminder(
     var id: String? = null,
     var editor: String? = null,
     val content: String? = null,

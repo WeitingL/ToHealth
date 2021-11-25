@@ -126,7 +126,7 @@ class ItemUpdateViewModel(
                 data.lastEditTime = Timestamp.now()
                 data.status = statusSelected.value ?: data.status
 
-                firebaseDataRepository.updateActivity(data)
+                firebaseDataRepository.updateEvent(data)
             }
 
             ManageType.CARE -> {

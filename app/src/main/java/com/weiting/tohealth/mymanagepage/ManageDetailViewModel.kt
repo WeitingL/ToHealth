@@ -22,10 +22,10 @@ class ManageDetailViewModel(
     val manageDetailList: LiveData<List<ItemData>>
         get() = _manageDetailList
 
-    val drugList = firebaseDataRepository.getLiveDrugList(user.id!!)
-    val measureList = firebaseDataRepository.getLiveMeasureList(user.id!!)
-    val activityList = firebaseDataRepository.getLiveActivityList(user.id!!)
-    val careList = firebaseDataRepository.getLiveCareList(user.id!!)
+    val drugList = firebaseDataRepository.getLiveDrugs(user.id!!)
+    val measureList = firebaseDataRepository.getLiveMeasures(user.id!!)
+    val activityList = firebaseDataRepository.getLiveEvents(user.id!!)
+    val careList = firebaseDataRepository.getLiveCares(user.id!!)
 
     fun putInDetailList(list: List<ItemData>) {
         if (!list.isNullOrEmpty()) {

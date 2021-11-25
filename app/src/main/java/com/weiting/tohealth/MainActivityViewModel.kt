@@ -51,7 +51,7 @@ class MainActivityViewModel(private val firebaseDataRepository: FirebaseReposito
 
             groupIdList.forEach {
                 groupList.add(it)
-                firebaseDataRepository.getMember(it).forEach { member ->
+                firebaseDataRepository.getMembers(it).forEach { member ->
                     memberList.add(member.userId!!)
                     Log.i("memberList", memberList.toString())
                 }

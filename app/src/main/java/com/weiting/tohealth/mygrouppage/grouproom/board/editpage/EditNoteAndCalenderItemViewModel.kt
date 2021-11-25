@@ -3,7 +3,7 @@ package com.weiting.tohealth.mygrouppage.grouproom.board.editpage
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.weiting.tohealth.data.CalenderItem
+import com.weiting.tohealth.data.Reminder
 import com.weiting.tohealth.data.FirebaseRepository
 import com.weiting.tohealth.data.Group
 import com.weiting.tohealth.data.Note
@@ -48,7 +48,7 @@ class EditNoteAndCalenderItemViewModel(
         firebaseDataRepository.postNote(note, group.id ?: "")
     }
 
-    fun postCalenderItem(calenderItem: CalenderItem) {
-        firebaseDataRepository.postCalenderItem(calenderItem, group.id ?: "")
+    fun postCalenderItem(reminder: Reminder) {
+        firebaseDataRepository.postCalenderItem(reminder, group.id ?: "")
     }
 }

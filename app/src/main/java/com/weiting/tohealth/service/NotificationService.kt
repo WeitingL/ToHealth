@@ -74,7 +74,7 @@ class NotificationService : LifecycleService() {
     }
 
     private fun startListenMembers(groupId: String) {
-        firebaseDataRepository.getLiveMember(groupId).observe(this@NotificationService) {
+        firebaseDataRepository.getLiveMembers(groupId).observe(this@NotificationService) {
             it.forEach {
                 if (it.userId !in memberListeningList) {
                     memberListeningList.add(it.userId ?: "")
@@ -85,7 +85,7 @@ class NotificationService : LifecycleService() {
     }
 
     private fun startListenChat(groupId: String) {
-        firebaseDataRepository.getLiveChatMessageForService(groupId).observe(this) {
+        firebaseDataRepository.getLiveChatMessagesForService(groupId).observe(this) {
             it.forEach {
                 if (Firebase.auth.currentUser?.uid !in it.isReadList) {
                     showLatestChat(it)
@@ -96,7 +96,7 @@ class NotificationService : LifecycleService() {
     }
 
     private fun startListenNotification(userId: String) {
-        firebaseDataRepository.getLiveNotificationForService(userId)
+        firebaseDataRepository.getLiveNotificationsForService(userId)
             .observe(this) {
 
                 val notificationList = it.filter {

@@ -7,13 +7,13 @@ import com.weiting.tohealth.data.*
 class FastAddViewModel(private val firebaseDataRepository: FirebaseRepository) : ViewModel() {
 
     private val drugList = firebaseDataRepository
-        .getLiveDrugList(UserManager.UserInformation.id!!)
+        .getLiveDrugs(UserManager.UserInformation.id!!)
 
     private val measureList = firebaseDataRepository
-        .getLiveMeasureList(UserManager.UserInformation.id!!)
+        .getLiveMeasures(UserManager.UserInformation.id!!)
 
     private val activityList = firebaseDataRepository
-        .getLiveActivityList(UserManager.UserInformation.id!!)
+        .getLiveEvents(UserManager.UserInformation.id!!)
 
     private val drugCurrentList = mutableListOf<FastAddItem>()
     private val measureCurrentList = mutableListOf<FastAddItem>()
@@ -44,7 +44,7 @@ class FastAddViewModel(private val firebaseDataRepository: FirebaseRepository) :
     }
 
     fun postDrugLog(itemId: String, drugLog: DrugLog, drug: Drug) {
-        firebaseDataRepository.postDrugRecord(itemId, drugLog)
+        firebaseDataRepository.postDrugLog(itemId, drugLog)
 
         val originStock = drug.stock
         val updateStock = originStock - drug.dose
@@ -53,7 +53,7 @@ class FastAddViewModel(private val firebaseDataRepository: FirebaseRepository) :
     }
 
     fun postActivity(itemId: String, eventLog: EventLog) {
-        firebaseDataRepository.postActivityRecord(itemId, eventLog)
+        firebaseDataRepository.postEventLog(itemId, eventLog)
     }
 }
 

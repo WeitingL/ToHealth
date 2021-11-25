@@ -24,12 +24,12 @@ class RecordViewModel(private val firebaseDataRepository: FirebaseRepository) :
 
     fun postCareLog(itemId: String, careLog: CareLog) {
         careLog.record = mapOf("emotion" to careScore?.toString(), "note" to careInfo)
-        firebaseDataRepository.postCareRecord(itemId, careLog)
+        firebaseDataRepository.postCareLog(itemId, careLog)
     }
 
     fun postMeasureLog(itemId: String, measureLog: MeasureLog, measureType: Int) {
         viewModelScope.launch {
-            measureLog.id = firebaseDataRepository.getMeasureRecordId(itemId)
+            measureLog.id = firebaseDataRepository.getMeasureLogId(itemId)
             when (measureType) {
                 0 -> {
                     if (isBloodPressureAbnormal(measureLog)) {
@@ -57,7 +57,7 @@ class RecordViewModel(private val firebaseDataRepository: FirebaseRepository) :
                     }
                 }
             }
-            firebaseDataRepository.postMeasureRecord(itemId, measureLog)
+            firebaseDataRepository.postMeasureLog(itemId, measureLog)
         }
     }
 
