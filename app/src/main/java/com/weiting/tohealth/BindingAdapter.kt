@@ -10,8 +10,8 @@ import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.Timestamp
 import com.weiting.tohealth.NavigationDestination.*
-import com.weiting.tohealth.notificationpage.NotificationRecord
-import com.weiting.tohealth.notificationpage.NotificationRecordAdapter
+import com.weiting.tohealth.alertmessagepage.AlterMessageRecord
+import com.weiting.tohealth.alertmessagepage.AlterMessageAdapter
 import com.weiting.tohealth.util.Util.getTimeStampToTimeInt
 
 @BindingAdapter("TimeStampForWelcomeSlogan")
@@ -58,8 +58,8 @@ fun bindTimeStampForWelcomeLottie(lottieAnimationView: LottieAnimationView, time
 }
 
 @BindingAdapter("bindNotificationRecyclerView")
-fun bindNotificationRecyclerView(recyclerView: RecyclerView, list: List<NotificationRecord>) {
-    val adapter = NotificationRecordAdapter()
+fun bindNotificationRecyclerView(recyclerView: RecyclerView, list: List<AlterMessageRecord>) {
+    val adapter = AlterMessageAdapter()
     adapter.submitList(list)
     recyclerView.adapter = adapter
 }

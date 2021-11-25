@@ -1,4 +1,4 @@
-package com.weiting.tohealth.notificationpage
+package com.weiting.tohealth.alertmessagepage
 
 import androidx.lifecycle.*
 import com.weiting.tohealth.data.FirebaseRepository
@@ -7,7 +7,7 @@ import com.weiting.tohealth.util.Util.toNotificationTextForMeasureLog
 import com.weiting.tohealth.util.Util.toStringFromTimeStamp
 import kotlinx.coroutines.launch
 
-class NotificationViewModel(
+class AlertMessageViewModel(
     private val firebaseDataRepository: FirebaseRepository,
     memberList: List<String>
 ) : ViewModel() {
@@ -19,8 +19,8 @@ class NotificationViewModel(
 
     val notificationList = firebaseDataRepository.getLiveNotifications(list)
 
-    private val _notificationRecordList = MutableLiveData<MutableList<NotificationRecord>>()
-    val notificationRecordList: LiveData<MutableList<NotificationRecord>>
+    private val _notificationRecordList = MutableLiveData<MutableList<AlterMessageRecord>>()
+    val alterMessageRecordList: LiveData<MutableList<AlterMessageRecord>>
         get() = _notificationRecordList
 
     private val _isLoading = MutableLiveData<Boolean>()
@@ -34,7 +34,7 @@ class NotificationViewModel(
 
     fun transferToNotificationRecord(list: List<AlertMessage>) {
         viewModelScope.launch {
-            val recordList = mutableListOf<NotificationRecord>()
+            val recordList = mutableListOf<AlterMessageRecord>()
             list.forEach {
                 val user = firebaseDataRepository.getUser(it.userId!!)
                 when (it.result) {
@@ -45,7 +45,7 @@ class NotificationViewModel(
                             it.logId!!
                         )
                         recordList.add(
-                            NotificationRecord(
+                            AlterMessageRecord(
                                 title = "數據異常",
                                 type = 4,
                                 itemName = "${user.name} ${
@@ -60,7 +60,7 @@ class NotificationViewModel(
                     }
                     5 -> {
                         recordList.add(
-                            NotificationRecord(
+                            AlterMessageRecord(
                                 title = "多次未完成",
                                 type = 5,
                                 itemName = "${user.name} 昨天多次未完成事項!",
@@ -71,7 +71,7 @@ class NotificationViewModel(
                     6 -> {
                         val drug = firebaseDataRepository.getDrug(it.itemId!!)
                         recordList.add(
-                            NotificationRecord(
+                            AlterMessageRecord(
                                 title = "藥物儲量警報",
                                 type = 6,
                                 itemName = "${user.name} 的 ${drug.drugName} 快要用完了!" +
@@ -89,7 +89,7 @@ class NotificationViewModel(
     }
 }
 
-data class NotificationRecord(
+data class AlterMessageRecord(
     val title: String,
     val type: Int,
     val itemName: String,

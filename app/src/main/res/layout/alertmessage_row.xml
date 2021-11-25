@@ -6,7 +6,7 @@
     <data>
         <variable
             name="notificationRecord"
-            type="com.weiting.tohealth.notificationpage.NotificationRecord" />
+            type="com.weiting.tohealth.alertmessagepage.AlterMessageRecord" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

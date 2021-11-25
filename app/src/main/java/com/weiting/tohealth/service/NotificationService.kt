@@ -117,7 +117,7 @@ class NotificationService : LifecycleService() {
             val groupName = firebaseDataRepository.getGroups(chat.groupId!!).first().groupName
             val userName = firebaseDataRepository.getUser(chat.creator!!).name
 
-            val chatNotification = RemoteViews(packageName, R.layout.notification_chat)
+            val chatNotification = RemoteViews(packageName, R.layout.altermessage_chat)
             chatNotification.setTextViewText(R.id.tv_name, "群組: $groupName")
             chatNotification.setTextViewText(R.id.tv_content, "$userName: ${chat.context}")
 
@@ -139,7 +139,7 @@ class NotificationService : LifecycleService() {
         coroutineScope.launch {
             val userName = firebaseDataRepository.getUser(alertMessage.userId!!).name
 
-            val alertNotification = RemoteViews(packageName, R.layout.notification_chat)
+            val alertNotification = RemoteViews(packageName, R.layout.altermessage_chat)
             when (alertMessage.result) {
                 4 -> {
                     val measure = firebaseDataRepository.getMeasure(alertMessage.itemId!!)

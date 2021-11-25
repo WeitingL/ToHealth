@@ -248,9 +248,9 @@
         app:destination="@id/loginFragment" />
     <fragment
         android:id="@+id/notificationFragment"
-        android:name="com.weiting.tohealth.notificationpage.NotificationFragment"
+        android:name="com.weiting.tohealth.alertmessagepage.AlertMessageFragment"
         android:label="notification_fragment"
-        tools:layout="@layout/notification_fragment">
+        tools:layout="@layout/altermessage_fragment">
         <argument
             android:name="memberList"
             app:argType="string[]" />
