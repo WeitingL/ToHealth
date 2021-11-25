@@ -12,6 +12,7 @@ import com.google.firebase.Timestamp
 import com.weiting.tohealth.NavigationDirections
 import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.R
+import com.weiting.tohealth.data.Care
 import com.weiting.tohealth.data.CareLog
 import com.weiting.tohealth.databinding.CareRecordFragmentBinding
 import com.weiting.tohealth.factory.RecordViewModelFactory
@@ -22,7 +23,7 @@ class CareRecordFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = CareRecordFragmentBinding.inflate(inflater, container, false)
         val factory = RecordViewModelFactory(PublicApplication.application.firebaseDataRepository)
         val viewModel = ViewModelProvider(this, factory).get(RecordViewModel::class.java)
@@ -130,14 +131,15 @@ class CareRecordFragment : Fragment() {
             btEnterCareLog.setOnClickListener {
                 viewModel.getCareInfo(binding.editTextTextPersonName.editableText.toString())
                 viewModel.postCareLog(
-                    itemId = careData.id!!,
+                    itemId = careData.id ?: "",
                     careLog = CareLog(
                         timeTag = timeTag,
                         result = 0,
                         createdTime = Timestamp.now()
                     )
                 )
-                Toast.makeText(context, "登錄完成", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, getString(R.string.addSuccessToast), Toast.LENGTH_LONG)
+                    .show()
                 findNavController().navigate(NavigationDirections.actionGlobalHomeFragment())
             }
 

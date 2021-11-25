@@ -23,7 +23,7 @@ class RecordViewModel(private val firebaseDataRepository: FirebaseRepository) :
     }
 
     fun postCareLog(itemId: String, careLog: CareLog) {
-        careLog.record = mapOf("emotion" to careScore?.toString(), "note" to careInfo)
+        careLog.record = mapOf(EMOTION to careScore?.toString(), NOTE to careInfo)
         firebaseDataRepository.postCareLog(itemId, careLog)
     }
 

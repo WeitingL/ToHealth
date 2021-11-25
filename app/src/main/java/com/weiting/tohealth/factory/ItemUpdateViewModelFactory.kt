@@ -6,12 +6,10 @@ import com.weiting.tohealth.data.FirebaseRepository
 import com.weiting.tohealth.data.ItemData
 import com.weiting.tohealth.data.User
 import com.weiting.tohealth.itemeditpage.ItemUpdateViewModel
-import com.weiting.tohealth.mymanagepage.ManageType
 
 class ItemUpdateViewModelFactory(
     private val firebaseDataRepository: FirebaseRepository,
     private val itemData: ItemData,
-    private val manageType: ManageType,
     private val user: User
 ) : ViewModelProvider.Factory {
 
@@ -19,7 +17,7 @@ class ItemUpdateViewModelFactory(
         with(modelClass) {
             when {
                 isAssignableFrom(ItemUpdateViewModel::class.java) ->
-                    ItemUpdateViewModel(firebaseDataRepository, itemData, manageType)
+                    ItemUpdateViewModel(firebaseDataRepository, itemData)
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }

@@ -5,16 +5,33 @@ import com.google.firebase.Timestamp
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
+const val TYPE = "type"
+const val DAY = "day"
+const val X = "X"
+const val N = "N"
+const val Z = "Z"
+const val Y = "Y"
+const val EMOTION = "emotion"
+const val NOTE = "note"
+
+
 // Use this data class to hold all type of item.
 @Parcelize
 data class ItemData(
     val DrugData: Drug? = null,
     val MeasureData: Measure? = null,
     val EventData: Event? = null,
-    val CareData: Care? = null
-):Parcelable{
-    @IgnoredOnParcel
-    val itemType = when{
+    val CareData: Care? = null,
+    val itemType: ItemType = getItemType(DrugData, MeasureData, EventData, CareData)
+) : Parcelable
+
+fun getItemType(
+    DrugData: Drug?,
+    MeasureData: Measure?,
+    EventData: Event?,
+    CareData: Care?
+): ItemType {
+    return when {
         DrugData != null -> ItemType.DRUG
         MeasureData != null -> ItemType.MEASURE
         EventData != null -> ItemType.EVENT
@@ -23,6 +40,7 @@ data class ItemData(
     }
 }
 
+
 @Parcelize
 data class Drug(
     var id: String? = null,
@@ -30,12 +48,12 @@ data class Drug(
     val drugName: String? = null,
     var dose: Float = 0F,
     var unit: Int? = null,
-    val endDate: Map<String, Int?> = mapOf("type" to null, "day" to null),
+    val endDate: Map<String, Int?> = mapOf(TYPE to null, DAY to null),
     val startDate: Timestamp? = null,
     var period: Map<String, Int?> = mapOf(
-        "type" to null,
-        "N" to null,
-        "X" to null
+        TYPE to null,
+        N to null,
+        X to null
     ),
     var executedTime: List<Timestamp> = listOf(),
     var stock: Float = 0F,
@@ -72,7 +90,7 @@ data class MeasureLog(
     var id: String? = null,
     val timeTag: Int? = null,
     val result: Int? = null,
-    val record: Map<String, Int?> = mapOf("X" to null, "Y" to null, "Z" to null),
+    val record: Map<String, Int?> = mapOf(X to null, Y to null, Z to null),
     val createdTime: Timestamp? = null
 ) : Parcelable
 
@@ -81,11 +99,11 @@ data class Event(
     var id: String? = null,
     val userId: String? = null,
     val type: Int? = null,
-    val endDate: Map<String, Int?> = mapOf("type" to null, "day" to null),
+    val endDate: Map<String, Int?> = mapOf(TYPE to null, DAY to null),
     var period: Map<String, Int?> = mapOf(
-        "type" to null,
-        "N" to null,
-        "X" to null
+        TYPE to null,
+        N to null,
+        X to null
     ),
     val startDate: Timestamp? = null,
     var executedTime: List<Timestamp> = listOf(),
@@ -101,7 +119,7 @@ data class EventLog(
     var id: String? = null,
     val timeTag: Int? = null,
     val result: Int? = null,
-    val record: Map<String, Int?> = mapOf("X" to null, "Y" to null, "Z" to null),
+    val record: Map<String, Int?> = mapOf(X to null, Y to null, Z to null),
     val createdTime: Timestamp? = null
 ) : Parcelable
 
@@ -110,11 +128,11 @@ data class Care(
     var id: String? = null,
     val userId: String? = null,
     val type: Int? = null,
-    val endDate: Map<String, Int?> = mapOf("type" to null, "day" to null),
+    val endDate: Map<String, Int?> = mapOf(TYPE to null, DAY to null),
     var period: Map<String, Int?> = mapOf(
-        "type" to null,
-        "N" to null,
-        "X" to null
+        TYPE to null,
+        N to null,
+        X to null
     ),
     val startDate: Timestamp? = null,
     var executeTime: List<Timestamp> = listOf(),
@@ -130,6 +148,6 @@ data class CareLog(
     var id: String? = null,
     val timeTag: Int? = null,
     val result: Int? = null,
-    var record: Map<String, String?> = mapOf("emotion" to null, "note" to null),
+    var record: Map<String, String?> = mapOf(EMOTION to null, NOTE to null),
     val createdTime: Timestamp? = null
 ) : Parcelable

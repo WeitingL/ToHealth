@@ -5,11 +5,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.weiting.tohealth.data.FirebaseRepository
 import com.weiting.tohealth.data.User
 import com.weiting.tohealth.mymanagepage.ManageDetailViewModel
-import com.weiting.tohealth.mymanagepage.ManageType
 
 class ManageDetailViewModelFactory(
     private val firebaseDataRepository: FirebaseRepository,
-    private val manageType: ManageType,
     private val user: User
 ) : ViewModelProvider.Factory {
 

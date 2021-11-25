@@ -9,7 +9,6 @@ import com.google.firebase.Timestamp
 import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.data.*
 import com.weiting.tohealth.databinding.ItemUpdateFragmentBinding
-import com.weiting.tohealth.mymanagepage.ManageType
 import com.weiting.tohealth.util.Util.getTimeStampToTimeInt
 import com.weiting.tohealth.works.RebuildAlarm
 import java.util.*
@@ -17,8 +16,7 @@ import kotlinx.coroutines.launch
 
 class ItemUpdateViewModel(
     private val firebaseDataRepository: FirebaseRepository,
-    private val itemData: ItemData,
-    private val manageType: ManageType
+    private val itemData: ItemData
 ) : ViewModel() {
 
     private val _periodType = MutableLiveData<Int>()
@@ -82,16 +80,16 @@ class ItemUpdateViewModel(
     }
 
     fun updateItem(binding: ItemUpdateFragmentBinding) {
-        when (manageType) {
-            ManageType.DRUG -> {
-                val data = itemData.DrugData!!
+        when (itemData.itemType) {
+            ItemType.DRUG -> {
+                val data = itemData.DrugData ?: Drug()
 
                 data.unit = binding.spUnitUpdate.selectedItemPosition
                 data.dose = binding.etvDrugDoseUpdate.text.toString().toFloat()
                 data.period = mapOf(
-                    "type" to binding.spPeriodUpdate.selectedItemPosition,
-                    "N" to binding.spOngoingDayUpdate.selectedItemPosition,
-                    "X" to binding.spSuspendDayUpdate.selectedItemPosition
+                    TYPE to binding.spPeriodUpdate.selectedItemPosition,
+                    N to binding.spOngoingDayUpdate.selectedItemPosition,
+                    X to binding.spSuspendDayUpdate.selectedItemPosition
                 )
                 data.executedTime = timePointSet.value ?: data.executedTime
                 data.stock = binding.etvStockUpdate.text.toString().toFloat()
@@ -102,8 +100,8 @@ class ItemUpdateViewModel(
                 firebaseDataRepository.updateDrug(data)
             }
 
-            ManageType.MEASURE -> {
-                val data = itemData.MeasureData!!
+            ItemType.MEASURE -> {
+                val data = itemData.MeasureData ?: Measure()
 
                 data.lastEditTime = Timestamp.now()
                 data.editor = UserManager.UserInfo.id
@@ -113,13 +111,13 @@ class ItemUpdateViewModel(
                 firebaseDataRepository.updateMeasure(data)
             }
 
-            ManageType.ACTIVITY -> {
-                val data = itemData.EventData!!
+            ItemType.EVENT -> {
+                val data = itemData.EventData ?: Event()
 
                 data.period = mapOf(
-                    "type" to binding.spPeriodUpdate.selectedItemPosition,
-                    "N" to binding.spOngoingDayUpdate.selectedItemPosition,
-                    "X" to binding.spSuspendDayUpdate.selectedItemPosition
+                    TYPE to binding.spPeriodUpdate.selectedItemPosition,
+                    N to binding.spOngoingDayUpdate.selectedItemPosition,
+                    X to binding.spSuspendDayUpdate.selectedItemPosition
                 )
                 data.executedTime = timePointSet.value ?: data.executedTime
                 data.editor = UserManager.UserInfo.id
@@ -129,13 +127,13 @@ class ItemUpdateViewModel(
                 firebaseDataRepository.updateEvent(data)
             }
 
-            ManageType.CARE -> {
-                val data = itemData.CareData!!
+            ItemType.CARE -> {
+                val data = itemData.CareData ?: Care()
 
                 data.period = mapOf(
-                    "type" to binding.spPeriodUpdate.selectedItemPosition,
-                    "N" to binding.spOngoingDayUpdate.selectedItemPosition,
-                    "X" to binding.spSuspendDayUpdate.selectedItemPosition
+                    TYPE to binding.spPeriodUpdate.selectedItemPosition,
+                    N to binding.spOngoingDayUpdate.selectedItemPosition,
+                    X to binding.spSuspendDayUpdate.selectedItemPosition
                 )
                 data.executeTime = timePointSet.value ?: data.executeTime
                 data.editor = UserManager.UserInfo.id

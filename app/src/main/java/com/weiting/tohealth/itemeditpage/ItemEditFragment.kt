@@ -17,7 +17,6 @@ import com.weiting.tohealth.R
 import com.weiting.tohealth.data.*
 import com.weiting.tohealth.databinding.ItemEditFragmentBinding
 import com.weiting.tohealth.factory.ItemEditViewModelFactory
-import com.weiting.tohealth.mymanagepage.ManageType
 import com.weiting.tohealth.timeset.*
 import com.weiting.tohealth.util.Util.toTimeFromTimeStamp
 
@@ -27,20 +26,20 @@ class ItemEditFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = ItemEditFragmentBinding.inflate(inflater, container, false)
-        val manageType = ItemEditFragmentArgs.fromBundle(requireArguments()).manageType
+        val itemType = ItemEditFragmentArgs.fromBundle(requireArguments()).itemType
         val user = ItemEditFragmentArgs.fromBundle(requireArguments()).userInfo
         val factory =
             ItemEditViewModelFactory(PublicApplication.application.firebaseDataRepository, user)
         val viewModel = ViewModelProvider(this, factory).get(ItemEditViewModel::class.java)
 
         // User is navigated from which menagePage of items to create new one.
-        val position = when (manageType) {
-            ManageType.DRUG -> 0
-            ManageType.MEASURE -> 1
-            ManageType.ACTIVITY -> 2
-            ManageType.CARE -> 3
+        val position = when (itemType) {
+            ItemType.DRUG -> 0
+            ItemType.MEASURE -> 1
+            ItemType.EVENT -> 2
+            ItemType.CARE -> 3
         }
         binding.spItemType.setSelection(position)
 
@@ -233,7 +232,7 @@ class ItemEditFragment : Fragment() {
         }
 
         viewModel.dateSet.observe(viewLifecycleOwner) {
-            binding.tvFirstDateSelected.text = it
+            binding.tvFirstDateSelected.text = "it"
         }
 
         setFragmentResultListener(GET_TIME) { requestKey, bundle ->

@@ -73,8 +73,8 @@
         android:label="item_edit_fragment"
         tools:layout="@layout/item_edit_fragment">
         <argument
-            android:name="manageType"
-            app:argType="com.weiting.tohealth.mymanagepage.ManageType" />
+            android:name="itemType"
+            app:argType="com.weiting.tohealth.data.ItemType" />
         <argument
             android:name="userInfo"
             app:argType="com.weiting.tohealth.data.User" />
@@ -216,9 +216,6 @@
         <argument
             android:name="itemData"
             app:argType="com.weiting.tohealth.data.ItemData" />
-        <argument
-            android:name="manageType"
-            app:argType="com.weiting.tohealth.mymanagepage.ManageType" />
         <argument
             android:name="userInfo"
             app:argType="com.weiting.tohealth.data.User" />

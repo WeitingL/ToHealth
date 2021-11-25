@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.weiting.tohealth.NavigationDirections
 import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.data.ItemData
+import com.weiting.tohealth.data.ItemType
 import com.weiting.tohealth.data.User
 import com.weiting.tohealth.databinding.MymanageItemFragmentBinding
 import com.weiting.tohealth.factory.ManageDetailViewModelFactory
@@ -23,12 +24,11 @@ class ManageDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = MymanageItemFragmentBinding.inflate(inflater, container, false)
-        val manageType = arguments?.get("type") as ManageType
+        val itemType = arguments?.get("type") as ItemType
         val user = arguments?.get("user") as User
         val private = arguments?.get("private") as Int
         val factory = ManageDetailViewModelFactory(
             PublicApplication.application.firebaseDataRepository,
-            manageType,
             user
         )
         val viewModel = ViewModelProvider(this, factory).get(ManageDetailViewModel::class.java)
@@ -38,15 +38,13 @@ class ManageDetailFragment : Fragment() {
         }
 
         val adapter = ManageDetailAdapter(
-            manageType,
-            ManageDetailAdapter.OnclickListener { itemData, itemType ->
+            ManageDetailAdapter.OnclickListener { itemData ->
                 when (private == 2) {
                     true -> Toast.makeText(context, "使用者限制您的編輯", Toast.LENGTH_LONG).show()
                     false -> {
                         findNavController().navigate(
                             NavigationDirections.actionGlobalItemUpdateFragment(
                                 itemData = itemData,
-                                manageType = manageType,
                                 userInfo = user
                             )
                         )
@@ -55,8 +53,8 @@ class ManageDetailFragment : Fragment() {
             }
         )
 
-        when (manageType) {
-            ManageType.DRUG -> {
+        when (itemType) {
+            ItemType.DRUG -> {
                 viewModel.drugList.observe(viewLifecycleOwner) {
                     val list = mutableListOf<ItemData>()
                     val newList = it.filter {
@@ -70,7 +68,7 @@ class ManageDetailFragment : Fragment() {
                 }
             }
 
-            ManageType.MEASURE -> {
+            ItemType.MEASURE -> {
                 viewModel.measureList.observe(viewLifecycleOwner) {
                     val list = mutableListOf<ItemData>()
                     val newList = it.filter {
@@ -83,7 +81,7 @@ class ManageDetailFragment : Fragment() {
                 }
             }
 
-            ManageType.ACTIVITY -> {
+            ItemType.EVENT -> {
                 viewModel.activityList.observe(viewLifecycleOwner) {
                     val list = mutableListOf<ItemData>()
                     val newList = it.filter {
@@ -96,7 +94,7 @@ class ManageDetailFragment : Fragment() {
                 }
             }
 
-            ManageType.CARE -> {
+            ItemType.CARE -> {
                 viewModel.careList.observe(viewLifecycleOwner) {
                     val list = mutableListOf<ItemData>()
                     val newList = it.filter {
@@ -129,7 +127,7 @@ class ManageDetailFragment : Fragment() {
         binding.rvManageItems.adapter = adapter
         binding.btAddItem.setOnClickListener {
             findNavController().navigate(
-                NavigationDirections.actionGlobalItemEditFragment(manageType, user)
+                NavigationDirections.actionGlobalItemEditFragment(itemType, user)
             )
         }
         return binding.root

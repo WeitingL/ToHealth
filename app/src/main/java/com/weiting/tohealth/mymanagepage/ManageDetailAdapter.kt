@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.*
 import com.weiting.tohealth.data.ItemData
+import com.weiting.tohealth.data.ItemType
 import com.weiting.tohealth.databinding.ManageRowItemBinding
 import com.weiting.tohealth.mymanagepage.ManageDetailAdapter.ItemsListViewHolder
 import com.weiting.tohealth.util.Util.getTimeStampToTimeInt
@@ -26,7 +27,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ManageDetailAdapter(private val dataType: ManageType, val onClickListener: OnclickListener) :
+class ManageDetailAdapter(val onClickListener: OnclickListener) :
     ListAdapter<ItemData, ItemsListViewHolder>(DiffCallBack) {
 
     val context: Context = PublicApplication.application.applicationContext
@@ -51,14 +52,14 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
         fun bind(item: ItemData) {
             binding.apply {
                 btEdit.setOnClickListener {
-                    onClickListener.onClick(getItem(position), dataType)
+                    onClickListener.onClick(getItem(position))
                 }
                 coroutineScope.launch {
 
                     val adapter = ManageDetailTimeAdapter()
 
-                    when (dataType) {
-                        ManageType.DRUG -> {
+                    when (item.itemType) {
+                        ItemType.DRUG -> {
                             val data = item.DrugData
                             adapter.submitList(
                                 data?.executedTime?.sortedBy {
@@ -101,7 +102,7 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                             tvEditorManage.text = database.getUser(data?.editor ?: "").name
                         }
 
-                        ManageType.MEASURE -> {
+                        ItemType.MEASURE -> {
                             val data = item.MeasureData
                             adapter.submitList(
                                 data?.executedTime?.sortedBy {
@@ -139,7 +140,7 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                             tvEditorManage.text = database.getUser(data?.editor ?: "").name
                         }
 
-                        ManageType.ACTIVITY -> {
+                        ItemType.EVENT -> {
                             val data = item.EventData
                             adapter.submitList(
                                 data?.executedTime?.sortedBy {
@@ -176,7 +177,7 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                             tvEditorManage.text = database.getUser(data?.editor ?: "").name
                         }
 
-                        ManageType.CARE -> {
+                        ItemType.CARE -> {
                             val data = item.CareData
                             adapter.submitList(
                                 data?.executeTime?.sortedBy {
@@ -233,9 +234,9 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
         holder.bind(getItem(position))
     }
 
-    class OnclickListener(val clickListener: (itemData: ItemData, manageType: ManageType) -> Unit) {
-        fun onClick(itemData: ItemData, manageType: ManageType) =
-            clickListener(itemData, manageType)
+    class OnclickListener(val clickListener: (itemData: ItemData) -> Unit) {
+        fun onClick(itemData: ItemData) =
+            clickListener(itemData)
     }
 
     private fun stockProgress(binding: ManageRowItemBinding, stock: Int, dose: Int) {
