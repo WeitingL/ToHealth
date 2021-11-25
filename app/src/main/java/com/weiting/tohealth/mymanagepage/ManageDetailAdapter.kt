@@ -88,7 +88,7 @@ class ManageDetailAdapter(val onClickListener: OnclickListener) :
                             tvDose.text = data?.dose.toString()
                             tvUnitManage.visibility = View.VISIBLE
                             tvUnitManage.text = toUnit(data?.unit)
-                            tvRatioTitle.text = "剩餘藥量"
+                            tvRatioTitle.text = context.getString(R.string.stockTitle)
 
                             "${data?.stock}${toUnit(data?.unit)}".also { tvRatioNum.text = it }
                             stockProgress(

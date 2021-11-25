@@ -54,7 +54,7 @@ class AddGroupViewModel(
                 name = UserManager.UserInfo.name,
                 nickName = UserManager.UserInfo.name
             ),
-            group.id!!
+            group.id?:""
         )
     }
 

@@ -17,7 +17,7 @@ class MyManageFragment : Fragment(R.layout.fragment_mymanage) {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         val binding = FragmentMymanageBinding.inflate(inflater, container, false)
 

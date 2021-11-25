@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.weiting.tohealth.NavigationDirections
 import com.weiting.tohealth.PublicApplication
+import com.weiting.tohealth.R
 import com.weiting.tohealth.data.ItemData
 import com.weiting.tohealth.data.ItemType
 import com.weiting.tohealth.data.User
@@ -24,9 +25,9 @@ class ManageDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = MymanageItemFragmentBinding.inflate(inflater, container, false)
-        val itemType = arguments?.get("type") as ItemType
-        val user = arguments?.get("user") as User
-        val private = arguments?.get("private") as Int
+        val itemType = arguments?.get(ITEM_TYPE) as ItemType
+        val user = arguments?.get(USER) as User
+        val private = arguments?.get(PRIVATE) as Int
         val factory = ManageDetailViewModelFactory(
             PublicApplication.application.firebaseDataRepository,
             user
@@ -40,7 +41,7 @@ class ManageDetailFragment : Fragment() {
         val adapter = ManageDetailAdapter(
             ManageDetailAdapter.OnclickListener { itemData ->
                 when (private == 2) {
-                    true -> Toast.makeText(context, "使用者限制您的編輯", Toast.LENGTH_LONG).show()
+                    true -> Toast.makeText(context, context?.getText(R.string.userDenyEdit), Toast.LENGTH_LONG).show()
                     false -> {
                         findNavController().navigate(
                             NavigationDirections.actionGlobalItemUpdateFragment(
