@@ -2,7 +2,7 @@ package com.weiting.tohealth.notificationpage
 
 import androidx.lifecycle.*
 import com.weiting.tohealth.data.FirebaseRepository
-import com.weiting.tohealth.data.Notification
+import com.weiting.tohealth.data.AlertMessage
 import com.weiting.tohealth.util.Util.toNotificationTextForMeasureLog
 import com.weiting.tohealth.util.Util.toStringFromTimeStamp
 import kotlinx.coroutines.launch
@@ -32,7 +32,7 @@ class NotificationViewModel(
         _isLoading.value = true
     }
 
-    fun transferToNotificationRecord(list: List<Notification>) {
+    fun transferToNotificationRecord(list: List<AlertMessage>) {
         viewModelScope.launch {
             val recordList = mutableListOf<NotificationRecord>()
             list.forEach {

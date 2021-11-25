@@ -63,8 +63,8 @@ class RecordViewModel(private val firebaseDataRepository: FirebaseRepository) :
 
     private fun postNotification(itemId: String, measureLog: MeasureLog) {
         firebaseDataRepository.postNotification(
-            Notification(
-                userId = UserManager.UserInformation.id,
+            AlertMessage(
+                userId = UserManager.UserInfo.id,
                 itemId = itemId,
                 logId = measureLog.id,
                 result = 4,

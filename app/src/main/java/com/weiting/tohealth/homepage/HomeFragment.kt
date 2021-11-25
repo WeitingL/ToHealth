@@ -38,7 +38,7 @@ class HomeFragment : Fragment() {
         if (use == null) {
             findNavController().navigate(NavigationDirections.actionGlobalLoginFragment())
         } else {
-            UserManager.UserInformation.id = use.uid
+            UserManager.UserInfo.id = use.uid
         }
 
         binding.viewModel = viewModel

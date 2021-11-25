@@ -49,10 +49,10 @@ class AddGroupViewModel(
         firebaseRepository.createGroup(group)
         firebaseRepository.joinGroup(
             Member(
-                userId = UserManager.UserInformation.id,
+                userId = UserManager.UserInfo.id,
                 private = 0,
-                name = UserManager.UserInformation.name,
-                nickName = UserManager.UserInformation.name
+                name = UserManager.UserInfo.name,
+                nickName = UserManager.UserInfo.name
             ),
             group.id!!
         )

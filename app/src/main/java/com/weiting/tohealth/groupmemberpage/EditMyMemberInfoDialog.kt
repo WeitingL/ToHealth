@@ -21,31 +21,31 @@ class EditMyMemberInfoDialog : DialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = DialogEditMyNicknameBinding.inflate(inflater, container, false)
-        val myMemberInfo = EditMyMemberInfoDialogArgs.fromBundle(requireArguments()).myMemderInfo
+        val memberInfo = EditMyMemberInfoDialogArgs.fromBundle(requireArguments()).memberInfo
         val groupId = EditMyMemberInfoDialogArgs.fromBundle(requireArguments()).groupId
         val factory = GroupMemberEditViewModelFactory(
             PublicApplication.application.firebaseDataRepository,
-            myMemberInfo,
+            memberInfo,
             groupId
         )
         val viewModel = ViewModelProvider(this, factory).get(GroupMemberEditViewModel::class.java)
 
-        binding.edtMyNickName.hint = myMemberInfo.nickName
+        binding.edtMyNickName.hint = memberInfo.nickName
 
         binding.btChange.setOnClickListener {
 
             if (binding.edtMyNickName.editableText.isNullOrEmpty()) {
-                myMemberInfo.nickName = myMemberInfo.name
+                memberInfo.nickName = memberInfo.name
             } else {
-                myMemberInfo.nickName = binding.edtMyNickName.text.toString()
+                memberInfo.nickName = binding.edtMyNickName.text.toString()
             }
 
-            viewModel.postNewNickName(myMemberInfo)
-            Toast.makeText(context, "改好囉!", Toast.LENGTH_LONG).show()
+            viewModel.postNewNickName(memberInfo)
+            Toast.makeText(context, getString(R.string.upDateSuccess), Toast.LENGTH_LONG).show()
             findNavController().popBackStack()
         }
 
-        binding.radioGroup.setOnCheckedChangeListener { radioGroup, i ->
+        binding.radioGroup.setOnCheckedChangeListener { _, i ->
             when (i) {
                 R.id.private_all -> viewModel.getNewPrivateSet(0)
                 R.id.private_readLog -> viewModel.getNewPrivateSet(1)
@@ -54,7 +54,7 @@ class EditMyMemberInfoDialog : DialogFragment() {
             }
         }
 
-        when (myMemberInfo.private) {
+        when (memberInfo.private) {
             0 -> binding.privateAll.isChecked = true
             1 -> binding.privateReadLog.isChecked = true
             2 -> binding.privateOnlyRead.isChecked = true

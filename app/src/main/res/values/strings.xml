@@ -18,7 +18,7 @@
     <string name="SomethingEmpty">有東西還沒填喔!</string>
     <string name="addRepeatTime">重複添加囉!</string>
     <string name="DrugItem">藥品品項</string>
-    <string name="ActivityItem">活動項目</string>
+    <string name="EventItem">活動項目</string>
     <string name="MeasureItem">測量項目</string>
     <string name="CareItem">關懷項目</string>
     <string name="upDateSuccess">已成功更新!</string>

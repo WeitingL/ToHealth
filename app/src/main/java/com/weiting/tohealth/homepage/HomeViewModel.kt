@@ -52,8 +52,8 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
 
         viewModelScope.launch {
             if (Firebase.auth.currentUser != null)
-                UserManager.UserInformation =
-                    firebaseDataRepository.getUser(UserManager.UserInformation.id!!)
+                UserManager.UserInfo =
+                    firebaseDataRepository.getUser(UserManager.UserInfo.id!!)
         }
     }
 
@@ -67,13 +67,13 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
     // TODO Refactor 1st
     //LiveData from firebase
     private val drugList =
-        firebaseDataRepository.getLiveDrugs(UserManager.UserInformation.id ?: "")
+        firebaseDataRepository.getLiveDrugs(UserManager.UserInfo.id ?: "")
     private val measureList =
-        firebaseDataRepository.getLiveMeasures(UserManager.UserInformation.id ?: "")
+        firebaseDataRepository.getLiveMeasures(UserManager.UserInfo.id ?: "")
     private val activityList =
-        firebaseDataRepository.getLiveEvents(UserManager.UserInformation.id ?: "")
+        firebaseDataRepository.getLiveEvents(UserManager.UserInfo.id ?: "")
     private val careList =
-        firebaseDataRepository.getLiveCares(UserManager.UserInformation.id ?: "")
+        firebaseDataRepository.getLiveCares(UserManager.UserInfo.id ?: "")
 
     //Isolate the todolist and store separately.
     private val drugCurrentList = mutableListOf<ItemDataType>()
@@ -87,10 +87,12 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
     val itemDataMediator = MediatorLiveData<MutableList<ItemDataType>>().apply {
         addSource(drugList) { drugList ->
             viewModelScope.launch {
+
                 drugCurrentList.clear()
                 isNewBie(drugList)
 
                 val ongoingDrugs = drugList.filter { it.status == 0 }
+
                 ongoingDrugs.forEach { drug ->
                     val logTimeTags = mutableListOf<Int>()
                     // Get all logs and filter to be created today.
@@ -100,6 +102,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
 
                     drug.drugLogs.forEach { drugLog ->
                         logTimeTags.add(drugLog.timeTag ?: 0)
+                        logTimeTags.distinct()
                         logTimeTags.sort()
                     }
 
@@ -158,6 +161,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
 
                     measure.measureLogs.forEach { measureLog ->
                         logTimeTags.add(measureLog.timeTag ?: 0)
+                        logTimeTags.distinct()
                         logTimeTags.sort()
                     }
 
@@ -213,6 +217,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
 
                     event.eventLogs.forEach { activityLog ->
                         logTimeTags.add(activityLog.timeTag!!)
+                        logTimeTags.distinct()
                         logTimeTags.sort()
                     }
 
@@ -271,6 +276,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
 
                     care.careLogs.forEach { careLog ->
                         logTimeTags.add(careLog.timeTag!!)
+                        logTimeTags.distinct()
                         logTimeTags.sort()
                     }
 
@@ -513,8 +519,8 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
 
     private fun postDrugExhausted(drug: Drug) {
         firebaseDataRepository.postNotification(
-            Notification(
-                userId = UserManager.UserInformation.id,
+            AlertMessage(
+                userId = UserManager.UserInfo.id,
                 itemId = drug.id,
                 result = 6,
                 createdTime = Timestamp.now()

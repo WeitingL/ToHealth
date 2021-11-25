@@ -212,23 +212,23 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.editStock(itemId, num)
     }
 
-    override fun postNotification(notification: Notification) {
-        return firebaseSource.postNotification(notification)
+    override fun postNotification(alertMessage: AlertMessage) {
+        return firebaseSource.postNotification(alertMessage)
     }
 
     override fun getLiveNotificationsForService(
         userId: String
-    ): MutableLiveData<List<Notification>> {
+    ): MutableLiveData<List<AlertMessage>> {
         return firebaseSource.getLiveNotificationsForService(userId)
     }
 
     override fun getLiveNotifications(userIdList: List<String>):
-            MutableLiveData<List<Notification>> {
+            MutableLiveData<List<AlertMessage>> {
         return firebaseSource.getLiveNotifications(userIdList)
     }
 
-    override fun postOnGetNotificationForService(notification: Notification) {
-        return firebaseSource.postOnGetNotificationForService(notification)
+    override fun postOnGetNotificationForService(alertMessage: AlertMessage) {
+        return firebaseSource.postOnGetNotificationForService(alertMessage)
     }
 
     override fun getLiveChatMessagesForService(

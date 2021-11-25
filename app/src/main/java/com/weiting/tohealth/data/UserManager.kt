@@ -1,5 +1,5 @@
 package com.weiting.tohealth.data
 
 object UserManager {
-    var UserInformation = User()
+    var UserInfo = User()
 }

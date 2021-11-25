@@ -79,7 +79,7 @@ class ItemUpdateFragment : Fragment() {
                 }
 
                 ManageType.ACTIVITY -> {
-                    tvItemTypeTitleUpdate.text = getString(R.string.ActivityItem)
+                    tvItemTypeTitleUpdate.text = getString(R.string.EventItem)
                     tvItemNameUpdate.text = toEventType(itemData.EventData?.type)
                     tvStartTimeUpdate.text = toDateFromTimeStamp(itemData.EventData?.startDate)
                     clUnitUpdate.visibility = View.GONE

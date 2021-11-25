@@ -63,7 +63,7 @@ class LoginFragment : Fragment() {
         val mainActivityViewModel = ViewModelProvider(requireActivity(), factory).get(MainActivityViewModel::class.java)
 
         viewModel.userInfo.observe(viewLifecycleOwner) {
-            UserManager.UserInformation = it
+            UserManager.UserInfo = it
             mainActivityViewModel.loginSuccess()
             findNavController().navigate(NavigationDirections.actionGlobalHomeFragment())
         }

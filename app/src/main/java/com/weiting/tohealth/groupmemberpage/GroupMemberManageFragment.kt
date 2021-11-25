@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
 import com.weiting.tohealth.NavigationDirections
+import com.weiting.tohealth.R
 import com.weiting.tohealth.data.User
 import com.weiting.tohealth.data.UserManager
 import com.weiting.tohealth.databinding.GroupMemberManagementFragmentBinding
@@ -31,7 +32,7 @@ class GroupMemberManageFragment : Fragment() {
         "聊天室暱稱: ${memberInfo.nickName}".also { binding.tvMemberNickName.text = it }
         transferCircleImage(binding.imPhoto, memberInfo.profilePhoto)
 
-        if (memberInfo.userId != UserManager.UserInformation.id) {
+        if (memberInfo.userId != UserManager.UserInfo.id) {
             binding.ibEditNickName.visibility = View.GONE
         }
 
@@ -47,15 +48,15 @@ class GroupMemberManageFragment : Fragment() {
                 id = memberInfo.userId,
                 name = memberInfo.name,
             ),
-            memberInfo.private!!
+            memberInfo.private?:0
         )
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             when (position) {
-                0 -> tab.text = "藥物項目"
-                1 -> tab.text = "測量項目"
-                2 -> tab.text = "活動項目"
-                3 -> tab.text = "關懷項目"
+                0 -> tab.text = getString(R.string.DrugItem)
+                1 -> tab.text = getString(R.string.MeasureItem)
+                2 -> tab.text = getString(R.string.EventItem)
+                3 -> tab.text = getString(R.string.CareItem)
             }
         }.attach()
 

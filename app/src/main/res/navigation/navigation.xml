@@ -232,7 +232,7 @@
         android:label="dialog_edit_my_nickname"
         tools:layout="@layout/dialog_edit_my_nickname">
         <argument
-            android:name="myMemderInfo"
+            android:name="memberInfo"
             app:argType="com.weiting.tohealth.data.Member" />
         <argument
             android:name="groupId"

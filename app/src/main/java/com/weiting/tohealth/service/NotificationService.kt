@@ -59,7 +59,7 @@ class NotificationService : LifecycleService() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        firebaseDataRepository.getLiveUser(UserManager.UserInformation.id!!).observe(this) {
+        firebaseDataRepository.getLiveUser(UserManager.UserInfo.id!!).observe(this) {
             if (it.groupList.isNotEmpty()) {
                 it.groupList.forEach {
                     if (it !in groupIdListeningList) {
@@ -135,17 +135,17 @@ class NotificationService : LifecycleService() {
         }
     }
 
-    private fun showNotification(notification: Notification) {
+    private fun showNotification(alertMessage: AlertMessage) {
         coroutineScope.launch {
-            val userName = firebaseDataRepository.getUser(notification.userId!!).name
+            val userName = firebaseDataRepository.getUser(alertMessage.userId!!).name
 
             val alertNotification = RemoteViews(packageName, R.layout.notification_chat)
-            when (notification.result) {
+            when (alertMessage.result) {
                 4 -> {
-                    val measure = firebaseDataRepository.getMeasure(notification.itemId!!)
+                    val measure = firebaseDataRepository.getMeasure(alertMessage.itemId!!)
                     val measureLog = firebaseDataRepository.getMeasureLog(
-                        notification.itemId,
-                        notification.logId ?: ""
+                        alertMessage.itemId,
+                        alertMessage.logId ?: ""
                     )
 
                     alertNotification.setTextViewText(R.id.tv_name, "測量項目異常 - $userName")
@@ -161,7 +161,7 @@ class NotificationService : LifecycleService() {
                 }
 
                 6 -> {
-                    val drugItem = firebaseDataRepository.getDrug(notification.itemId!!)
+                    val drugItem = firebaseDataRepository.getDrug(alertMessage.itemId!!)
                     alertNotification.setTextViewText(R.id.tv_name, "藥物快要用完了 - $userName")
                     alertNotification.setTextViewText(
                         R.id.tv_content,

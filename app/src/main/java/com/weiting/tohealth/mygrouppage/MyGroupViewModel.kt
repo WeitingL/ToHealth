@@ -17,7 +17,7 @@ class MyGroupViewModel(private val firebaseDataRepository: FirebaseRepository) :
     val loading: LiveData<Boolean>
         get() = _loading
 
-    val userData = firebaseDataRepository.getLiveUser(UserManager.UserInformation.id!!)
+    val userData = firebaseDataRepository.getLiveUser(UserManager.UserInfo.id!!)
 
     private val currentGroupList = mutableListOf<GroupPageItem>()
 

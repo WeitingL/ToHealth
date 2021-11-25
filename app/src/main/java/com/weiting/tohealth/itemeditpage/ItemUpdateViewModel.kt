@@ -95,7 +95,7 @@ class ItemUpdateViewModel(
                 )
                 data.executedTime = timePointSet.value ?: data.executedTime
                 data.stock = binding.etvStockUpdate.text.toString().toFloat()
-                data.editor = UserManager.UserInformation.id
+                data.editor = UserManager.UserInfo.id
                 data.lastEditTime = Timestamp.now()
                 data.status = statusSelected.value ?: data.status
 
@@ -106,7 +106,7 @@ class ItemUpdateViewModel(
                 val data = itemData.MeasureData!!
 
                 data.lastEditTime = Timestamp.now()
-                data.editor = UserManager.UserInformation.id
+                data.editor = UserManager.UserInfo.id
                 data.executedTime = timePointSet.value ?: data.executedTime
                 data.status = statusSelected.value ?: data.status
 
@@ -122,7 +122,7 @@ class ItemUpdateViewModel(
                     "X" to binding.spSuspendDayUpdate.selectedItemPosition
                 )
                 data.executedTime = timePointSet.value ?: data.executedTime
-                data.editor = UserManager.UserInformation.id
+                data.editor = UserManager.UserInfo.id
                 data.lastEditTime = Timestamp.now()
                 data.status = statusSelected.value ?: data.status
 
@@ -138,7 +138,7 @@ class ItemUpdateViewModel(
                     "X" to binding.spSuspendDayUpdate.selectedItemPosition
                 )
                 data.executeTime = timePointSet.value ?: data.executeTime
-                data.editor = UserManager.UserInformation.id
+                data.editor = UserManager.UserInfo.id
                 data.lastEditTime = Timestamp.now()
                 data.status = statusSelected.value ?: data.status
 

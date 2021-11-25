@@ -27,9 +27,9 @@ class MyManageFragment : Fragment(R.layout.fragment_mymanage) {
         viewPager.adapter = MyManageAdapter(
             this,
             User(
-                name = UserManager.UserInformation.name,
-                id = UserManager.UserInformation.id,
-                groupList = UserManager.UserInformation.groupList
+                name = UserManager.UserInfo.name,
+                id = UserManager.UserInfo.id,
+                groupList = UserManager.UserInfo.groupList
             ),
             0
         )
@@ -38,7 +38,7 @@ class MyManageFragment : Fragment(R.layout.fragment_mymanage) {
             when (position) {
                 0 -> tab.text = context?.getString(R.string.DrugItem)
                 1 -> tab.text = context?.getString(R.string.MeasureItem)
-                2 -> tab.text = context?.getString(R.string.ActivityItem)
+                2 -> tab.text = context?.getString(R.string.EventItem)
                 3 -> tab.text = context?.getString(R.string.CareItem)
             }
         }.attach()

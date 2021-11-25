@@ -896,15 +896,15 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
-    override fun postNotification(notification: Notification) {
+    override fun postNotification(alertMessage: AlertMessage) {
         val database = application.database
 
-        notification.id = database.collection("notifications").document().id
+        alertMessage.id = database.collection("notifications").document().id
 
-        database.collection("notifications").document(notification.id!!)
-            .set(notification)
+        database.collection("notifications").document(alertMessage.id!!)
+            .set(alertMessage)
             .addOnSuccessListener { documentReference ->
-                Log.d("store success", "DocumentSnapshot added with ID: ${notification.id}")
+                Log.d("store success", "DocumentSnapshot added with ID: ${alertMessage.id}")
             }
             .addOnFailureListener { e ->
                 Log.w("store failure", "Error adding document", e)
@@ -913,8 +913,8 @@ object FirebaseDataSource : FirebaseSource {
 
     override fun getLiveNotificationsForService(
         userId: String
-    ): MutableLiveData<List<Notification>> {
-        val notificationList = MutableLiveData<List<Notification>>()
+    ): MutableLiveData<List<AlertMessage>> {
+        val notificationList = MutableLiveData<List<AlertMessage>>()
 
         val c = Calendar.getInstance()
         c.time = Timestamp.now().toDate()
@@ -931,10 +931,10 @@ object FirebaseDataSource : FirebaseSource {
                         Log.e("Listen failed.", error.toString())
                         return@addSnapshotListener
                     }
-                    val list = mutableListOf<Notification>()
+                    val list = mutableListOf<AlertMessage>()
 
                     for (document in value!!) {
-                        val data = document.toObject(Notification::class.java)
+                        val data = document.toObject(AlertMessage::class.java)
                         list.add(data)
                     }
                     notificationList.value = list
@@ -945,8 +945,8 @@ object FirebaseDataSource : FirebaseSource {
 
     override fun getLiveNotifications(
         userIdList: List<String>
-    ): MutableLiveData<List<Notification>> {
-        val notificationList = MutableLiveData<List<Notification>>()
+    ): MutableLiveData<List<AlertMessage>> {
+        val notificationList = MutableLiveData<List<AlertMessage>>()
 
         application.database.collection("notifications")
             .whereIn("userId", userIdList)
@@ -957,10 +957,10 @@ object FirebaseDataSource : FirebaseSource {
                     Log.e("Listen failed.", error.toString())
                     return@addSnapshotListener
                 }
-                val list = mutableListOf<Notification>()
+                val list = mutableListOf<AlertMessage>()
 
                 for (document in value!!) {
-                    val data = document.toObject(Notification::class.java)
+                    val data = document.toObject(AlertMessage::class.java)
 
                     list.add(data)
                 }
@@ -970,14 +970,14 @@ object FirebaseDataSource : FirebaseSource {
         return notificationList
     }
 
-    override fun postOnGetNotificationForService(notification: Notification) {
+    override fun postOnGetNotificationForService(alertMessage: AlertMessage) {
 
-        notification.alreadySend.add(Firebase.auth.currentUser?.uid!!)
+        alertMessage.alreadySend.add(Firebase.auth.currentUser?.uid!!)
 
-        application.database.collection("notifications").document(notification.id!!)
-            .update("alreadySend", notification.alreadySend)
+        application.database.collection("notifications").document(alertMessage.id!!)
+            .update("alreadySend", alertMessage.alreadySend)
             .addOnSuccessListener { documentReference ->
-                Log.d("store success", "DocumentSnapshot added with ID: ${notification.id}")
+                Log.d("store success", "DocumentSnapshot added with ID: ${alertMessage.id}")
             }
             .addOnFailureListener { e ->
                 Log.w("store failure", "Error adding document", e)

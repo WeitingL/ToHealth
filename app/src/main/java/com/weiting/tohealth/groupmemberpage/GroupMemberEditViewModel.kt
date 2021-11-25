@@ -1,6 +1,5 @@
 package com.weiting.tohealth.groupmemberpage
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.weiting.tohealth.data.FirebaseRepository
@@ -12,12 +11,10 @@ class GroupMemberEditViewModel(
     private val groupId: String
 ) : ViewModel() {
 
-    private val _privateSet = MutableLiveData<Int>()
-    val privateSet: LiveData<Int>
-        get() = _privateSet
+    private val privateSet = MutableLiveData<Int>()
 
     init {
-        _privateSet.value = member.private!!
+        privateSet.value = member.private?:0
     }
 
     fun postNewNickName(member: Member) {
@@ -26,6 +23,6 @@ class GroupMemberEditViewModel(
     }
 
     fun getNewPrivateSet(int: Int) {
-        _privateSet.value = int
+        privateSet.value = int
     }
 }

@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
  */
 
 @Parcelize
-data class Notification(
+data class AlertMessage(
     var id: String? = null,
     val userId: String? = null,
     val itemId: String? = null,

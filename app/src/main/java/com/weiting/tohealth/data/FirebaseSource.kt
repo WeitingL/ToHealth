@@ -128,17 +128,17 @@ interface FirebaseSource {
 
     fun editStock(itemId: String, num: Float)
 
-    fun postNotification(notification: Notification)
+    fun postNotification(alertMessage: AlertMessage)
 
     fun getLiveNotificationsForService(
         userId: String
-    ): MutableLiveData<List<Notification>>
+    ): MutableLiveData<List<AlertMessage>>
 
     fun getLiveNotifications(
         userIdList: List<String>
-    ): MutableLiveData<List<Notification>>
+    ): MutableLiveData<List<AlertMessage>>
 
-    fun postOnGetNotificationForService(notification: Notification)
+    fun postOnGetNotificationForService(alertMessage: AlertMessage)
 
     fun getLiveChatMessagesForService(
         groupId: String

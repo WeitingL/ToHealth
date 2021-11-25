@@ -29,9 +29,9 @@ class MyStatisticFragment : Fragment() {
         viewPager.adapter = MyStatisticAdapter(
             this,
             User(
-                name = UserManager.UserInformation.name,
-                id = UserManager.UserInformation.id,
-                groupList = UserManager.UserInformation.groupList
+                name = UserManager.UserInfo.name,
+                id = UserManager.UserInfo.id,
+                groupList = UserManager.UserInfo.groupList
             )
         )
 

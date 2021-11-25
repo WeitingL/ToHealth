@@ -40,7 +40,7 @@ class ChatFragment : Fragment() {
                     Chat(
                         groupId = group.id,
                         context = binding.etvMessage.text.toString(),
-                        creator = UserManager.UserInformation.id,
+                        creator = UserManager.UserInfo.id,
                         createdTime = Timestamp.now()
                     )
                 )

@@ -47,7 +47,7 @@ class JoinGroupDialog : DialogFragment() {
             when (it) {
                 true -> {
                     viewModel.checkIsRelationshipExist(
-                        userId = UserManager.UserInformation.id ?: "",
+                        userId = UserManager.UserInfo.id ?: "",
                         groupId = binding.tilGroupName.editText?.text.toString()
                     )
                 }
@@ -67,10 +67,10 @@ class JoinGroupDialog : DialogFragment() {
                 false -> {
                     viewModel.joinGroup(
                         member = Member(
-                            userId = UserManager.UserInformation.id ?: "",
+                            userId = UserManager.UserInfo.id ?: "",
                             private = 0,
-                            name = UserManager.UserInformation.name,
-                            nickName = UserManager.UserInformation.name
+                            name = UserManager.UserInfo.name,
+                            nickName = UserManager.UserInfo.name
                         ),
                         groupId = binding.tilGroupName.editText?.text.toString()
                     )
