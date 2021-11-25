@@ -9,14 +9,17 @@ import com.weiting.tohealth.mygrouppage.grouproom.board.BoardFragment
 import com.weiting.tohealth.mygrouppage.grouproom.chat.ChatFragment
 import com.weiting.tohealth.mygrouppage.grouproom.members.MembersFragment
 
+const val GROUP = "group"
+
+
 class GroupRoomAdapter(fragment: Fragment, private val group: Group) : FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int = 3
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> getBoardFragment(bundleOf("group" to group))
-            1 -> getChatFragment(bundleOf("group" to group))
-            2 -> getMembersFragment(bundleOf("group" to group))
+            0 -> getBoardFragment(bundleOf(GROUP to group))
+            1 -> getChatFragment(bundleOf(GROUP to group))
+            2 -> getMembersFragment(bundleOf(GROUP to group))
             else -> throw Exception("Unknown position $position")
         }
     }

@@ -12,6 +12,7 @@ import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.data.Group
 import com.weiting.tohealth.databinding.BroadFragmentBinding
 import com.weiting.tohealth.factory.BoardViewModelFactory
+import com.weiting.tohealth.mygrouppage.grouproom.GROUP
 
 class BoardFragment : Fragment() {
 
@@ -21,7 +22,7 @@ class BoardFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = BroadFragmentBinding.inflate(inflater, container, false)
-        val group: Group = arguments?.get("group") as Group
+        val group: Group = arguments?.get(GROUP) as Group
         val factory =
             BoardViewModelFactory(PublicApplication.application.firebaseDataRepository, group)
         val viewModel = ViewModelProvider(this, factory).get(BoardViewModel::class.java)

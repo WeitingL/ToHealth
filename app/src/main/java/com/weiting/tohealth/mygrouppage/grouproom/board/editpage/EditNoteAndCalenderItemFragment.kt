@@ -20,6 +20,7 @@ import com.weiting.tohealth.data.Note
 import com.weiting.tohealth.data.UserManager
 import com.weiting.tohealth.databinding.EditNoteandcalenderitemFragmentBinding
 import com.weiting.tohealth.factory.EditNoteAndCalenderItemViewModelFactory
+import com.weiting.tohealth.mygrouppage.grouproom.GROUP
 import com.weiting.tohealth.timeset.EditTimeType
 import com.weiting.tohealth.timeset.GET_TIME_AND_DAY
 import com.weiting.tohealth.timeset.TIME_AND_DAY
@@ -33,7 +34,7 @@ class EditNoteAndCalenderItemFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = EditNoteandcalenderitemFragmentBinding.inflate(inflater, container, false)
-        val group: Group = arguments?.get("group") as Group
+        val group: Group = arguments?.get(GROUP) as Group
         val factory = EditNoteAndCalenderItemViewModelFactory(
             PublicApplication.application.firebaseDataRepository,
             group
@@ -81,7 +82,7 @@ class EditNoteAndCalenderItemFragment : Fragment() {
             }
         }
 
-        setFragmentResultListener(GET_TIME_AND_DAY) { requestKey, bundle ->
+        setFragmentResultListener(GET_TIME_AND_DAY) { _, bundle ->
             viewModel.getTimeSet(bundle.getLong(TIME_AND_DAY))
         }
 
@@ -113,7 +114,7 @@ class EditNoteAndCalenderItemFragment : Fragment() {
                             Reminder(
                                 editor = UserManager.UserInfo.id,
                                 content = binding.edvReminderTitle.text.toString(),
-                                date = Timestamp(Date(viewModel.longTime.value!!)),
+                                date = Timestamp(Date(viewModel.longTime.value?:0L)),
                                 createdTime = Timestamp.now(),
                                 result = 0
                             )

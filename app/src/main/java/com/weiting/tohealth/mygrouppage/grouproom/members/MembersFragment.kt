@@ -12,6 +12,7 @@ import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.data.Group
 import com.weiting.tohealth.databinding.MembersFragmentBinding
 import com.weiting.tohealth.factory.MembersViewModelFactory
+import com.weiting.tohealth.mygrouppage.grouproom.GROUP
 
 class MembersFragment : Fragment() {
 
@@ -21,13 +22,13 @@ class MembersFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = MembersFragmentBinding.inflate(inflater, container, false)
-        val group = arguments?.get("group") as Group
+        val group = arguments?.get(GROUP) as Group
         val factory =
             MembersViewModelFactory(PublicApplication.application.firebaseDataRepository, group)
         val viewModel = ViewModelProvider(this, factory).get(MembersViewModel::class.java)
         val adapter = MembersAdapter(
             MembersAdapter.EditOnclickListener {
-                findNavController().navigate(NavigationDirections.actionGlobalGroupMemberManageFragment(it, group.id!!))
+                findNavController().navigate(NavigationDirections.actionGlobalGroupMemberManageFragment(it, group.id?:""))
             },
             MembersAdapter.ViewOnclickListener {
                 findNavController().navigate(NavigationDirections.actionGlobalGroupMemberStatisticFragment(it))

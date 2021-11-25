@@ -13,6 +13,7 @@ import com.weiting.tohealth.data.Group
 import com.weiting.tohealth.data.UserManager
 import com.weiting.tohealth.databinding.ChatroomFragmentBinding
 import com.weiting.tohealth.factory.ChatViewModelFactory
+import com.weiting.tohealth.mygrouppage.grouproom.GROUP
 
 class ChatFragment : Fragment() {
 
@@ -22,7 +23,7 @@ class ChatFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = ChatroomFragmentBinding.inflate(inflater, container, false)
-        val group: Group = arguments?.get("group") as Group
+        val group: Group = arguments?.get(GROUP) as Group
 
         val factory =
             ChatViewModelFactory(PublicApplication.application.firebaseDataRepository, group)

@@ -15,8 +15,8 @@ import com.weiting.tohealth.databinding.MygroupRowGroupBinding
 import com.weiting.tohealth.util.Util.toStringFromTimeStamp
 import java.lang.ClassCastException
 
-const val GROUP_VIEWTYPE_GROUP = 0
-const val GROUP_VIEWTYPE_ADDGROUP = 1
+const val VIEW_TYPE_GROUP = 0
+const val VIEW_TYPE_ADD_GROUP = 1
 
 class GroupAdapter(
     val onClickListener: OnclickListener,
@@ -68,10 +68,10 @@ class GroupAdapter(
                     onClickListener.onClick(myGroup)
                 }
                 imGenerateQR.setOnClickListener {
-                    onclickListenerForQR.onClickForQR(myGroup.group.id!!)
+                    onclickListenerForQR.onClickForQR(myGroup.group.id?:"")
                 }
 
-                TabLayoutMediator(tabLayoutForDots, rvGroupNoteList) { tab, position ->
+                TabLayoutMediator(tabLayoutForDots, rvGroupNoteList) { _, _ ->
                 }.attach()
             }
         }
@@ -82,14 +82,14 @@ class GroupAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
-            is GroupPageItem.MyGroups -> GROUP_VIEWTYPE_GROUP
-            is GroupPageItem.AddGroups -> GROUP_VIEWTYPE_ADDGROUP
+            is GroupPageItem.MyGroups -> VIEW_TYPE_GROUP
+            is GroupPageItem.AddGroups -> VIEW_TYPE_ADD_GROUP
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            GROUP_VIEWTYPE_GROUP -> MyGroupCardViewHolder(
+            VIEW_TYPE_GROUP -> MyGroupCardViewHolder(
                 MygroupRowGroupBinding.inflate(
                     LayoutInflater.from(
                         parent.context
@@ -98,7 +98,7 @@ class GroupAdapter(
                 )
             )
 
-            GROUP_VIEWTYPE_ADDGROUP -> AddGroupViewHolder(
+            VIEW_TYPE_ADD_GROUP -> AddGroupViewHolder(
                 CardviewBottombuttonRowBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
                 )
@@ -199,7 +199,6 @@ class GroupAdapter(
                 }
             }
         }
-
         return list
     }
 }

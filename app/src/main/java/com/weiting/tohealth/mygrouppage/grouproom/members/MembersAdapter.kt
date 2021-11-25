@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.PublicApplication
+import com.weiting.tohealth.R
 import com.weiting.tohealth.data.Member
+import com.weiting.tohealth.data.UserManager
 import com.weiting.tohealth.databinding.MemberRowBinding
 import com.weiting.tohealth.util.Util.transferCircleImage
 
@@ -37,17 +39,37 @@ class MembersAdapter(
 
                 btEditMember.setOnClickListener {
                     val context = PublicApplication.application.applicationContext
-                    when (member.private) {
-                        1 -> Toast.makeText(context, "使用者拒絕群組編輯", Toast.LENGTH_LONG).show()
-                        3 -> Toast.makeText(context, "使用者拒絕群組編輯", Toast.LENGTH_LONG).show()
-                        else -> onClickListener.onClick(member)
+                    if (member.userId != UserManager.UserInfo.id) {
+                        when (member.private) {
+                            1 -> Toast.makeText(
+                                context,
+                                context.getString(R.string.userDenyEdit),
+                                Toast.LENGTH_LONG
+                            ).show()
+                            3 -> Toast.makeText(
+                                context,
+                                context.getString(R.string.userDenyEdit),
+                                Toast.LENGTH_LONG
+                            ).show()
+                            else -> onClickListener.onClick(member)
+                        }
+                    }else{
+                        onClickListener.onClick(member)
                     }
                 }
                 btStastisticMember.setOnClickListener {
                     val context = PublicApplication.application.applicationContext
-                    when (member.private) {
-                        3 -> Toast.makeText(context, "使用者拒絕群組查看", Toast.LENGTH_LONG).show()
-                        else -> onclickListener.onClick(member)
+                    if (member.userId != UserManager.UserInfo.id) {
+                        when (member.private) {
+                            3 -> Toast.makeText(
+                                context,
+                                context.getString(R.string.userDenyCheckout),
+                                Toast.LENGTH_LONG
+                            ).show()
+                            else -> onclickListener.onClick(member)
+                        }
+                    }else{
+                        onClickListener.onClick(member)
                     }
                 }
             }
