@@ -1,7 +1,6 @@
 package com.weiting.tohealth.data
 
 import androidx.lifecycle.MutableLiveData
-import com.google.firebase.Timestamp
 
 class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : FirebaseRepository {
 
@@ -29,7 +28,7 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.getAllMeasures(userId)
     }
 
-    override suspend fun getAllActivities(userId: String): List<Activity> {
+    override suspend fun getAllActivities(userId: String): List<Event> {
         return firebaseSource.getAllActivities(userId)
     }
 
@@ -49,7 +48,7 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.getLiveMeasureList(userId)
     }
 
-    override fun getLiveActivityList(userId: String): MutableLiveData<List<Activity>> {
+    override fun getLiveActivityList(userId: String): MutableLiveData<List<Event>> {
         return firebaseSource.getLiveActivityList(userId)
     }
 
@@ -65,8 +64,8 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.postMeasure(measure)
     }
 
-    override fun postActivity(activity: Activity) {
-        return firebaseSource.postActivity(activity)
+    override fun postActivity(event: Event) {
+        return firebaseSource.postActivity(event)
     }
 
     override fun postCare(care: Care) {
@@ -81,8 +80,8 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.updateMeasure(measure)
     }
 
-    override fun updateActivity(activity: Activity) {
-        return firebaseSource.updateActivity(activity)
+    override fun updateActivity(event: Event) {
+        return firebaseSource.updateActivity(event)
     }
 
     override fun updateCare(care: Care) {
@@ -101,8 +100,8 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.postMeasureRecord(id, measureLog)
     }
 
-    override fun postActivityRecord(id: String, activityLog: ActivityLog) {
-        return firebaseSource.postActivityRecord(id, activityLog)
+    override fun postActivityRecord(id: String, eventLog: EventLog) {
+        return firebaseSource.postActivityRecord(id, eventLog)
     }
 
     override fun postCareRecord(id: String, careLog: CareLog) {
@@ -121,7 +120,7 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.getMeasureLog(itemId, itemsLogId)
     }
 
-    override suspend fun getActivityRecord(itemId: String): List<ActivityLog> {
+    override suspend fun getActivityRecord(itemId: String): List<EventLog> {
         return firebaseSource.getActivityRecord(itemId)
     }
 

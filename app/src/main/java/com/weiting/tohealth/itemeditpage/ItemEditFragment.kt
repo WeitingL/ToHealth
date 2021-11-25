@@ -100,7 +100,7 @@ class ItemEditFragment : Fragment() {
                         clStock.visibility = View.GONE
                     }
 
-                    ItemType.ACTIVITY -> {
+                    ItemType.EVENT -> {
                         tvDrugname.visibility = View.GONE
                         tilDrugName.visibility = View.GONE
                         tvItemNameEdit.visibility = View.VISIBLE

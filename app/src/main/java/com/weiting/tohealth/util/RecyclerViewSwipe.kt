@@ -21,7 +21,7 @@ abstract class RecyclerViewSwipe :
     ): Int {
 
         // If the viewHolder is timeViewHolder, the swipe function is not support.
-        if (viewHolder.itemViewType == ITEM_VIEWTYPE_TIME) return 0
+        if (viewHolder.itemViewType == VIEW_TYPE_TIME) return 0
 
         return super.getMovementFlags(recyclerView, viewHolder)
     }
@@ -67,12 +67,12 @@ abstract class RecyclerViewSwipe :
 
     fun isLastInTimePoint(position: Int, adapter: TodayItemAdapter): Boolean {
 
-        return when (adapter.getItemViewType(position - 1) == ITEM_VIEWTYPE_TIME) {
+        return when (adapter.getItemViewType(position - 1) == VIEW_TYPE_TIME) {
             true -> {
                 when (adapter.currentList.size == position) {
                     true -> true
                     false -> {
-                        when (adapter.getItemViewType(position) == ITEM_VIEWTYPE_TIME) {
+                        when (adapter.getItemViewType(position) == VIEW_TYPE_TIME) {
                             true -> true
                             false -> false
                         }

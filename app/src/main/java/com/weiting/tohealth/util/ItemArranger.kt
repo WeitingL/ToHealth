@@ -1,28 +1,27 @@
 package com.weiting.tohealth.util
 
 import com.google.firebase.Timestamp
-import com.weiting.tohealth.data.ItemData
-import com.weiting.tohealth.data.ItemType
+import com.weiting.tohealth.data.*
 import java.util.*
 
 class ItemArranger {
 
-    fun isThatDayNeedToDo(itemType: ItemType, itemData: ItemData, day: Timestamp): Boolean {
+    fun isThatDayNeedToDo(itemsData: ItemData, day: Timestamp): Boolean {
 
-        return when (itemType) {
+        return when (itemsData.itemType) {
             ItemType.DRUG -> {
 
-                return when (itemData.DrugData?.period?.get("type")) {
+                return when (itemsData.DrugData?.period?.get("type")) {
                     0 -> true
                     1 -> typeSeveralDays(
-                        itemData.DrugData.period,
-                        itemData.DrugData.startDate!!,
+                        itemsData.DrugData.period,
+                        itemsData.DrugData.startDate ?: Timestamp.now(),
                         day
                     )
-                    2 -> typeWeekToDo(itemData.DrugData.period, itemData.DrugData.startDate!!, day)
+                    2 -> typeWeekToDo(itemsData.DrugData.period, day)
                     3 -> typeForCycleSetSet(
-                        itemData.DrugData.period,
-                        itemData.DrugData.startDate!!,
+                        itemsData.DrugData.period,
+                        itemsData.DrugData.startDate ?: Timestamp.now(),
                         day
                     )
                     4 -> false
@@ -31,17 +30,17 @@ class ItemArranger {
             }
             ItemType.CARE -> {
 
-                return when (itemData.CareData?.period?.get("type")) {
+                return when (itemsData.CareData?.period?.get("type")) {
                     0 -> true
                     1 -> typeSeveralDays(
-                        itemData.CareData.period,
-                        itemData.CareData.startDate!!,
+                        itemsData.CareData.period,
+                        itemsData.CareData.startDate ?: Timestamp.now(),
                         day
                     )
-                    2 -> typeWeekToDo(itemData.CareData.period, itemData.CareData.startDate!!, day)
+                    2 -> typeWeekToDo(itemsData.CareData.period, day)
                     3 -> typeForCycleSetSet(
-                        itemData.CareData.period,
-                        itemData.CareData.startDate!!,
+                        itemsData.CareData.period,
+                        itemsData.CareData.startDate ?: Timestamp.now(),
                         day
                     )
                     4 -> false
@@ -49,23 +48,22 @@ class ItemArranger {
                 }
             }
 
-            ItemType.ACTIVITY -> {
+            ItemType.EVENT -> {
 
-                return when (itemData.ActivityData?.period?.get("type")) {
+                return when (itemsData.EventData?.period?.get("type")) {
                     0 -> true
                     1 -> typeSeveralDays(
-                        itemData.ActivityData.period,
-                        itemData.ActivityData.startDate!!,
+                        itemsData.EventData.period,
+                        itemsData.EventData.startDate ?: Timestamp.now(),
                         day
                     )
                     2 -> typeWeekToDo(
-                        itemData.ActivityData.period,
-                        itemData.ActivityData.startDate!!,
+                        itemsData.EventData.period,
                         day
                     )
                     3 -> typeForCycleSetSet(
-                        itemData.ActivityData.period,
-                        itemData.ActivityData.startDate!!,
+                        itemsData.EventData.period,
+                        itemsData.EventData.startDate ?: Timestamp.now(),
                         day
                     )
                     4 -> false
@@ -98,7 +96,6 @@ class ItemArranger {
 
     private fun typeWeekToDo(
         data: Map<String, Int?>,
-        startDate: Timestamp,
         day: Timestamp
     ): Boolean {
         val c = Calendar.getInstance(Locale.TAIWAN)

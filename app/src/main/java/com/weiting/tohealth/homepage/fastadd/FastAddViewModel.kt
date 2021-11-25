@@ -52,13 +52,13 @@ class FastAddViewModel(private val firebaseDataRepository: FirebaseRepository) :
         firebaseDataRepository.editStock(drug.id!!, updateStock)
     }
 
-    fun postActivity(itemId: String, activityLog: ActivityLog) {
-        firebaseDataRepository.postActivityRecord(itemId, activityLog)
+    fun postActivity(itemId: String, eventLog: EventLog) {
+        firebaseDataRepository.postActivityRecord(itemId, eventLog)
     }
 }
 
 sealed class FastAddItem {
     data class DrugItem(val drug: Drug) : FastAddItem()
     data class MeasureItem(val measure: Measure) : FastAddItem()
-    data class ActivityItem(val activity: Activity) : FastAddItem()
+    data class ActivityItem(val event: Event) : FastAddItem()
 }

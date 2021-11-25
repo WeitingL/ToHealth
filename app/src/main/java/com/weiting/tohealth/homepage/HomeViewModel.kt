@@ -65,6 +65,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
      */
 
     // TODO Refactor 1st
+    //LiveData from firebase
     private val drugList =
         firebaseDataRepository.getLiveDrugList(UserManager.UserInformation.id ?: "")
     private val measureList =
@@ -74,37 +75,36 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
     private val careList =
         firebaseDataRepository.getLiveCareList(UserManager.UserInformation.id ?: "")
 
+    //Isolate the todolist and store separately.
     private val drugCurrentList = mutableListOf<ItemDataType>()
     private val measureCurrentList = mutableListOf<ItemDataType>()
     private val activityCurrentList = mutableListOf<ItemDataType>()
     private val careCurrentList = mutableListOf<ItemDataType>()
-
     private val timeCurrentList = mutableListOf<ItemDataType>()
+
     private val timeIntList = mutableListOf<Int>()
 
     val itemDataMediator = MediatorLiveData<MutableList<ItemDataType>>().apply {
         addSource(drugList) { drugList ->
             viewModelScope.launch {
-
                 drugCurrentList.clear()
-                isNotNewBie(drugList)
+                isNewBie(drugList)
 
-                val todayLogCreateTimeIntList = mutableListOf<Int>()
+                val logTimeTags = mutableListOf<Int>()
+                val ongoingDrugs = drugList.filter { it.status == 0 }
+                ongoingDrugs.forEach { drug ->
 
-                val ongoingDrugList = drugList.filter { it.status == 0 }
-                ongoingDrugList.forEach { drug ->
-                    // Get all logs today.
+                    // Get all logs and filter to be created today.
                     drug.drugLogs =
                         firebaseDataRepository.getDrugRecord(drug.id ?: "")
                             .filter { isToday(it.createdTime) }
 
                     drug.drugLogs.forEach { drugLog ->
-                        todayLogCreateTimeIntList.add(drugLog.timeTag?:0)
-                        todayLogCreateTimeIntList.sort()
+                        logTimeTags.add(drugLog.timeTag ?: 0)
+                        logTimeTags.sort()
                     }
 
                     if (ItemArranger().isThatDayNeedToDo(
-                            ItemType.DRUG,
                             ItemData(DrugData = drug),
                             Timestamp.now()
                         )
@@ -113,7 +113,8 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
                             _totalTask.value = _totalTask.value?.plus(1)
 
                             // Skip the item log that time tag is the same with exist time tag.
-                            if (getTimeStampToTimeInt(it) !in todayLogCreateTimeIntList) {
+                            if (getTimeStampToTimeInt(it) !in logTimeTags) {
+
                                 drugCurrentList.add(
                                     ItemDataType.DrugType(
                                         ItemData(DrugData = drug),
@@ -144,34 +145,30 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
             viewModelScope.launch {
 
                 measureCurrentList.clear()
-                isNotNewBie(measureList)
+                isNewBie(measureList)
 
+                val ongoingMeasures = measureList.filter { it.status == 0 }
+                val logTimeTags = mutableListOf<Int>()
 
-                val measureListByFilter = measureList.filter {
-                    it.status == 0
-                }
-
-                measureListByFilter.forEach { measure ->
+                ongoingMeasures.forEach { measure ->
 
                     measure.measureLogs =
                         firebaseDataRepository.getMeasureRecord(measure.id ?: "")
                             .filter { isToday(it.createdTime) }
 
-                    val todayLogCreateTimeIntList = mutableListOf<Int>()
                     measure.measureLogs.forEach { measureLog ->
-                        todayLogCreateTimeIntList.add(measureLog.timeTag!!)
-                        todayLogCreateTimeIntList.sort()
+                        logTimeTags.add(measureLog.timeTag ?: 0)
+                        logTimeTags.sort()
                     }
 
                     if (ItemArranger().isThatDayNeedToDo(
-                            ItemType.MEASURE,
                             ItemData(MeasureData = measure),
                             Timestamp.now()
                         )
                     ) {
                         measure.executedTime.forEach {
                             _totalTask.value = _totalTask.value?.plus(1)
-                            if (getTimeStampToTimeInt(it) !in todayLogCreateTimeIntList) {
+                            if (getTimeStampToTimeInt(it) !in logTimeTags) {
                                 measureCurrentList.add(
                                     ItemDataType.MeasureType(
                                         ItemData(MeasureData = measure),
@@ -188,6 +185,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
                                         )
                                     )
                                 }
+
                             } else {
                                 _completedTask.value = _completedTask.value?.plus(1)
                             }
@@ -201,37 +199,36 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
         addSource(activityList) { activityList ->
             viewModelScope.launch {
                 activityCurrentList.clear()
-                isNotNewBie(activityList)
-
+                isNewBie(activityList)
 
                 val activityListByFilter = activityList.filter {
                     it.status == 0
                 }
 
-                activityListByFilter.forEach { activity ->
+                val logTimeTags = mutableListOf<Int>()
 
-                    activity.activityLogs =
-                        firebaseDataRepository.getActivityRecord(activity.id ?: "")
+                activityListByFilter.forEach { event ->
+
+                    event.eventLogs =
+                        firebaseDataRepository.getActivityRecord(event.id ?: "")
                             .filter { isToday(it.createdTime) }
 
-                    val todayLogCreateTimeIntList = mutableListOf<Int>()
-                    activity.activityLogs.forEach { activityLog ->
-                        todayLogCreateTimeIntList.add(activityLog.timeTag!!)
-                        todayLogCreateTimeIntList.sort()
+                    event.eventLogs.forEach { activityLog ->
+                        logTimeTags.add(activityLog.timeTag!!)
+                        logTimeTags.sort()
                     }
 
                     if (ItemArranger().isThatDayNeedToDo(
-                            ItemType.ACTIVITY,
-                            ItemData(ActivityData = activity),
+                            ItemData(EventData = event),
                             Timestamp.now()
                         )
                     ) {
-                        activity.executedTime.forEach {
+                        event.executedTime.forEach {
                             _totalTask.value = _totalTask.value?.plus(1)
-                            if (getTimeStampToTimeInt(it) !in todayLogCreateTimeIntList) {
+                            if (getTimeStampToTimeInt(it) !in logTimeTags) {
                                 activityCurrentList.add(
-                                    ItemDataType.ActivityType(
-                                        ItemData(ActivityData = activity),
+                                    ItemDataType.EventType(
+                                        ItemData(EventData = event),
                                         getTimeStampToTimeInt(it)
                                     )
                                 )
@@ -258,12 +255,13 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
         addSource(careList) { careList ->
             viewModelScope.launch {
                 careCurrentList.clear()
-                isNotNewBie(careList)
+                isNewBie(careList)
 
 
                 val careListByFilter = careList.filter {
                     it.status == 0
                 }
+                val logTimeTags = mutableListOf<Int>()
 
                 careListByFilter.forEach { care ->
 
@@ -271,21 +269,20 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
                         firebaseDataRepository.getCareRecord(care.id ?: "")
                             .filter { isToday(it.createdTime) }
 
-                    val todayLogCreateTimeIntList = mutableListOf<Int>()
+
                     care.careLogs.forEach { careLog ->
-                        todayLogCreateTimeIntList.add(careLog.timeTag!!)
-                        todayLogCreateTimeIntList.sort()
+                        logTimeTags.add(careLog.timeTag!!)
+                        logTimeTags.sort()
                     }
 
                     if (ItemArranger().isThatDayNeedToDo(
-                            ItemType.CARE,
                             ItemData(CareData = care),
                             Timestamp.now()
                         )
                     ) {
                         care.executeTime.forEach {
                             _totalTask.value = _totalTask.value?.plus(1)
-                            if (getTimeStampToTimeInt(it) !in todayLogCreateTimeIntList) {
+                            if (getTimeStampToTimeInt(it) !in logTimeTags) {
                                 careCurrentList.add(
                                     ItemDataType.CareType(
                                         ItemData(CareData = care),
@@ -313,30 +310,13 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
         }
     }
 
-    private fun reAssignValue(): MutableList<ItemDataType> {
-        return arrangeTodoList(
-            timeIntList,
-            timeCurrentList,
-            drugCurrentList,
-            measureCurrentList,
-            activityCurrentList,
-            careCurrentList
-        )
-    }
 
-    private fun arrangeTodoList(
-        timeList: MutableList<Int>,
-        timeCurrentList: MutableList<ItemDataType>,
-        drugList: MutableList<ItemDataType>,
-        measureList: MutableList<ItemDataType>,
-        activityList: MutableList<ItemDataType>,
-        careList: MutableList<ItemDataType>
-    ): MutableList<ItemDataType> {
+    private fun reAssignValue(): MutableList<ItemDataType> {
         val list = mutableListOf<ItemDataType>()
 
-        timeList.distinct()
-        timeList.sort()
-        timeList.forEach { time ->
+        timeIntList.distinct()
+        timeIntList.sort()
+        timeIntList.forEach { time ->
 
             timeCurrentList.forEach {
                 if ((it as ItemDataType.TimeType).timeInt == time) {
@@ -344,25 +324,25 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
                 }
             }
 
-            drugList.forEach {
+            drugCurrentList.forEach {
                 if ((it as ItemDataType.DrugType).timeInt == time) {
                     list.add(it)
                 }
             }
 
-            measureList.forEach {
+            measureCurrentList.forEach {
                 if ((it as ItemDataType.MeasureType).timeInt == time) {
                     list.add(it)
                 }
             }
 
-            activityList.forEach {
-                if ((it as ItemDataType.ActivityType).timeInt == time) {
+            activityCurrentList.forEach {
+                if ((it as ItemDataType.EventType).timeInt == time) {
                     list.add(it)
                 }
             }
 
-            careList.forEach {
+            careCurrentList.forEach {
                 if ((it as ItemDataType.CareType).timeInt == time) {
                     list.add(it)
                 }
@@ -371,7 +351,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
         return list
     }
 
-    private fun isNotNewBie(list: List<ItemsDataType>) {
+    private fun isNewBie(list: List<Any>) {
         if (list.isEmpty()) {
             _isTheNewbie.value = false
         }
@@ -395,9 +375,6 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
     }
 
     fun removeTimeHeader(swipeData: SwipeData) {
-//        if (skipTimeList.isNotEmpty()){
-//            skipTimeList.clear()
-//        }
         skipTimeList.add(swipeData)
     }
 
@@ -406,7 +383,6 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
         val currentList = itemDataMediator.value
 
         if (skipTimeList.isNotEmpty() && lastData.position == (skipTimeList.last().position + 1)) {
-//            Log.i("data", skipTimeList.last().itemDataType.toString())
             currentList?.add(skipTimeList.last().position, skipTimeList.last().itemDataType)
             skipTimeList.removeLast()
         }
@@ -415,7 +391,6 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
         _completedTask.value = _completedTask.value?.minus(1)
 
         currentList?.add(lastData.position, lastData.itemDataType)
-//        Log.i("data", "${lastData.position}: ${currentList}")
         itemDataMediator.value = currentList
     }
 
@@ -458,10 +433,10 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
                         )
                     }
 
-                    is ItemDataType.ActivityType -> {
+                    is ItemDataType.EventType -> {
                         firebaseDataRepository.postActivityRecord(
-                            it.itemDataType.activity.ActivityData?.id!!,
-                            ActivityLog(
+                            it.itemDataType.Event.EventData?.id!!,
+                            EventLog(
                                 timeTag = it.itemDataType.timeInt,
                                 result = 1,
                                 createdTime = Timestamp.now()
@@ -535,10 +510,10 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) :
                     )
                 }
 
-                is ItemDataType.ActivityType -> {
+                is ItemDataType.EventType -> {
                     firebaseDataRepository.postActivityRecord(
-                        it.itemDataType.activity.ActivityData?.id!!,
-                        ActivityLog(
+                        it.itemDataType.Event.EventData?.id!!,
+                        EventLog(
                             timeTag = it.itemDataType.timeInt,
                             result = 0,
                             createdTime = Timestamp.now()
@@ -568,7 +543,7 @@ sealed class ItemDataType {
     data class TimeType(val time: String, val timeInt: Int) : ItemDataType()
     data class DrugType(val drug: ItemData, val timeInt: Int) : ItemDataType()
     data class MeasureType(val measure: ItemData, val timeInt: Int) : ItemDataType()
-    data class ActivityType(val activity: ItemData, val timeInt: Int) : ItemDataType()
+    data class EventType(val Event: ItemData, val timeInt: Int) : ItemDataType()
     data class CareType(val care: ItemData, val timeInt: Int) : ItemDataType()
 }
 

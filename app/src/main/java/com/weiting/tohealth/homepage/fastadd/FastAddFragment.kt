@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.firebase.Timestamp
 import com.weiting.tohealth.NavigationDirections
 import com.weiting.tohealth.PublicApplication
-import com.weiting.tohealth.data.ActivityLog
+import com.weiting.tohealth.data.EventLog
 import com.weiting.tohealth.data.DrugLog
 import com.weiting.tohealth.databinding.FastAddFragmentBinding
 import com.weiting.tohealth.factory.FastAddViewModelFactory
@@ -47,8 +47,8 @@ class FastAddFragment : Fragment() {
                     }
                     is FastAddItem.ActivityItem -> {
                         viewModel.postActivity(
-                            it.activity.id!!,
-                            ActivityLog(
+                            it.event.id!!,
+                            EventLog(
                                 timeTag = getTimeStampToTimeInt(
                                     Timestamp.now()
                                 ),

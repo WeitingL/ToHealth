@@ -114,7 +114,7 @@ class ItemUpdateViewModel(
             }
 
             ManageType.ACTIVITY -> {
-                val data = itemData.ActivityData!!
+                val data = itemData.EventData!!
 
                 data.period = mapOf(
                     "type" to binding.spPeriodUpdate.selectedItemPosition,

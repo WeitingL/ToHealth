@@ -90,7 +90,7 @@ class ManageDetailFragment : Fragment() {
                         it.status != 2
                     }
                     newList.forEach {
-                        list += ItemData(ActivityData = it)
+                        list += ItemData(EventData = it)
                     }
                     viewModel.putInDetailList(list)
                 }

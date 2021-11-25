@@ -3,6 +3,7 @@ package com.weiting.tohealth.works
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
@@ -11,9 +12,10 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.weiting.tohealth.*
 import com.weiting.tohealth.data.*
+import com.weiting.tohealth.homepage.ItemDataType
 import com.weiting.tohealth.util.ItemArranger
 import com.weiting.tohealth.util.Util.getTimeStampToTimeInt
-import com.weiting.tohealth.util.Util.toActivityType
+import com.weiting.tohealth.util.Util.toEventType
 import com.weiting.tohealth.util.Util.toCareType
 import com.weiting.tohealth.util.Util.toMeasureType
 import com.weiting.tohealth.util.Util.toTimeFromTimeStamp
@@ -29,57 +31,45 @@ class TodoListNotification {
         val userId = Firebase.auth.currentUser?.uid ?: ""
 
         val drugList = firebaseDataRepository.getAllDrugs(userId).filter {
-            ItemArranger().isThatDayNeedToDo(
-                ItemType.DRUG, ItemData(DrugData = it),
-                Timestamp.now()
-            )
+            ItemArranger().isThatDayNeedToDo(ItemData(DrugData = it), Timestamp.now())
         }
         drugList.forEach { drug ->
             drug.executedTime.forEach { timeStamp ->
                 if (getTimeStampToTimeInt(timeStamp) == timeTag) {
-                    showNotification(drug, timeStamp)
+                    showNotification(ItemData(DrugData = drug), timeStamp)
                 }
             }
         }
 
         val measureList = firebaseDataRepository.getAllMeasures(userId).filter {
-            ItemArranger().isThatDayNeedToDo(
-                ItemType.MEASURE, ItemData(MeasureData = it),
-                Timestamp.now()
-            )
+            ItemArranger().isThatDayNeedToDo(ItemData(MeasureData = it), Timestamp.now())
         }
         measureList.forEach { measure ->
             measure.executedTime.forEach { timestamp ->
                 if (getTimeStampToTimeInt(timestamp) == timeTag) {
-                    showNotification(measure, timestamp)
+                    showNotification(ItemData(MeasureData = measure), timestamp)
                 }
             }
         }
 
         val careList = firebaseDataRepository.getAllCares(userId).filter {
-            ItemArranger().isThatDayNeedToDo(
-                ItemType.CARE, ItemData(CareData = it),
-                Timestamp.now()
-            )
+            ItemArranger().isThatDayNeedToDo(ItemData(CareData = it), Timestamp.now())
         }
         careList.forEach { care ->
             care.executeTime.forEach { timestamp ->
                 if (getTimeStampToTimeInt(timestamp) == timeTag) {
-                    showNotification(care, timestamp)
+                    showNotification(ItemData(CareData = care), timestamp)
                 }
             }
         }
 
-        val activityList = firebaseDataRepository.getAllActivities(userId).filter {
-            ItemArranger().isThatDayNeedToDo(
-                ItemType.ACTIVITY, ItemData(ActivityData = it),
-                Timestamp.now()
-            )
+        val eventList = firebaseDataRepository.getAllActivities(userId).filter {
+            ItemArranger().isThatDayNeedToDo(ItemData(EventData = it), Timestamp.now())
         }
-        activityList.forEach { activity ->
-            activity.executedTime.forEach { timestamp ->
+        eventList.forEach { event ->
+            event.executedTime.forEach { timestamp ->
                 if (getTimeStampToTimeInt(timestamp) == timeTag) {
-                    showNotification(activity, timestamp)
+                    showNotification(ItemData(EventData = event), timestamp)
                 }
             }
         }
@@ -97,16 +87,18 @@ class TodoListNotification {
     private val pendingIntent =
         PendingIntent.getActivity(context, 0, mainIntent, PendingIntent.FLAG_CANCEL_CURRENT)
 
-    private fun showNotification(itemsDataType: ItemsDataType, timestamp: Timestamp) {
+    private fun showNotification(itemData: ItemData, timestamp: Timestamp) {
         notificationManager.createNotificationChannel(channel)
 
-        when (itemsDataType) {
-            is Drug -> {
+        when (itemData.itemType) {
+            ItemType.DRUG -> {
+                val drug = itemData.DrugData ?: Drug()
+
                 val notification = NotificationCompat.Builder(context, CHANNEL_ID)
                     .setSmallIcon(R.drawable.hospital_sign)
                     .setContentTitle("已經${toTimeFromTimeStamp(Timestamp.now())}  該吃藥囉!")
                     .setContentText(
-                        "${itemsDataType.drugName}\n要吃 ${itemsDataType.dose} ${toUnit(itemsDataType.unit)}\n輕觸可以開啟應用程式"
+                        "${drug.drugName}\n要吃 ${drug.dose} ${toUnit(drug.unit)}\n輕觸可以開啟應用程式"
                     )
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setContentIntent(pendingIntent)
@@ -115,12 +107,12 @@ class TodoListNotification {
                 notificationManager.notify(timestamp.nanoseconds, notification)
             }
 
-            is Measure -> {
+            ItemType.MEASURE -> {
                 val notification = NotificationCompat.Builder(context, CHANNEL_ID)
                     .setSmallIcon(R.drawable.hospital_sign)
                     .setContentTitle("已經${toTimeFromTimeStamp(Timestamp.now())}囉!")
                     .setContentText(
-                        "應該要量${toMeasureType(itemsDataType.type)}了!\n輕觸可以開啟應用程式"
+                        "應該要量${toMeasureType(itemData.MeasureData?.type)}了!\n輕觸可以開啟應用程式"
                     )
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setContentIntent(pendingIntent)
@@ -129,12 +121,12 @@ class TodoListNotification {
                 notificationManager.notify(timestamp.nanoseconds + 1, notification)
             }
 
-            is Care -> {
+            ItemType.CARE -> {
                 val notification = NotificationCompat.Builder(context, CHANNEL_ID)
                     .setSmallIcon(R.drawable.hospital_sign)
                     .setContentTitle("已經${toTimeFromTimeStamp(Timestamp.now())}囉!")
                     .setContentText(
-                        "應該要填${toCareType(itemsDataType.type)}了!\n輕觸可以開啟應用程式"
+                        "應該要填${toCareType(itemData.CareData?.type)}了!\n輕觸可以開啟應用程式"
                     )
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setContentIntent(pendingIntent)
@@ -142,12 +134,12 @@ class TodoListNotification {
 
                 notificationManager.notify(timestamp.nanoseconds + 2, notification)
             }
-            is Activity -> {
+            ItemType.EVENT -> {
                 val notification = NotificationCompat.Builder(context, CHANNEL_ID)
                     .setSmallIcon(R.drawable.hospital_sign)
                     .setContentTitle("已經${toTimeFromTimeStamp(Timestamp.now())}囉!")
                     .setContentText(
-                        "應該要去${toActivityType(itemsDataType.type)}了!\n輕觸可以開啟應用程式"
+                        "應該要去${toEventType(itemData.EventData?.type)}了!\n輕觸可以開啟應用程式"
                     )
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setContentIntent(pendingIntent)

@@ -2,6 +2,7 @@ package com.weiting.tohealth.data
 
 import android.os.Parcelable
 import com.google.firebase.Timestamp
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 // Use this data class to hold all type of item.
@@ -9,9 +10,18 @@ import kotlinx.parcelize.Parcelize
 data class ItemData(
     val DrugData: Drug? = null,
     val MeasureData: Measure? = null,
-    val ActivityData: Activity? = null,
+    val EventData: Event? = null,
     val CareData: Care? = null
-) : Parcelable
+):Parcelable{
+    @IgnoredOnParcel
+    val itemType = when{
+        DrugData != null -> ItemType.DRUG
+        MeasureData != null -> ItemType.MEASURE
+        EventData != null -> ItemType.EVENT
+        CareData != null -> ItemType.CARE
+        else -> throw Exception("Something Wrong!")
+    }
+}
 
 @Parcelize
 data class Drug(
@@ -34,7 +44,7 @@ data class Drug(
     var lastEditTime: Timestamp? = null,
     var status: Int? = null,
     var drugLogs: List<DrugLog> = listOf()
-) : Parcelable, ItemsDataType
+) : Parcelable
 
 @Parcelize
 data class DrugLog(
@@ -42,7 +52,7 @@ data class DrugLog(
     val timeTag: Int? = null,
     val result: Int? = null,
     val createdTime: Timestamp? = null
-) : Parcelable, ItemsLogType
+) : Parcelable
 
 @Parcelize
 data class Measure(
@@ -55,7 +65,7 @@ data class Measure(
     var lastEditTime: Timestamp? = null,
     var status: Int? = null,
     var measureLogs: List<MeasureLog> = listOf()
-) : Parcelable, ItemsDataType
+) : Parcelable
 
 @Parcelize
 data class MeasureLog(
@@ -64,10 +74,10 @@ data class MeasureLog(
     val result: Int? = null,
     val record: Map<String, Int?> = mapOf("X" to null, "Y" to null, "Z" to null),
     val createdTime: Timestamp? = null
-) : Parcelable, ItemsLogType
+) : Parcelable
 
 @Parcelize
-data class Activity(
+data class Event(
     var id: String? = null,
     val userId: String? = null,
     val type: Int? = null,
@@ -83,17 +93,17 @@ data class Activity(
     val createdTime: Timestamp? = null,
     var lastEditTime: Timestamp? = null,
     var status: Int? = null,
-    var activityLogs: List<ActivityLog> = listOf()
-) : Parcelable, ItemsDataType
+    var eventLogs: List<EventLog> = listOf()
+) : Parcelable
 
 @Parcelize
-data class ActivityLog(
+data class EventLog(
     var id: String? = null,
     val timeTag: Int? = null,
     val result: Int? = null,
     val record: Map<String, Int?> = mapOf("X" to null, "Y" to null, "Z" to null),
     val createdTime: Timestamp? = null
-) : Parcelable, ItemsLogType
+) : Parcelable
 
 @Parcelize
 data class Care(
@@ -113,7 +123,7 @@ data class Care(
     var lastEditTime: Timestamp? = null,
     var status: Int? = null,
     var careLogs: List<CareLog> = listOf()
-) : Parcelable, ItemsDataType
+) : Parcelable
 
 @Parcelize
 data class CareLog(
@@ -122,8 +132,4 @@ data class CareLog(
     val result: Int? = null,
     var record: Map<String, String?> = mapOf("emotion" to null, "note" to null),
     val createdTime: Timestamp? = null
-) : Parcelable, ItemsLogType
-
-interface ItemsDataType
-
-interface ItemsLogType
+) : Parcelable

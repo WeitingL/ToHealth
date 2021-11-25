@@ -1,11 +1,11 @@
 package com.weiting.tohealth.mystatisticpage.activitychart
 
 import com.google.firebase.Timestamp
-import com.weiting.tohealth.data.Activity
+import com.weiting.tohealth.data.Event
 import com.weiting.tohealth.mystatisticpage.LogItem
 import com.weiting.tohealth.mystatisticpage.ResultInDate
 import com.weiting.tohealth.util.Util.getTimeStampToDateInt
-import com.weiting.tohealth.util.Util.toActivityType
+import com.weiting.tohealth.util.Util.toEventType
 import com.weiting.tohealth.util.Util.toTimeFromTimeStamp
 
 class AnalyzeActivityLog {
@@ -16,10 +16,10 @@ class AnalyzeActivityLog {
     private val allDateInInt = mutableListOf<Int>()
     private val allDateInTimeStamp = mutableListOf<Timestamp>()
 
-    fun revertToResultInDateList(activity: Activity): LogItem.ActivityLogItem {
-        getAllDate(activity)
+    fun revertToResultInDateList(event: Event): LogItem.ActivityLogItem {
+        getAllDate(event)
         allDateInInt.forEachIndexed { index, it ->
-            activity.activityLogs.forEach { activityLog ->
+            event.eventLogs.forEach { activityLog ->
                 if (getTimeStampToDateInt(activityLog.createdTime ?: Timestamp.now()) == it) {
                     resultList.add(
                         mapOf(
@@ -32,11 +32,11 @@ class AnalyzeActivityLog {
             resultInDateList.add(ResultInDate(allDateInTimeStamp[index], resultList))
             resultList = mutableListOf()
         }
-        return LogItem.ActivityLogItem(toActivityType(activity.type), resultInDateList)
+        return LogItem.ActivityLogItem(toEventType(event.type), resultInDateList)
     }
 
-    private fun getAllDate(activity: Activity) {
-        activity.activityLogs.forEach {
+    private fun getAllDate(event: Event) {
+        event.eventLogs.forEach {
             if (getTimeStampToDateInt(it.createdTime ?: Timestamp.now()) !in allDateInInt) {
                 allDateInInt.add(getTimeStampToDateInt(it.createdTime ?: Timestamp.now()))
                 allDateInTimeStamp.add(it.createdTime ?: Timestamp.now())

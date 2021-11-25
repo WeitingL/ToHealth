@@ -51,7 +51,7 @@ class ItemEditViewModel(
         when (int) {
             0 -> _editItemType.value = ItemType.DRUG
             1 -> _editItemType.value = ItemType.MEASURE
-            2 -> _editItemType.value = ItemType.ACTIVITY
+            2 -> _editItemType.value = ItemType.EVENT
             3 -> _editItemType.value = ItemType.CARE
         }
     }
@@ -132,8 +132,8 @@ class ItemEditViewModel(
 
                 firebaseDataRepository.postMeasure(data)
             }
-            ItemType.ACTIVITY -> {
-                val data = Activity(
+            ItemType.EVENT -> {
+                val data = Event(
                     userId = user.id,
                     type = binding.spItemName.selectedItemPosition,
                     endDate = mapOf(

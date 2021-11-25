@@ -46,7 +46,7 @@ class StatisticDetailViewModel(
         viewModelScope.launch {
             val measureList = firebaseDataRepository.getAllMeasures(userId)
             measureList.forEach {
-                it.measureLogs = firebaseDataRepository.getMeasureRecord(it.id!!, Timestamp.now())
+                it.measureLogs = firebaseDataRepository.getMeasureRecord(it.id?:"")
                 if (it.measureLogs.isNotEmpty()) {
                     logItemList.add(AnalyzeMeasureLog().revertToResultInDateList(it))
                 }
@@ -61,7 +61,7 @@ class StatisticDetailViewModel(
         viewModelScope.launch {
             val careList = firebaseDataRepository.getAllCares(userId)
             careList.forEach {
-                it.careLogs = firebaseDataRepository.getCareRecord(it.id!!, Timestamp.now())
+                it.careLogs = firebaseDataRepository.getCareRecord(it.id?:"")
                 if (it.careLogs.isNotEmpty()) {
                     logItemList.add(AnalyzeCareLog().revertToResultInDateList(it))
                 }
@@ -76,8 +76,8 @@ class StatisticDetailViewModel(
         viewModelScope.launch {
             val activityList = firebaseDataRepository.getAllActivities(userId)
             activityList.forEach {
-                it.activityLogs = firebaseDataRepository.getActivityRecord(it.id!!, Timestamp.now())
-                if (it.activityLogs.isNotEmpty()) {
+                it.eventLogs = firebaseDataRepository.getActivityRecord(it.id?:"")
+                if (it.eventLogs.isNotEmpty()) {
                     logItemList.add(AnalyzeActivityLog().revertToResultInDateList(it))
                 }
             }
@@ -91,7 +91,7 @@ class StatisticDetailViewModel(
         viewModelScope.launch {
             val drugList = firebaseDataRepository.getAllDrugs(userId)
             drugList.forEach {
-                it.drugLogs = firebaseDataRepository.getDrugRecord(it.id!!, Timestamp.now())
+                it.drugLogs = firebaseDataRepository.getDrugRecord(it.id?:"")
                 if (it.drugLogs.isNotEmpty()) {
                     logItemList.add(AnalyzeDrugLog().revertToResultInDateList(it))
                 }

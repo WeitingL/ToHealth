@@ -6,13 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.weiting.tohealth.*
 import com.weiting.tohealth.data.*
 import com.weiting.tohealth.databinding.ItemRowBinding
-import com.weiting.tohealth.util.Util.setActivityType
+import com.weiting.tohealth.util.Util.setEventType
 import com.weiting.tohealth.util.Util.setDrugDrawable
 import com.weiting.tohealth.util.Util.setMeasureDrawable
-import com.weiting.tohealth.util.Util.toActivityType
+import com.weiting.tohealth.util.Util.toEventType
 import com.weiting.tohealth.util.Util.toMeasureType
 import com.weiting.tohealth.util.Util.toUnit
 import java.lang.ClassCastException
@@ -66,10 +65,10 @@ class FastAddAdapter(val onClickListener: OnclickListener) :
 
     inner class ActivityViewHolder(private val binding: ItemRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(activity: Activity?) {
+        fun bind(event: Event?) {
             binding.apply {
-                tvName.text = toActivityType(activity?.type)
-                imageView.setImageResource(setActivityType(activity?.type))
+                tvName.text = toEventType(event?.type)
+                imageView.setImageResource(setEventType(event?.type))
                 tvUnit.visibility = View.GONE
                 tvStock.visibility = View.GONE
             }
@@ -121,7 +120,7 @@ class FastAddAdapter(val onClickListener: OnclickListener) :
                 }
             }
             is ActivityViewHolder -> {
-                holder.bind((getItem(position) as FastAddItem.ActivityItem).activity)
+                holder.bind((getItem(position) as FastAddItem.ActivityItem).event)
                 holder.itemView.setOnClickListener {
                     onClickListener.onClick((getItem(position) as FastAddItem.ActivityItem))
                 }

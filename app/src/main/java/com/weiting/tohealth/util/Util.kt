@@ -61,7 +61,7 @@ object Util {
         }
     }
 
-    fun toActivityType(int: Int?): String {
+    fun toEventType(int: Int?): String {
         return when (int) {
             0 -> "健身"
             1 -> "走路(健走"
@@ -117,7 +117,7 @@ object Util {
         }
     }
 
-    fun setActivityType(int: Int?): Int {
+    fun setEventType(int: Int?): Int {
         return when (int) {
             0 -> R.drawable.strength
             1 -> R.drawable.running

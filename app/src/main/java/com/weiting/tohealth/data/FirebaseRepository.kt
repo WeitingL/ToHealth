@@ -1,7 +1,6 @@
 package com.weiting.tohealth.data
 
 import androidx.lifecycle.MutableLiveData
-import com.google.firebase.Timestamp
 
 interface FirebaseRepository {
 
@@ -26,7 +25,7 @@ interface FirebaseRepository {
 
     suspend fun getAllMeasures(userId: String): List<Measure>
 
-    suspend fun getAllActivities(userId: String): List<Activity>
+    suspend fun getAllActivities(userId: String): List<Event>
 
     suspend fun getAllCares(userId: String): List<Care>
 
@@ -36,7 +35,7 @@ interface FirebaseRepository {
 
     fun getLiveMeasureList(userId: String): MutableLiveData<List<Measure>>
 
-    fun getLiveActivityList(userId: String): MutableLiveData<List<Activity>>
+    fun getLiveActivityList(userId: String): MutableLiveData<List<Event>>
 
     fun getLiveCareList(userId: String): MutableLiveData<List<Care>>
 
@@ -45,7 +44,7 @@ interface FirebaseRepository {
 
     fun postMeasure(measure: Measure)
 
-    fun postActivity(activity: Activity)
+    fun postActivity(event: Event)
 
     fun postCare(care: Care)
 
@@ -54,7 +53,7 @@ interface FirebaseRepository {
 
     fun updateMeasure(measure: Measure)
 
-    fun updateActivity(activity: Activity)
+    fun updateActivity(event: Event)
 
     fun updateCare(care: Care)
 
@@ -65,7 +64,7 @@ interface FirebaseRepository {
 
     fun postMeasureRecord(id: String, measureLog: MeasureLog)
 
-    fun postActivityRecord(id: String, activityLog: ActivityLog)
+    fun postActivityRecord(id: String, eventLog: EventLog)
 
     fun postCareRecord(id: String, careLog: CareLog)
 
@@ -76,7 +75,7 @@ interface FirebaseRepository {
 
     suspend fun getMeasureLog(itemId: String, itemsLogId: String): MeasureLog
 
-    suspend fun getActivityRecord(itemId: String): List<ActivityLog>
+    suspend fun getActivityRecord(itemId: String): List<EventLog>
 
     suspend fun getCareRecord(itemId: String): List<CareLog>
     /*

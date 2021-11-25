@@ -2,7 +2,6 @@ package com.weiting.tohealth.homepage
 
 import android.content.Context
 import android.os.Bundle
-import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -54,7 +53,7 @@ class HomeFragment : Fragment() {
                     // Skip
                     ItemTouchHelper.LEFT -> {
                         when (viewHolder.itemViewType) {
-                            ITEM_VIEWTYPE_DRUG -> {
+                            VIEW_TYPE_DRUG -> {
 
                                 viewModel.swipeToSkip(
                                     SwipeData(
@@ -102,7 +101,7 @@ class HomeFragment : Fragment() {
                                         })
                                     .show()
                             }
-                            ITEM_VIEWTYPE_MEASURE -> {
+                            VIEW_TYPE_MEASURE -> {
 
                                 viewModel.swipeToSkip(
                                     SwipeData(
@@ -149,7 +148,7 @@ class HomeFragment : Fragment() {
                                             }
                                         }).show()
                             }
-                            ITEM_VIEWTYPE_ACTIVITY -> {
+                            VIEW_TYPE_EVENT -> {
 
                                 viewModel.swipeToSkip(
                                     SwipeData(
@@ -197,7 +196,7 @@ class HomeFragment : Fragment() {
                                             }
                                         }).show()
                             }
-                            ITEM_VIEWTYPE_CARE -> {
+                            VIEW_TYPE_CARE -> {
 
                                 viewModel.swipeToSkip(
                                     SwipeData(
@@ -250,7 +249,7 @@ class HomeFragment : Fragment() {
                     // Log
                     ItemTouchHelper.RIGHT -> {
                         when (viewHolder.itemViewType) {
-                            ITEM_VIEWTYPE_DRUG -> {
+                            VIEW_TYPE_DRUG -> {
                                 viewModel.getFinishedLog(
                                     SwipeData(
                                         adapter.currentList[position],
@@ -296,7 +295,7 @@ class HomeFragment : Fragment() {
                                             }
                                         }).show()
                             }
-                            ITEM_VIEWTYPE_MEASURE -> {
+                            VIEW_TYPE_MEASURE -> {
                                 findNavController().navigate(
                                     NavigationDirections.actionGlobalMeasureRecordFragment(
                                         (
@@ -310,7 +309,7 @@ class HomeFragment : Fragment() {
                                     )
                                 )
                             }
-                            ITEM_VIEWTYPE_ACTIVITY -> {
+                            VIEW_TYPE_EVENT -> {
 
                                 viewModel.getFinishedLog(
                                     SwipeData(
@@ -357,7 +356,7 @@ class HomeFragment : Fragment() {
                                             }
                                         }).show()
                             }
-                            ITEM_VIEWTYPE_CARE -> {
+                            VIEW_TYPE_CARE -> {
                                 findNavController().navigate(
                                     NavigationDirections.actionGlobalCareRecordFragment(
                                         (
@@ -427,25 +426,17 @@ class HomeFragment : Fragment() {
 }
 
 class WrapContentLinearLayoutManager : LinearLayoutManager {
-    constructor(context: Context?) : super(context)
     constructor(context: Context?, orientation: Int, reverseLayout: Boolean) : super(
         context,
         orientation,
         reverseLayout
     )
 
-    constructor(
-        context: Context?,
-        attrs: AttributeSet?,
-        defStyleAttr: Int,
-        defStyleRes: Int
-    ) : super(context, attrs, defStyleAttr, defStyleRes)
-
     override fun onLayoutChildren(recycler: Recycler, state: RecyclerView.State) {
         try {
             super.onLayoutChildren(recycler, state)
         } catch (e: IndexOutOfBoundsException) {
-//            e.printStackTrace()
+//            EventData.printStackTrace()
         }
     }
 }

@@ -11,7 +11,6 @@ import com.google.firebase.ktx.Firebase
 import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.data.FirebaseRepository
 import com.weiting.tohealth.data.ItemData
-import com.weiting.tohealth.data.ItemType
 import com.weiting.tohealth.receiver.AlarmReceiver
 import com.weiting.tohealth.receiver.POST_NOTIFICATION
 import com.weiting.tohealth.util.ItemArranger
@@ -29,7 +28,7 @@ class RebuildAlarm {
         val timeList = mutableListOf<Timestamp>()
 
         val drugList = firebaseDataRepository.getAllDrugs(userId).filter {
-            ItemArranger().isThatDayNeedToDo(ItemType.DRUG, ItemData(DrugData = it), Timestamp.now())
+            ItemArranger().isThatDayNeedToDo(ItemData(DrugData = it), Timestamp.now())
         }
         drugList.forEach {
             it.executedTime.forEach {
@@ -40,7 +39,7 @@ class RebuildAlarm {
         }
 
         val measureLog = firebaseDataRepository.getAllMeasures(userId).filter {
-            ItemArranger().isThatDayNeedToDo(ItemType.MEASURE, ItemData(MeasureData = it), Timestamp.now())
+            ItemArranger().isThatDayNeedToDo(ItemData(MeasureData = it), Timestamp.now())
         }
         measureLog.forEach {
             it.executedTime.forEach {
@@ -50,10 +49,10 @@ class RebuildAlarm {
             }
         }
 
-        val activityList = firebaseDataRepository.getAllActivities(userId).filter {
-            ItemArranger().isThatDayNeedToDo(ItemType.ACTIVITY, ItemData(ActivityData = it), Timestamp.now())
+        val eventList = firebaseDataRepository.getAllActivities(userId).filter {
+            ItemArranger().isThatDayNeedToDo(ItemData(EventData = it), Timestamp.now())
         }
-        activityList.forEach {
+        eventList.forEach {
             it.executedTime.forEach {
                 if (getTimeStampToTimeInt(it) > getTimeStampToTimeInt(Timestamp.now())) {
                     timeList.add(it)
@@ -62,7 +61,7 @@ class RebuildAlarm {
         }
 
         val careList = firebaseDataRepository.getAllCares(userId).filter {
-            ItemArranger().isThatDayNeedToDo(ItemType.CARE, ItemData(CareData = it), Timestamp.now())
+            ItemArranger().isThatDayNeedToDo(ItemData(CareData = it), Timestamp.now())
         }
         careList.forEach {
             it.executeTime.forEach {

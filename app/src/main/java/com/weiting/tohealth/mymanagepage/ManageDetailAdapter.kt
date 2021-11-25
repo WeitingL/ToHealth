@@ -12,10 +12,10 @@ import com.weiting.tohealth.data.ItemData
 import com.weiting.tohealth.databinding.ManageRowItemBinding
 import com.weiting.tohealth.mymanagepage.ManageDetailAdapter.ItemsListViewHolder
 import com.weiting.tohealth.util.Util.getTimeStampToTimeInt
-import com.weiting.tohealth.util.Util.setActivityType
+import com.weiting.tohealth.util.Util.setEventType
 import com.weiting.tohealth.util.Util.setDrugDrawable
 import com.weiting.tohealth.util.Util.setMeasureDrawable
-import com.weiting.tohealth.util.Util.toActivityType
+import com.weiting.tohealth.util.Util.toEventType
 import com.weiting.tohealth.util.Util.toCareType
 import com.weiting.tohealth.util.Util.toMeasureType
 import com.weiting.tohealth.util.Util.toStatus
@@ -140,7 +140,7 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                         }
 
                         ManageType.ACTIVITY -> {
-                            val data = item.ActivityData
+                            val data = item.EventData
                             adapter.submitList(
                                 data?.executedTime?.sortedBy {
                                     getTimeStampToTimeInt(it)
@@ -158,8 +158,8 @@ class ManageDetailAdapter(private val dataType: ManageType, val onClickListener:
                             }
 
                             rvTimeList.adapter = adapter
-                            tvItemNameManage.text = toActivityType(data?.type)
-                            imItemIcon.setImageResource(setActivityType(data?.type))
+                            tvItemNameManage.text = toEventType(data?.type)
+                            imItemIcon.setImageResource(setEventType(data?.type))
                             tvPeriod.text = toStringFromPeriod(data?.period ?: mapOf())
                             tvTagManage.text = toStatus(data?.status)
 

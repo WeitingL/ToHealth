@@ -10,20 +10,20 @@ import com.weiting.tohealth.*
 import com.weiting.tohealth.data.*
 import com.weiting.tohealth.databinding.ItemRowHomeBinding
 import com.weiting.tohealth.databinding.TimeRowBinding
-import com.weiting.tohealth.util.Util.setActivityType
+import com.weiting.tohealth.util.Util.setEventType
 import com.weiting.tohealth.util.Util.setDrugDrawable
 import com.weiting.tohealth.util.Util.setMeasureDrawable
-import com.weiting.tohealth.util.Util.toActivityType
+import com.weiting.tohealth.util.Util.toEventType
 import com.weiting.tohealth.util.Util.toCareType
 import com.weiting.tohealth.util.Util.toMeasureType
 import com.weiting.tohealth.util.Util.toUnit
 import java.lang.ClassCastException
 
-const val ITEM_VIEWTYPE_TIME = 0
-const val ITEM_VIEWTYPE_DRUG = 1
-const val ITEM_VIEWTYPE_MEASURE = 2
-const val ITEM_VIEWTYPE_ACTIVITY = 3
-const val ITEM_VIEWTYPE_CARE = 4
+const val VIEW_TYPE_TIME = 0
+const val VIEW_TYPE_DRUG = 1
+const val VIEW_TYPE_MEASURE = 2
+const val VIEW_TYPE_EVENT = 3
+const val VIEW_TYPE_CARE = 4
 
 class TodayItemAdapter :
     ListAdapter<ItemDataType, RecyclerView.ViewHolder>(DiffCallback) {
@@ -38,11 +38,11 @@ class TodayItemAdapter :
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
-            is ItemDataType.TimeType -> ITEM_VIEWTYPE_TIME
-            is ItemDataType.DrugType -> ITEM_VIEWTYPE_DRUG
-            is ItemDataType.MeasureType -> ITEM_VIEWTYPE_MEASURE
-            is ItemDataType.ActivityType -> ITEM_VIEWTYPE_ACTIVITY
-            is ItemDataType.CareType -> ITEM_VIEWTYPE_CARE
+            is ItemDataType.TimeType -> VIEW_TYPE_TIME
+            is ItemDataType.DrugType -> VIEW_TYPE_DRUG
+            is ItemDataType.MeasureType -> VIEW_TYPE_MEASURE
+            is ItemDataType.EventType -> VIEW_TYPE_EVENT
+            is ItemDataType.CareType -> VIEW_TYPE_CARE
         }
     }
 
@@ -75,12 +75,12 @@ class TodayItemAdapter :
         }
     }
 
-    inner class ActivityViewHolder(private val binding: ItemRowHomeBinding) :
+    inner class EventViewHolder(private val binding: ItemRowHomeBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(activity: Activity?) {
+        fun bind(event: Event?) {
             binding.apply {
-                tvName.text = toActivityType(activity?.type)
-                imageView.setImageResource(setActivityType(activity?.type))
+                tvName.text = toEventType(event?.type)
+                imageView.setImageResource(setEventType(event?.type))
                 tvUnit.visibility = View.GONE
             }
         }
@@ -108,7 +108,7 @@ class TodayItemAdapter :
         viewType: Int
     ): RecyclerView.ViewHolder {
         return when (viewType) {
-            ITEM_VIEWTYPE_TIME -> TimeViewHolder(
+            VIEW_TYPE_TIME -> TimeViewHolder(
                 TimeRowBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
@@ -116,7 +116,7 @@ class TodayItemAdapter :
                 )
             )
 
-            ITEM_VIEWTYPE_DRUG -> DrugViewHolder(
+            VIEW_TYPE_DRUG -> DrugViewHolder(
                 ItemRowHomeBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
@@ -124,7 +124,7 @@ class TodayItemAdapter :
                 )
             )
 
-            ITEM_VIEWTYPE_MEASURE -> MeasureViewHolder(
+            VIEW_TYPE_MEASURE -> MeasureViewHolder(
                 ItemRowHomeBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
@@ -132,7 +132,7 @@ class TodayItemAdapter :
                 )
             )
 
-            ITEM_VIEWTYPE_ACTIVITY -> ActivityViewHolder(
+            VIEW_TYPE_EVENT -> EventViewHolder(
                 ItemRowHomeBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
@@ -140,7 +140,7 @@ class TodayItemAdapter :
                 )
             )
 
-            ITEM_VIEWTYPE_CARE -> CareViewHolder(
+            VIEW_TYPE_CARE -> CareViewHolder(
                 ItemRowHomeBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
@@ -166,8 +166,8 @@ class TodayItemAdapter :
             is MeasureViewHolder -> {
                 holder.bind((getItem(position) as ItemDataType.MeasureType).measure.MeasureData)
             }
-            is ActivityViewHolder -> {
-                holder.bind((getItem(position) as ItemDataType.ActivityType).activity.ActivityData)
+            is EventViewHolder -> {
+                holder.bind((getItem(position) as ItemDataType.EventType).Event.EventData)
             }
             is CareViewHolder -> {
                 holder.bind((getItem(position) as ItemDataType.CareType).care.CareData)

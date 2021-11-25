@@ -119,9 +119,9 @@ object FirebaseDataSource : FirebaseSource {
                 }
         }
 
-    override suspend fun getAllActivities(userId: String): List<Activity> =
+    override suspend fun getAllActivities(userId: String): List<Event> =
         suspendCoroutine { continuation ->
-            val list = mutableListOf<Activity>()
+            val list = mutableListOf<Event>()
             val database = application.database
 
             database.collection("activity")
@@ -129,7 +129,7 @@ object FirebaseDataSource : FirebaseSource {
                 .get()
                 .addOnSuccessListener { result ->
 
-                    val dataList = result.toObjects(Activity::class.java)
+                    val dataList = result.toObjects(Event::class.java)
                     list += dataList
 
 //                Log.i("activityList", list.toString())
@@ -218,8 +218,8 @@ object FirebaseDataSource : FirebaseSource {
         return measureList
     }
 
-    override fun getLiveActivityList(userId: String): MutableLiveData<List<Activity>> {
-        val activityList = MutableLiveData<List<Activity>>()
+    override fun getLiveActivityList(userId: String): MutableLiveData<List<Event>> {
+        val activityList = MutableLiveData<List<Event>>()
 
         application.database.collection("activity")
             .whereEqualTo("userId", userId)
@@ -229,10 +229,10 @@ object FirebaseDataSource : FirebaseSource {
                     return@addSnapshotListener
                 }
 
-                val list = mutableListOf<Activity>()
+                val list = mutableListOf<Event>()
 
                 for (document in value!!) {
-                    val data = document.toObject(Activity::class.java)
+                    val data = document.toObject(Event::class.java)
                     list.add(data)
                 }
 
@@ -293,14 +293,14 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
-    override fun postActivity(activity: Activity) {
+    override fun postActivity(event: Event) {
         val database = application.database
 
-        activity.id = database.collection("activity").document().id
-        database.collection("activity").document(activity.id!!)
-            .set(activity)
+        event.id = database.collection("activity").document().id
+        database.collection("activity").document(event.id!!)
+            .set(event)
             .addOnSuccessListener { documentReference ->
-                Log.d("store success", "DocumentSnapshot added with ID: ${activity.id}")
+                Log.d("store success", "DocumentSnapshot added with ID: ${event.id}")
             }
             .addOnFailureListener { e ->
                 Log.w("store failure", "Error adding document", e)
@@ -343,11 +343,11 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
-    override fun updateActivity(activity: Activity) {
-        application.database.collection("activity").document(activity.id!!)
-            .set(activity, SetOptions.merge())
+    override fun updateActivity(event: Event) {
+        application.database.collection("activity").document(event.id!!)
+            .set(event, SetOptions.merge())
             .addOnSuccessListener { documentReference ->
-                Log.d("store success", "DocumentSnapshot added with ID: ${activity.id}")
+                Log.d("store success", "DocumentSnapshot added with ID: ${event.id}")
             }
             .addOnFailureListener { e ->
                 Log.w("store failure", "Error adding document", e)
@@ -403,16 +403,16 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
-    override fun postActivityRecord(id: String, activityLog: ActivityLog) {
+    override fun postActivityRecord(id: String, eventLog: EventLog) {
         val database = application.database
 
-        activityLog.id =
+        eventLog.id =
             database.collection("activity").document(id).collection("activityLogs").document().id
         database.collection("activity").document(id).collection("activityLogs")
-            .document(activityLog.id!!)
-            .set(activityLog)
+            .document(eventLog.id!!)
+            .set(eventLog)
             .addOnSuccessListener { documentReference ->
-                Log.d("store success", "DocumentSnapshot added with ID: ${activityLog.id}")
+                Log.d("store success", "DocumentSnapshot added with ID: ${eventLog.id}")
             }
             .addOnFailureListener { e ->
                 Log.w("store failure", "Error adding document", e)
@@ -490,9 +490,9 @@ object FirebaseDataSource : FirebaseSource {
                 }
         }
 
-    override suspend fun getActivityRecord(itemId: String): List<ActivityLog> =
+    override suspend fun getActivityRecord(itemId: String): List<EventLog> =
         suspendCoroutine { continuation ->
-            val list = mutableListOf<ActivityLog>()
+            val list = mutableListOf<EventLog>()
             val database = application.database
 
             database.collection("activity").document(itemId).collection("activityLogs")
@@ -501,7 +501,7 @@ object FirebaseDataSource : FirebaseSource {
                 .get()
                 .addOnSuccessListener { result ->
 
-                    val dataList = result.toObjects(ActivityLog::class.java)
+                    val dataList = result.toObjects(EventLog::class.java)
                     list += dataList
 
                     continuation.resume(list)
