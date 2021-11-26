@@ -28,7 +28,7 @@ class CalenderTimeDialog : DialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = DialogCalendertimeBinding.inflate(inflater, container, false)
         binding.timePicker.setIs24HourView(true)
         val editTimeType = CalenderTimeDialogArgs.fromBundle(requireArguments()).timeEditType

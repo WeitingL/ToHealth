@@ -2,7 +2,6 @@ package com.weiting.tohealth.data
 
 import android.os.Parcelable
 import com.google.firebase.Timestamp
-import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 const val TYPE = "type"
@@ -18,24 +17,47 @@ const val NOTE = "note"
 // Use this data class to hold all type of item.
 @Parcelize
 data class ItemData(
-    val DrugData: Drug? = null,
-    val MeasureData: Measure? = null,
-    val EventData: Event? = null,
-    val CareData: Care? = null,
-    val itemType: ItemType = getItemType(DrugData, MeasureData, EventData, CareData)
+    val drugData: Drug? = null,
+    val measureData: Measure? = null,
+    val eventData: Event? = null,
+    val careData: Care? = null,
+    val itemType: ItemType = getItemType(drugData, measureData, eventData, careData)
 ) : Parcelable
 
-fun getItemType(
-    DrugData: Drug?,
-    MeasureData: Measure?,
-    EventData: Event?,
-    CareData: Care?
+private fun getItemType(
+    drugData: Drug?,
+    measureData: Measure?,
+    eventData: Event?,
+    careData: Care?
 ): ItemType {
     return when {
-        DrugData != null -> ItemType.DRUG
-        MeasureData != null -> ItemType.MEASURE
-        EventData != null -> ItemType.EVENT
-        CareData != null -> ItemType.CARE
+        drugData != null -> ItemType.DRUG
+        measureData != null -> ItemType.MEASURE
+        eventData != null -> ItemType.EVENT
+        careData != null -> ItemType.CARE
+        else -> throw Exception("Something Wrong!")
+    }
+}
+
+data class ItemLog(
+    val drugLog: DrugLog? = null,
+    val measureLog: MeasureLog? = null,
+    val eventLog: EventLog? = null,
+    val careLog: CareLog? = null,
+    val itemType: ItemType = getItemType(drugLog, measureLog, eventLog, careLog)
+)
+
+private fun getItemType(
+    drugLog: DrugLog?,
+    measureLog: MeasureLog?,
+    eventLog: EventLog?,
+    careLog: CareLog?
+): ItemType {
+    return when {
+        drugLog != null -> ItemType.DRUG
+        measureLog != null -> ItemType.MEASURE
+        eventLog != null -> ItemType.EVENT
+        careLog != null -> ItemType.CARE
         else -> throw Exception("Something Wrong!")
     }
 }
@@ -135,7 +157,7 @@ data class Care(
         X to null
     ),
     val startDate: Timestamp? = null,
-    var executeTime: List<Timestamp> = listOf(),
+    var executedTime: List<Timestamp> = listOf(),
     var editor: String? = null,
     val createdTime: Timestamp? = null,
     var lastEditTime: Timestamp? = null,

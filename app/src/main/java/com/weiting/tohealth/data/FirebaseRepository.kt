@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 interface FirebaseRepository {
 
     /*
-    Login with livedata
- */
+       Login with livedata
+    */
 
     fun getLiveUser(userId: String): MutableLiveData<User>
 
@@ -29,6 +29,7 @@ interface FirebaseRepository {
 
     suspend fun getAllCares(userId: String): List<Care>
 
+    // Get Item
     suspend fun getMeasure(itemId: String): Measure
 
     fun getLiveDrugs(userId: String): MutableLiveData<List<Drug>>
@@ -68,7 +69,7 @@ interface FirebaseRepository {
 
     fun postCareLog(id: String, careLog: CareLog)
 
-    // Get Item Log
+    // Get Item Logs
     suspend fun getDrugLogs(itemId: String): List<DrugLog>
 
     suspend fun getMeasureLogs(itemId: String): List<MeasureLog>
@@ -78,8 +79,17 @@ interface FirebaseRepository {
     suspend fun getEventLogs(itemId: String): List<EventLog>
 
     suspend fun getCareLogs(itemId: String): List<CareLog>
+
+    fun getLiveDrugLogs(itemId: String):MutableLiveData<List<DrugLog>>
+
+    fun getLiveMeasureLogs(itemId: String): MutableLiveData<List<MeasureLog>>
+
+    fun getLiveEventLogs(itemId: String): MutableLiveData<List<EventLog>>
+
+    fun getLiveCareLogs(itemId: String): MutableLiveData<List<CareLog>>
+
     /*
-       Group operation
+        Group operation
      */
 
     // Post Group
@@ -87,13 +97,11 @@ interface FirebaseRepository {
 
     fun getNewGroupId(): String
 
-    // Get group Id
-    suspend fun checkIsGroupExist(groupId: String): Boolean
-
-    // Join Group
     fun joinGroup(member: Member, groupId: String)
 
     suspend fun checkIsRelationExist(userId: String, groupId: String): Boolean
+
+    suspend fun checkIsGroupExist(groupId: String): Boolean
 
     suspend fun getGroups(groupId: String): List<Group>
 
@@ -113,7 +121,7 @@ interface FirebaseRepository {
 
     fun postNote(note: Note, groupId: String)
 
-    fun postCalenderItem(reminder: Reminder, groupId: String)
+    fun postReminder(reminder: Reminder, groupId: String)
 
     fun deleteNote(note: Note, groupId: String)
 
@@ -128,17 +136,17 @@ interface FirebaseRepository {
 
     fun editStock(itemId: String, num: Float)
 
-    fun postNotification(alertMessage: AlertMessage)
+    fun postAlertMessage(alertMessage: AlertMessage)
 
-    fun getLiveNotificationsForService(
+    fun getLiveAlertMessageForService(
         userId: String
     ): MutableLiveData<List<AlertMessage>>
 
-    fun getLiveNotifications(
+    fun getLiveAlertMessages(
         userIdList: List<String>
     ): MutableLiveData<List<AlertMessage>>
 
-    fun postOnGetNotificationForService(alertMessage: AlertMessage)
+    fun postOnGetAlertMessagesForService(alertMessage: AlertMessage)
 
     fun getLiveChatMessagesForService(
         groupId: String

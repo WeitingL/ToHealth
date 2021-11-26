@@ -154,23 +154,21 @@ class TodayItemAdapter :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-//        Log.i("positionAdapter", position.toString())
-
         when (holder) {
             is TimeViewHolder -> {
                 holder.bind((getItem(position) as ItemDataType.TimeType).time)
             }
             is DrugViewHolder -> {
-                holder.bind((getItem(position) as ItemDataType.DrugType).drug.DrugData)
+                holder.bind((getItem(position) as ItemDataType.DrugType).drug.drugData)
             }
             is MeasureViewHolder -> {
-                holder.bind((getItem(position) as ItemDataType.MeasureType).measure.MeasureData)
+                holder.bind((getItem(position) as ItemDataType.MeasureType).measure.measureData)
             }
             is EventViewHolder -> {
-                holder.bind((getItem(position) as ItemDataType.EventType).Event.EventData)
+                holder.bind((getItem(position) as ItemDataType.EventType).event.eventData)
             }
             is CareViewHolder -> {
-                holder.bind((getItem(position) as ItemDataType.CareType).care.CareData)
+                holder.bind((getItem(position) as ItemDataType.CareType).care.careData)
             }
         }
     }

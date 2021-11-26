@@ -1,5 +1,6 @@
 package com.weiting.tohealth.util
 
+import android.util.Log
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.google.firebase.Timestamp
@@ -134,22 +135,22 @@ object Util {
         }
     }
 
-    fun toStringFromTimeStamp(timestamp: Timestamp?): String {
+    fun getTimeStampToDateAndTimeString(timestamp: Timestamp?): String {
         return SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.TAIWAN).format(timestamp!!.toDate())
             .toString()
     }
 
-    fun toDateFromTimeStamp(timestamp: Timestamp?): String {
+    fun getTimeStampToDateString(timestamp: Timestamp?): String {
         return SimpleDateFormat("yyyy/MM/dd", Locale.TAIWAN).format(timestamp!!.toDate())
             .toString()
     }
 
-    fun toDateWithoutYearFromTimeStamp(timestamp: Timestamp?): String {
+    fun getTimeStampToDateWithoutYString(timestamp: Timestamp?): String {
         return SimpleDateFormat("MM/dd", Locale.TAIWAN).format(timestamp!!.toDate())
             .toString()
     }
 
-    fun toTimeFromTimeStamp(timestamp: Timestamp?): String {
+    fun getTimeStampToTimeString(timestamp: Timestamp?): String {
         return SimpleDateFormat("HH:mm", Locale.TAIWAN).format(timestamp!!.toDate()).toString()
     }
 
@@ -233,18 +234,28 @@ object Util {
         }
     }
 
-    // 0000 -> 2359
+    // 0 -> 2359
     fun getTimeStampToTimeInt(timestamp: Timestamp): Int {
         val c = Calendar.getInstance()
         c.time = timestamp.toDate()
         return (c.get(Calendar.HOUR_OF_DAY) * 100 + c.get(Calendar.MINUTE))
     }
 
-    // 0101 -> 1231
+    // 101 -> 1231
     fun getTimeStampToDateInt(timestamp: Timestamp): Int {
         val c = Calendar.getInstance()
         c.time = timestamp.toDate()
         return ((c.get(Calendar.MONTH) + 1) * 100 + (c.get(Calendar.DAY_OF_MONTH)))
+    }
+
+    fun getTimeTagToTimeString(timeTag: Int): String {
+        val hour = timeTag / 100
+        val min = timeTag % 100
+
+        val c = Calendar.getInstance()
+        c.set(Calendar.HOUR_OF_DAY, hour)
+        c.set(Calendar.MINUTE, min)
+        return getTimeStampToTimeString(Timestamp(c.time))
     }
 
     fun toPeriod(int: Int?): String {
@@ -295,7 +306,9 @@ object Util {
     fun toNotificationTextForMeasureLog(measure: Measure, measureLog: MeasureLog): String {
         return when (measure.type) {
             0 -> {
-                "血壓異常! \n收縮壓: ${measureLog.record["X"]} mmHg \n舒張壓: ${measureLog.record["Y"]} mmHg \n心搏: ${measureLog.record["Z"]} bpm"
+                "血壓異常! \n收縮壓: ${measureLog.record["X"]} mmHg " +
+                        "\n舒張壓: ${measureLog.record["Y"]} mmHg " +
+                        "\n心搏: ${measureLog.record["Z"]} bpm"
             }
 
             1 -> {
@@ -320,6 +333,6 @@ object Util {
 
     fun isToday(timestamp: Timestamp?): Boolean {
         return getTimeStampToDateInt(timestamp ?: Timestamp.now()) ==
-            getTimeStampToDateInt(Timestamp.now())
+                getTimeStampToDateInt(Timestamp.now())
     }
 }

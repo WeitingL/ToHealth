@@ -169,7 +169,7 @@ class ItemEditViewModel(
                         "N" to binding.spOngoingDay.selectedItemPosition,
                         "X" to binding.spSuspendDay.selectedItemPosition,
                     ),
-                    executeTime = timePointSet.value ?: listOf(),
+                    executedTime = timePointSet.value ?: listOf(),
                     editor = UserManager.UserInfo.id,
                     createdTime = Timestamp.now(),
                     lastEditTime = Timestamp.now(),

@@ -124,7 +124,7 @@ object FirebaseDataSource : FirebaseSource {
             val list = mutableListOf<Event>()
             val database = application.database
 
-            database.collection("activity")
+            database.collection("events")
                 .whereEqualTo("userId", userId)
                 .get()
                 .addOnSuccessListener { result ->
@@ -221,7 +221,7 @@ object FirebaseDataSource : FirebaseSource {
     override fun getLiveEvents(userId: String): MutableLiveData<List<Event>> {
         val activityList = MutableLiveData<List<Event>>()
 
-        application.database.collection("activity")
+        application.database.collection("events")
             .whereEqualTo("userId", userId)
             .addSnapshotListener { value, error ->
                 if (error != null) {
@@ -296,8 +296,8 @@ object FirebaseDataSource : FirebaseSource {
     override fun postEvent(event: Event) {
         val database = application.database
 
-        event.id = database.collection("activity").document().id
-        database.collection("activity").document(event.id!!)
+        event.id = database.collection("events").document().id
+        database.collection("events").document(event.id!!)
             .set(event)
             .addOnSuccessListener { documentReference ->
                 Log.d("store success", "DocumentSnapshot added with ID: ${event.id}")
@@ -344,7 +344,7 @@ object FirebaseDataSource : FirebaseSource {
     }
 
     override fun updateEvent(event: Event) {
-        application.database.collection("activity").document(event.id!!)
+        application.database.collection("events").document(event.id!!)
             .set(event, SetOptions.merge())
             .addOnSuccessListener { documentReference ->
                 Log.d("store success", "DocumentSnapshot added with ID: ${event.id}")
@@ -407,8 +407,8 @@ object FirebaseDataSource : FirebaseSource {
         val database = application.database
 
         eventLog.id =
-            database.collection("activity").document(id).collection("activityLogs").document().id
-        database.collection("activity").document(id).collection("activityLogs")
+            database.collection("events").document(id).collection("eventsLogs").document().id
+        database.collection("events").document(id).collection("eventsLogs")
             .document(eventLog.id!!)
             .set(eventLog)
             .addOnSuccessListener { documentReference ->
@@ -478,7 +478,7 @@ object FirebaseDataSource : FirebaseSource {
     override suspend fun getMeasureLog(itemId: String, itemsLogId: String): MeasureLog =
         suspendCoroutine { continuation ->
             application.database.collection("measures").document(itemId)
-                .collection("measuresLogs").document(itemsLogId)
+                .collection("measureLogs").document(itemsLogId)
                 .get()
                 .addOnSuccessListener {
                     if (it != null) {
@@ -490,12 +490,12 @@ object FirebaseDataSource : FirebaseSource {
                 }
         }
 
-    override suspend fun getActivityLogs(itemId: String): List<EventLog> =
+    override suspend fun getEventLogs(itemId: String): List<EventLog> =
         suspendCoroutine { continuation ->
             val list = mutableListOf<EventLog>()
             val database = application.database
 
-            database.collection("activity").document(itemId).collection("activityLogs")
+            database.collection("events").document(itemId).collection("activityLogs")
                 .orderBy("createdTime", Query.Direction.DESCENDING)
                 .limit(100)
                 .get()
@@ -531,6 +531,106 @@ object FirebaseDataSource : FirebaseSource {
                     Log.w("Error to get data", e)
                 }
         }
+
+    override fun getLiveDrugLogs(itemId: String): MutableLiveData<List<DrugLog>> {
+        val drugLogsList = MutableLiveData<List<DrugLog>>()
+
+        application.database.collection("drugs")
+            .document(itemId)
+            .collection("drugLogs")
+            .addSnapshotListener { value, error ->
+
+                if (error != null) {
+                    Log.e("Listen failed.", error.toString())
+                    return@addSnapshotListener
+                }
+                val list = mutableListOf<DrugLog>()
+
+                for (document in value!!) {
+                    val data = document.toObject(DrugLog::class.java)
+
+                    list.add(data)
+                }
+                drugLogsList.value = list
+            }
+
+        return drugLogsList
+    }
+
+    override fun getLiveMeasureLogs(itemId: String): MutableLiveData<List<MeasureLog>> {
+        val MeasureLogsList = MutableLiveData<List<MeasureLog>>()
+
+        application.database.collection("measures")
+            .document(itemId)
+            .collection("measureLogs")
+            .addSnapshotListener { value, error ->
+
+                if (error != null) {
+                    Log.e("Listen failed.", error.toString())
+                    return@addSnapshotListener
+                }
+                val list = mutableListOf<MeasureLog>()
+
+                for (document in value!!) {
+                    val data = document.toObject(MeasureLog::class.java)
+
+                    list.add(data)
+                }
+                MeasureLogsList.value = list
+            }
+
+        return MeasureLogsList
+    }
+
+    override fun getLiveEventLogs(itemId: String): MutableLiveData<List<EventLog>> {
+        val EventLogsList = MutableLiveData<List<EventLog>>()
+
+        application.database.collection("events")
+            .document(itemId)
+            .collection("eventLogs")
+            .addSnapshotListener { value, error ->
+
+                if (error != null) {
+                    Log.e("Listen failed.", error.toString())
+                    return@addSnapshotListener
+                }
+                val list = mutableListOf<EventLog>()
+
+                for (document in value!!) {
+                    val data = document.toObject(EventLog::class.java)
+
+                    list.add(data)
+                }
+                EventLogsList.value = list
+            }
+
+        return EventLogsList
+    }
+
+    override fun getLiveCareLogs(itemId: String): MutableLiveData<List<CareLog>> {
+        val careLogsList = MutableLiveData<List<CareLog>>()
+
+        application.database.collection("cares")
+            .document(itemId)
+            .collection("careLogs")
+            .addSnapshotListener { value, error ->
+
+                if (error != null) {
+                    Log.e("Listen failed.", error.toString())
+                    return@addSnapshotListener
+                }
+                val list = mutableListOf<CareLog>()
+
+                for (document in value!!) {
+                    val data = document.toObject(CareLog::class.java)
+
+                    list.add(data)
+                }
+                careLogsList.value = list
+            }
+
+        return careLogsList
+    }
 
     override fun createGroup(group: Group) {
         val database = application.database
@@ -674,13 +774,13 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
-    override suspend fun getCalenderItems(groupId: String): List<Reminder> =
+    override suspend fun getReminders(groupId: String): List<Reminder> =
         suspendCoroutine { continuation ->
             val list = mutableListOf<Reminder>()
             val database = application.database
 
             database.collection("groups").document(groupId)
-                .collection("calenderItems")
+                .collection("reminders")
                 .orderBy("createdTime", Query.Direction.DESCENDING)
                 .get()
                 .addOnSuccessListener { result ->
@@ -756,11 +856,11 @@ object FirebaseDataSource : FirebaseSource {
         return notesList
     }
 
-    override fun getLiveCalenderItems(groupId: String): MutableLiveData<List<Reminder>> {
+    override fun getLiveReminders(groupId: String): MutableLiveData<List<Reminder>> {
         val calenderItemsList = MutableLiveData<List<Reminder>>()
 
         application.database.collection("groups").document(groupId)
-            .collection("calenderItems")
+            .collection("reminders")
             .addSnapshotListener { value, error ->
                 if (error != null) {
                     Log.e("Listen failed.", error.toString())
@@ -796,11 +896,11 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
-    override fun postCalenderItem(reminder: Reminder, groupId: String) {
+    override fun postReminder(reminder: Reminder, groupId: String) {
         val database = application.database
 
         reminder.id = database.collection("groups")
-            .document(groupId).collection("calenderItems").document().id
+            .document(groupId).collection("reminders").document().id
 
         database.collection("groups").document(groupId)
             .collection("calenderItems").document(reminder.id!!)
@@ -826,9 +926,9 @@ object FirebaseDataSource : FirebaseSource {
             .addOnFailureListener { e -> Log.w("Delete failure", "Error deleting document", e) }
     }
 
-    override fun deleteCalenderItem(reminder: Reminder, groupId: String) {
+    override fun deleteReminder(reminder: Reminder, groupId: String) {
         application.database.collection("groups").document(groupId)
-            .collection("calenderItems").document(reminder.id!!)
+            .collection("reminders").document(reminder.id!!)
             .delete()
             .addOnSuccessListener {
                 Log.d(
@@ -896,12 +996,12 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
-    override fun postNotification(alertMessage: AlertMessage) {
+    override fun postAlertMessage(alertMessage: AlertMessage) {
         val database = application.database
 
-        alertMessage.id = database.collection("notifications").document().id
+        alertMessage.id = database.collection("alertMessages").document().id
 
-        database.collection("notifications").document(alertMessage.id!!)
+        database.collection("alertMessages").document(alertMessage.id!!)
             .set(alertMessage)
             .addOnSuccessListener { documentReference ->
                 Log.d("store success", "DocumentSnapshot added with ID: ${alertMessage.id}")
@@ -911,7 +1011,7 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
-    override fun getLiveNotificationsForService(
+    override fun getLiveAlertMessageForService(
         userId: String
     ): MutableLiveData<List<AlertMessage>> {
         val notificationList = MutableLiveData<List<AlertMessage>>()
@@ -920,7 +1020,7 @@ object FirebaseDataSource : FirebaseSource {
         c.time = Timestamp.now().toDate()
         c.add(Calendar.DATE, -3)
 
-        application.database.collection("notifications")
+        application.database.collection("alertMessages")
             .whereEqualTo("userId", userId)
             .orderBy("createdTime", Query.Direction.DESCENDING)
             .whereGreaterThan("createdTime", Timestamp(c.time))
@@ -943,12 +1043,12 @@ object FirebaseDataSource : FirebaseSource {
         return notificationList
     }
 
-    override fun getLiveNotifications(
+    override fun getLiveAlertMessages(
         userIdList: List<String>
     ): MutableLiveData<List<AlertMessage>> {
         val notificationList = MutableLiveData<List<AlertMessage>>()
 
-        application.database.collection("notifications")
+        application.database.collection("alertMessages")
             .whereIn("userId", userIdList)
             .orderBy("createdTime", Query.Direction.DESCENDING)
             .addSnapshotListener { value, error ->
@@ -970,11 +1070,11 @@ object FirebaseDataSource : FirebaseSource {
         return notificationList
     }
 
-    override fun postOnGetNotificationForService(alertMessage: AlertMessage) {
+    override fun postOnGetAlertMessagesForService(alertMessage: AlertMessage) {
 
         alertMessage.alreadySend.add(Firebase.auth.currentUser?.uid!!)
 
-        application.database.collection("notifications").document(alertMessage.id!!)
+        application.database.collection("alertMessages").document(alertMessage.id!!)
             .update("alreadySend", alertMessage.alreadySend)
             .addOnSuccessListener { documentReference ->
                 Log.d("store success", "DocumentSnapshot added with ID: ${alertMessage.id}")

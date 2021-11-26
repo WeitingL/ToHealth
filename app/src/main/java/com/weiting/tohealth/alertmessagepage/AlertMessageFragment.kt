@@ -28,12 +28,12 @@ class AlertMessageFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        viewModel.notificationList.observe(viewLifecycleOwner) {
+        viewModel.liveAlterMessageRecord.observe(viewLifecycleOwner) {
             if (it.isEmpty()) {
                 binding.lavLoagindNotification.visibility = View.VISIBLE
                 binding.lavLoagindNotification.setAnimation(R.raw.empty_box)
             } else {
-                viewModel.transferToNotificationRecord(it)
+                viewModel.transferToAlterMessageRecord(it)
             }
         }
 

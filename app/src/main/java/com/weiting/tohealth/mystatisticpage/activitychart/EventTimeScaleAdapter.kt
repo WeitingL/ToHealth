@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.databinding.StatisticDrugTimeRowBinding
 import com.weiting.tohealth.mystatisticpage.ResultInDate
 import com.weiting.tohealth.mystatisticpage.drugchart.DrugResultScaleAdapter
-import com.weiting.tohealth.util.Util.toDateWithoutYearFromTimeStamp
+import com.weiting.tohealth.util.Util.getTimeStampToDateWithoutYString
 
 class EventTimeScaleAdapter :
     ListAdapter<ResultInDate, EventTimeScaleAdapter.DateTimeLineViewHolder>(DiffCallback) {
@@ -24,7 +24,7 @@ class EventTimeScaleAdapter :
     inner class DateTimeLineViewHolder(private val binding: StatisticDrugTimeRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(resultInDate: ResultInDate) {
-            binding.tvDate.text = toDateWithoutYearFromTimeStamp(resultInDate.date)
+            binding.tvDate.text = getTimeStampToDateWithoutYString(resultInDate.date)
             val adapter = DrugResultScaleAdapter()
             adapter.submitList(resultInDate.results)
             binding.rvLogCheck.adapter = adapter

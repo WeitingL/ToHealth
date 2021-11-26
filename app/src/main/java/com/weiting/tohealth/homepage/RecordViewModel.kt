@@ -33,27 +33,27 @@ class RecordViewModel(private val firebaseDataRepository: FirebaseRepository) :
             when (measureType) {
                 0 -> {
                     if (isBloodPressureAbnormal(measureLog)) {
-                        postNotification(itemId, measureLog)
+                        postAlterMessage(itemId, measureLog)
                     }
                 }
                 1 -> {
                     if (isBeforeMealBloodSugarAbnormal(measureLog)) {
-                        postNotification(itemId, measureLog)
+                        postAlterMessage(itemId, measureLog)
                     }
                 }
                 2 -> {
                     if (isAfterMealBloodSugarAbnormal(measureLog)) {
-                        postNotification(itemId, measureLog)
+                        postAlterMessage(itemId, measureLog)
                     }
                 }
                 3 -> {
                     if (isSPO2Abnormal(measureLog)) {
-                        postNotification(itemId, measureLog)
+                        postAlterMessage(itemId, measureLog)
                     }
                 }
                 5 -> {
                     if (isBodyTemperatureAbnormal(measureLog)) {
-                        postNotification(itemId, measureLog)
+                        postAlterMessage(itemId, measureLog)
                     }
                 }
             }
@@ -61,8 +61,8 @@ class RecordViewModel(private val firebaseDataRepository: FirebaseRepository) :
         }
     }
 
-    private fun postNotification(itemId: String, measureLog: MeasureLog) {
-        firebaseDataRepository.postNotification(
+    private fun postAlterMessage(itemId: String, measureLog: MeasureLog) {
+        firebaseDataRepository.postAlertMessage(
             AlertMessage(
                 userId = UserManager.UserInfo.id,
                 itemId = itemId,

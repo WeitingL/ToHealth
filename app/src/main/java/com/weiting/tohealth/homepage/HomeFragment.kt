@@ -301,7 +301,7 @@ class HomeFragment : Fragment() {
                                         (
                                             adapter.currentList[position] as
                                                 ItemDataType.MeasureType
-                                            ).measure.MeasureData!!,
+                                            ).measure.measureData!!,
                                         (
                                             adapter.currentList[position] as
                                                 ItemDataType.MeasureType
@@ -362,7 +362,7 @@ class HomeFragment : Fragment() {
                                         (
                                             adapter.currentList[position] as
                                                 ItemDataType.CareType
-                                            ).care.CareData!!,
+                                            ).care.careData!!,
                                         (
                                             adapter.currentList[position] as
                                                 ItemDataType.CareType
@@ -380,7 +380,9 @@ class HomeFragment : Fragment() {
         touchHelper.attachToRecyclerView(binding.rvHomeCardView)
 
         viewModel.itemDataMediator.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
+            if (it.isNotEmpty()){
+                adapter.submitList(it)
+            }
         }
 
         viewModel.totalTask.observe(viewLifecycleOwner) {

@@ -29,7 +29,7 @@ class PostUnCheckedLogsWork {
         val yesterday = c.time
 
         val drugList = firebaseDataRepository.getAllDrugs(userId).filter {
-            ItemArranger().isThatDayNeedToDo(ItemData(DrugData = it), Timestamp(yesterday))
+            ItemArranger.isThatDayNeedToDo(ItemData(drugData = it), Timestamp(yesterday))
         }
 
         drugList.forEach {
@@ -39,11 +39,11 @@ class PostUnCheckedLogsWork {
                         it.createdTime ?: Timestamp.now()
                     ) == getTimeStampToDateInt(Timestamp(yesterday))
                 }
-            itemList.add(ItemData(DrugData = it))
+            itemList.add(ItemData(drugData = it))
         }
 
         val measureList = firebaseDataRepository.getAllMeasures(userId).filter {
-            ItemArranger().isThatDayNeedToDo(ItemData(MeasureData =it), Timestamp(yesterday))
+            ItemArranger.isThatDayNeedToDo(ItemData(measureData =it), Timestamp(yesterday))
         }
         measureList.forEach {
             it.measureLogs.filter {
@@ -51,11 +51,11 @@ class PostUnCheckedLogsWork {
                     Timestamp(yesterday)
                 )
             }
-            itemList.add(ItemData(MeasureData =it))
+            itemList.add(ItemData(measureData =it))
         }
 
         val careList = firebaseDataRepository.getAllCares(userId).filter {
-            ItemArranger().isThatDayNeedToDo(ItemData(CareData =it), Timestamp(yesterday))
+            ItemArranger.isThatDayNeedToDo(ItemData(careData =it), Timestamp(yesterday))
         }
         careList.forEach {
             it.careLogs =
@@ -66,11 +66,11 @@ class PostUnCheckedLogsWork {
                         Timestamp(yesterday)
                     )
                 }
-            itemList.add(ItemData(CareData =it))
+            itemList.add(ItemData(careData =it))
         }
 
         val activityList = firebaseDataRepository.getAllEvents(userId).filter {
-            ItemArranger().isThatDayNeedToDo(ItemData(EventData =it), Timestamp(yesterday))
+            ItemArranger.isThatDayNeedToDo(ItemData(eventData =it), Timestamp(yesterday))
         }
         activityList.forEach {
             it.eventLogs =
@@ -81,7 +81,7 @@ class PostUnCheckedLogsWork {
                         Timestamp(yesterday)
                     )
                 }
-            itemList.add(ItemData(EventData =it))
+            itemList.add(ItemData(eventData =it))
         }
 
         getUncheckLogs(itemList, firebaseDataRepository)
@@ -103,13 +103,13 @@ class PostUnCheckedLogsWork {
         itemList.forEach { itemData ->
             when (itemData.itemType) {
                 ItemType.DRUG -> {
-                    itemData.DrugData?.drugLogs?.forEach { drugLog ->
+                    itemData.drugData?.drugLogs?.forEach { drugLog ->
                         timeTags.add(drugLog.timeTag ?: 0)
                     }
-                    itemData.DrugData?.executedTime?.forEach { timeStamp ->
+                    itemData.drugData?.executedTime?.forEach { timeStamp ->
                         if (getTimeStampToTimeInt(timeStamp) !in timeTags) {
                             firebaseDataRepository.postDrugLog(
-                                itemData.DrugData.id ?: "",
+                                itemData.drugData.id ?: "",
                                 DrugLog(
                                     timeTag = getTimeStampToTimeInt(timeStamp),
                                     result = 3,
@@ -122,13 +122,13 @@ class PostUnCheckedLogsWork {
                 }
 
                 ItemType.EVENT-> {
-                    itemData.EventData?.eventLogs?.forEach { activityLog ->
+                    itemData.eventData?.eventLogs?.forEach { activityLog ->
                         timeTags.add(activityLog.timeTag ?: 0)
                     }
-                    itemData.EventData?.executedTime?.forEach { timeStamp ->
+                    itemData.eventData?.executedTime?.forEach { timeStamp ->
                         if (getTimeStampToTimeInt(timeStamp) !in timeTags) {
                             firebaseDataRepository.postEventLog(
-                                itemData.EventData.id ?: "",
+                                itemData.eventData.id ?: "",
                                 EventLog(
                                     timeTag = getTimeStampToTimeInt(timeStamp),
                                     result = 3,
@@ -141,16 +141,16 @@ class PostUnCheckedLogsWork {
                 }
 
                 ItemType.MEASURE -> {
-                    itemData.MeasureData?.measureLogs?.forEach { measureLog ->
+                    itemData.measureData?.measureLogs?.forEach { measureLog ->
                         timeTags.add(measureLog.timeTag ?: 0)
                     }
-                    itemData.MeasureData?.executedTime?.forEach { timeStamp ->
+                    itemData.measureData?.executedTime?.forEach { timeStamp ->
                         if (getTimeStampToTimeInt(timeStamp) !in timeTags) {
                             firebaseDataRepository.postMeasureLog(
-                                itemData.MeasureData.id ?: "",
+                                itemData.measureData.id ?: "",
                                 MeasureLog(
                                     id = firebaseDataRepository.getMeasureLogId(
-                                        itemData.MeasureData.id ?: ""
+                                        itemData.measureData.id ?: ""
                                     ),
                                     timeTag = getTimeStampToTimeInt(timeStamp),
                                     result = 3,
@@ -163,13 +163,13 @@ class PostUnCheckedLogsWork {
                 }
 
                 ItemType.CARE -> {
-                    itemData.CareData?.careLogs?.forEach { careLog ->
+                    itemData.careData?.careLogs?.forEach { careLog ->
                         timeTags.add(careLog.timeTag ?: 0)
                     }
-                    itemData.CareData?.executeTime?.forEach { timeStamp ->
+                    itemData.careData?.executedTime?.forEach { timeStamp ->
                         if (getTimeStampToTimeInt(timeStamp) !in timeTags) {
                             firebaseDataRepository.postCareLog(
-                                itemData.CareData.id ?: "",
+                                itemData.careData.id ?: "",
                                 CareLog(
                                     timeTag = getTimeStampToTimeInt(timeStamp),
                                     result = 3,

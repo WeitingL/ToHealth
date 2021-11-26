@@ -23,7 +23,7 @@ import com.weiting.tohealth.util.Util.getTimeStampToTimeInt
 import com.weiting.tohealth.util.Util.toEventType
 import com.weiting.tohealth.util.Util.toCareType
 import com.weiting.tohealth.util.Util.toCycleValue
-import com.weiting.tohealth.util.Util.toDateFromTimeStamp
+import com.weiting.tohealth.util.Util.getTimeStampToDateString
 import com.weiting.tohealth.util.Util.toDay
 import com.weiting.tohealth.util.Util.toMeasureType
 import com.weiting.tohealth.util.Util.toPeriod
@@ -56,64 +56,64 @@ class ItemUpdateFragment : Fragment() {
             when (itemData.itemType) {
                 ItemType.DRUG -> {
                     tvItemTypeTitleUpdate.text = getString(R.string.DrugItem)
-                    tvItemNameUpdate.text = itemData.DrugData?.drugName
-                    tvStartTimeUpdate.text = toDateFromTimeStamp(itemData.DrugData?.startDate)
-                    spUnitUpdate.setSelection(itemData.DrugData?.unit ?: 0)
-                    "原先設定: ${toUnit(itemData.DrugData?.unit)}".also { tvOriginUnit.text = it }
-                    etvDrugDoseUpdate.setText(itemData.DrugData?.dose.toString())
+                    tvItemNameUpdate.text = itemData.drugData?.drugName
+                    tvStartTimeUpdate.text = getTimeStampToDateString(itemData.drugData?.startDate)
+                    spUnitUpdate.setSelection(itemData.drugData?.unit ?: 0)
+                    "原先設定: ${toUnit(itemData.drugData?.unit)}".also { tvOriginUnit.text = it }
+                    etvDrugDoseUpdate.setText(itemData.drugData?.dose.toString())
 
-                    "原先設定: ${itemData.DrugData?.dose}".also { tvOriginDose.text = it }
-                    "原先設定: ${toPeriod(itemData.DrugData?.period?.get("type") ?: 0)}".also { tvOriginPeriod.text = it }
+                    "原先設定: ${itemData.drugData?.dose}".also { tvOriginDose.text = it }
+                    "原先設定: ${toPeriod(itemData.drugData?.period?.get("type") ?: 0)}".also { tvOriginPeriod.text = it }
 
-                    etvStockUpdate.setText(itemData.DrugData?.stock.toString())
-                    "原先設定: ${itemData.DrugData?.stock}".also { tvOriginStock.text = it }
+                    etvStockUpdate.setText(itemData.drugData?.stock.toString())
+                    "原先設定: ${itemData.drugData?.stock}".also { tvOriginStock.text = it }
 
-                    spPeriodUpdate.setSelection(itemData.DrugData?.period?.get("type") ?: 0)
-                    viewModel.setPeriodType(itemData.DrugData?.period?.get("type") ?: 0)
+                    spPeriodUpdate.setSelection(itemData.drugData?.period?.get("type") ?: 0)
+                    viewModel.setPeriodType(itemData.drugData?.period?.get("type") ?: 0)
                     setExecuteTime(itemData, binding, viewModel)
 
-                    setStatus(itemData.DrugData?.status ?: 0, binding)
+                    setStatus(itemData.drugData?.status ?: 0, binding)
                 }
 
                 ItemType.EVENT -> {
                     tvItemTypeTitleUpdate.text = getString(R.string.EventItem)
-                    tvItemNameUpdate.text = toEventType(itemData.EventData?.type)
-                    tvStartTimeUpdate.text = toDateFromTimeStamp(itemData.EventData?.startDate)
+                    tvItemNameUpdate.text = toEventType(itemData.eventData?.type)
+                    tvStartTimeUpdate.text = getTimeStampToDateString(itemData.eventData?.startDate)
                     clUnitUpdate.visibility = View.GONE
                     clStockUpdate.visibility = View.GONE
-                    "原先設定: ${toPeriod(itemData.EventData?.period?.get("type") ?: 0)}".also { tvOriginPeriod.text = it }
-                    spPeriodUpdate.setSelection(itemData.EventData?.period?.get("type") ?: 0)
-                    viewModel.setPeriodType(itemData.EventData?.period?.get("type") ?: 0)
+                    "原先設定: ${toPeriod(itemData.eventData?.period?.get("type") ?: 0)}".also { tvOriginPeriod.text = it }
+                    spPeriodUpdate.setSelection(itemData.eventData?.period?.get("type") ?: 0)
+                    viewModel.setPeriodType(itemData.eventData?.period?.get("type") ?: 0)
                     setExecuteTime(itemData, binding, viewModel)
 
-                    setStatus(itemData.EventData?.status ?: 0, binding)
+                    setStatus(itemData.eventData?.status ?: 0, binding)
                 }
 
                 ItemType.MEASURE -> {
                     tvItemTypeTitleUpdate.text = getString(R.string.MeasureItem)
-                    tvItemNameUpdate.text = toMeasureType(itemData.MeasureData?.type)
-                    tvStartTimeUpdate.text = toDateFromTimeStamp(itemData.MeasureData?.createdTime)
+                    tvItemNameUpdate.text = toMeasureType(itemData.measureData?.type)
+                    tvStartTimeUpdate.text = getTimeStampToDateString(itemData.measureData?.createdTime)
                     clUnitUpdate.visibility = View.GONE
                     clStockUpdate.visibility = View.GONE
                     clPeriodUpdate.visibility = View.GONE
                     setExecuteTime(itemData, binding, viewModel)
 
-                    setStatus(itemData.MeasureData?.status!!, binding)
+                    setStatus(itemData.measureData?.status!!, binding)
                 }
 
                 ItemType.CARE -> {
                     tvItemTypeTitleUpdate.text = getString(R.string.CareItem)
-                    tvItemNameUpdate.text = toCareType(itemData.CareData?.type)
-                    tvStartTimeUpdate.text = toDateFromTimeStamp(itemData.CareData?.startDate)
-                    "原先設定: ${toPeriod(itemData.CareData?.period?.get("type") ?: 0)}".also { tvOriginPeriod.text = it }
+                    tvItemNameUpdate.text = toCareType(itemData.careData?.type)
+                    tvStartTimeUpdate.text = getTimeStampToDateString(itemData.careData?.startDate)
+                    "原先設定: ${toPeriod(itemData.careData?.period?.get("type") ?: 0)}".also { tvOriginPeriod.text = it }
                     clUnitUpdate.visibility = View.GONE
                     clStockUpdate.visibility = View.GONE
 
-                    spPeriodUpdate.setSelection(itemData.CareData?.period?.get("type") ?: 0)
-                    viewModel.setPeriodType(itemData.CareData?.period?.get("type") ?: 0)
+                    spPeriodUpdate.setSelection(itemData.careData?.period?.get("type") ?: 0)
+                    viewModel.setPeriodType(itemData.careData?.period?.get("type") ?: 0)
                     setExecuteTime(itemData, binding, viewModel)
 
-                    setStatus(itemData.CareData?.status ?: 0, binding)
+                    setStatus(itemData.careData?.status ?: 0, binding)
                 }
             }
         }
@@ -255,59 +255,59 @@ class ItemUpdateFragment : Fragment() {
         binding.apply {
             when (itemData.itemType) {
                 ItemType.DRUG -> {
-                    when (itemData.DrugData?.period?.get(TYPE)) {
+                    when (itemData.drugData?.period?.get(TYPE)) {
                         1 -> {
-                            spOngoingDayUpdate.setSelection(itemData.DrugData.period[N] ?: 0)
-                            "原先設定: ${toDay(itemData.DrugData.period[N] ?: 0)}".also { tvOriginN.text = it }
+                            spOngoingDayUpdate.setSelection(itemData.drugData.period[N] ?: 0)
+                            "原先設定: ${toDay(itemData.drugData.period[N] ?: 0)}".also { tvOriginN.text = it }
                         }
                         2 -> {
-                            spOngoingDayUpdate.setSelection(itemData.DrugData.period[N] ?: 0)
-                            "原先設定: ${toWeek(itemData.DrugData.period[N] ?: 0)}".also { tvOriginN.text = it }
+                            spOngoingDayUpdate.setSelection(itemData.drugData.period[N] ?: 0)
+                            "原先設定: ${toWeek(itemData.drugData.period[N] ?: 0)}".also { tvOriginN.text = it }
                         }
                         3 -> {
-                            spOngoingDayUpdate.setSelection(itemData.DrugData.period[N] ?: 0)
-                            "原先設定: ${toCycleValue(itemData.DrugData.period[N] ?: 0)}".also { tvOriginN.text = it }
+                            spOngoingDayUpdate.setSelection(itemData.drugData.period[N] ?: 0)
+                            "原先設定: ${toCycleValue(itemData.drugData.period[N] ?: 0)}".also { tvOriginN.text = it }
 
-                            spSuspendDayUpdate.setSelection(itemData.DrugData.period[X] ?: 0)
-                            "原先設定: ${toCycleValue(itemData.DrugData.period[X] ?: 0)}".also { tvOriginX.text = it }
+                            spSuspendDayUpdate.setSelection(itemData.drugData.period[X] ?: 0)
+                            "原先設定: ${toCycleValue(itemData.drugData.period[X] ?: 0)}".also { tvOriginX.text = it }
                         }
                     }
                 }
                 ItemType.EVENT -> {
-                    when (itemData.EventData?.period?.get(TYPE)) {
+                    when (itemData.eventData?.period?.get(TYPE)) {
                         1 -> {
-                            spOngoingDayUpdate.setSelection(itemData.EventData.period[N] ?: 0)
-                            "原先設定: ${toDay(itemData.EventData.period[N] ?: 0)}".also { tvOriginN.text = it }
+                            spOngoingDayUpdate.setSelection(itemData.eventData.period[N] ?: 0)
+                            "原先設定: ${toDay(itemData.eventData.period[N] ?: 0)}".also { tvOriginN.text = it }
                         }
                         2 -> {
-                            spOngoingDayUpdate.setSelection(itemData.EventData.period[N] ?: 0)
-                            "原先設定: ${toWeek(itemData.EventData.period[N] ?: 0)}".also { tvOriginN.text = it }
+                            spOngoingDayUpdate.setSelection(itemData.eventData.period[N] ?: 0)
+                            "原先設定: ${toWeek(itemData.eventData.period[N] ?: 0)}".also { tvOriginN.text = it }
                         }
                         3 -> {
-                            spOngoingDayUpdate.setSelection(itemData.EventData.period[N] ?: 0)
-                            "原先設定: ${toCycleValue(itemData.EventData.period[N] ?: 0)}".also { tvOriginN.text = it }
+                            spOngoingDayUpdate.setSelection(itemData.eventData.period[N] ?: 0)
+                            "原先設定: ${toCycleValue(itemData.eventData.period[N] ?: 0)}".also { tvOriginN.text = it }
 
-                            spSuspendDayUpdate.setSelection(itemData.EventData.period[X] ?: 0)
-                            "原先設定: ${toCycleValue(itemData.EventData.period[X] ?: 0)}".also { tvOriginX.text = it }
+                            spSuspendDayUpdate.setSelection(itemData.eventData.period[X] ?: 0)
+                            "原先設定: ${toCycleValue(itemData.eventData.period[X] ?: 0)}".also { tvOriginX.text = it }
                         }
                     }
                 }
                 ItemType.CARE -> {
-                    when (itemData.CareData?.period?.get(TYPE)) {
+                    when (itemData.careData?.period?.get(TYPE)) {
                         1 -> {
-                            spOngoingDayUpdate.setSelection(itemData.CareData.period[N] ?: 0)
-                            "原先設定: ${toDay(itemData.CareData.period[N] ?: 0)}".also { tvOriginN.text = it }
+                            spOngoingDayUpdate.setSelection(itemData.careData.period[N] ?: 0)
+                            "原先設定: ${toDay(itemData.careData.period[N] ?: 0)}".also { tvOriginN.text = it }
                         }
                         2 -> {
-                            spOngoingDayUpdate.setSelection(itemData.CareData.period[N] ?: 0)
-                            "原先設定: ${toWeek(itemData.CareData.period[N] ?: 0)}".also { tvOriginN.text = it }
+                            spOngoingDayUpdate.setSelection(itemData.careData.period[N] ?: 0)
+                            "原先設定: ${toWeek(itemData.careData.period[N] ?: 0)}".also { tvOriginN.text = it }
                         }
                         3 -> {
-                            spOngoingDayUpdate.setSelection(itemData.CareData.period[N] ?: 0)
-                            "原先設定: ${toCycleValue(itemData.CareData.period[N] ?: 0)}".also { tvOriginN.text = it }
+                            spOngoingDayUpdate.setSelection(itemData.careData.period[N] ?: 0)
+                            "原先設定: ${toCycleValue(itemData.careData.period[N] ?: 0)}".also { tvOriginN.text = it }
 
-                            spSuspendDayUpdate.setSelection(itemData.CareData.period[X] ?: 0)
-                            "原先設定: ${toCycleValue(itemData.CareData.period[X] ?: 0)}".also { tvOriginX.text = it }
+                            spSuspendDayUpdate.setSelection(itemData.careData.period[X] ?: 0)
+                            "原先設定: ${toCycleValue(itemData.careData.period[X] ?: 0)}".also { tvOriginX.text = it }
                         }
                     }
                 }
@@ -323,41 +323,41 @@ class ItemUpdateFragment : Fragment() {
         val adapter = ManageDetailTimeAdapter()
         when (itemData.itemType) {
             ItemType.DRUG -> {
-                itemData.DrugData?.executedTime?.forEach {
+                itemData.drugData?.executedTime?.forEach {
                     viewModel.getTimeSet(it.toDate().time)
                 }
                 adapter.submitList(
-                    itemData.DrugData?.executedTime?.sortedBy {
+                    itemData.drugData?.executedTime?.sortedBy {
                         getTimeStampToTimeInt(it)
                     }
                 )
             }
             ItemType.CARE -> {
-                itemData.CareData?.executeTime?.forEach {
+                itemData.careData?.executedTime?.forEach {
                     viewModel.getTimeSet(it.toDate().time)
                 }
                 adapter.submitList(
-                    itemData.CareData?.executeTime?.sortedBy {
+                    itemData.careData?.executedTime?.sortedBy {
                         getTimeStampToTimeInt(it)
                     }
                 )
             }
             ItemType.EVENT -> {
-                itemData.EventData?.executedTime?.forEach {
+                itemData.eventData?.executedTime?.forEach {
                     viewModel.getTimeSet(it.toDate().time)
                 }
                 adapter.submitList(
-                    itemData.EventData?.executedTime?.sortedBy {
+                    itemData.eventData?.executedTime?.sortedBy {
                         getTimeStampToTimeInt(it)
                     }
                 )
             }
             ItemType.MEASURE -> {
-                itemData.MeasureData?.executedTime?.forEach {
+                itemData.measureData?.executedTime?.forEach {
                     viewModel.getTimeSet(it.toDate().time)
                 }
                 adapter.submitList(
-                    itemData.MeasureData?.executedTime?.sortedBy {
+                    itemData.measureData?.executedTime?.sortedBy {
                         getTimeStampToTimeInt(it)
                     }
                 )

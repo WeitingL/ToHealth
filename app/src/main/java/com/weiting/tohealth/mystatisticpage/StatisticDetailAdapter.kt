@@ -19,7 +19,7 @@ import com.weiting.tohealth.databinding.*
 import com.weiting.tohealth.mystatisticpage.activitychart.EventTimeScaleAdapter
 import com.weiting.tohealth.mystatisticpage.drugchart.DrugTimeScaleAdapter
 import com.weiting.tohealth.util.Util.toMeasureType
-import com.weiting.tohealth.util.Util.toStringFromTimeStamp
+import com.weiting.tohealth.util.Util.getTimeStampToDateAndTimeString
 import com.weiting.tohealth.util.Util.toUnitForMeasure
 import java.lang.ClassCastException
 
@@ -73,7 +73,7 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
             item.list.forEach {
                 list.add(
                     MeasureValueEntry(
-                        toStringFromTimeStamp(it.createTime),
+                        getTimeStampToDateAndTimeString(it.createTime),
                         it.record[X],
                         it.record[Y],
                         it.record[Z]
@@ -142,7 +142,7 @@ class StatisticDetailAdapter : ListAdapter<LogItem, RecyclerView.ViewHolder>(Dif
             val data = mutableListOf<DataEntry>()
 
             item.list.forEach {
-                data.add(CareValueEntry(toStringFromTimeStamp(it.createTime), it.emotion, it.note))
+                data.add(CareValueEntry(getTimeStampToDateAndTimeString(it.createTime), it.emotion, it.note))
             }
 
             val column = cartesian.column(data)

@@ -6,7 +6,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.R
 import com.weiting.tohealth.databinding.MygroupRowNoteBinding
-import com.weiting.tohealth.util.Util.toStringFromTimeStamp
+import com.weiting.tohealth.util.Util.getTimeStampToDateAndTimeString
 
 class GroupNoteViewPagerAdapter(
     private val list: List<GroupAdapter.BoardMessage>
@@ -19,7 +19,7 @@ class GroupNoteViewPagerAdapter(
                 tvNoteTitle.text = boardMessage.title
                 tvContent.text = boardMessage.content
                 tvCreateMember.text = boardMessage.editor
-                tvNoteCreatTime.text = toStringFromTimeStamp(boardMessage.createTime)
+                tvNoteCreatTime.text = getTimeStampToDateAndTimeString(boardMessage.createTime)
                 tvNoteTag.apply {
                     when (boardMessage.result) {
                         7 -> {

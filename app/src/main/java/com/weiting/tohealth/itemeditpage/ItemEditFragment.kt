@@ -18,7 +18,7 @@ import com.weiting.tohealth.data.*
 import com.weiting.tohealth.databinding.ItemEditFragmentBinding
 import com.weiting.tohealth.factory.ItemEditViewModelFactory
 import com.weiting.tohealth.timeset.*
-import com.weiting.tohealth.util.Util.toTimeFromTimeStamp
+import com.weiting.tohealth.util.Util.getTimeStampToTimeString
 
 class ItemEditFragment : Fragment() {
 
@@ -225,7 +225,7 @@ class ItemEditFragment : Fragment() {
                 }
             )
             it.sortedBy {
-                toTimeFromTimeStamp(it)
+                getTimeStampToTimeString(it)
             }
             adapter.submitList(it)
             binding.rvTimeChose.adapter = adapter

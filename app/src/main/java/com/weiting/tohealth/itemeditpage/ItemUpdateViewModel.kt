@@ -82,7 +82,7 @@ class ItemUpdateViewModel(
     fun updateItem(binding: ItemUpdateFragmentBinding) {
         when (itemData.itemType) {
             ItemType.DRUG -> {
-                val data = itemData.DrugData ?: Drug()
+                val data = itemData.drugData ?: Drug()
 
                 data.unit = binding.spUnitUpdate.selectedItemPosition
                 data.dose = binding.etvDrugDoseUpdate.text.toString().toFloat()
@@ -101,7 +101,7 @@ class ItemUpdateViewModel(
             }
 
             ItemType.MEASURE -> {
-                val data = itemData.MeasureData ?: Measure()
+                val data = itemData.measureData ?: Measure()
 
                 data.lastEditTime = Timestamp.now()
                 data.editor = UserManager.UserInfo.id
@@ -112,7 +112,7 @@ class ItemUpdateViewModel(
             }
 
             ItemType.EVENT -> {
-                val data = itemData.EventData ?: Event()
+                val data = itemData.eventData ?: Event()
 
                 data.period = mapOf(
                     TYPE to binding.spPeriodUpdate.selectedItemPosition,
@@ -128,14 +128,14 @@ class ItemUpdateViewModel(
             }
 
             ItemType.CARE -> {
-                val data = itemData.CareData ?: Care()
+                val data = itemData.careData ?: Care()
 
                 data.period = mapOf(
                     TYPE to binding.spPeriodUpdate.selectedItemPosition,
                     N to binding.spOngoingDayUpdate.selectedItemPosition,
                     X to binding.spSuspendDayUpdate.selectedItemPosition
                 )
-                data.executeTime = timePointSet.value ?: data.executeTime
+                data.executedTime = timePointSet.value ?: data.executedTime
                 data.editor = UserManager.UserInfo.id
                 data.lastEditTime = Timestamp.now()
                 data.status = statusSelected.value ?: data.status

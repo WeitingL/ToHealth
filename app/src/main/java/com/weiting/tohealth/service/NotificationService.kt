@@ -78,7 +78,7 @@ class NotificationService : LifecycleService() {
             it.forEach {
                 if (it.userId !in memberListeningList) {
                     memberListeningList.add(it.userId ?: "")
-                    startListenNotification(it.userId ?: "")
+                    startListenAlertMessage(it.userId ?: "")
                 }
             }
         }
@@ -95,19 +95,19 @@ class NotificationService : LifecycleService() {
         }
     }
 
-    private fun startListenNotification(userId: String) {
-        firebaseDataRepository.getLiveNotificationsForService(userId)
+    private fun startListenAlertMessage(userId: String) {
+        firebaseDataRepository.getLiveAlertMessageForService(userId)
             .observe(this) {
 
-                val notificationList = it.filter {
+                val alertMessageList = it.filter {
                     !it.alreadySend.contains(
                         Firebase.auth.currentUser?.uid
                     )
                 }
 
-                notificationList.forEach { notification ->
+                alertMessageList.forEach { notification ->
                     showNotification(notification)
-                    firebaseDataRepository.postOnGetNotificationForService(notification)
+                    firebaseDataRepository.postOnGetAlertMessagesForService(notification)
                 }
             }
     }
@@ -171,7 +171,7 @@ class NotificationService : LifecycleService() {
                 }
             }
 
-            val nNotification = NotificationCompat.Builder(this@NotificationService, APP_NAME)
+            val Notification = NotificationCompat.Builder(this@NotificationService, APP_NAME)
                 .setSmallIcon(R.drawable.exclamation_mark)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setStyle(NotificationCompat.DecoratedCustomViewStyle())
@@ -180,7 +180,7 @@ class NotificationService : LifecycleService() {
                 .build()
 
             val id = Random.nextInt(15)
-            notificationManager.notify(id, nNotification)
+            notificationManager.notify(id, Notification)
         }
     }
 }

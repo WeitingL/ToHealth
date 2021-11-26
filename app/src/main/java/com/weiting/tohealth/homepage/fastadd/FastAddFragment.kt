@@ -31,13 +31,13 @@ class FastAddFragment : Fragment() {
                 when (it.itemType) {
                     ItemType.DRUG -> {
                         viewModel.postDrugLog(
-                            it.DrugData?.id?:"",
+                            it.drugData?.id?:"",
                             DrugLog(
                                 timeTag = getTimeStampToTimeInt(Timestamp.now()),
                                 result = 2,
                                 createdTime = Timestamp.now()
                             ),
-                            it.DrugData?: Drug()
+                            it.drugData?: Drug()
                         )
                         Toast.makeText(context, "已登錄紀錄", Toast.LENGTH_LONG).show()
                         findNavController().navigate(
@@ -46,7 +46,7 @@ class FastAddFragment : Fragment() {
                     }
                     ItemType.EVENT -> {
                         viewModel.postActivity(
-                            it.EventData?.id?:"",
+                            it.eventData?.id?:"",
                             EventLog(
                                 timeTag = getTimeStampToTimeInt(
                                     Timestamp.now()
@@ -63,7 +63,7 @@ class FastAddFragment : Fragment() {
                     ItemType.MEASURE -> {
                         findNavController().navigate(
                             NavigationDirections.actionGlobalMeasureRecordFragment(
-                                it.MeasureData?: Measure(),
+                                it.measureData?: Measure(),
                                 9999
                             )
                         )

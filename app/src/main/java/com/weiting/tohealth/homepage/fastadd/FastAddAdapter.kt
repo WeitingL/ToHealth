@@ -109,19 +109,19 @@ class FastAddAdapter(val onClickListener: OnclickListener) :
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is DrugViewHolder -> {
-                holder.bind((getItem(position).DrugData))
+                holder.bind((getItem(position).drugData))
                 holder.itemView.setOnClickListener {
                     onClickListener.onClick((getItem(position)))
                 }
             }
             is MeasureViewHolder -> {
-                holder.bind((getItem(position).MeasureData))
+                holder.bind((getItem(position).measureData))
                 holder.itemView.setOnClickListener {
                     onClickListener.onClick((getItem(position)))
                 }
             }
             is ActivityViewHolder -> {
-                holder.bind((getItem(position).EventData))
+                holder.bind((getItem(position).eventData))
                 holder.itemView.setOnClickListener {
                     onClickListener.onClick((getItem(position)))
                 }

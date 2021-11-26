@@ -28,7 +28,7 @@ class RebuildAlarm {
         val timeList = mutableListOf<Timestamp>()
 
         val drugList = firebaseDataRepository.getAllDrugs(userId).filter {
-            ItemArranger().isThatDayNeedToDo(ItemData(DrugData = it), Timestamp.now())
+            ItemArranger.isThatDayNeedToDo(ItemData(drugData = it), Timestamp.now())
         }
         drugList.forEach {
             it.executedTime.forEach {
@@ -39,7 +39,7 @@ class RebuildAlarm {
         }
 
         val measureLog = firebaseDataRepository.getAllMeasures(userId).filter {
-            ItemArranger().isThatDayNeedToDo(ItemData(MeasureData = it), Timestamp.now())
+            ItemArranger.isThatDayNeedToDo(ItemData(measureData = it), Timestamp.now())
         }
         measureLog.forEach {
             it.executedTime.forEach {
@@ -50,7 +50,7 @@ class RebuildAlarm {
         }
 
         val eventList = firebaseDataRepository.getAllEvents(userId).filter {
-            ItemArranger().isThatDayNeedToDo(ItemData(EventData = it), Timestamp.now())
+            ItemArranger.isThatDayNeedToDo(ItemData(eventData = it), Timestamp.now())
         }
         eventList.forEach {
             it.executedTime.forEach {
@@ -61,10 +61,10 @@ class RebuildAlarm {
         }
 
         val careList = firebaseDataRepository.getAllCares(userId).filter {
-            ItemArranger().isThatDayNeedToDo(ItemData(CareData = it), Timestamp.now())
+            ItemArranger.isThatDayNeedToDo(ItemData(careData = it), Timestamp.now())
         }
         careList.forEach {
-            it.executeTime.forEach {
+            it.executedTime.forEach {
                 if (getTimeStampToTimeInt(it) > getTimeStampToTimeInt(Timestamp.now())) {
                     timeList.add(it)
                 }

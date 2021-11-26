@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.data.Reminder
 import com.weiting.tohealth.databinding.CalenderItemRowBinding
-import com.weiting.tohealth.util.Util.toStringFromTimeStamp
+import com.weiting.tohealth.util.Util.getTimeStampToDateAndTimeString
 
 class BoardCalenderItemsAdapter(val onclickListener: DeleteOnclickListener) :
     ListAdapter<Reminder, BoardCalenderItemsAdapter.CalenderItemViewHolder>(DiffCallback) {
@@ -25,8 +25,8 @@ class BoardCalenderItemsAdapter(val onclickListener: DeleteOnclickListener) :
         fun bind(reminder: Reminder) {
             binding.apply {
                 tvCalenderTitle.text = reminder.content
-                tvCreateTimeCalender.text = toStringFromTimeStamp(reminder.createdTime)
-                tvDateCalender.text = toStringFromTimeStamp(reminder.date)
+                tvCreateTimeCalender.text = getTimeStampToDateAndTimeString(reminder.createdTime)
+                tvDateCalender.text = getTimeStampToDateAndTimeString(reminder.date)
                 tvEditorCalender.text = reminder.editor
                 ibDeleteReminder.setOnClickListener {
                     onclickListener.onClick(reminder)

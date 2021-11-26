@@ -76,9 +76,17 @@ interface FirebaseSource {
 
     suspend fun getMeasureLog(itemId: String, itemsLogId: String): MeasureLog
 
-    suspend fun getActivityLogs(itemId: String): List<EventLog>
+    suspend fun getEventLogs(itemId: String): List<EventLog>
 
     suspend fun getCareLogs(itemId: String): List<CareLog>
+
+    fun getLiveDrugLogs(itemId: String):MutableLiveData<List<DrugLog>>
+
+    fun getLiveMeasureLogs(itemId: String): MutableLiveData<List<MeasureLog>>
+
+    fun getLiveEventLogs(itemId: String): MutableLiveData<List<EventLog>>
+
+    fun getLiveCareLogs(itemId: String): MutableLiveData<List<CareLog>>
 
     /*
         Group operation
@@ -101,7 +109,7 @@ interface FirebaseSource {
 
     suspend fun getNotes(groupId: String): List<Note>
 
-    suspend fun getCalenderItems(groupId: String): List<Reminder>
+    suspend fun getReminders(groupId: String): List<Reminder>
 
     fun getLiveMembers(groupId: String): MutableLiveData<List<Member>>
 
@@ -109,15 +117,15 @@ interface FirebaseSource {
 
     fun getLiveNotes(groupId: String): MutableLiveData<List<Note>>
 
-    fun getLiveCalenderItems(groupId: String): MutableLiveData<List<Reminder>>
+    fun getLiveReminders(groupId: String): MutableLiveData<List<Reminder>>
 
     fun postNote(note: Note, groupId: String)
 
-    fun postCalenderItem(reminder: Reminder, groupId: String)
+    fun postReminder(reminder: Reminder, groupId: String)
 
     fun deleteNote(note: Note, groupId: String)
 
-    fun deleteCalenderItem(reminder: Reminder, groupId: String)
+    fun deleteReminder(reminder: Reminder, groupId: String)
 
     fun getLiveChatMessages(
         userId: String,
@@ -128,17 +136,17 @@ interface FirebaseSource {
 
     fun editStock(itemId: String, num: Float)
 
-    fun postNotification(alertMessage: AlertMessage)
+    fun postAlertMessage(alertMessage: AlertMessage)
 
-    fun getLiveNotificationsForService(
+    fun getLiveAlertMessageForService(
         userId: String
     ): MutableLiveData<List<AlertMessage>>
 
-    fun getLiveNotifications(
+    fun getLiveAlertMessages(
         userIdList: List<String>
     ): MutableLiveData<List<AlertMessage>>
 
-    fun postOnGetNotificationForService(alertMessage: AlertMessage)
+    fun postOnGetAlertMessagesForService(alertMessage: AlertMessage)
 
     fun getLiveChatMessagesForService(
         groupId: String

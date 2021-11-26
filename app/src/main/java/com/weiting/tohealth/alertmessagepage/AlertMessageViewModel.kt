@@ -4,7 +4,7 @@ import androidx.lifecycle.*
 import com.weiting.tohealth.data.FirebaseRepository
 import com.weiting.tohealth.data.AlertMessage
 import com.weiting.tohealth.util.Util.toNotificationTextForMeasureLog
-import com.weiting.tohealth.util.Util.toStringFromTimeStamp
+import com.weiting.tohealth.util.Util.getTimeStampToDateAndTimeString
 import kotlinx.coroutines.launch
 
 class AlertMessageViewModel(
@@ -17,22 +17,22 @@ class AlertMessageViewModel(
         false -> memberList
     }
 
-    val notificationList = firebaseDataRepository.getLiveNotifications(list)
+    val liveAlterMessageRecord = firebaseDataRepository.getLiveAlertMessages(list)
 
-    private val _notificationRecordList = MutableLiveData<MutableList<AlterMessageRecord>>()
+    private val _alterMessageRecordList = MutableLiveData<MutableList<AlterMessageRecord>>()
     val alterMessageRecordList: LiveData<MutableList<AlterMessageRecord>>
-        get() = _notificationRecordList
+        get() = _alterMessageRecordList
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
     init {
-        _notificationRecordList.value = mutableListOf()
+        _alterMessageRecordList.value = mutableListOf()
         _isLoading.value = true
     }
 
-    fun transferToNotificationRecord(list: List<AlertMessage>) {
+    fun transferToAlterMessageRecord(list: List<AlertMessage>) {
         viewModelScope.launch {
             val recordList = mutableListOf<AlterMessageRecord>()
             list.forEach {
@@ -54,7 +54,7 @@ class AlertMessageViewModel(
                                     measureLog
                                 )
                                 }",
-                                createdTime = toStringFromTimeStamp(it.createdTime)
+                                createdTime = getTimeStampToDateAndTimeString(it.createdTime)
                             )
                         )
                     }
@@ -64,7 +64,7 @@ class AlertMessageViewModel(
                                 title = "多次未完成",
                                 type = 5,
                                 itemName = "${user.name} 昨天多次未完成事項!",
-                                createdTime = toStringFromTimeStamp(it.createdTime)
+                                createdTime = getTimeStampToDateAndTimeString(it.createdTime)
                             )
                         )
                     }
@@ -76,14 +76,14 @@ class AlertMessageViewModel(
                                 type = 6,
                                 itemName = "${user.name} 的 ${drug.drugName} 快要用完了!" +
                                     "\n剩下 ${(drug.stock / drug.dose).toInt()} 次的服藥",
-                                createdTime = toStringFromTimeStamp(it.createdTime)
+                                createdTime = getTimeStampToDateAndTimeString(it.createdTime)
                             )
                         )
                     }
                     else -> throw Exception("Error result")
                 }
             }
-            _notificationRecordList.value = recordList
+            _alterMessageRecordList.value = recordList
             _isLoading.value = false
         }
     }

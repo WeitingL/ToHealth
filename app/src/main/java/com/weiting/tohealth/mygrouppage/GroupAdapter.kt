@@ -12,7 +12,7 @@ import com.weiting.tohealth.data.Reminder
 import com.weiting.tohealth.data.Note
 import com.weiting.tohealth.databinding.CardviewBottombuttonRowBinding
 import com.weiting.tohealth.databinding.MygroupRowGroupBinding
-import com.weiting.tohealth.util.Util.toStringFromTimeStamp
+import com.weiting.tohealth.util.Util.getTimeStampToDateAndTimeString
 import java.lang.ClassCastException
 
 const val VIEW_TYPE_GROUP = 0
@@ -163,7 +163,7 @@ class GroupAdapter(
                     list.add(
                         BoardMessage(
                             title = calenderItem.content ?: "",
-                            content = "時間: ${toStringFromTimeStamp(calenderItem.date)}",
+                            content = "時間: ${getTimeStampToDateAndTimeString(calenderItem.date)}",
                             createTime = calenderItem.createdTime ?: Timestamp.now(),
                             editor = calenderItem.editor ?: "",
                             result = 8
@@ -190,7 +190,7 @@ class GroupAdapter(
                     list.add(
                         BoardMessage(
                             title = calenderItem.content ?: "",
-                            content = "時間: ${toStringFromTimeStamp(calenderItem.date)}",
+                            content = "時間: ${getTimeStampToDateAndTimeString(calenderItem.date)}",
                             createTime = calenderItem.createdTime ?: Timestamp.now(),
                             editor = calenderItem.editor ?: "",
                             result = 8

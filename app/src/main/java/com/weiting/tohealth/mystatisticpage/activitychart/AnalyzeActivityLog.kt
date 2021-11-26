@@ -6,7 +6,7 @@ import com.weiting.tohealth.mystatisticpage.LogItem
 import com.weiting.tohealth.mystatisticpage.ResultInDate
 import com.weiting.tohealth.util.Util.getTimeStampToDateInt
 import com.weiting.tohealth.util.Util.toEventType
-import com.weiting.tohealth.util.Util.toTimeFromTimeStamp
+import com.weiting.tohealth.util.Util.getTimeStampToTimeString
 
 class AnalyzeActivityLog {
 
@@ -24,7 +24,7 @@ class AnalyzeActivityLog {
                     resultList.add(
                         mapOf(
                             "result" to activityLog.result.toString(),
-                            "time" to toTimeFromTimeStamp(activityLog.createdTime)
+                            "time" to getTimeStampToTimeString(activityLog.createdTime)
                         )
                     )
                 }

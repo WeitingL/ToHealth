@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.data.Note
 import com.weiting.tohealth.databinding.NoteRowBinding
 import com.weiting.tohealth.util.Util.toFooter
-import com.weiting.tohealth.util.Util.toStringFromTimeStamp
+import com.weiting.tohealth.util.Util.getTimeStampToDateAndTimeString
 
 class BoardNotesAdapter(val onclickListener: DeleteOnclickListener) :
     ListAdapter<Note, BoardNotesAdapter.NoteViewHolder>(DiffCallback) {
@@ -28,7 +28,7 @@ class BoardNotesAdapter(val onclickListener: DeleteOnclickListener) :
                 tvNoteTitle.text = note.title
                 tvEditor.text = note.editor
                 tvNoteContext.text = note.content
-                tvNoteCreateTime.text = toStringFromTimeStamp(note.createdTime)
+                tvNoteCreateTime.text = getTimeStampToDateAndTimeString(note.createdTime)
                 tvFooter.text = toFooter(note.footer)
                 ibDelecteNote.setOnClickListener {
                     onclickListener.onClick(note)

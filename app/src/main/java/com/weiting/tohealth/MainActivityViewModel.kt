@@ -22,7 +22,7 @@ class MainActivityViewModel(private val firebaseDataRepository: FirebaseReposito
         get() = _navigationDestination
 
     val memberList = mutableListOf<String>()
-    val groupList = mutableListOf<String>()
+    private val groupList = mutableListOf<String>()
 
     init {
         if (Firebase.auth.currentUser?.uid != null) {
@@ -52,8 +52,7 @@ class MainActivityViewModel(private val firebaseDataRepository: FirebaseReposito
             groupIdList.forEach {
                 groupList.add(it)
                 firebaseDataRepository.getMembers(it).forEach { member ->
-                    memberList.add(member.userId!!)
-                    Log.i("memberList", memberList.toString())
+                    memberList.add(member.userId?:"")
                 }
             }
         }

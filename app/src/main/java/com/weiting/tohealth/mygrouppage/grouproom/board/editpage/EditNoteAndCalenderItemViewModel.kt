@@ -48,7 +48,7 @@ class EditNoteAndCalenderItemViewModel(
         firebaseDataRepository.postNote(note, group.id ?: "")
     }
 
-    fun postCalenderItem(reminder: Reminder) {
-        firebaseDataRepository.postCalenderItem(reminder, group.id ?: "")
+    fun postReminder(reminder: Reminder) {
+        firebaseDataRepository.postReminder(reminder, group.id ?: "")
     }
 }

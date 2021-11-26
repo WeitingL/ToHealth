@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.Timestamp
 import com.weiting.tohealth.databinding.EditTimeRowBinding
-import com.weiting.tohealth.util.Util.toTimeFromTimeStamp
+import com.weiting.tohealth.util.Util.getTimeStampToTimeString
 
 class TimeSetAdapter(val onClickListener: OnclickListener) : ListAdapter<Timestamp, TimeSetAdapter.TimeEditViewHolder>(DiffCallBack) {
 
@@ -22,7 +22,7 @@ class TimeSetAdapter(val onClickListener: OnclickListener) : ListAdapter<Timesta
     inner class TimeEditViewHolder(private val binding: EditTimeRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(timestamp: Timestamp, position: Int) {
-            binding.tvTimerSet.text = toTimeFromTimeStamp(timestamp)
+            binding.tvTimerSet.text = getTimeStampToTimeString(timestamp)
             binding.btRemoveTimeSet.setOnClickListener {
                 onClickListener.onClick(position)
             }

@@ -21,7 +21,7 @@ import com.weiting.tohealth.util.Util.toCareType
 import com.weiting.tohealth.util.Util.toMeasureType
 import com.weiting.tohealth.util.Util.toStatus
 import com.weiting.tohealth.util.Util.toStringFromPeriod
-import com.weiting.tohealth.util.Util.toStringFromTimeStamp
+import com.weiting.tohealth.util.Util.getTimeStampToDateAndTimeString
 import com.weiting.tohealth.util.Util.toUnit
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -60,7 +60,7 @@ class ManageDetailAdapter(val onClickListener: OnclickListener) :
 
                     when (item.itemType) {
                         ItemType.DRUG -> {
-                            val data = item.DrugData
+                            val data = item.drugData
                             adapter.submitList(
                                 data?.executedTime?.sortedBy {
                                     getTimeStampToTimeInt(it)
@@ -97,13 +97,13 @@ class ManageDetailAdapter(val onClickListener: OnclickListener) :
                                 (data?.dose ?: 0L).toInt()
                             )
 
-                            tvUpdateTime.text = toStringFromTimeStamp(data?.lastEditTime)
-                            tvCreatedTime.text = toStringFromTimeStamp(data?.createdTime)
+                            tvUpdateTime.text = getTimeStampToDateAndTimeString(data?.lastEditTime)
+                            tvCreatedTime.text = getTimeStampToDateAndTimeString(data?.createdTime)
                             tvEditorManage.text = database.getUser(data?.editor ?: "").name
                         }
 
                         ItemType.MEASURE -> {
-                            val data = item.MeasureData
+                            val data = item.measureData
                             adapter.submitList(
                                 data?.executedTime?.sortedBy {
                                     getTimeStampToTimeInt(it)
@@ -130,8 +130,8 @@ class ManageDetailAdapter(val onClickListener: OnclickListener) :
                             tvPerTimeTitle.visibility = View.GONE
                             tvDose.visibility = View.GONE
                             tvUnitManage.visibility = View.GONE
-                            tvCreatedTime.text = toStringFromTimeStamp(data?.createdTime)
-                            tvUpdateTime.text = toStringFromTimeStamp(data?.lastEditTime)
+                            tvCreatedTime.text = getTimeStampToDateAndTimeString(data?.createdTime)
+                            tvUpdateTime.text = getTimeStampToDateAndTimeString(data?.lastEditTime)
                             tvRatioTitle.text = context.getString(R.string.outDate)
                             tvRatioNum.text = context.getString(R.string.unLimit)
                             tvStockDayUnit.text = context.getString(R.string.unLimit)
@@ -141,7 +141,7 @@ class ManageDetailAdapter(val onClickListener: OnclickListener) :
                         }
 
                         ItemType.EVENT -> {
-                            val data = item.EventData
+                            val data = item.eventData
                             adapter.submitList(
                                 data?.executedTime?.sortedBy {
                                     getTimeStampToTimeInt(it)
@@ -167,8 +167,8 @@ class ManageDetailAdapter(val onClickListener: OnclickListener) :
                             tvPerTimeTitle.visibility = View.GONE
                             tvDose.visibility = View.GONE
                             tvUnitManage.visibility = View.GONE
-                            tvCreatedTime.text = toStringFromTimeStamp(data?.createdTime)
-                            tvUpdateTime.text = toStringFromTimeStamp(data?.lastEditTime)
+                            tvCreatedTime.text = getTimeStampToDateAndTimeString(data?.createdTime)
+                            tvUpdateTime.text = getTimeStampToDateAndTimeString(data?.lastEditTime)
                             tvRatioTitle.text = context.getString(R.string.outDate)
                             tvRatioNum.text = context.getString(R.string.unLimit)
                             tvStockDayUnit.text = context.getString(R.string.unLimit)
@@ -178,14 +178,14 @@ class ManageDetailAdapter(val onClickListener: OnclickListener) :
                         }
 
                         ItemType.CARE -> {
-                            val data = item.CareData
+                            val data = item.careData
                             adapter.submitList(
-                                data?.executeTime?.sortedBy {
+                                data?.executedTime?.sortedBy {
                                     getTimeStampToTimeInt(it)
                                 }
                             )
 
-                            when (data?.executeTime?.isEmpty()) {
+                            when (data?.executedTime?.isEmpty()) {
                                 true -> {
                                     binding.tvTimeTitle.text =
                                         context.getString(R.string.setTime_empty)
@@ -209,8 +209,8 @@ class ManageDetailAdapter(val onClickListener: OnclickListener) :
                             tvDose.visibility = View.GONE
                             tvUnitManage.visibility = View.GONE
 
-                            tvCreatedTime.text = toStringFromTimeStamp(data?.createdTime)
-                            tvUpdateTime.text = toStringFromTimeStamp(data?.lastEditTime)
+                            tvCreatedTime.text = getTimeStampToDateAndTimeString(data?.createdTime)
+                            tvUpdateTime.text = getTimeStampToDateAndTimeString(data?.lastEditTime)
 
                             tvEditorManage.text = database.getUser(data?.editor ?: "").name
                         }

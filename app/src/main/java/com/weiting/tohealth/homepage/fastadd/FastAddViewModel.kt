@@ -23,21 +23,21 @@ class FastAddViewModel(private val firebaseDataRepository: FirebaseRepository) :
         addSource(drugs) {
             drugCurrentList.clear()
             it.forEach {
-                drugCurrentList.add(ItemData(DrugData = it))
+                drugCurrentList.add(ItemData(drugData = it))
             }
             value = (drugCurrentList + measureCurrentList + eventCurrentList).toMutableList()
         }
         addSource(measures) {
             measureCurrentList.clear()
             it.forEach {
-                measureCurrentList.add(ItemData(MeasureData = it))
+                measureCurrentList.add(ItemData(measureData = it))
             }
             value = (drugCurrentList + measureCurrentList + eventCurrentList).toMutableList()
         }
         addSource(events) {
             eventCurrentList.clear()
             it.forEach {
-                eventCurrentList.add(ItemData(EventData = it))
+                eventCurrentList.add(ItemData(eventData = it))
             }
             value = (drugCurrentList + measureCurrentList + eventCurrentList).toMutableList()
         }

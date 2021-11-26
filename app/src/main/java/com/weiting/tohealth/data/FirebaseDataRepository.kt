@@ -121,11 +121,27 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
     }
 
     override suspend fun getEventLogs(itemId: String): List<EventLog> {
-        return firebaseSource.getActivityLogs(itemId)
+        return firebaseSource.getEventLogs(itemId)
     }
 
     override suspend fun getCareLogs(itemId: String): List<CareLog> {
         return firebaseSource.getCareLogs(itemId)
+    }
+
+    override fun getLiveDrugLogs(itemId: String): MutableLiveData<List<DrugLog>> {
+        return firebaseSource.getLiveDrugLogs(itemId)
+    }
+
+    override fun getLiveMeasureLogs(itemId: String): MutableLiveData<List<MeasureLog>> {
+        return firebaseSource.getLiveMeasureLogs(itemId)
+    }
+
+    override fun getLiveEventLogs(itemId: String): MutableLiveData<List<EventLog>> {
+        return firebaseSource.getLiveEventLogs(itemId)
+    }
+
+    override fun getLiveCareLogs(itemId: String): MutableLiveData<List<CareLog>> {
+        return firebaseSource.getLiveCareLogs(itemId)
     }
 
     override fun createGroup(group: Group) {
@@ -161,7 +177,7 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
     }
 
     override suspend fun getReminders(groupId: String): List<Reminder> {
-        return firebaseSource.getCalenderItems(groupId)
+        return firebaseSource.getReminders(groupId)
     }
 
     override fun getLiveMembers(groupId: String): MutableLiveData<List<Member>> {
@@ -177,15 +193,15 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
     }
 
     override fun getLiveReminders(groupId: String): MutableLiveData<List<Reminder>> {
-        return firebaseSource.getLiveCalenderItems(groupId)
+        return firebaseSource.getLiveReminders(groupId)
     }
 
     override fun postNote(note: Note, groupId: String) {
         return firebaseSource.postNote(note, groupId)
     }
 
-    override fun postCalenderItem(reminder: Reminder, groupId: String) {
-        return firebaseSource.postCalenderItem(reminder, groupId)
+    override fun postReminder(reminder: Reminder, groupId: String) {
+        return firebaseSource.postReminder(reminder, groupId)
     }
 
     override fun deleteNote(note: Note, groupId: String) {
@@ -193,7 +209,7 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
     }
 
     override fun deleteReminder(reminder: Reminder, groupId: String) {
-        return firebaseSource.deleteCalenderItem(reminder, groupId)
+        return firebaseSource.deleteReminder(reminder, groupId)
     }
 
     override fun getLiveChatMessages(
@@ -212,23 +228,23 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.editStock(itemId, num)
     }
 
-    override fun postNotification(alertMessage: AlertMessage) {
-        return firebaseSource.postNotification(alertMessage)
+    override fun postAlertMessage(alertMessage: AlertMessage) {
+        return firebaseSource.postAlertMessage(alertMessage)
     }
 
-    override fun getLiveNotificationsForService(
+    override fun getLiveAlertMessageForService(
         userId: String
     ): MutableLiveData<List<AlertMessage>> {
-        return firebaseSource.getLiveNotificationsForService(userId)
+        return firebaseSource.getLiveAlertMessageForService(userId)
     }
 
-    override fun getLiveNotifications(userIdList: List<String>):
+    override fun getLiveAlertMessages(userIdList: List<String>):
             MutableLiveData<List<AlertMessage>> {
-        return firebaseSource.getLiveNotifications(userIdList)
+        return firebaseSource.getLiveAlertMessages(userIdList)
     }
 
-    override fun postOnGetNotificationForService(alertMessage: AlertMessage) {
-        return firebaseSource.postOnGetNotificationForService(alertMessage)
+    override fun postOnGetAlertMessagesForService(alertMessage: AlertMessage) {
+        return firebaseSource.postOnGetAlertMessagesForService(alertMessage)
     }
 
     override fun getLiveChatMessagesForService(

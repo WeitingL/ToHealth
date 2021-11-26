@@ -110,7 +110,7 @@ class EditNoteAndCalenderItemFragment : Fragment() {
                     if (binding.edvReminderTitle.text.isEmpty() || binding.tvEditDate.text.isEmpty()) {
                         Toast.makeText(context, getString(R.string.SomethingEmpty), Toast.LENGTH_LONG).show()
                     } else {
-                        viewModel.postCalenderItem(
+                        viewModel.postReminder(
                             Reminder(
                                 editor = UserManager.UserInfo.id,
                                 content = binding.edvReminderTitle.text.toString(),

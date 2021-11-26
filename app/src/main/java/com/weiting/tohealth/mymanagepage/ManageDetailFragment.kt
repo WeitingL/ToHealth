@@ -63,7 +63,7 @@ class ManageDetailFragment : Fragment() {
                     }
 
                     newList.forEach {
-                        list += ItemData(DrugData = it)
+                        list += ItemData(drugData = it)
                     }
                     viewModel.putInDetailList(list)
                 }
@@ -76,7 +76,7 @@ class ManageDetailFragment : Fragment() {
                         it.status != 2
                     }
                     newList.forEach {
-                        list += ItemData(MeasureData = it)
+                        list += ItemData(measureData = it)
                     }
                     viewModel.putInDetailList(list)
                 }
@@ -89,7 +89,7 @@ class ManageDetailFragment : Fragment() {
                         it.status != 2
                     }
                     newList.forEach {
-                        list += ItemData(EventData = it)
+                        list += ItemData(eventData = it)
                     }
                     viewModel.putInDetailList(list)
                 }
@@ -102,7 +102,7 @@ class ManageDetailFragment : Fragment() {
                         it.status != 2
                     }
                     newList.forEach {
-                        list += ItemData(CareData = it)
+                        list += ItemData(careData = it)
                     }
                     viewModel.putInDetailList(list)
                 }
