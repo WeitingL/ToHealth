@@ -22,6 +22,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
     */
 
     private val progressCounter = TodoListProgressCounter()
+    private val listManager = TodoListManager()
 
     private val _isTheNewbie = MutableLiveData<Boolean>()
     val isTheNewbie: LiveData<Boolean>
@@ -76,18 +77,15 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
     private var careList =
         firebaseDataRepository.getLiveCares(UserManager.UserInfo.id ?: "")
 
-    private val drugCurrentList = mutableListOf<ItemDataType>()
-    private val measureCurrentList = mutableListOf<ItemDataType>()
-    private val eventCurrentList = mutableListOf<ItemDataType>()
-    private val careCurrentList = mutableListOf<ItemDataType>()
-
-    private val timeCurrentList = mutableListOf<ItemDataType>()
-    private val timeTitleList = mutableListOf<Int>()
 
     val itemDataMediator = MediatorLiveData<MutableList<ItemDataType>>().apply {
         addSource(liveDrugs) { drugList ->
             viewModelScope.launch {
-                drugCurrentList.clear()
+                listManager.apply {
+                    clearCurrentList(ItemType.DRUG)
+                    clearAllItemList(ItemType.DRUG)
+                }
+
                 _completedTask.value =
                     _completedTask.value?.minus(progressCounter.getCounterRecord(ItemType.DRUG))
 
@@ -113,28 +111,30 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                     val logTimeTags = mutableListOf<Int>()
                     drug.drugLogs.forEach { drugLog ->
                         logTimeTags.add(drugLog.timeTag ?: 0)
-                        logTimeTags.sort()
                     }
 
                     drug.executedTime.forEach {
+                        listManager.getAllItem(ItemData(drugData = drug))
 
                         //Skip the item log that time tag is the same with exist time tag.
                         if (getTimeStampToTimeInt(it) !in logTimeTags) {
-                            drugCurrentList.add(
+                            listManager.getCurrentItemDataType(
                                 ItemDataType.DrugType(
                                     ItemData(drugData = drug),
                                     getTimeStampToTimeInt(it)
                                 )
                             )
 
-                            if (getTimeStampToTimeInt(it) !in timeTitleList) {
-                                timeTitleList.add(getTimeStampToTimeInt(it))
-                                timeCurrentList.add(
-                                    ItemDataType.TimeType(
-                                        getTimeStampToTimeString(it),
-                                        getTimeStampToTimeInt(it)
+                            if (getTimeStampToTimeInt(it) !in listManager.timeTitleList) {
+                                listManager.apply {
+                                    getTimeTitle(getTimeStampToTimeInt(it))
+                                    getCurrentItemDataType(
+                                        ItemDataType.TimeType(
+                                            getTimeStampToTimeString(it),
+                                            getTimeStampToTimeInt(it)
+                                        )
                                     )
-                                )
+                                }
                             }
                         } else {
                             _completedTask.value = _completedTask.value?.plus(1)
@@ -142,20 +142,17 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                     }
                 }
 
-                value = ItemArranger.arrangeTodoList(
-                    timeTitleList,
-                    timeCurrentList,
-                    drugCurrentList,
-                    measureCurrentList,
-                    eventCurrentList,
-                    careCurrentList
-                )
+                value = listManager.arrangeTodoList()
             }
         }
 
         addSource(measureList) { measureList ->
             viewModelScope.launch {
-                measureCurrentList.clear()
+                listManager.apply {
+                    clearCurrentList(ItemType.MEASURE)
+                    clearAllItemList(ItemType.MEASURE)
+                }
+
                 _completedTask.value =
                     _completedTask.value?.minus(progressCounter.getCounterRecord(ItemType.MEASURE))
 
@@ -183,27 +180,29 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                     val logTimeTags = mutableListOf<Int>()
                     measure.measureLogs.forEach { measureLog ->
                         logTimeTags.add(measureLog.timeTag!!)
-                        logTimeTags.sort()
                     }
 
                     measure.executedTime.forEach {
-                        _totalTask.value = _totalTask.value?.plus(1)
+                        listManager.getAllItem(ItemData(measureData = measure))
+
                         if (getTimeStampToTimeInt(it) !in logTimeTags) {
-                            measureCurrentList.add(
+                            listManager.getCurrentItemDataType(
                                 ItemDataType.MeasureType(
                                     ItemData(measureData = measure),
                                     getTimeStampToTimeInt(it)
                                 )
                             )
 
-                            if (getTimeStampToTimeInt(it) !in timeTitleList) {
-                                timeTitleList.add(getTimeStampToTimeInt(it))
-                                timeCurrentList.add(
-                                    ItemDataType.TimeType(
-                                        getTimeStampToTimeString(it),
-                                        getTimeStampToTimeInt(it)
+                            if (getTimeStampToTimeInt(it) !in listManager.timeTitleList) {
+                                listManager.apply {
+                                    getTimeTitle(getTimeStampToTimeInt(it))
+                                    getCurrentItemDataType(
+                                        ItemDataType.TimeType(
+                                            getTimeStampToTimeString(it),
+                                            getTimeStampToTimeInt(it)
+                                        )
                                     )
-                                )
+                                }
                             }
                         } else {
                             _completedTask.value = _completedTask.value?.plus(1)
@@ -211,20 +210,17 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
 
                     }
                 }
-                value = ItemArranger.arrangeTodoList(
-                    timeTitleList,
-                    timeCurrentList,
-                    drugCurrentList,
-                    measureCurrentList,
-                    eventCurrentList,
-                    careCurrentList
-                )
+                value = listManager.arrangeTodoList()
             }
         }
 
         addSource(eventList) { eventList ->
             viewModelScope.launch {
-                eventCurrentList.clear()
+                listManager.apply {
+                    clearCurrentList(ItemType.EVENT)
+                    clearAllItemList(ItemType.EVENT)
+                }
+
                 _completedTask.value =
                     _completedTask.value?.minus(progressCounter.getCounterRecord(ItemType.EVENT))
 
@@ -251,47 +247,46 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                     val logTimeTags = mutableListOf<Int>()
                     event.eventLogs.forEach { activityLog ->
                         logTimeTags.add(activityLog.timeTag!!)
-                        logTimeTags.sort()
                     }
 
                     event.executedTime.forEach {
+                        listManager.getAllItem(ItemData(eventData = event))
 
                         if (getTimeStampToTimeInt(it) !in logTimeTags) {
-                            eventCurrentList.add(
+                            listManager.getCurrentItemDataType(
                                 ItemDataType.EventType(
                                     ItemData(eventData = event),
                                     getTimeStampToTimeInt(it)
                                 )
                             )
 
-                            if (getTimeStampToTimeInt(it) !in timeTitleList) {
-                                timeTitleList.add(getTimeStampToTimeInt(it))
-                                timeCurrentList.add(
-                                    ItemDataType.TimeType(
-                                        getTimeStampToTimeString(it),
-                                        getTimeStampToTimeInt(it)
+                            if (getTimeStampToTimeInt(it) !in listManager.timeTitleList) {
+                                listManager.apply {
+                                    getTimeTitle(getTimeStampToTimeInt(it))
+                                    getCurrentItemDataType(
+                                        ItemDataType.TimeType(
+                                            getTimeStampToTimeString(it),
+                                            getTimeStampToTimeInt(it)
+                                        )
                                     )
-                                )
+                                }
                             }
                         } else {
                             _completedTask.value = _completedTask.value?.plus(1)
                         }
                     }
                 }
-                value = ItemArranger.arrangeTodoList(
-                    timeTitleList,
-                    timeCurrentList,
-                    drugCurrentList,
-                    measureCurrentList,
-                    eventCurrentList,
-                    careCurrentList
-                )
+                value = listManager.arrangeTodoList()
             }
         }
 
         addSource(careList) { careList ->
             viewModelScope.launch {
-                careCurrentList.clear()
+                listManager.apply {
+                    clearCurrentList(ItemType.CARE)
+                    clearAllItemList(ItemType.CARE)
+                }
+
                 _completedTask.value =
                     _completedTask.value?.minus(progressCounter.getCounterRecord(ItemType.CARE))
 
@@ -316,43 +311,38 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
 
                     val logTimeTags = mutableListOf<Int>()
                     care.careLogs.forEach { careLog ->
-                        logTimeTags.add(careLog.timeTag!!)
-                        logTimeTags.sort()
+                        logTimeTags.add(careLog.timeTag?:0)
                     }
 
 
                     care.executedTime.forEach {
+                        listManager.getAllItem(ItemData(careData = care))
 
                         if (getTimeStampToTimeInt(it) !in logTimeTags) {
-                            careCurrentList.add(
+                            listManager.getCurrentItemDataType(
                                 ItemDataType.CareType(
                                     ItemData(careData = care),
                                     getTimeStampToTimeInt(it)
                                 )
                             )
 
-                            if (getTimeStampToTimeInt(it) !in timeTitleList) {
-                                timeTitleList.add(getTimeStampToTimeInt(it))
-                                timeCurrentList.add(
-                                    ItemDataType.TimeType(
-                                        getTimeStampToTimeString(it),
-                                        getTimeStampToTimeInt(it)
+                            if (getTimeStampToTimeInt(it) !in listManager.timeTitleList) {
+                                listManager.apply {
+                                    getTimeTitle(getTimeStampToTimeInt(it))
+                                    getCurrentItemDataType(
+                                        ItemDataType.TimeType(
+                                            getTimeStampToTimeString(it),
+                                            getTimeStampToTimeInt(it)
+                                        )
                                     )
-                                )
+                                }
                             }
                         } else {
                             _completedTask.value = _completedTask.value?.plus(1)
                         }
                     }
                 }
-                value = ItemArranger.arrangeTodoList(
-                    timeTitleList,
-                    timeCurrentList,
-                    drugCurrentList,
-                    measureCurrentList,
-                    eventCurrentList,
-                    careCurrentList
-                )
+                value = listManager.arrangeTodoList()
             }
         }
     }
@@ -362,8 +352,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
     }
 
     fun getAllTaskNumber() {
-        _totalTask.value =
-            drugCurrentList.size + measureCurrentList.size + eventCurrentList.size + careCurrentList.size
+        _totalTask.value = listManager.getAllTodoListNum()
     }
 
     /*
@@ -462,7 +451,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
     private fun cleanSkipList() {
         skipList.clear()
         skipTimeList.forEach {
-            timeTitleList.remove((it.itemDataType as ItemDataType.TimeType).timeInt)
+            listManager.removeTimeTitle((it.itemDataType as ItemDataType.TimeType).timeInt)
         }
         skipTimeList.clear()
     }
@@ -547,7 +536,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
     private fun clearPostLogList() {
         finishedLogList.clear()
         finishedTimeList.forEach {
-            timeTitleList.remove((it.itemDataType as ItemDataType.TimeType).timeInt)
+            listManager.removeTimeTitle((it.itemDataType as ItemDataType.TimeType).timeInt)
         }
         finishedTimeList.clear()
     }
