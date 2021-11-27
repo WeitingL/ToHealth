@@ -4,12 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.Timestamp
 import com.weiting.tohealth.data.*
-import com.weiting.tohealth.util.NotificationGenerator
+import com.weiting.tohealth.util.AlterMessageGenerator
 import kotlinx.coroutines.launch
 
 class RecordViewModel(private val firebaseDataRepository: FirebaseRepository) :
     ViewModel(),
-    NotificationGenerator {
+    AlterMessageGenerator {
 
     var careScore: Int? = null
     var careInfo: String? = null

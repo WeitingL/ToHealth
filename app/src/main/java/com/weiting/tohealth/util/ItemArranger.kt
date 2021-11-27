@@ -7,6 +7,56 @@ import java.util.*
 
 object ItemArranger {
 
+
+    fun arrangeTodoList(
+        timeTitleList: MutableList<Int>,
+        timeCurrentList: MutableList<ItemDataType>,
+        drugCurrentList: MutableList<ItemDataType>,
+        measureCurrentList: MutableList<ItemDataType>,
+        eventCurrentList: MutableList<ItemDataType>,
+        careCurrentList: MutableList<ItemDataType>
+    ): MutableList<ItemDataType> {
+        val list = mutableListOf<ItemDataType>()
+
+        timeTitleList.distinct()
+        timeTitleList.sort()
+        timeTitleList.forEach { time ->
+
+            timeCurrentList.forEach {
+                if ((it as ItemDataType.TimeType).timeInt == time) {
+                    list.add(it)
+                }
+            }
+
+            drugCurrentList.forEach {
+                if ((it as ItemDataType.DrugType).timeInt == time) {
+                    list.add(it)
+                }
+            }
+
+            measureCurrentList.forEach {
+                if ((it as ItemDataType.MeasureType).timeInt == time) {
+                    list.add(it)
+                }
+            }
+
+            eventCurrentList.forEach {
+                if ((it as ItemDataType.EventType).timeInt == time) {
+                    list.add(it)
+                }
+            }
+
+            careCurrentList.forEach {
+                if ((it as ItemDataType.CareType).timeInt == time) {
+                    list.add(it)
+                }
+            }
+        }
+
+        return list
+    }
+
+
     fun isThatDayNeedToDo(itemsData: ItemData, day: Timestamp): Boolean {
         return when (itemsData.itemType) {
             ItemType.DRUG -> {

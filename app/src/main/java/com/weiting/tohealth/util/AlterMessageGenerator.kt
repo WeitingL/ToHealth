@@ -7,7 +7,7 @@ import com.weiting.tohealth.data.MeasureLog
     The notification will be generated before log generate and after getting data from firebase.
  */
 
-interface NotificationGenerator {
+interface AlterMessageGenerator {
 
     fun isDrugExhausted(drug: Drug): Boolean {
         val currentStock = drug.stock

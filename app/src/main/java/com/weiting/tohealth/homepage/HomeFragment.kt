@@ -48,7 +48,8 @@ class HomeFragment : Fragment() {
         val adapter = TodayItemAdapter()
         val swipeSet = object : RecyclerViewSwipe() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position = viewHolder.adapterPosition
+                val position = viewHolder.position
+                Log.i("position", position.toString())
                 when (direction) {
                     // Skip
                     ItemTouchHelper.LEFT -> {
@@ -250,7 +251,7 @@ class HomeFragment : Fragment() {
                     ItemTouchHelper.RIGHT -> {
                         when (viewHolder.itemViewType) {
                             VIEW_TYPE_DRUG -> {
-                                viewModel.getFinishedLog(
+                                viewModel.swipeToFinished(
                                     SwipeData(
                                         adapter.currentList[position],
                                         position
@@ -311,7 +312,7 @@ class HomeFragment : Fragment() {
                             }
                             VIEW_TYPE_EVENT -> {
 
-                                viewModel.getFinishedLog(
+                                viewModel.swipeToFinished(
                                     SwipeData(
                                         adapter.currentList[position],
                                         position
@@ -382,29 +383,28 @@ class HomeFragment : Fragment() {
         viewModel.itemDataMediator.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()){
                 adapter.submitList(it)
+                viewModel.getAllTaskNumber()
             }
         }
 
         viewModel.totalTask.observe(viewLifecycleOwner) {
-            viewModel.taskCompleted()
-
+            viewModel.isTaskCompleted()
             binding.progressBar.max = it
         }
 
         viewModel.completedTask.observe(viewLifecycleOwner) {
-            viewModel.taskCompleted()
-
+            viewModel.isTaskCompleted()
             binding.progressBar.progress = it
         }
 
-        viewModel.allCompleted.observe(viewLifecycleOwner) {
+        viewModel.isAllCompleted.observe(viewLifecycleOwner) {
             binding.apply {
                 when (it) {
                     true -> {
                         lavFinished.setAnimation(R.raw.sunny)
                         lavFinished.visibility = View.VISIBLE
                         tvFinishedSlogan.visibility = View.VISIBLE
-                        rvHomeCardView.visibility = View.GONE
+                        rvHomeCardView.visibility = View.VISIBLE
                     }
                     false -> {
                         lavFinished.visibility = View.GONE
@@ -427,12 +427,12 @@ class HomeFragment : Fragment() {
     }
 }
 
-class WrapContentLinearLayoutManager : LinearLayoutManager {
-    constructor(context: Context?, orientation: Int, reverseLayout: Boolean) : super(
+class WrapContentLinearLayoutManager(context: Context?, orientation: Int, reverseLayout: Boolean) :
+    LinearLayoutManager(
         context,
         orientation,
         reverseLayout
-    )
+    ) {
 
     override fun onLayoutChildren(recycler: Recycler, state: RecyclerView.State) {
         try {
