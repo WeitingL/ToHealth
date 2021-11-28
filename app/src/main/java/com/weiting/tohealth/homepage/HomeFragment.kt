@@ -18,6 +18,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.weiting.tohealth.*
+import com.weiting.tohealth.data.ItemType
 import com.weiting.tohealth.data.UserManager
 import com.weiting.tohealth.databinding.FragmentHomeBinding
 import com.weiting.tohealth.util.RecyclerViewSwipe
@@ -88,17 +89,17 @@ class HomeFragment : Fragment() {
                                         adapter.notifyItemRangeInserted(position - 1, 2)
                                     }
                                     .addCallback(object :
-                                            BaseTransientBottomBar.BaseCallback<Snackbar>() {
-                                            override fun onDismissed(
-                                                transientBottomBar: Snackbar?,
-                                                event: Int
-                                            ) {
-                                                super.onDismissed(transientBottomBar, event)
-                                                if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
-                                                    viewModel.postSkipLog()
-                                                }
+                                        BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                                        override fun onDismissed(
+                                            transientBottomBar: Snackbar?,
+                                            event: Int
+                                        ) {
+                                            super.onDismissed(transientBottomBar, event)
+                                            if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
+                                                viewModel.postSkipLog()
                                             }
-                                        })
+                                        }
+                                    })
                                     .show()
                             }
                             VIEW_TYPE_MEASURE -> {
@@ -136,17 +137,17 @@ class HomeFragment : Fragment() {
                                         adapter.notifyItemRangeInserted(position - 1, 2)
                                     }
                                     .addCallback(object :
-                                            BaseTransientBottomBar.BaseCallback<Snackbar>() {
-                                            override fun onDismissed(
-                                                transientBottomBar: Snackbar?,
-                                                event: Int
-                                            ) {
-                                                super.onDismissed(transientBottomBar, event)
-                                                if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
-                                                    viewModel.postSkipLog()
-                                                }
+                                        BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                                        override fun onDismissed(
+                                            transientBottomBar: Snackbar?,
+                                            event: Int
+                                        ) {
+                                            super.onDismissed(transientBottomBar, event)
+                                            if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
+                                                viewModel.postSkipLog()
                                             }
-                                        }).show()
+                                        }
+                                    }).show()
                             }
                             VIEW_TYPE_EVENT -> {
 
@@ -167,7 +168,6 @@ class HomeFragment : Fragment() {
                                             position - 1
                                         )
                                     )
-                                    Log.i("position", position.toString())
                                     viewModel.itemDataMediator.value?.removeAt(position - 1)
                                     adapter.notifyItemRemoved(position - 1)
                                 }
@@ -184,17 +184,17 @@ class HomeFragment : Fragment() {
                                         adapter.notifyItemRangeInserted(position - 1, 2)
                                     }
                                     .addCallback(object :
-                                            BaseTransientBottomBar.BaseCallback<Snackbar>() {
-                                            override fun onDismissed(
-                                                transientBottomBar: Snackbar?,
-                                                event: Int
-                                            ) {
-                                                super.onDismissed(transientBottomBar, event)
-                                                if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
-                                                    viewModel.postSkipLog()
-                                                }
+                                        BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                                        override fun onDismissed(
+                                            transientBottomBar: Snackbar?,
+                                            event: Int
+                                        ) {
+                                            super.onDismissed(transientBottomBar, event)
+                                            if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
+                                                viewModel.postSkipLog()
                                             }
-                                        }).show()
+                                        }
+                                    }).show()
                             }
                             VIEW_TYPE_CARE -> {
 
@@ -231,17 +231,17 @@ class HomeFragment : Fragment() {
                                         adapter.notifyItemRangeInserted(position - 1, 2)
                                     }
                                     .addCallback(object :
-                                            BaseTransientBottomBar.BaseCallback<Snackbar>() {
-                                            override fun onDismissed(
-                                                transientBottomBar: Snackbar?,
-                                                event: Int
-                                            ) {
-                                                super.onDismissed(transientBottomBar, event)
-                                                if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
-                                                    viewModel.postSkipLog()
-                                                }
+                                        BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                                        override fun onDismissed(
+                                            transientBottomBar: Snackbar?,
+                                            event: Int
+                                        ) {
+                                            super.onDismissed(transientBottomBar, event)
+                                            if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
+                                                viewModel.postSkipLog()
                                             }
-                                        }).show()
+                                        }
+                                    }).show()
                             }
                         }
                     }
@@ -250,6 +250,7 @@ class HomeFragment : Fragment() {
                     ItemTouchHelper.RIGHT -> {
                         when (viewHolder.itemViewType) {
                             VIEW_TYPE_DRUG -> {
+
                                 viewModel.swipeToFinished(
                                     SwipeData(
                                         adapter.currentList[position],
@@ -260,52 +261,23 @@ class HomeFragment : Fragment() {
                                 viewModel.itemDataMediator.value?.removeAt(position)
                                 adapter.notifyItemRemoved(position)
 
-                                if (isLastInTimePoint(position, adapter)) {
-                                    viewModel.removeTimeHeaderOfFinished(
-                                        SwipeData(
-                                            adapter.currentList[position - 1],
-                                            position - 1
-                                        )
-                                    )
-                                    viewModel.itemDataMediator.value?.removeAt(position - 1)
-                                    adapter.notifyItemRemoved(position - 1)
-                                }
-
                                 Snackbar.make(
                                     binding.rvHomeCardView,
                                     getString(R.string.itemFinished_text),
                                     Snackbar.LENGTH_LONG
-                                )
-                                    .setAction(
-                                        getString(R.string.itemSwipe_undo)
-                                    ) {
-                                        viewModel.undoSwipeToLog()
-                                        adapter.notifyItemRangeInserted(position - 1, 2)
-                                    }
-                                    .addCallback(object :
-                                            BaseTransientBottomBar.BaseCallback<Snackbar>() {
-                                            override fun onDismissed(
-                                                transientBottomBar: Snackbar?,
-                                                event: Int
-                                            ) {
-                                                super.onDismissed(transientBottomBar, event)
-                                                if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
-                                                    viewModel.postFinishDrugAndActivityLog()
-                                                }
-                                            }
-                                        }).show()
+                                ).setAction(
+                                    getString(R.string.itemSwipe_undo)
+                                ) {
+                                    viewModel.undoSwipeToLog(ItemType.DRUG)
+                                }.show()
                             }
                             VIEW_TYPE_MEASURE -> {
                                 findNavController().navigate(
                                     NavigationDirections.actionGlobalMeasureRecordFragment(
-                                        (
-                                            adapter.currentList[position] as
-                                                ItemDataType.MeasureType
-                                            ).measure.measureData!!,
-                                        (
-                                            adapter.currentList[position] as
-                                                ItemDataType.MeasureType
-                                            ).timeInt
+                                        (adapter.currentList[position] as ItemDataType.MeasureType)
+                                            .measure.measureData!!,
+                                        (adapter.currentList[position] as ItemDataType.MeasureType)
+                                            .timeInt
                                     )
                                 )
                             }
@@ -340,33 +312,33 @@ class HomeFragment : Fragment() {
                                     .setAction(
                                         getString(R.string.itemSwipe_undo)
                                     ) {
-                                        viewModel.undoSwipeToLog()
+                                        viewModel.undoSwipeToLog(ItemType.EVENT)
                                         adapter.notifyItemRangeInserted(position - 1, 2)
                                     }
                                     .addCallback(object :
-                                            BaseTransientBottomBar.BaseCallback<Snackbar>() {
-                                            override fun onDismissed(
-                                                transientBottomBar: Snackbar?,
-                                                event: Int
-                                            ) {
-                                                super.onDismissed(transientBottomBar, event)
-                                                if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
-                                                    viewModel.postFinishDrugAndActivityLog()
-                                                }
+                                        BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                                        override fun onDismissed(
+                                            transientBottomBar: Snackbar?,
+                                            event: Int
+                                        ) {
+                                            super.onDismissed(transientBottomBar, event)
+                                            if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
+                                                viewModel.postFinishDrugAndActivityLog(ItemType.EVENT)
                                             }
-                                        }).show()
+                                        }
+                                    }).show()
                             }
                             VIEW_TYPE_CARE -> {
                                 findNavController().navigate(
                                     NavigationDirections.actionGlobalCareRecordFragment(
                                         (
-                                            adapter.currentList[position] as
-                                                ItemDataType.CareType
-                                            ).care.careData!!,
+                                                adapter.currentList[position] as
+                                                        ItemDataType.CareType
+                                                ).care.careData!!,
                                         (
-                                            adapter.currentList[position] as
-                                                ItemDataType.CareType
-                                            ).timeInt
+                                                adapter.currentList[position] as
+                                                        ItemDataType.CareType
+                                                ).timeInt
                                     )
                                 )
                             }
@@ -380,9 +352,8 @@ class HomeFragment : Fragment() {
         touchHelper.attachToRecyclerView(binding.rvHomeCardView)
 
         viewModel.itemDataMediator.observe(viewLifecycleOwner) {
-            if (it.isNotEmpty()){
+            if (it.isNotEmpty()) {
                 adapter.submitList(it)
-                Log.i("currentList", it.toString())
                 viewModel.getAllTaskNumber()
             }
         }
@@ -416,7 +387,8 @@ class HomeFragment : Fragment() {
         }
 
         binding.apply {
-            rvHomeCardView.layoutManager = WrapContentLinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            rvHomeCardView.layoutManager =
+                WrapContentLinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             rvHomeCardView.adapter = adapter
             btFastAdd.setOnClickListener {
                 findNavController().navigate(NavigationDirections.actionGlobalFastAddFragment())

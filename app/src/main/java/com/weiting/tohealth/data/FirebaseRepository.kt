@@ -59,7 +59,11 @@ interface FirebaseRepository {
     fun updateCare(care: Care)
 
     // Post Item record
+    suspend fun getDrugLogId(itemId: String): String
+
     fun postDrugLog(id: String, drugLog: DrugLog)
+
+    fun deleteDrugLog(drugId: String, drugLogId: String)
 
     suspend fun getMeasureLogId(itemId: String): String
 

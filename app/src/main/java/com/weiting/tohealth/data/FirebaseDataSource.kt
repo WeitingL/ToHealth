@@ -365,11 +365,19 @@ object FirebaseDataSource : FirebaseSource {
             }
     }
 
+    override suspend fun getDrugLogId(itemId: String): String = suspendCoroutine {
+
+        val database = application.database
+        val id = database.collection("drugs").document(itemId).collection("drugLogs")
+            .document().id
+
+        it.resume(id)
+    }
+
     override fun postDrugLog(id: String, drugLog: DrugLog) {
 
         val database = application.database
 
-        drugLog.id = database.collection("drugs").document(id).collection("drugLogs").document().id
         database.collection("drugs").document(id).collection("drugLogs").document(drugLog.id!!)
             .set(drugLog)
             .addOnSuccessListener { documentReference ->
@@ -377,6 +385,23 @@ object FirebaseDataSource : FirebaseSource {
             }
             .addOnFailureListener { e ->
                 Log.w("store failure", "Error adding document", e)
+            }
+    }
+
+    override fun deleteDrugLog(drugId: String, drugLogId: String) {
+        val database = application.database
+
+        database.collection("drugs").document(drugId)
+            .collection("drugLogs").document(drugLogId)
+            .delete()
+            .addOnSuccessListener {
+                Log.d(
+                    "Delete success",
+                    "DocumentSnapshot successfully deleted! $drugLogId"
+                )
+            }
+            .addOnFailureListener { e ->
+                Log.w("Delete failure", "Error deleting document", e)
             }
     }
 
@@ -422,7 +447,8 @@ object FirebaseDataSource : FirebaseSource {
     override fun postCareLog(id: String, careLog: CareLog) {
         val database = application.database
 
-        careLog.id = database.collection("cares").document(id).collection("careLogs").document().id
+        careLog.id =
+            database.collection("cares").document(id).collection("careLogs").document().id
         database.collection("cares").document(id).collection("careLogs").document(careLog.id!!)
             .set(careLog)
             .addOnSuccessListener { documentReference ->
@@ -495,7 +521,7 @@ object FirebaseDataSource : FirebaseSource {
             val list = mutableListOf<EventLog>()
             val database = application.database
 
-            database.collection("events").document(itemId).collection("activityLogs")
+            database.collection("events").document(itemId).collection("eventsLogs")
                 .orderBy("createdTime", Query.Direction.DESCENDING)
                 .limit(100)
                 .get()
@@ -753,26 +779,27 @@ object FirebaseDataSource : FirebaseSource {
                 }
         }
 
-    override suspend fun getNotes(groupId: String): List<Note> = suspendCoroutine { continuation ->
-        val list = mutableListOf<Note>()
-        val database = application.database
+    override suspend fun getNotes(groupId: String): List<Note> =
+        suspendCoroutine { continuation ->
+            val list = mutableListOf<Note>()
+            val database = application.database
 
-        database.collection("groups").document(groupId)
-            .collection("notes")
-            .orderBy("createdTime", Query.Direction.DESCENDING)
-            .get()
-            .addOnSuccessListener { result ->
+            database.collection("groups").document(groupId)
+                .collection("notes")
+                .orderBy("createdTime", Query.Direction.DESCENDING)
+                .get()
+                .addOnSuccessListener { result ->
 
-                val dataList = result.toObjects(Note::class.java)
-                list += dataList
+                    val dataList = result.toObjects(Note::class.java)
+                    list += dataList
 
-                Log.i("NoteList", list.toString())
-                continuation.resume(list)
-            }
-            .addOnFailureListener { e ->
-                Log.w("Error to get data", e)
-            }
-    }
+                    Log.i("NoteList", list.toString())
+                    continuation.resume(list)
+                }
+                .addOnFailureListener { e ->
+                    Log.w("Error to get data", e)
+                }
+        }
 
     override suspend fun getReminders(groupId: String): List<Reminder> =
         suspendCoroutine { continuation ->

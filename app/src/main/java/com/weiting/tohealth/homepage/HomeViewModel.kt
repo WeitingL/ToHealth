@@ -40,6 +40,10 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
     val isAllCompleted: LiveData<Boolean>
         get() = _isAllCompleted
 
+    private val _postCheckedLog = MutableLiveData<Boolean>()
+    val postCheckedLog: LiveData<Boolean>
+        get() = _postCheckedLog
+
     val welcomeSlogan = MutableLiveData<Timestamp>().apply {
         value = Timestamp.now()
     }
@@ -53,6 +57,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
         _completedTask.value = 0
         _isAllCompleted.value = false
         _isTheNewbie.value = true
+        _postCheckedLog.value = false
 
         viewModelScope.launch {
             if (Firebase.auth.currentUser != null)
@@ -240,13 +245,12 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                     event.eventLogs =
                         firebaseDataRepository.getEventLogs(event.id!!)
                             .filter {
-                                getTimeStampToDateInt(it.createdTime!!) ==
-                                        getTimeStampToDateInt(Timestamp.now())
+                                Util.isToday(it.createdTime)
                             }
 
                     val logTimeTags = mutableListOf<Int>()
-                    event.eventLogs.forEach { activityLog ->
-                        logTimeTags.add(activityLog.timeTag!!)
+                    event.eventLogs.forEach { eventLog ->
+                        logTimeTags.add(eventLog.timeTag!!)
                     }
 
                     event.executedTime.forEach {
@@ -392,8 +396,6 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                             createdTime = Timestamp.now()
                         )
                     )
-                    liveDrugs =
-                        firebaseDataRepository.getLiveDrugs(UserManager.UserInfo.id ?: "")
                 }
 
                 is ItemDataType.MeasureType -> {
@@ -406,8 +408,6 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                             createdTime = Timestamp.now()
                         )
                     )
-                    liveMeasures =
-                        firebaseDataRepository.getLiveMeasures(UserManager.UserInfo.id ?: "")
                 }
 
                 is ItemDataType.CareType -> {
@@ -418,8 +418,6 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                             createdTime = Timestamp.now()
                         )
                     )
-                    liveCares =
-                        firebaseDataRepository.getLiveCares(UserManager.UserInfo.id ?: "")
                 }
 
                 is ItemDataType.EventType -> {
@@ -430,8 +428,6 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                             createdTime = Timestamp.now()
                         )
                     )
-                    liveEvents =
-                        firebaseDataRepository.getLiveEvents(UserManager.UserInfo.id ?: "")
                 }
             }
             cleanSkipList()
@@ -457,72 +453,94 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
 
     fun swipeToFinished(swipeData: SwipeData) {
         _completedTask.value = _completedTask.value?.plus(1)
-        swipeCheckedListManager.getSwipeToChecked(swipeData)
+
+        if (swipeData.itemDataType is ItemDataType.DrugType) {
+            swipeCheckedListManager.getDrugSwipeData(swipeData)
+            progressCounter.postLog(swipeData)
+            postFinishDrugAndActivityLog(ItemType.DRUG)
+        } else {
+            swipeCheckedListManager.getEventSwipeData(swipeData)
+            progressCounter.postLog(swipeData)
+        }
+
     }
 
     fun removeTimeHeaderOfFinished(swipeData: SwipeData) {
-        swipeCheckedListManager.getSwipeToChecked(swipeData)
+        swipeCheckedListManager.getEventTimeHeader(swipeData)
     }
 
-    fun undoSwipeToLog() {
-        val currentList = itemDataMediator.value
-        _completedTask.value = _completedTask.value?.minus(1)
-        itemDataMediator.value =
-            swipeCheckedListManager.reBuildCurrentList(currentList ?: mutableListOf())
-    }
+    fun undoSwipeToLog(itemType: ItemType) {
+        when (itemType) {
+            ItemType.DRUG -> {
+                _completedTask.value = _completedTask.value?.minus(1)
 
-    fun postFinishDrugAndActivityLog() {
-        val checkedData = swipeCheckedListManager.finishedLogList.first()
-        progressCounter.postLog(checkedData)
-        when (checkedData.itemDataType) {
-            is ItemDataType.DrugType -> {
+                val logId = swipeCheckedListManager.giveDrugLogIdForUndo()
+                val drugData = swipeCheckedListManager
+                    .giveDrugSwipeDataForUndo().itemDataType as ItemDataType.DrugType
+                val drugId = drugData.drug.drugData?.id ?: ""
+                val drugStock = drugData.drug.drugData?.stock ?: 0F
 
-                if (isDrugExhausted(checkedData.itemDataType.drug.drugData ?: Drug())) {
-                    postDrugExhausted(checkedData.itemDataType.drug.drugData ?: Drug())
-                }
+                firebaseDataRepository.deleteDrugLog(drugId, logId)
+                firebaseDataRepository.editStock(drugId, drugStock)
 
-                firebaseDataRepository.postDrugLog(
-                    checkedData.itemDataType.drug.drugData?.id ?: "", DrugLog(
-                        timeTag = checkedData.itemDataType.timeInt,
-                        result = 0,
-                        createdTime = Timestamp.now()
-                    )
-                )
-
-                val originStock = checkedData.itemDataType.drug.drugData?.stock ?: 0F
-                val dose = checkedData.itemDataType.drug.drugData?.dose ?: 0F
-                val updateStock = originStock - dose
-
-                firebaseDataRepository.editStock(
-                    checkedData.itemDataType.drug.drugData?.id ?: "",
-                    updateStock
-                )
-//                liveDrugs = firebaseDataRepository.getLiveDrugs(UserManager.UserInfo.id ?: "")
             }
+            ItemType.EVENT -> {
+                val currentList = itemDataMediator.value
+                _completedTask.value = _completedTask.value?.minus(1)
+                itemDataMediator.value =
+                    swipeCheckedListManager
+                        .reBuildCurrentList(currentList ?: mutableListOf())
 
-            is ItemDataType.EventType -> {
-                firebaseDataRepository.postEventLog(
-                    checkedData.itemDataType.event.eventData?.id!!, EventLog(
-                        timeTag = checkedData.itemDataType.timeInt,
-                        result = 0,
-                        createdTime = Timestamp.now()
-                    )
-                )
-                liveEvents =
-                    firebaseDataRepository.getLiveEvents(UserManager.UserInfo.id ?: "")
             }
+            else -> { }
         }
-        Log.i("work!!", " ${swipeCheckedListManager.finishedLogList}")
-        clearPostLogList()
     }
 
-    private fun clearPostLogList() {
-        swipeCheckedListManager.apply {
-            finishedLogList.removeLast()
+    fun postFinishDrugAndActivityLog(itemType: ItemType) {
+        viewModelScope.launch {
+            when (itemType) {
+                ItemType.DRUG -> {
+                    val drug =
+                        swipeCheckedListManager.giveDrugSwipeDataForPost()
+                            .itemDataType as ItemDataType.DrugType
 
-            if (finishedTimeList.isNotEmpty()) {
-                listManager.removeTimeTitle((finishedTimeList.last().itemDataType as ItemDataType.TimeType).timeInt)
-                finishedTimeList.removeLast()
+                    if (isDrugExhausted(drug.drug.drugData ?: Drug())) {
+                        postDrugExhausted(drug.drug.drugData ?: Drug())
+                    }
+
+                    val drugId = drug.drug.drugData?.id ?: ""
+                    val drugLogId = firebaseDataRepository.getDrugLogId(drugId)
+
+                    swipeCheckedListManager.getDrugLogId(drugLogId)
+
+                    firebaseDataRepository.postDrugLog(
+                        drugId, DrugLog(
+                            id = drugLogId,
+                            timeTag = drug.timeInt,
+                            result = 0,
+                            createdTime = Timestamp.now()
+                        )
+                    )
+
+                    val originStock = drug.drug.drugData?.stock ?: 0F
+                    val updateStock = originStock - (drug.drug.drugData?.dose ?: 0F)
+
+                    firebaseDataRepository.editStock(drugId, updateStock)
+                }
+                ItemType.EVENT -> {
+                    val event =
+                        swipeCheckedListManager.giveEventSwipeData().itemDataType as ItemDataType.EventType
+
+                    firebaseDataRepository.postEventLog(
+                        event.event.eventData?.id!!, EventLog(
+                            timeTag = event.timeInt,
+                            result = 0,
+                            createdTime = Timestamp.now()
+                        )
+                    )
+                }
+                else -> {
+                }
             }
         }
     }

@@ -10,7 +10,7 @@ import com.weiting.tohealth.data.MeasureLog
 interface AlterMessageGenerator {
 
     fun isDrugExhausted(drug: Drug): Boolean {
-        val currentStock = drug.stock
+        val currentStock = drug.stock - drug.dose
 
         return when (currentStock / drug.dose < 10) {
             true -> true

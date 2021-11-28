@@ -88,8 +88,16 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.updateCare(care)
     }
 
+    override suspend fun getDrugLogId(itemId: String): String {
+        return firebaseSource.getDrugLogId(itemId)
+    }
+
     override fun postDrugLog(id: String, drugLog: DrugLog) {
         return firebaseSource.postDrugLog(id, drugLog)
+    }
+
+    override fun deleteDrugLog(drugId: String, drugLogId: String) {
+        return firebaseSource.deleteDrugLog(drugId, drugLogId)
     }
 
     override suspend fun getMeasureLogId(itemId: String): String {

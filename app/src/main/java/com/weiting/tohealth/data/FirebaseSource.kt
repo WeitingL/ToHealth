@@ -59,7 +59,11 @@ interface FirebaseSource {
     fun updateCare(care: Care)
 
     // Post Item record
+    suspend fun getDrugLogId(itemId: String): String
+
     fun postDrugLog(id: String, drugLog: DrugLog)
+
+    fun deleteDrugLog(drugId: String, drugLogId: String)
 
     suspend fun getMeasureLogId(itemId: String): String
 
@@ -80,7 +84,7 @@ interface FirebaseSource {
 
     suspend fun getCareLogs(itemId: String): List<CareLog>
 
-    fun getLiveDrugLogs(itemId: String):MutableLiveData<List<DrugLog>>
+    fun getLiveDrugLogs(itemId: String): MutableLiveData<List<DrugLog>>
 
     fun getLiveMeasureLogs(itemId: String): MutableLiveData<List<MeasureLog>>
 

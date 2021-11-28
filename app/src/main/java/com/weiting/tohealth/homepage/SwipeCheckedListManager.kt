@@ -2,44 +2,66 @@ package com.weiting.tohealth.homepage
 
 class SwipeCheckedListManager {
 
-    val finishedLogList = mutableListOf<SwipeData>()
-    val finishedTimeList = mutableListOf<SwipeData>()
+    private val drugSwipeData = mutableListOf<SwipeData>()
+    private val drugLogIds= mutableListOf<String>()
 
-    fun getSwipeToChecked(swipeData: SwipeData) {
-        when (swipeData.itemDataType) {
-            is ItemDataType.TimeType -> {
-                finishedTimeList.add(swipeData)
-            }
-            else -> {
-                finishedLogList.add(swipeData)
-            }
-        }
+    private val eventSwipeData = mutableListOf<SwipeData>()
+    private val eventTimeList = mutableListOf<SwipeData>()
+
+    fun getDrugSwipeData (swipeData: SwipeData){
+        drugSwipeData.add(swipeData)
     }
 
-    fun hasCheckedLogNotPost(): Boolean {
-        return when (finishedLogList.isNotEmpty()) {
-            true -> true
-            false -> false
-        }
+    fun getEventSwipeData(swipeData: SwipeData){
+        eventSwipeData.add(swipeData)
+    }
+
+    fun getEventTimeHeader(swipeData: SwipeData){
+        eventTimeList.add(swipeData)
+    }
+
+    fun getDrugLogId(drugLogId: String){
+        drugLogIds.add(drugLogId)
+    }
+
+    fun giveDrugSwipeDataForUndo(): SwipeData {
+        val data = drugSwipeData.last()
+        drugSwipeData.clear()
+        return data
+    }
+
+    fun giveDrugLogIdForUndo(): String {
+        val data = drugLogIds.last()
+        drugLogIds.clear()
+        return data
+    }
+
+    fun giveDrugSwipeDataForPost(): SwipeData {
+        return drugSwipeData.last()
+    }
+
+    fun giveEventSwipeData():SwipeData{
+        val data = eventSwipeData.last()
+        eventSwipeData.clear()
+        eventTimeList.clear()
+        return data
     }
 
     fun reBuildCurrentList(currentList: MutableList<ItemDataType>): MutableList<ItemDataType> {
 
-        if (finishedLogList.isNotEmpty()) {
-            val lastSwipeData = finishedLogList.last()
+        if (eventSwipeData.isNotEmpty()) {
+            val lastSwipeData = eventSwipeData.last()
 
-            if (finishedTimeList.isNotEmpty() && lastSwipeData.position == (finishedTimeList.last().position + 1)) {
-                currentList.add(
-                    finishedTimeList.last().position,
-                    finishedTimeList.last().itemDataType
-                )
-                finishedTimeList.removeLast()
+            if (eventTimeList.isNotEmpty() && lastSwipeData.position == (eventTimeList.last().position +1)) {
+                currentList.add(eventTimeList.last().position, eventTimeList.last().itemDataType)
+                eventTimeList.removeLast()
             }
 
             currentList.add(lastSwipeData.position, lastSwipeData.itemDataType)
-            finishedLogList.removeLast()
+            eventSwipeData.removeLast()
         }
         return currentList
     }
+
 
 }
