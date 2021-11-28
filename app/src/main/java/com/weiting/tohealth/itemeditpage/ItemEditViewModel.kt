@@ -1,5 +1,6 @@
 package com.weiting.tohealth.itemeditpage
 
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -89,7 +90,7 @@ class ItemEditViewModel(
 
     fun getDateSet(time: Long?) {
         startDateInLong = time ?: 0
-        _dateSet.value = toDateFromMilliTime(time ?: 0)
+        _dateSet.value = toDateFromMilliTime(time?:0)
     }
 
     fun postData(binding: ItemEditFragmentBinding) {

@@ -49,7 +49,6 @@ class HomeFragment : Fragment() {
         val swipeSet = object : RecyclerViewSwipe() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.position
-                Log.i("position", position.toString())
                 when (direction) {
                     // Skip
                     ItemTouchHelper.LEFT -> {
@@ -383,6 +382,7 @@ class HomeFragment : Fragment() {
         viewModel.itemDataMediator.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()){
                 adapter.submitList(it)
+                Log.i("currentList", it.toString())
                 viewModel.getAllTaskNumber()
             }
         }

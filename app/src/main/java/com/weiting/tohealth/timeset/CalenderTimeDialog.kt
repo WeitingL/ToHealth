@@ -69,7 +69,7 @@ class CalenderTimeDialog : DialogFragment() {
              */
             when (editTimeType) {
                 EditTimeType.DATE -> {
-                    setFragmentResult(GET_TIME, bundleOf(DATE to milliTime))
+                    setFragmentResult(GET_DATE, bundleOf(DATE to milliTime))
                 }
 
                 EditTimeType.TIME -> {

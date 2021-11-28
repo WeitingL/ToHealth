@@ -1,11 +1,6 @@
 package com.weiting.tohealth.homepage
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-
 class SwipeSkipListManager {
-
-    private val coroutineScope = CoroutineScope(Dispatchers.Default)
 
     val skipList = mutableListOf<SwipeData>()
     val skipTimeList = mutableListOf<SwipeData>()

@@ -232,7 +232,7 @@ class ItemEditFragment : Fragment() {
         }
 
         viewModel.dateSet.observe(viewLifecycleOwner) {
-            binding.tvFirstDateSelected.text = "it"
+            binding.tvFirstDateSelected.text = it
         }
 
         setFragmentResultListener(GET_TIME) { requestKey, bundle ->

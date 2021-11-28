@@ -181,7 +181,7 @@
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/row_block"
                 android:gravity="center"
-                android:textSize="30sp"
+                android:textAppearance="@style/subTitle_text_bl"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tv_firstDateTitle"
@@ -343,16 +343,16 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:ems="10"
-                android:textColorHint="@color/gray"
                 android:hint="@string/doseHint"
+                android:importantForAutofill="no"
                 android:inputType="numberDecimal"
                 android:maxLength="10"
                 android:minHeight="48dp"
+                android:textColorHint="@color/gray"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tv_dose_edit"
-                app:layout_constraintTop_toBottomOf="@+id/sp_unit"
-                android:importantForAutofill="no" />
+                app:layout_constraintTop_toBottomOf="@+id/sp_unit" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -380,8 +380,8 @@
                 android:drawableStart="@drawable/ic_baseline_add_40"
                 android:gravity="center"
                 android:minHeight="48dp"
-                android:paddingEnd="30sp"
                 android:paddingStart="30dp"
+                android:paddingEnd="30sp"
                 android:text="@string/addTimeSet"
                 android:textAppearance="@style/subTitle_text_bl"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -441,6 +441,7 @@
                 android:drawableBottom="@drawable/editext_bottomline"
                 android:ems="10"
                 android:hint="@string/stock_hint"
+                android:importantForAutofill="no"
                 android:inputType="number"
                 android:maxLength="4"
                 android:minHeight="48dp"
@@ -448,8 +449,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/tv_unit_stock"
                 app:layout_constraintStart_toEndOf="@+id/tv_stock_edit"
-                app:layout_constraintTop_toTopOf="parent"
-                android:importantForAutofill="no" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_stock_edit"
