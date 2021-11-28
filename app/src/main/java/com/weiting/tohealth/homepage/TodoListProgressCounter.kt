@@ -20,12 +20,21 @@ class TodoListProgressCounter {
         }
     }
 
-    fun getCounterRecord(itemType: ItemType):Int {
-        return when(itemType){
+    fun getCounterRecord(itemType: ItemType): Int {
+        return when (itemType) {
             ItemType.DRUG -> drugPostNum
             ItemType.EVENT -> eventPostNum
             ItemType.MEASURE -> measurePostNum
             ItemType.CARE -> carePostNum
+        }
+    }
+
+    fun clearNum(itemType: ItemType) {
+        when (itemType) {
+            ItemType.DRUG -> drugPostNum = 0
+            ItemType.EVENT -> eventPostNum = 0
+            ItemType.MEASURE -> measurePostNum = 0
+            ItemType.CARE -> carePostNum = 0
         }
     }
 
