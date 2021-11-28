@@ -1,6 +1,5 @@
 package com.weiting.tohealth.homepage
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
@@ -9,7 +8,6 @@ import com.weiting.tohealth.data.*
 import com.weiting.tohealth.util.ItemArranger
 import com.weiting.tohealth.util.AlterMessageGenerator
 import com.weiting.tohealth.util.Util
-import com.weiting.tohealth.util.Util.getTimeStampToDateInt
 import com.weiting.tohealth.util.Util.getTimeStampToTimeInt
 import com.weiting.tohealth.util.Util.getTimeStampToTimeString
 import kotlinx.coroutines.*
@@ -36,35 +34,36 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
     val completedTask: LiveData<Int>
         get() = _completedTask
 
-    private val _isAllCompleted = MutableLiveData<Boolean>()
-    val isAllCompleted: LiveData<Boolean>
-        get() = _isAllCompleted
-
-    private val _postCheckedLog = MutableLiveData<Boolean>()
-    val postCheckedLog: LiveData<Boolean>
-        get() = _postCheckedLog
-
     val welcomeSlogan = MutableLiveData<Timestamp>().apply {
         value = Timestamp.now()
-    }
-
-    fun isTaskCompleted() {
-        _isAllCompleted.value = totalTask.value == completedTask.value
     }
 
     init {
         _totalTask.value = 0
         _completedTask.value = 0
-        _isAllCompleted.value = false
         _isTheNewbie.value = true
-        _postCheckedLog.value = false
 
         viewModelScope.launch {
             if (Firebase.auth.currentUser != null)
                 UserManager.UserInfo = firebaseDataRepository.getUser(UserManager.UserInfo.id ?: "")
         }
-
     }
+
+    val isAllCompleted = MediatorLiveData<Boolean>().apply{
+        addSource(totalTask){
+            value = when (totalTask == completedTask){
+                true -> true
+                false -> false
+            }
+        }
+        addSource(completedTask){
+            value = when (totalTask == completedTask){
+                true -> true
+                false -> false
+            }
+        }
+    }
+
 
     /*
         Logic about todoList after get the livedata from firebase.
@@ -176,8 +175,8 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
 
                     measure.measureLogs =
                         firebaseDataRepository.getMeasureLogs(measure.id!!).filter {
-                                Util.isToday(it.createdTime)
-                            }
+                            Util.isToday(it.createdTime)
+                        }
 
                     val logTimeTags = mutableListOf<Int>()
                     measure.measureLogs.forEach { measureLog ->
@@ -241,8 +240,8 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
 
                     event.eventLogs =
                         firebaseDataRepository.getEventLogs(event.id!!).filter {
-                                Util.isToday(it.createdTime)
-                            }
+                            Util.isToday(it.createdTime)
+                        }
 
                     val logTimeTags = mutableListOf<Int>()
                     event.eventLogs.forEach { eventLog ->
@@ -524,7 +523,8 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                 }
                 ItemType.EVENT -> {
                     val event =
-                        swipeCheckedListManager.giveEventSwipeData().itemDataType as ItemDataType.EventType
+                        swipeCheckedListManager.giveEventSwipeData()
+                            .itemDataType as ItemDataType.EventType
 
                     firebaseDataRepository.postEventLog(
                         event.event.eventData?.id!!, EventLog(

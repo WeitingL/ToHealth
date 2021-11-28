@@ -352,20 +352,10 @@ class HomeFragment : Fragment() {
         touchHelper.attachToRecyclerView(binding.rvHomeCardView)
 
         viewModel.itemDataMediator.observe(viewLifecycleOwner) {
+            viewModel.getAllTaskNumber()
             if (it.isNotEmpty()) {
                 adapter.submitList(it)
-                viewModel.getAllTaskNumber()
             }
-        }
-
-        viewModel.totalTask.observe(viewLifecycleOwner) {
-            viewModel.isTaskCompleted()
-            binding.progressBar.max = it
-        }
-
-        viewModel.completedTask.observe(viewLifecycleOwner) {
-            viewModel.isTaskCompleted()
-            binding.progressBar.progress = it
         }
 
         viewModel.isAllCompleted.observe(viewLifecycleOwner) {
@@ -375,7 +365,7 @@ class HomeFragment : Fragment() {
                         lavFinished.setAnimation(R.raw.sunny)
                         lavFinished.visibility = View.VISIBLE
                         tvFinishedSlogan.visibility = View.VISIBLE
-                        rvHomeCardView.visibility = View.VISIBLE
+                        rvHomeCardView.visibility = View.GONE
                     }
                     false -> {
                         lavFinished.visibility = View.GONE
