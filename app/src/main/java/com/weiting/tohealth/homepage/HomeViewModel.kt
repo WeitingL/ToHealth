@@ -1,6 +1,6 @@
 package com.weiting.tohealth.homepage
 
-import android.icu.number.IntegerWidth
+import android.util.Log
 import androidx.lifecycle.*
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
@@ -70,11 +70,11 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
 
     private var liveDrugs =
         firebaseDataRepository.getLiveDrugs(UserManager.UserInfo.id ?: "")
-    private var measureList =
+    private var liveMeasures =
         firebaseDataRepository.getLiveMeasures(UserManager.UserInfo.id ?: "")
-    private var eventList =
+    private var liveEvents =
         firebaseDataRepository.getLiveEvents(UserManager.UserInfo.id ?: "")
-    private var careList =
+    private var liveCares =
         firebaseDataRepository.getLiveCares(UserManager.UserInfo.id ?: "")
 
 
@@ -146,7 +146,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
             }
         }
 
-        addSource(measureList) { measureList ->
+        addSource(liveMeasures) { measureList ->
             viewModelScope.launch {
                 listManager.apply {
                     clearCurrentList(ItemType.MEASURE)
@@ -214,7 +214,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
             }
         }
 
-        addSource(eventList) { eventList ->
+        addSource(liveEvents) { eventList ->
             viewModelScope.launch {
                 listManager.apply {
                     clearCurrentList(ItemType.EVENT)
@@ -280,7 +280,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
             }
         }
 
-        addSource(careList) { careList ->
+        addSource(liveCares) { careList ->
             viewModelScope.launch {
                 listManager.apply {
                     clearCurrentList(ItemType.CARE)
@@ -311,7 +311,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
 
                     val logTimeTags = mutableListOf<Int>()
                     care.careLogs.forEach { careLog ->
-                        logTimeTags.add(careLog.timeTag?:0)
+                        logTimeTags.add(careLog.timeTag ?: 0)
                     }
 
 
@@ -359,89 +359,78 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
        Swipe to Skip
      */
 
+    private val swipeSkipListManager = SwipeSkipListManager()
     // Collected the skip item data and time title data.
-    private val skipList = mutableListOf<SwipeData>()
-    private val skipTimeList = mutableListOf<SwipeData>()
+
 
     fun swipeToSkip(swipeData: SwipeData) {
         _completedTask.value = _completedTask.value?.plus(1)
-        skipList.add(swipeData)
+        swipeSkipListManager.getSwipeToSkip(swipeData)
     }
 
     fun removeTimeHeader(swipeData: SwipeData) {
-        skipTimeList.add(swipeData)
+        swipeSkipListManager.getSwipeToSkip(swipeData)
     }
 
     fun undoSwipeToSkip() {
-        val lastData = skipList.last()
         val currentList = itemDataMediator.value
-
-        if (skipTimeList.isNotEmpty() && lastData.position == (skipTimeList.last().position + 1)) {
-            currentList?.add(skipTimeList.last().position, skipTimeList.last().itemDataType)
-            skipTimeList.removeLast()
-        }
-
-        skipList.removeLast()
         _completedTask.value = _completedTask.value?.minus(1)
-
-        currentList?.add(lastData.position, lastData.itemDataType)
-        itemDataMediator.value = currentList
+        itemDataMediator.value = swipeSkipListManager.reBuildCurrentList(currentList ?: mutableListOf())
     }
 
     fun postSkipLog() {
         viewModelScope.launch {
-            skipList.forEach {
-                progressCounter.postLog(it)
-                when (it.itemDataType) {
-                    is ItemDataType.DrugType -> {
-                        firebaseDataRepository.postDrugLog(
-                            it.itemDataType.drug.drugData?.id!!, DrugLog(
-                                timeTag = it.itemDataType.timeInt,
-                                result = 1,
-                                createdTime = Timestamp.now()
-                            )
+            val skipData = swipeSkipListManager.skipList.first()
+            progressCounter.postLog(skipData)
+            when (skipData.itemDataType) {
+                is ItemDataType.DrugType -> {
+                    firebaseDataRepository.postDrugLog(
+                        skipData.itemDataType.drug.drugData?.id!!, DrugLog(
+                            timeTag = skipData.itemDataType.timeInt,
+                            result = 1,
+                            createdTime = Timestamp.now()
                         )
-                        liveDrugs =
-                            firebaseDataRepository.getLiveDrugs(UserManager.UserInfo.id ?: "")
-                    }
+                    )
+                    liveDrugs =
+                        firebaseDataRepository.getLiveDrugs(UserManager.UserInfo.id ?: "")
+                }
 
-                    is ItemDataType.MeasureType -> {
-                        firebaseDataRepository.postMeasureLog(
-                            it.itemDataType.measure.measureData?.id!!, MeasureLog(
-                                id = firebaseDataRepository
-                                    .getMeasureLogId(it.itemDataType.measure.measureData.id!!),
-                                timeTag = it.itemDataType.timeInt,
-                                result = 1,
-                                createdTime = Timestamp.now()
-                            )
+                is ItemDataType.MeasureType -> {
+                    firebaseDataRepository.postMeasureLog(
+                        skipData.itemDataType.measure.measureData?.id!!, MeasureLog(
+                            id = firebaseDataRepository
+                                .getMeasureLogId(skipData.itemDataType.measure.measureData.id!!),
+                            timeTag = skipData.itemDataType.timeInt,
+                            result = 1,
+                            createdTime = Timestamp.now()
                         )
-                        measureList =
-                            firebaseDataRepository.getLiveMeasures(UserManager.UserInfo.id ?: "")
-                    }
+                    )
+                    liveMeasures =
+                        firebaseDataRepository.getLiveMeasures(UserManager.UserInfo.id ?: "")
+                }
 
-                    is ItemDataType.CareType -> {
-                        firebaseDataRepository.postCareLog(
-                            it.itemDataType.care.careData?.id!!, CareLog(
-                                timeTag = it.itemDataType.timeInt,
-                                result = 1,
-                                createdTime = Timestamp.now()
-                            )
+                is ItemDataType.CareType -> {
+                    firebaseDataRepository.postCareLog(
+                        skipData.itemDataType.care.careData?.id!!, CareLog(
+                            timeTag = skipData.itemDataType.timeInt,
+                            result = 1,
+                            createdTime = Timestamp.now()
                         )
-                        careList =
-                            firebaseDataRepository.getLiveCares(UserManager.UserInfo.id ?: "")
-                    }
+                    )
+                    liveCares =
+                        firebaseDataRepository.getLiveCares(UserManager.UserInfo.id ?: "")
+                }
 
-                    is ItemDataType.EventType -> {
-                        firebaseDataRepository.postEventLog(
-                            it.itemDataType.event.eventData?.id!!, EventLog(
-                                timeTag = it.itemDataType.timeInt,
-                                result = 1,
-                                createdTime = Timestamp.now()
-                            )
+                is ItemDataType.EventType -> {
+                    firebaseDataRepository.postEventLog(
+                        skipData.itemDataType.event.eventData?.id!!, EventLog(
+                            timeTag = skipData.itemDataType.timeInt,
+                            result = 1,
+                            createdTime = Timestamp.now()
                         )
-                        eventList =
-                            firebaseDataRepository.getLiveEvents(UserManager.UserInfo.id ?: "")
-                    }
+                    )
+                    liveEvents =
+                        firebaseDataRepository.getLiveEvents(UserManager.UserInfo.id ?: "")
                 }
             }
             cleanSkipList()
@@ -449,11 +438,13 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
     }
 
     private fun cleanSkipList() {
-        skipList.clear()
-        skipTimeList.forEach {
-            listManager.removeTimeTitle((it.itemDataType as ItemDataType.TimeType).timeInt)
+        swipeSkipListManager.apply {
+            skipList.clear()
+            skipTimeList.forEach {
+                listManager.removeTimeTitle((it.itemDataType as ItemDataType.TimeType).timeInt)
+            }
+            skipTimeList.clear()
         }
-        skipTimeList.clear()
     }
 
     /*
@@ -490,8 +481,10 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
     }
 
     fun postFinishDrugAndActivityLog() {
+        Log.i("work!!", "postFinishDrugAndActivityLog")
         finishedLogList.forEach {
             progressCounter.postLog(it)
+            Log.i("work!!", it.itemDataType.toString())
             when (it.itemDataType) {
                 is ItemDataType.DrugType -> {
 
@@ -515,6 +508,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                         it.itemDataType.drug.drugData?.id ?: "",
                         updateStock
                     )
+                    liveDrugs = firebaseDataRepository.getLiveDrugs(UserManager.UserInfo.id ?: "")
                 }
 
                 is ItemDataType.EventType -> {
@@ -525,11 +519,12 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                             createdTime = Timestamp.now()
                         )
                     )
-                    eventList =
+                    liveEvents =
                         firebaseDataRepository.getLiveEvents(UserManager.UserInfo.id ?: "")
                 }
             }
         }
+
         clearPostLogList()
     }
 

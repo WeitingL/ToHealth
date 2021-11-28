@@ -7,9 +7,6 @@ import java.util.*
 
 object ItemArranger {
 
-
-
-
     fun isThatDayNeedToDo(itemsData: ItemData, day: Timestamp): Boolean {
         return when (itemsData.itemType) {
             ItemType.DRUG -> {
