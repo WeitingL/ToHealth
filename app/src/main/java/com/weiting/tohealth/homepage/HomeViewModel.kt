@@ -175,11 +175,8 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                 todayMeasures.forEach { measure ->
 
                     measure.measureLogs =
-                        firebaseDataRepository.getMeasureLogs(measure.id!!)
-                            .filter {
-                                getTimeStampToDateInt(it.createdTime!!) == getTimeStampToDateInt(
-                                    Timestamp.now()
-                                )
+                        firebaseDataRepository.getMeasureLogs(measure.id!!).filter {
+                                Util.isToday(it.createdTime)
                             }
 
                     val logTimeTags = mutableListOf<Int>()
@@ -243,8 +240,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                 todayEvents.forEach { event ->
 
                     event.eventLogs =
-                        firebaseDataRepository.getEventLogs(event.id!!)
-                            .filter {
+                        firebaseDataRepository.getEventLogs(event.id!!).filter {
                                 Util.isToday(it.createdTime)
                             }
 
@@ -309,8 +305,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
 
                     care.careLogs =
                         firebaseDataRepository.getCareLogs(care.id!!).filter {
-                            getTimeStampToDateInt(it.createdTime!!) ==
-                                    getTimeStampToDateInt(Timestamp.now())
+                            Util.isToday(it.createdTime)
                         }
 
                     val logTimeTags = mutableListOf<Int>()
@@ -492,7 +487,8 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                         .reBuildCurrentList(currentList ?: mutableListOf())
 
             }
-            else -> { }
+            else -> {
+            }
         }
     }
 
@@ -511,8 +507,6 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                     val drugId = drug.drug.drugData?.id ?: ""
                     val drugLogId = firebaseDataRepository.getDrugLogId(drugId)
 
-                    swipeCheckedListManager.getDrugLogId(drugLogId)
-
                     firebaseDataRepository.postDrugLog(
                         drugId, DrugLog(
                             id = drugLogId,
@@ -522,9 +516,10 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                         )
                     )
 
+                    swipeCheckedListManager.getDrugLogId(drugLogId)
+
                     val originStock = drug.drug.drugData?.stock ?: 0F
                     val updateStock = originStock - (drug.drug.drugData?.dose ?: 0F)
-
                     firebaseDataRepository.editStock(drugId, updateStock)
                 }
                 ItemType.EVENT -> {

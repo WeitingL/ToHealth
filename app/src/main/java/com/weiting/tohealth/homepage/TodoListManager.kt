@@ -78,6 +78,7 @@ class TodoListManager {
         timeTitleList.distinct()
         timeTitleList.sort()
         timeTitleList.forEach { time ->
+            var num = 0
 
             timeCurrentList.forEach {
                 if ((it as ItemDataType.TimeType).timeInt == time) {
@@ -88,25 +89,33 @@ class TodoListManager {
             drugCurrentList.forEach {
                 if ((it as ItemDataType.DrugType).timeInt == time) {
                     list.add(it)
+                    num +=1
                 }
             }
 
             measureCurrentList.forEach {
                 if ((it as ItemDataType.MeasureType).timeInt == time) {
                     list.add(it)
+                    num +=1
                 }
             }
 
             eventCurrentList.forEach {
                 if ((it as ItemDataType.EventType).timeInt == time) {
                     list.add(it)
+                    num +=1
                 }
             }
 
             careCurrentList.forEach {
                 if ((it as ItemDataType.CareType).timeInt == time) {
                     list.add(it)
+                    num +=1
                 }
+            }
+
+            if (num == 0){
+                list.removeLast()
             }
         }
         return list
