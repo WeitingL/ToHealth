@@ -353,6 +353,7 @@ class HomeFragment : Fragment() {
 
         viewModel.itemDataMediator.observe(viewLifecycleOwner) {
             viewModel.getAllTaskNumber()
+            viewModel.getAllCheckedTaskCount()
             if (it.isNotEmpty()) {
                 adapter.submitList(it)
             }

@@ -19,7 +19,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
       Percentage of the completion
     */
 
-    private val progressCounter = TodoListProgressCounter()
+    private val progressCounter = TodoListLogCounter()
     private val todoListManager = TodoListManager()
 
     private val _isTheNewbie = MutableLiveData<Boolean>()
@@ -49,27 +49,26 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
         }
     }
 
-    val isAllCompleted = MediatorLiveData<Boolean>().apply{
-        addSource(totalTask){
-            value = when (totalTask == completedTask){
+    val isAllCompleted = MediatorLiveData<Boolean>().apply {
+        addSource(totalTask) {
+            value = when (totalTask == completedTask) {
                 true -> true
                 false -> false
             }
         }
-        addSource(completedTask){
-            value = when (totalTask == completedTask){
+        addSource(completedTask) {
+            value = when (totalTask == completedTask) {
                 true -> true
                 false -> false
             }
         }
     }
 
-
     /*
-        Logic about todoList after get the livedata from firebase.
+        TodoList after getting the livedata from firebase.
         Totally 4 LiveData are needed order by time(hour and min).
 
-        Identify the finished mission by numbers and created time of ItemLog.
+        Identify the finished mission by timeTag and created time of ItemLog.
      */
 
     private var liveDrugs =
@@ -87,13 +86,10 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
             viewModelScope.launch {
                 todoListManager.apply {
                     clearCurrentList(ItemType.DRUG)
-                    clearAllItemList(ItemType.DRUG)
+                    clearAllMissionList(ItemType.DRUG)
                 }
 
-                _completedTask.value =
-                    _completedTask.value?.minus(progressCounter.getCounterRecord(ItemType.DRUG))
-                progressCounter.clearNum(ItemType.DRUG)
-
+                progressCounter.clearCount(ItemType.DRUG)
 
                 if (drugList.isNotEmpty()) {
                     isNotNewBie()
@@ -120,11 +116,11 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                     }
 
                     drug.executedTime.forEach {
-                        todoListManager.getAllItem(ItemData(drugData = drug))
+                        todoListManager.addAllMission(ItemData(drugData = drug))
 
                         //Skip the item log that time tag is the same with exist time tag.
                         if (getTimeStampToTimeInt(it) !in logTimeTags) {
-                            todoListManager.getCurrentItemDataType(
+                            todoListManager.addCurrentItemDataType(
                                 ItemDataType.DrugType(
                                     ItemData(drugData = drug),
                                     getTimeStampToTimeInt(it)
@@ -133,8 +129,8 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
 
                             if (getTimeStampToTimeInt(it) !in todoListManager.timeTitleList) {
                                 todoListManager.apply {
-                                    getTimeTitle(getTimeStampToTimeInt(it))
-                                    getCurrentItemDataType(
+                                    addTimeTitle(getTimeStampToTimeInt(it))
+                                    addCurrentItemDataType(
                                         ItemDataType.TimeType(
                                             getTimeStampToTimeString(it),
                                             getTimeStampToTimeInt(it)
@@ -143,11 +139,10 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                                 }
                             }
                         } else {
-                            _completedTask.value = _completedTask.value?.plus(1)
+                            progressCounter.addPostLogCount(ItemType.DRUG)
                         }
                     }
                 }
-
                 value = todoListManager.arrangeTodoList()
             }
         }
@@ -156,12 +151,10 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
             viewModelScope.launch {
                 todoListManager.apply {
                     clearCurrentList(ItemType.MEASURE)
-                    clearAllItemList(ItemType.MEASURE)
+                    clearAllMissionList(ItemType.MEASURE)
                 }
 
-                _completedTask.value =
-                    _completedTask.value?.minus(progressCounter.getCounterRecord(ItemType.MEASURE))
-                progressCounter.clearNum(ItemType.MEASURE)
+                progressCounter.clearCount(ItemType.MEASURE)
 
                 if (measureList.isNotEmpty()) {
                     isNotNewBie()
@@ -187,10 +180,10 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                     }
 
                     measure.executedTime.forEach {
-                        todoListManager.getAllItem(ItemData(measureData = measure))
+                        todoListManager.addAllMission(ItemData(measureData = measure))
 
                         if (getTimeStampToTimeInt(it) !in logTimeTags) {
-                            todoListManager.getCurrentItemDataType(
+                            todoListManager.addCurrentItemDataType(
                                 ItemDataType.MeasureType(
                                     ItemData(measureData = measure),
                                     getTimeStampToTimeInt(it)
@@ -199,8 +192,8 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
 
                             if (getTimeStampToTimeInt(it) !in todoListManager.timeTitleList) {
                                 todoListManager.apply {
-                                    getTimeTitle(getTimeStampToTimeInt(it))
-                                    getCurrentItemDataType(
+                                    addTimeTitle(getTimeStampToTimeInt(it))
+                                    addCurrentItemDataType(
                                         ItemDataType.TimeType(
                                             getTimeStampToTimeString(it),
                                             getTimeStampToTimeInt(it)
@@ -209,7 +202,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                                 }
                             }
                         } else {
-                            _completedTask.value = _completedTask.value?.plus(1)
+                            progressCounter.addPostLogCount(ItemType.MEASURE)
                         }
 
                     }
@@ -222,12 +215,10 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
             viewModelScope.launch {
                 todoListManager.apply {
                     clearCurrentList(ItemType.EVENT)
-                    clearAllItemList(ItemType.EVENT)
+                    clearAllMissionList(ItemType.EVENT)
                 }
 
-                _completedTask.value =
-                    _completedTask.value?.minus(progressCounter.getCounterRecord(ItemType.EVENT))
-                progressCounter.clearNum(ItemType.EVENT)
+                progressCounter.clearCount(ItemType.EVENT)
 
                 if (eventList.isNotEmpty()) {
                     isNotNewBie()
@@ -253,10 +244,10 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                     }
 
                     event.executedTime.forEach {
-                        todoListManager.getAllItem(ItemData(eventData = event))
+                        todoListManager.addAllMission(ItemData(eventData = event))
 
                         if (getTimeStampToTimeInt(it) !in logTimeTags) {
-                            todoListManager.getCurrentItemDataType(
+                            todoListManager.addCurrentItemDataType(
                                 ItemDataType.EventType(
                                     ItemData(eventData = event),
                                     getTimeStampToTimeInt(it)
@@ -265,8 +256,8 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
 
                             if (getTimeStampToTimeInt(it) !in todoListManager.timeTitleList) {
                                 todoListManager.apply {
-                                    getTimeTitle(getTimeStampToTimeInt(it))
-                                    getCurrentItemDataType(
+                                    addTimeTitle(getTimeStampToTimeInt(it))
+                                    addCurrentItemDataType(
                                         ItemDataType.TimeType(
                                             getTimeStampToTimeString(it),
                                             getTimeStampToTimeInt(it)
@@ -275,7 +266,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                                 }
                             }
                         } else {
-                            _completedTask.value = _completedTask.value?.plus(1)
+                            progressCounter.addPostLogCount(ItemType.EVENT)
                         }
                     }
                 }
@@ -287,12 +278,10 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
             viewModelScope.launch {
                 todoListManager.apply {
                     clearCurrentList(ItemType.CARE)
-                    clearAllItemList(ItemType.CARE)
+                    clearAllMissionList(ItemType.CARE)
                 }
 
-                _completedTask.value =
-                    _completedTask.value?.minus(progressCounter.getCounterRecord(ItemType.CARE))
-                progressCounter.clearNum(ItemType.CARE)
+                progressCounter.clearCount(ItemType.CARE)
 
                 if (careList.isNotEmpty()) {
                     isNotNewBie()
@@ -319,10 +308,10 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
 
 
                     care.executedTime.forEach {
-                        todoListManager.getAllItem(ItemData(careData = care))
+                        todoListManager.addAllMission(ItemData(careData = care))
 
                         if (getTimeStampToTimeInt(it) !in logTimeTags) {
-                            todoListManager.getCurrentItemDataType(
+                            todoListManager.addCurrentItemDataType(
                                 ItemDataType.CareType(
                                     ItemData(careData = care),
                                     getTimeStampToTimeInt(it)
@@ -331,8 +320,8 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
 
                             if (getTimeStampToTimeInt(it) !in todoListManager.timeTitleList) {
                                 todoListManager.apply {
-                                    getTimeTitle(getTimeStampToTimeInt(it))
-                                    getCurrentItemDataType(
+                                    addTimeTitle(getTimeStampToTimeInt(it))
+                                    addCurrentItemDataType(
                                         ItemDataType.TimeType(
                                             getTimeStampToTimeString(it),
                                             getTimeStampToTimeInt(it)
@@ -341,7 +330,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                                 }
                             }
                         } else {
-                            _completedTask.value = _completedTask.value?.plus(1)
+                            progressCounter.addPostLogCount(ItemType.CARE)
                         }
                     }
                 }
@@ -358,16 +347,20 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
         _totalTask.value = todoListManager.getAllTodoListNum()
     }
 
+    fun getAllCheckedTaskCount() {
+        _completedTask.value = progressCounter.getTotalCheckedLogNum()
+    }
+
     /*
        Swipe to Skip
      */
 
-    private val swipeSkipListManager = SwipeSkipListManager()
     // Collected the skip item data and time title data.
-
+    private val swipeSkipListManager = SwipeSkipListManager()
 
     fun swipeToSkip(swipeData: SwipeData) {
-        _completedTask.value = _completedTask.value?.plus(1)
+        progressCounter.addPostLogCount(swipeData)
+        getAllCheckedTaskCount()
         swipeSkipListManager.getSwipeToSkip(swipeData)
     }
 
@@ -377,7 +370,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
 
     fun undoSwipeToSkip() {
         val currentList = itemDataMediator.value
-        _completedTask.value = _completedTask.value?.minus(1)
+        progressCounter.decreasePostLogCount()
         itemDataMediator.value =
             swipeSkipListManager.reBuildCurrentList(currentList ?: mutableListOf())
     }
@@ -385,7 +378,6 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
     fun postSkipLog() {
         viewModelScope.launch {
             val skipData = swipeSkipListManager.skipList.first()
-            progressCounter.postLog(skipData)
             when (skipData.itemDataType) {
                 is ItemDataType.DrugType -> {
                     firebaseDataRepository.postDrugLog(
@@ -451,31 +443,28 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
     private val swipeCheckedListManager = SwipeCheckedListManager()
 
     fun swipeToFinished(swipeData: SwipeData) {
-        _completedTask.value = _completedTask.value?.plus(1)
 
         if (swipeData.itemDataType is ItemDataType.DrugType) {
-            swipeCheckedListManager.getDrugSwipeData(swipeData)
-            progressCounter.postLog(swipeData)
+            swipeCheckedListManager.addDrugSwipeData(swipeData)
             postFinishDrugAndActivityLog(ItemType.DRUG)
         } else {
-            swipeCheckedListManager.getEventSwipeData(swipeData)
-            progressCounter.postLog(swipeData)
+            progressCounter.addPostLogCount(swipeData)
+            getAllCheckedTaskCount()
+            swipeCheckedListManager.addEventSwipeData(swipeData)
         }
 
     }
 
     fun removeTimeHeaderOfFinished(swipeData: SwipeData) {
-        swipeCheckedListManager.getEventTimeHeader(swipeData)
+        swipeCheckedListManager.addEventTimeHeader(swipeData)
     }
 
     fun undoSwipeToLog(itemType: ItemType) {
         when (itemType) {
             ItemType.DRUG -> {
-                _completedTask.value = _completedTask.value?.minus(1)
-
-                val logId = swipeCheckedListManager.giveDrugLogIdForUndo()
+                val logId = swipeCheckedListManager.getDrugLogIdForUndo()
                 val drugData = swipeCheckedListManager
-                    .giveDrugSwipeDataForUndo().itemDataType as ItemDataType.DrugType
+                    .getDrugSwipeDataForUndo().itemDataType as ItemDataType.DrugType
                 val drugId = drugData.drug.drugData?.id ?: ""
                 val drugStock = drugData.drug.drugData?.stock ?: 0F
 
@@ -485,7 +474,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
             }
             ItemType.EVENT -> {
                 val currentList = itemDataMediator.value
-                _completedTask.value = _completedTask.value?.minus(1)
+                progressCounter.decreasePostLogCount()
                 itemDataMediator.value =
                     swipeCheckedListManager
                         .reBuildCurrentList(currentList ?: mutableListOf())
@@ -501,7 +490,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
             when (itemType) {
                 ItemType.DRUG -> {
                     val drug =
-                        swipeCheckedListManager.giveDrugSwipeDataForPost()
+                        swipeCheckedListManager.getDrugSwipeDataForPost()
                             .itemDataType as ItemDataType.DrugType
 
                     if (isDrugExhausted(drug.drug.drugData ?: Drug())) {
@@ -520,7 +509,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                         )
                     )
 
-                    swipeCheckedListManager.getDrugLogId(drugLogId)
+                    swipeCheckedListManager.addDrugLogId(drugLogId)
 
                     val originStock = drug.drug.drugData?.stock ?: 0F
                     val updateStock = originStock - (drug.drug.drugData?.dose ?: 0F)
@@ -528,7 +517,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                 }
                 ItemType.EVENT -> {
                     val event =
-                        swipeCheckedListManager.giveEventSwipeData()
+                        swipeCheckedListManager.getEventSwipeData()
                             .itemDataType as ItemDataType.EventType
 
                     firebaseDataRepository.postEventLog(

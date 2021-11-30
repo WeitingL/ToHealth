@@ -1,6 +1,5 @@
 package com.weiting.tohealth.homepage
 
-import android.util.Log
 
 class SwipeCheckedListManager {
 
@@ -10,39 +9,39 @@ class SwipeCheckedListManager {
     private val eventSwipeData = mutableListOf<SwipeData>()
     private val eventTimeList = mutableListOf<SwipeData>()
 
-    fun getDrugSwipeData (swipeData: SwipeData){
+    fun addDrugSwipeData (swipeData: SwipeData){
         drugSwipeData.add(swipeData)
     }
 
-    fun getEventSwipeData(swipeData: SwipeData){
+    fun addEventSwipeData(swipeData: SwipeData){
         eventSwipeData.add(swipeData)
     }
 
-    fun getEventTimeHeader(swipeData: SwipeData){
+    fun addEventTimeHeader(swipeData: SwipeData){
         eventTimeList.add(swipeData)
     }
 
-    fun getDrugLogId(drugLogId: String){
+    fun addDrugLogId(drugLogId: String){
         drugLogIds.add(drugLogId)
     }
 
-    fun giveDrugSwipeDataForUndo(): SwipeData {
+    fun getDrugSwipeDataForUndo(): SwipeData {
         val data = drugSwipeData.last()
         drugSwipeData.removeLast()
         return data
     }
 
-    fun giveDrugLogIdForUndo(): String {
+    fun getDrugLogIdForUndo(): String {
         val data = drugLogIds.last()
         drugLogIds.removeLast()
         return data
     }
 
-    fun giveDrugSwipeDataForPost(): SwipeData {
+    fun getDrugSwipeDataForPost(): SwipeData {
         return drugSwipeData.last()
     }
 
-    fun giveEventSwipeData():SwipeData{
+    fun getEventSwipeData():SwipeData{
         val data = eventSwipeData.first()
         eventSwipeData.removeFirst()
         eventTimeList.clear()
@@ -50,7 +49,6 @@ class SwipeCheckedListManager {
     }
 
     fun reBuildCurrentList(currentList: MutableList<ItemDataType>): MutableList<ItemDataType> {
-        Log.i("reBuildCurrentList", eventSwipeData.toString())
 
         if (eventSwipeData.isNotEmpty()) {
             val lastSwipeData = eventSwipeData.last()

@@ -5,7 +5,7 @@ import com.weiting.tohealth.data.*
 class TodoListManager {
 
     /*
-        Store the all todolist item below.
+        Store the all todolist mission below.
      */
     private val drugItemList = mutableListOf<ItemData>()
     private val measureItemList = mutableListOf<ItemData>()
@@ -13,7 +13,7 @@ class TodoListManager {
     private val careItemList = mutableListOf<ItemData>()
 
     /*
-        Store the unchecked todolist item below.
+        Store the unchecked todolist mission item below.
      */
     private val drugCurrentList = mutableListOf<ItemDataType>()
     private val measureCurrentList = mutableListOf<ItemDataType>()
@@ -23,7 +23,7 @@ class TodoListManager {
     private val timeCurrentList = mutableListOf<ItemDataType>()
     val timeTitleList = mutableListOf<Int>()
 
-    fun getCurrentItemDataType(itemDataType: ItemDataType) {
+    fun addCurrentItemDataType(itemDataType: ItemDataType) {
         when (itemDataType) {
             is ItemDataType.TimeType -> timeCurrentList.add(itemDataType)
             is ItemDataType.CareType -> careCurrentList.add(itemDataType)
@@ -33,7 +33,7 @@ class TodoListManager {
         }
     }
 
-    fun clearAllItemList(itemType: ItemType){
+    fun clearAllMissionList(itemType: ItemType){
         when(itemType){
             ItemType.DRUG -> drugItemList.clear()
             ItemType.EVENT -> eventItemList.clear()
@@ -42,7 +42,7 @@ class TodoListManager {
         }
     }
 
-    fun getAllItem(itemData: ItemData) {
+    fun addAllMission(itemData: ItemData) {
         when (itemData.itemType) {
             ItemType.DRUG -> drugItemList.add(itemData)
             ItemType.EVENT -> eventItemList.add(itemData)
@@ -55,7 +55,7 @@ class TodoListManager {
         return drugItemList.size + eventItemList.size + measureItemList.size + careItemList.size
     }
 
-    fun getTimeTitle(timeHeader: Int) {
+    fun addTimeTitle(timeHeader: Int) {
         timeTitleList.add(timeHeader)
     }
 

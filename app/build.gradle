@@ -18,8 +18,8 @@ android {
         applicationId "com.weiting.tohealth"
         minSdk 26
         targetSdk 31
-        versionCode 27
-        versionName "6.0"
+        versionCode 28
+        versionName "6.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
