@@ -1,8 +1,10 @@
-package com.weiting.tohealth.homepage
+package com.weiting.tohealth.homepage.homeutil
 
 
 import android.util.Log
 import com.weiting.tohealth.data.ItemType
+import com.weiting.tohealth.homepage.ItemDataType
+import com.weiting.tohealth.homepage.SwipeData
 
 class TodoListLogCounter {
 

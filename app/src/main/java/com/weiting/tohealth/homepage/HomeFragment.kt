@@ -47,7 +47,6 @@ class HomeFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        // TODO Refactor 2nd
         val adapter = TodayItemAdapter()
         val snackBarCallBackForSkip = SnackBarCallBackForSkip(viewModel)
         val snackBarCallBackForEvent = SnackBarCallBackForEvent(viewModel)
