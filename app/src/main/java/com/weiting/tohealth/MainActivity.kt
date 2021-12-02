@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         binding.bottomNavigationView.setupWithNavController(navController)
 
-        binding.imMoreMotification.setOnClickListener {
+        binding.imMoreNotification.setOnClickListener {
             navController.navigate(NavigationDirections.actionGlobalNotificationFragment(viewModel.memberList.toTypedArray()))
         }
 

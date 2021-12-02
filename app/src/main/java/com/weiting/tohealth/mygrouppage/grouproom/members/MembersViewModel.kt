@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import com.weiting.tohealth.data.FirebaseRepository
 import com.weiting.tohealth.data.Group
 import com.weiting.tohealth.data.Member
+import com.weiting.tohealth.data.Result
 import kotlinx.coroutines.launch
 
 class MembersViewModel(
@@ -17,8 +18,11 @@ class MembersViewModel(
         addSource(liveMembersList) { list ->
             viewModelScope.launch {
                 list.forEach { member ->
-                    member.profilePhoto =
-                        firebaseDataRepository.getUser(member.userId ?: "").userPhoto
+                    val user = when(val result = firebaseDataRepository.getUser(member.userId ?: "")){
+                        is Result.Success -> result.data
+                        else -> null
+                    }
+                    member.profilePhoto = user?.userPhoto
                 }
                 value = list
             }

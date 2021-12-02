@@ -7,7 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.Timestamp
 import com.weiting.tohealth.data.FirebaseRepository
 import com.weiting.tohealth.data.ItemType
-import com.weiting.tohealth.mystatisticpage.activitychart.AnalyzeActivityLog
+import com.weiting.tohealth.data.Result
+import com.weiting.tohealth.mystatisticpage.eventchart.AnalyzeActivityLog
 import com.weiting.tohealth.mystatisticpage.carechart.AnalyzeCareLog
 import com.weiting.tohealth.mystatisticpage.drugchart.AnalyzeDrugLog
 import com.weiting.tohealth.mystatisticpage.measurechart.AnalyzeMeasureLog
@@ -18,10 +19,6 @@ class StatisticDetailViewModel(
     private val userId: String,
     itemType: ItemType
 ) : ViewModel() {
-
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean>
-        get() = _isLoading
 
     private val _logList = MutableLiveData<List<LogItem>>()
     val logList: LiveData<List<LogItem>>
@@ -36,70 +33,82 @@ class StatisticDetailViewModel(
             ItemType.EVENT -> getEventLogs()
             ItemType.MEASURE -> getMeasureLogs()
         }
-        _isLoading.value = true
-    }
-
-    private fun loadingFinished() {
-        _isLoading.value = false
     }
 
     private fun getMeasureLogs() {
         viewModelScope.launch {
-            val measureList = firebaseDataRepository.getAllMeasures(userId)
+            val measureList = when(val result = firebaseDataRepository.getAllMeasures(userId)){
+                is Result.Success -> result.data
+                else -> listOf()
+            }
             measureList.forEach {
-                it.measureLogs = firebaseDataRepository.getMeasureLogs(it.id?:"")
+                it.measureLogs = when(val result = firebaseDataRepository.getMeasureLogs(it.id?:"")){
+                    is Result.Success -> result.data
+                    else -> listOf()
+                }
                 if (it.measureLogs.isNotEmpty()) {
                     logItemList.add(AnalyzeMeasureLog().revertToResultInDateList(it))
                 }
             }
-//            logItemList.add(LogItem.Bottom)
             _logList.value = logItemList
-            loadingFinished()
         }
     }
 
     private fun getCareLogs() {
         viewModelScope.launch {
-            val careList = firebaseDataRepository.getAllCares(userId)
+            val careList = when(val result = firebaseDataRepository.getAllCares(userId)){
+                is Result.Success -> result.data
+                else -> listOf()
+            }
             careList.forEach {
-                it.careLogs = firebaseDataRepository.getCareLogs(it.id?:"")
+                it.careLogs = when(val result = firebaseDataRepository.getCareLogs(it.id?:"")){
+                    is Result.Success -> result.data
+                    else -> listOf()
+                }
                 if (it.careLogs.isNotEmpty()) {
                     logItemList.add(AnalyzeCareLog().revertToResultInDateList(it))
                 }
             }
-//            logItemList.add(LogItem.Bottom)
             _logList.value = logItemList
-            loadingFinished()
         }
     }
 
     private fun getEventLogs() {
         viewModelScope.launch {
-            val events = firebaseDataRepository.getAllEvents(userId)
+            val events = when(val result = firebaseDataRepository.getAllEvents(userId)){
+                is Result.Success -> result.data
+                else -> listOf()
+            }
+
             events.forEach {
-                it.eventLogs = firebaseDataRepository.getEventLogs(it.id?:"")
+                it.eventLogs = when(val result = firebaseDataRepository.getEventLogs(it.id?:"")){
+                    is Result.Success -> result.data
+                    else -> listOf()
+                }
                 if (it.eventLogs.isNotEmpty()) {
                     logItemList.add(AnalyzeActivityLog().revertToResultInDateList(it))
                 }
             }
-//            logItemList.add(LogItem.Bottom)
             _logList.value = logItemList
-            loadingFinished()
         }
     }
 
     private fun getDrugLogs() {
         viewModelScope.launch {
-            val drugList = firebaseDataRepository.getAllDrugs(userId)
+            val drugList = when(val result = firebaseDataRepository.getAllDrugs(userId)){
+                is Result.Success -> result.data
+                else -> listOf()
+            }
             drugList.forEach {
-                it.drugLogs = firebaseDataRepository.getDrugLogs(it.id?:"")
+                it.drugLogs = when(val result = firebaseDataRepository.getDrugLogs(it.id?:"")){
+                    is Result.Success -> result.data
+                    else -> listOf()
+                }
                 if (it.drugLogs.isNotEmpty()) {
                     logItemList.add(AnalyzeDrugLog().revertToResultInDateList(it))
                 }
             }
-//            logItemList.add(LogItem.Bottom)
             _logList.value = logItemList
-            loadingFinished()
         }
     }
 }

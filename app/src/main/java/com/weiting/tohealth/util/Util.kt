@@ -7,6 +7,7 @@ import com.google.firebase.Timestamp
 import com.weiting.tohealth.R
 import com.weiting.tohealth.data.Measure
 import com.weiting.tohealth.data.MeasureLog
+import com.weiting.tohealth.data.Result
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -335,4 +336,7 @@ object Util {
         return getTimeStampToDateInt(timestamp ?: Timestamp.now()) ==
                 getTimeStampToDateInt(Timestamp.now())
     }
+
+
+
 }

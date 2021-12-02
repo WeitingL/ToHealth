@@ -120,6 +120,7 @@
     <string name="dataExtract">資料輸出(Coming Soon)</string>
     <string name="userDenyEdit">使用者拒絕群組編輯</string>
     <string name="userDenyCheckout">使用者拒絕群組查看</string>
+    <string name="something_wrong">There is something wrong.</string>
 
     <string-array name="ItemType">
         <item>藥品</item>

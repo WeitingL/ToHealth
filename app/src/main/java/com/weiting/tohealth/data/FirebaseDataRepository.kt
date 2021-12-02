@@ -8,7 +8,7 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.getLiveUser(userId)
     }
 
-    override suspend fun getUser(userId: String): User {
+    override suspend fun getUser(userId: String): Result<User> {
         return firebaseSource.getUser(userId)
     }
 
@@ -16,27 +16,27 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.signIn(user)
     }
 
-    override suspend fun getAllDrugs(userId: String): List<Drug> {
+    override suspend fun getAllDrugs(userId: String): Result<List<Drug>> {
         return firebaseSource.getAllDrugs(userId)
     }
 
-    override suspend fun getDrug(itemId: String): Drug {
+    override suspend fun getDrug(itemId: String): Result<Drug> {
         return firebaseSource.getDrug(itemId)
     }
 
-    override suspend fun getAllMeasures(userId: String): List<Measure> {
+    override suspend fun getAllMeasures(userId: String): Result<List<Measure>> {
         return firebaseSource.getAllMeasures(userId)
     }
 
-    override suspend fun getAllEvents(userId: String): List<Event> {
+    override suspend fun getAllEvents(userId: String): Result<List<Event>> {
         return firebaseSource.getAllEvents(userId)
     }
 
-    override suspend fun getAllCares(userId: String): List<Care> {
+    override suspend fun getAllCares(userId: String): Result<List<Care>> {
         return firebaseSource.getAllCares(userId)
     }
 
-    override suspend fun getMeasure(itemId: String): Measure {
+    override suspend fun getMeasure(itemId: String): Result<Measure> {
         return firebaseSource.getMeasure(itemId)
     }
 
@@ -88,7 +88,7 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.updateCare(care)
     }
 
-    override suspend fun getDrugLogId(itemId: String): String {
+    override suspend fun getDrugLogId(itemId: String): Result<String> {
         return firebaseSource.getDrugLogId(itemId)
     }
 
@@ -100,7 +100,7 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.deleteDrugLog(drugId, drugLogId)
     }
 
-    override suspend fun getMeasureLogId(itemId: String): String {
+    override suspend fun getMeasureLogId(itemId: String): Result<String> {
         return firebaseSource.getMeasureLogId(itemId)
     }
 
@@ -116,23 +116,23 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.postCareLog(id, careLog)
     }
 
-    override suspend fun getDrugLogs(itemId: String): List<DrugLog> {
+    override suspend fun getDrugLogs(itemId: String): Result<List<DrugLog>> {
         return firebaseSource.getDrugLogs(itemId)
     }
 
-    override suspend fun getMeasureLogs(itemId: String): List<MeasureLog> {
+    override suspend fun getMeasureLogs(itemId: String): Result<List<MeasureLog>> {
         return firebaseSource.getMeasureLogs(itemId)
     }
 
-    override suspend fun getMeasureLog(itemId: String, itemsLogId: String): MeasureLog {
+    override suspend fun getMeasureLog(itemId: String, itemsLogId: String): Result<MeasureLog> {
         return firebaseSource.getMeasureLog(itemId, itemsLogId)
     }
 
-    override suspend fun getEventLogs(itemId: String): List<EventLog> {
+    override suspend fun getEventLogs(itemId: String): Result<List<EventLog>> {
         return firebaseSource.getEventLogs(itemId)
     }
 
-    override suspend fun getCareLogs(itemId: String): List<CareLog> {
+    override suspend fun getCareLogs(itemId: String): Result<List<CareLog>> {
         return firebaseSource.getCareLogs(itemId)
     }
 
@@ -156,11 +156,11 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.createGroup(group)
     }
 
-    override fun getNewGroupId(): String {
+    override fun getNewGroupId(): Result<String> {
         return firebaseSource.getNewGroupId()
     }
 
-    override suspend fun checkIsGroupExist(groupId: String): Boolean {
+    override suspend fun checkIsGroupExist(groupId: String): Result<Boolean> {
         return firebaseSource.checkIsGroupExist(groupId)
     }
 
@@ -168,23 +168,23 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
         return firebaseSource.joinGroup(member, groupId)
     }
 
-    override suspend fun checkIsRelationExist(userId: String, groupId: String): Boolean {
+    override suspend fun checkIsRelationExist(userId: String, groupId: String): Result<Boolean> {
         return firebaseSource.checkIsRelationExist(userId, groupId)
     }
 
-    override suspend fun getGroups(groupId: String): List<Group> {
+    override suspend fun getGroups(groupId: String): Result<List<Group>> {
         return firebaseSource.getGroups(groupId)
     }
 
-    override suspend fun getMembers(groupId: String): List<Member> {
+    override suspend fun getMembers(groupId: String): Result<List<Member>> {
         return firebaseSource.getMembers(groupId)
     }
 
-    override suspend fun getNotes(groupId: String): List<Note> {
+    override suspend fun getNotes(groupId: String): Result<List<Note>> {
         return firebaseSource.getNotes(groupId)
     }
 
-    override suspend fun getReminders(groupId: String): List<Reminder> {
+    override suspend fun getReminders(groupId: String): Result<List<Reminder>> {
         return firebaseSource.getReminders(groupId)
     }
 
@@ -238,12 +238,6 @@ class FirebaseDataRepository(private val firebaseSource: FirebaseSource) : Fireb
 
     override fun postAlertMessage(alertMessage: AlertMessage) {
         return firebaseSource.postAlertMessage(alertMessage)
-    }
-
-    override fun getLiveAlertMessageForService(
-        userId: String
-    ): MutableLiveData<List<AlertMessage>> {
-        return firebaseSource.getLiveAlertMessageForService(userId)
     }
 
     override fun getLiveAlertMessages(userIdList: List<String>):

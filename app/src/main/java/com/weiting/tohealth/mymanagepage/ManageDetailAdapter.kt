@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.weiting.tohealth.*
 import com.weiting.tohealth.data.ItemData
 import com.weiting.tohealth.data.ItemType
+import com.weiting.tohealth.data.Result
 import com.weiting.tohealth.databinding.ManageRowItemBinding
 import com.weiting.tohealth.mymanagepage.ManageDetailAdapter.ItemsListViewHolder
 import com.weiting.tohealth.util.Util.getTimeStampToTimeInt
@@ -99,7 +100,13 @@ class ManageDetailAdapter(val onClickListener: OnclickListener) :
 
                             tvUpdateTime.text = getTimeStampToDateAndTimeString(data?.lastEditTime)
                             tvCreatedTime.text = getTimeStampToDateAndTimeString(data?.createdTime)
-                            tvEditorManage.text = database.getUser(data?.editor ?: "").name
+
+                            val user = when(val result = database.getUser(data?.editor ?: "")){
+                                is Result.Success -> result.data
+                                else -> null
+                            }
+
+                            tvEditorManage.text = user?.name
                         }
 
                         ItemType.MEASURE -> {
@@ -137,7 +144,11 @@ class ManageDetailAdapter(val onClickListener: OnclickListener) :
                             tvStockDayUnit.text = context.getString(R.string.unLimit)
                             pbStock.progress = 100
 
-                            tvEditorManage.text = database.getUser(data?.editor ?: "").name
+                            val user = when(val result = database.getUser(data?.editor ?: "")){
+                                is Result.Success -> result.data
+                                else -> null
+                            }
+                            tvEditorManage.text = user?.name
                         }
 
                         ItemType.EVENT -> {
@@ -174,7 +185,11 @@ class ManageDetailAdapter(val onClickListener: OnclickListener) :
                             tvStockDayUnit.text = context.getString(R.string.unLimit)
                             pbStock.progress = 100
 
-                            tvEditorManage.text = database.getUser(data?.editor ?: "").name
+                            val user = when(val result = database.getUser(data?.editor ?: "")){
+                                is Result.Success -> result.data
+                                else -> null
+                            }
+                            tvEditorManage.text = user?.name
                         }
 
                         ItemType.CARE -> {
@@ -212,7 +227,11 @@ class ManageDetailAdapter(val onClickListener: OnclickListener) :
                             tvCreatedTime.text = getTimeStampToDateAndTimeString(data?.createdTime)
                             tvUpdateTime.text = getTimeStampToDateAndTimeString(data?.lastEditTime)
 
-                            tvEditorManage.text = database.getUser(data?.editor ?: "").name
+                            val user = when(val result = database.getUser(data?.editor ?: "")){
+                                is Result.Success -> result.data
+                                else -> null
+                            }
+                            tvEditorManage.text = user?.name
                         }
                     }
                 }

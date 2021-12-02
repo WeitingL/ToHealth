@@ -42,7 +42,10 @@ class AddGroupViewModel(
     }
 
     private fun getGroupId() {
-        _newGroupId.value = firebaseRepository.getNewGroupId()
+        _newGroupId.value = when (val result = firebaseRepository.getNewGroupId()) {
+            is Result.Success -> result.data
+            else -> null
+        }
     }
 
     fun createGroup(group: Group) {
@@ -54,13 +57,18 @@ class AddGroupViewModel(
                 name = UserManager.UserInfo.name,
                 nickName = UserManager.UserInfo.name
             ),
-            group.id?:""
+            group.id ?: ""
         )
     }
 
     fun checkIsGroupIdExist(groupId: String) {
         viewModelScope.launch {
-            when (firebaseRepository.checkIsGroupExist(groupId)) {
+            val isExist = when (val result = firebaseRepository.checkIsGroupExist(groupId)) {
+                is Result.Success -> result.data
+                else -> null
+            }
+
+            when (isExist) {
                 true -> _isGroupExist.value = true
                 false -> _isGroupExist.value = false
             }
@@ -72,11 +80,13 @@ class AddGroupViewModel(
         groupId: String
     ) {
         viewModelScope.launch {
-            when (
-                firebaseRepository.checkIsRelationExist(
-                    userId, groupId
-                )
-            ) {
+            val isExist =
+                when (val result = firebaseRepository.checkIsRelationExist(userId, groupId)) {
+                    is Result.Success -> result.data
+                    else -> null
+                }
+
+            when (isExist) {
                 true -> _isRelationshipExist.value = true
                 false -> _isRelationshipExist.value = false
             }

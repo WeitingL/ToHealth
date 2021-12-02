@@ -1,4 +1,4 @@
-package com.weiting.tohealth.mystatisticpage.activitychart
+package com.weiting.tohealth.mystatisticpage.eventchart
 
 import com.google.firebase.Timestamp
 import com.weiting.tohealth.data.Event

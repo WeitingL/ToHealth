@@ -17,7 +17,7 @@ class MyGroupViewModel(private val firebaseDataRepository: FirebaseRepository) :
     val loading: LiveData<Boolean>
         get() = _loading
 
-    val userData = firebaseDataRepository.getLiveUser(UserManager.UserInfo.id!!)
+    val userData = firebaseDataRepository.getLiveUser(UserManager.UserInfo.id ?: "")
 
     private val currentGroupList = mutableListOf<GroupPageItem>()
 
@@ -33,26 +33,57 @@ class MyGroupViewModel(private val firebaseDataRepository: FirebaseRepository) :
             _groupItemList.value = mutableListOf()
             currentGroupList.clear()
             idList.forEach { id ->
-                val groupList = firebaseDataRepository.getGroups(id)
+                val groupList = when (val result = firebaseDataRepository.getGroups(id)) {
+                    is Result.Success -> result.data
+                    else -> null
+                }
 
-                if (groupList.isNotEmpty()) {
+                if (groupList?.isNotEmpty() == true) {
                     groupList.forEach {
 
-                        it.member += firebaseDataRepository.getMembers(it.id!!)
+                        it.member += when (val result =
+                            firebaseDataRepository.getMembers(it.id ?: "")) {
+                            is Result.Success -> result.data
+                            else -> listOf()
+                        }
+
                         it.member.forEach { member ->
-                            member.profilePhoto =
-                                firebaseDataRepository.getUser(member.userId!!).userPhoto
+                            val user = when (val result =
+                                firebaseDataRepository.getUser(member.userId ?: "")) {
+                                is Result.Success -> result.data
+                                else -> null
+                            }
+                            member.profilePhoto = user?.userPhoto
                         }
 
-                        it.notes += firebaseDataRepository.getNotes(it.id!!)
+                        it.notes += when (val result =
+                            firebaseDataRepository.getNotes(it.id ?: "")) {
+                            is Result.Success -> result.data
+                            else -> listOf()
+                        }
+
                         it.notes.forEach { note ->
-                            note.editor = firebaseDataRepository.getUser(note.editor!!).name
+                            val user = when (val result =
+                                firebaseDataRepository.getUser(note.editor ?: "")) {
+                                is Result.Success -> result.data
+                                else -> null
+                            }
+                            note.editor = user?.name
                         }
 
-                        it.reminders += firebaseDataRepository.getReminders(it.id!!)
+                        it.reminders += when (val result =
+                            firebaseDataRepository.getReminders(it.id ?: "")) {
+                            is Result.Success -> result.data
+                            else -> listOf()
+                        }
+
                         it.reminders.forEach { calenderItem ->
-                            calenderItem.editor =
-                                firebaseDataRepository.getUser(calenderItem.editor!!).name
+                            val user = when (val result =
+                                firebaseDataRepository.getUser(calenderItem.editor ?: "")) {
+                                is Result.Success -> result.data
+                                else -> null
+                            }
+                            calenderItem.editor = user?.name
                         }
                         currentGroupList.add(GroupPageItem.MyGroups(it))
                     }

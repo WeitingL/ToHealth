@@ -29,7 +29,11 @@ class RecordViewModel(private val firebaseDataRepository: FirebaseRepository) :
 
     fun postMeasureLog(itemId: String, measureLog: MeasureLog, measureType: Int) {
         viewModelScope.launch {
-            measureLog.id = firebaseDataRepository.getMeasureLogId(itemId)
+            measureLog.id = when(val result = firebaseDataRepository.getMeasureLogId(itemId)){
+                is Result.Success -> result.data
+                else -> null
+            }
+
             when (measureType) {
                 0 -> {
                     if (isBloodPressureAbnormal(measureLog)) {

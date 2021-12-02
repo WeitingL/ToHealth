@@ -5,12 +5,12 @@ import androidx.lifecycle.MutableLiveData
 interface FirebaseSource {
 
     /*
-        Login with livedata
-     */
+       Login
+    */
 
     fun getLiveUser(userId: String): MutableLiveData<User>
 
-    suspend fun getUser(userId: String): User
+    suspend fun getUser(userId: String): Result<User>
 
     fun signIn(user: User)
 
@@ -19,18 +19,18 @@ interface FirebaseSource {
      */
 
     // Get Items list
-    suspend fun getAllDrugs(userId: String): List<Drug>
+    suspend fun getAllDrugs(userId: String): Result<List<Drug>>
 
-    suspend fun getDrug(itemId: String): Drug
+    suspend fun getDrug(itemId: String): Result<Drug>
 
-    suspend fun getAllMeasures(userId: String): List<Measure>
+    suspend fun getAllMeasures(userId: String): Result<List<Measure>>
 
-    suspend fun getAllEvents(userId: String): List<Event>
+    suspend fun getAllEvents(userId: String): Result<List<Event>>
 
-    suspend fun getAllCares(userId: String): List<Care>
+    suspend fun getAllCares(userId: String): Result<List<Care>>
 
     // Get Item
-    suspend fun getMeasure(itemId: String): Measure
+    suspend fun getMeasure(itemId: String): Result<Measure>
 
     fun getLiveDrugs(userId: String): MutableLiveData<List<Drug>>
 
@@ -59,13 +59,13 @@ interface FirebaseSource {
     fun updateCare(care: Care)
 
     // Post Item record
-    suspend fun getDrugLogId(itemId: String): String
+    suspend fun getDrugLogId(itemId: String): Result<String>
 
     fun postDrugLog(id: String, drugLog: DrugLog)
 
     fun deleteDrugLog(drugId: String, drugLogId: String)
 
-    suspend fun getMeasureLogId(itemId: String): String
+    suspend fun getMeasureLogId(itemId: String): Result<String>
 
     fun postMeasureLog(id: String, measureLog: MeasureLog)
 
@@ -74,15 +74,15 @@ interface FirebaseSource {
     fun postCareLog(id: String, careLog: CareLog)
 
     // Get Item Logs
-    suspend fun getDrugLogs(itemId: String): List<DrugLog>
+    suspend fun getDrugLogs(itemId: String): Result<List<DrugLog>>
 
-    suspend fun getMeasureLogs(itemId: String): List<MeasureLog>
+    suspend fun getMeasureLogs(itemId: String): Result<List<MeasureLog>>
 
-    suspend fun getMeasureLog(itemId: String, itemsLogId: String): MeasureLog
+    suspend fun getMeasureLog(itemId: String, itemsLogId: String): Result<MeasureLog>
 
-    suspend fun getEventLogs(itemId: String): List<EventLog>
+    suspend fun getEventLogs(itemId: String): Result<List<EventLog>>
 
-    suspend fun getCareLogs(itemId: String): List<CareLog>
+    suspend fun getCareLogs(itemId: String): Result<List<CareLog>>
 
     fun getLiveDrugLogs(itemId: String): MutableLiveData<List<DrugLog>>
 
@@ -99,21 +99,21 @@ interface FirebaseSource {
     // Post Group
     fun createGroup(group: Group)
 
-    fun getNewGroupId(): String
+    fun getNewGroupId(): Result<String>
 
     fun joinGroup(member: Member, groupId: String)
 
-    suspend fun checkIsRelationExist(userId: String, groupId: String): Boolean
+    suspend fun checkIsRelationExist(userId: String, groupId: String): Result<Boolean>
 
-    suspend fun checkIsGroupExist(groupId: String): Boolean
+    suspend fun checkIsGroupExist(groupId: String): Result<Boolean>
 
-    suspend fun getGroups(groupId: String): List<Group>
+    suspend fun getGroups(groupId: String): Result<List<Group>>
 
-    suspend fun getMembers(groupId: String): List<Member>
+    suspend fun getMembers(groupId: String): Result<List<Member>>
 
-    suspend fun getNotes(groupId: String): List<Note>
+    suspend fun getNotes(groupId: String): Result<List<Note>>
 
-    suspend fun getReminders(groupId: String): List<Reminder>
+    suspend fun getReminders(groupId: String): Result<List<Reminder>>
 
     fun getLiveMembers(groupId: String): MutableLiveData<List<Member>>
 
@@ -141,10 +141,6 @@ interface FirebaseSource {
     fun editStock(itemId: String, num: Float)
 
     fun postAlertMessage(alertMessage: AlertMessage)
-
-    fun getLiveAlertMessageForService(
-        userId: String
-    ): MutableLiveData<List<AlertMessage>>
 
     fun getLiveAlertMessages(
         userIdList: List<String>

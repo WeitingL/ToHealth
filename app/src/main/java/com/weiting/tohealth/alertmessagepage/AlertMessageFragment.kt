@@ -1,6 +1,7 @@
 package com.weiting.tohealth.alertmessagepage
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,9 +18,10 @@ class AlertMessageFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = AltermessageFragmentBinding.inflate(inflater, container, false)
         val memberList = AlertMessageFragmentArgs.fromBundle(requireArguments()).memberList.toList()
+
         val factory = NotificationRecordViewModelFactory(
             PublicApplication.application.firebaseDataRepository,
             memberList
@@ -39,6 +41,7 @@ class AlertMessageFragment : Fragment() {
 
         viewModel.isLoading.observe(viewLifecycleOwner) {
             if (it) {
+                binding.lavLoagindNotification.setAnimation(R.raw.loading)
                 binding.lavLoagindNotification.visibility = View.VISIBLE
             } else {
                 binding.lavLoagindNotification.visibility = View.GONE

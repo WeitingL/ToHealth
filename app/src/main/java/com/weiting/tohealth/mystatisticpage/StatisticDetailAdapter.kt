@@ -16,7 +16,7 @@ import com.weiting.tohealth.data.X
 import com.weiting.tohealth.data.Y
 import com.weiting.tohealth.data.Z
 import com.weiting.tohealth.databinding.*
-import com.weiting.tohealth.mystatisticpage.activitychart.EventTimeScaleAdapter
+import com.weiting.tohealth.mystatisticpage.eventchart.EventTimeScaleAdapter
 import com.weiting.tohealth.mystatisticpage.drugchart.DrugTimeScaleAdapter
 import com.weiting.tohealth.util.Util.toMeasureType
 import com.weiting.tohealth.util.Util.getTimeStampToDateAndTimeString

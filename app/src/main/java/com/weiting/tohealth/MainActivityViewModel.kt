@@ -8,6 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.weiting.tohealth.data.FirebaseRepository
+import com.weiting.tohealth.data.Member
+import com.weiting.tohealth.data.Result
 import com.weiting.tohealth.works.RebuildAlarm
 import kotlinx.coroutines.launch
 
@@ -46,15 +48,23 @@ class MainActivityViewModel(private val firebaseDataRepository: FirebaseReposito
     private fun getMemberIdList() {
         viewModelScope.launch {
             val auth = Firebase.auth
-            val user = firebaseDataRepository.getUser(auth.currentUser?.uid!!)
-            val groupIdList = user.groupList
-
-            groupIdList.forEach {
-                groupList.add(it)
-                firebaseDataRepository.getMembers(it).forEach { member ->
-                    memberList.add(member.userId?:"")
+            when (val user = firebaseDataRepository.getUser(auth.currentUser?.uid!!)) {
+                is Result.Success -> {
+                    user.data.groupList.forEach { groupId ->
+                        groupList.add(groupId)
+                        getMembers(groupId).forEach { memberId ->
+                            memberList.add(memberId.userId ?: "")
+                        }
+                    }
                 }
             }
+        }
+    }
+
+    private suspend fun getMembers(id: String): List<Member> {
+        return when (val data = firebaseDataRepository.getMembers(id)) {
+            is Result.Success -> data.data
+            else -> listOf()
         }
     }
 

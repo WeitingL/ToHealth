@@ -11,11 +11,13 @@ import com.google.firebase.ktx.Firebase
 import com.weiting.tohealth.PublicApplication
 import com.weiting.tohealth.data.FirebaseRepository
 import com.weiting.tohealth.data.ItemData
+import com.weiting.tohealth.data.Result
 import com.weiting.tohealth.receiver.AlarmReceiver
 import com.weiting.tohealth.receiver.POST_NOTIFICATION
 import com.weiting.tohealth.util.ItemArranger
 import com.weiting.tohealth.util.Util.getTimeStampToTimeInt
 import java.util.*
+import kotlin.system.measureNanoTime
 
 class RebuildAlarm {
 
@@ -27,44 +29,60 @@ class RebuildAlarm {
         val userId = Firebase.auth.currentUser?.uid ?: ""
         val timeList = mutableListOf<Timestamp>()
 
-        val drugList = firebaseDataRepository.getAllDrugs(userId).filter {
+        val drugs = when(val result = firebaseDataRepository.getAllDrugs(userId)){
+            is Result.Success -> result.data
+            else -> listOf()
+        }
+        val drugList = drugs.filter {
             ItemArranger.isThatDayNeedToDo(ItemData(drugData = it), Timestamp.now())
         }
-        drugList.forEach {
-            it.executedTime.forEach {
+        drugList.forEach { drug ->
+            drug.executedTime.forEach {
                 if (getTimeStampToTimeInt(it) > getTimeStampToTimeInt(Timestamp.now())) {
                     timeList.add(it)
                 }
             }
         }
 
-        val measureLog = firebaseDataRepository.getAllMeasures(userId).filter {
+        val measures = when(val result = firebaseDataRepository.getAllMeasures(userId)) {
+            is Result.Success -> result.data
+            else -> listOf()
+        }
+        val measureLog = measures.filter {
             ItemArranger.isThatDayNeedToDo(ItemData(measureData = it), Timestamp.now())
         }
-        measureLog.forEach {
-            it.executedTime.forEach {
+        measureLog.forEach { measure ->
+            measure.executedTime.forEach {
                 if (getTimeStampToTimeInt(it) > getTimeStampToTimeInt(Timestamp.now())) {
                     timeList.add(it)
                 }
             }
         }
 
-        val eventList = firebaseDataRepository.getAllEvents(userId).filter {
+        val events = when(val result = firebaseDataRepository.getAllEvents(userId)){
+            is Result.Success -> result.data
+            else -> listOf()
+        }
+        val eventList = events.filter {
             ItemArranger.isThatDayNeedToDo(ItemData(eventData = it), Timestamp.now())
         }
-        eventList.forEach {
-            it.executedTime.forEach {
+        eventList.forEach { event ->
+            event.executedTime.forEach {
                 if (getTimeStampToTimeInt(it) > getTimeStampToTimeInt(Timestamp.now())) {
                     timeList.add(it)
                 }
             }
         }
 
-        val careList = firebaseDataRepository.getAllCares(userId).filter {
+        val cares = when(val result = firebaseDataRepository.getAllCares(userId)){
+            is Result.Success -> result.data
+            else -> listOf()
+        }
+        val careList = cares.filter {
             ItemArranger.isThatDayNeedToDo(ItemData(careData = it), Timestamp.now())
         }
-        careList.forEach {
-            it.executedTime.forEach {
+        careList.forEach { care ->
+            care.executedTime.forEach {
                 if (getTimeStampToTimeInt(it) > getTimeStampToTimeInt(Timestamp.now())) {
                     timeList.add(it)
                 }

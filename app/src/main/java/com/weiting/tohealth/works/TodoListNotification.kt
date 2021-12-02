@@ -28,7 +28,11 @@ class TodoListNotification {
     suspend fun receiveIntentFromAlarm(timeTag: Int, firebaseDataRepository: FirebaseRepository) {
         val userId = Firebase.auth.currentUser?.uid ?: ""
 
-        val drugList = firebaseDataRepository.getAllDrugs(userId).filter {
+        val drugs = when(val result = firebaseDataRepository.getAllDrugs(userId)){
+            is Result.Success -> result.data
+            else -> listOf()
+        }
+        val drugList = drugs.filter {
             ItemArranger.isThatDayNeedToDo(ItemData(drugData = it), Timestamp.now())
         }
         drugList.forEach { drug ->
@@ -39,7 +43,11 @@ class TodoListNotification {
             }
         }
 
-        val measureList = firebaseDataRepository.getAllMeasures(userId).filter {
+        val measures = when(val result = firebaseDataRepository.getAllMeasures(userId)){
+            is Result.Success -> result.data
+            else -> listOf()
+        }
+        val measureList = measures.filter {
             ItemArranger.isThatDayNeedToDo(ItemData(measureData = it), Timestamp.now())
         }
         measureList.forEach { measure ->
@@ -50,7 +58,11 @@ class TodoListNotification {
             }
         }
 
-        val careList = firebaseDataRepository.getAllCares(userId).filter {
+        val cares = when(val result = firebaseDataRepository.getAllCares(userId)){
+            is Result.Success -> result.data
+            else -> listOf()
+        }
+        val careList = cares.filter {
             ItemArranger.isThatDayNeedToDo(ItemData(careData = it), Timestamp.now())
         }
         careList.forEach { care ->
@@ -61,7 +73,11 @@ class TodoListNotification {
             }
         }
 
-        val eventList = firebaseDataRepository.getAllEvents(userId).filter {
+        val events = when(val result = firebaseDataRepository.getAllEvents(userId)){
+            is Result.Success -> result.data
+            else -> listOf()
+        }
+        val eventList = events.filter {
             ItemArranger.isThatDayNeedToDo(ItemData(eventData = it), Timestamp.now())
         }
         eventList.forEach { event ->

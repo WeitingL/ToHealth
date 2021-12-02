@@ -1,4 +1,4 @@
-package com.weiting.tohealth.mystatisticpage.activitychart
+package com.weiting.tohealth.mystatisticpage.eventchart
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

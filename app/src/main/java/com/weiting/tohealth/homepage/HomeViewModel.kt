@@ -45,7 +45,11 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
 
         viewModelScope.launch {
             if (Firebase.auth.currentUser != null)
-                UserManager.UserInfo = firebaseDataRepository.getUser(UserManager.UserInfo.id ?: "")
+                UserManager.UserInfo = when (val result =
+                    firebaseDataRepository.getUser(UserManager.UserInfo.id ?: "")) {
+                    is Result.Success -> result.data
+                    else -> User()
+                }
         }
     }
 
@@ -105,10 +109,15 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                 todayDrugs.forEach { drug ->
 
                     //Get all logs today.
-                    drug.drugLogs =
-                        firebaseDataRepository.getDrugLogs(drug.id ?: "").filter {
-                            Util.isToday(it.createdTime)
+                    val data =
+                        when (val result = firebaseDataRepository.getDrugLogs(drug.id ?: "")) {
+                            is Result.Success -> result.data
+                            else -> listOf()
                         }
+
+                    drug.drugLogs = data.filter {
+                        Util.isToday(it.createdTime)
+                    }
 
                     val logTimeTags = mutableListOf<Int>()
                     drug.drugLogs.forEach { drugLog ->
@@ -169,10 +178,15 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
 
                 todayMeasures.forEach { measure ->
 
-                    measure.measureLogs =
-                        firebaseDataRepository.getMeasureLogs(measure.id!!).filter {
-                            Util.isToday(it.createdTime)
-                        }
+                    val data = when (val result =
+                        firebaseDataRepository.getMeasureLogs(measure.id ?: "")) {
+                        is Result.Success -> result.data
+                        else -> listOf()
+                    }
+
+                    measure.measureLogs = data.filter {
+                        Util.isToday(it.createdTime)
+                    }
 
                     val logTimeTags = mutableListOf<Int>()
                     measure.measureLogs.forEach { measureLog ->
@@ -233,10 +247,15 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
 
                 todayEvents.forEach { event ->
 
-                    event.eventLogs =
-                        firebaseDataRepository.getEventLogs(event.id!!).filter {
-                            Util.isToday(it.createdTime)
+                    val data =
+                        when (val result = firebaseDataRepository.getEventLogs(event.id ?: "")) {
+                            is Result.Success -> result.data
+                            else -> listOf()
                         }
+
+                    event.eventLogs = data.filter {
+                        Util.isToday(it.createdTime)
+                    }
 
                     val logTimeTags = mutableListOf<Int>()
                     event.eventLogs.forEach { eventLog ->
@@ -296,10 +315,15 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
 
                 todayCares.forEach { care ->
 
-                    care.careLogs =
-                        firebaseDataRepository.getCareLogs(care.id!!).filter {
-                            Util.isToday(it.createdTime)
+                    val data =
+                        when (val result = firebaseDataRepository.getCareLogs(care.id ?: "")) {
+                            is Result.Success -> result.data
+                            else -> listOf()
                         }
+
+                    care.careLogs = data.filter {
+                        Util.isToday(it.createdTime)
+                    }
 
                     val logTimeTags = mutableListOf<Int>()
                     care.careLogs.forEach { careLog ->
@@ -390,10 +414,16 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                 }
 
                 is ItemDataType.MeasureType -> {
+                    val id = when (val result = firebaseDataRepository
+                        .getMeasureLogId(skipData.itemDataType.measure.measureData?.id ?: "")) {
+                        is Result.Success -> result.data
+                        else -> null
+                    }
+
                     firebaseDataRepository.postMeasureLog(
-                        skipData.itemDataType.measure.measureData?.id!!, MeasureLog(
-                            id = firebaseDataRepository
-                                .getMeasureLogId(skipData.itemDataType.measure.measureData.id!!),
+                        skipData.itemDataType.measure.measureData?.id ?: "",
+                        MeasureLog(
+                            id = id,
                             timeTag = skipData.itemDataType.timeInt,
                             result = 1,
                             createdTime = Timestamp.now()
@@ -498,7 +528,11 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                     }
 
                     val drugId = drug.drug.drugData?.id ?: ""
-                    val drugLogId = firebaseDataRepository.getDrugLogId(drugId)
+                    val drugLogId =
+                        when (val result = firebaseDataRepository.getDrugLogId(drugId)) {
+                            is Result.Success -> result.data
+                            else -> null
+                        }
 
                     firebaseDataRepository.postDrugLog(
                         drugId, DrugLog(
@@ -509,7 +543,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                         )
                     )
 
-                    swipeCheckedListManager.addDrugLogId(drugLogId)
+                    swipeCheckedListManager.addDrugLogId(drugLogId ?: "")
 
                     val originStock = drug.drug.drugData?.stock ?: 0F
                     val updateStock = originStock - (drug.drug.drugData?.dose ?: 0F)

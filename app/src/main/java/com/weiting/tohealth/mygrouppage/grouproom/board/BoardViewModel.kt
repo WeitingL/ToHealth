@@ -5,16 +5,13 @@ import com.weiting.tohealth.data.Reminder
 import com.weiting.tohealth.data.FirebaseRepository
 import com.weiting.tohealth.data.Group
 import com.weiting.tohealth.data.Note
+import com.weiting.tohealth.data.Result
 import kotlinx.coroutines.launch
 
 class BoardViewModel(
     private val firebaseDataRepository: FirebaseRepository,
     private val group: Group
 ) : ViewModel() {
-
-    private val _boardList = MutableLiveData<List<BoardType>>()
-    val boardList: LiveData<List<BoardType>>
-        get() = _boardList
 
     private val notesLiveList = firebaseDataRepository.getLiveNotes(group.id ?: "")
     private val calenderLiveItem = firebaseDataRepository.getLiveReminders(group.id ?: "")
@@ -28,10 +25,13 @@ class BoardViewModel(
             viewModelScope.launch {
                 noteCurrentList.clear()
                 noteList.forEach { note ->
-                    note.editor = firebaseDataRepository.getUser(note.editor ?: "").name
+                    val user = when(val result = firebaseDataRepository.getUser(note.editor ?: "")){
+                        is Result.Success -> result.data
+                        else -> null
+                    }
+                    note.editor = user?.name
                     noteCurrentList.add(note)
                 }
-
                 value = getBoards()
             }
         }
@@ -40,8 +40,11 @@ class BoardViewModel(
             viewModelScope.launch {
                 calenderCurrentList.clear()
                 calenderList.forEach { calenderItem ->
-                    calenderItem.editor =
-                        firebaseDataRepository.getUser(calenderItem.editor ?: "").name
+                    val user = when(val result = firebaseDataRepository.getUser(calenderItem.editor ?: "")){
+                        is Result.Success -> result.data
+                        else -> null
+                    }
+                    calenderItem.editor = user?.name
                     calenderCurrentList.add(calenderItem)
                 }
                 value = getBoards()

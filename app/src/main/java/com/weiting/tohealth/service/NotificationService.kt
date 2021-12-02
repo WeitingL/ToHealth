@@ -96,7 +96,7 @@ class NotificationService : LifecycleService() {
     }
 
     private fun startListenAlertMessage(userId: String) {
-        firebaseDataRepository.getLiveAlertMessageForService(userId)
+        firebaseDataRepository.getLiveAlertMessages(listOf(userId))
             .observe(this) {
 
                 val alertMessageList = it.filter {
@@ -114,8 +114,17 @@ class NotificationService : LifecycleService() {
 
     private fun showLatestChat(chat: Chat) {
         coroutineScope.launch {
-            val groupName = firebaseDataRepository.getGroups(chat.groupId!!).first().groupName
-            val userName = firebaseDataRepository.getUser(chat.creator!!).name
+            val group = when (val result = firebaseDataRepository.getGroups(chat.groupId ?: "")) {
+                is Result.Success -> result.data
+                else -> null
+            }
+            val groupName = group?.first()?.groupName
+
+            val user = when (val result = firebaseDataRepository.getUser(chat.creator ?: "")) {
+                is Result.Success -> result.data
+                else -> null
+            }
+            val userName = user?.name
 
             val chatNotification = RemoteViews(packageName, R.layout.altermessage_chat)
             chatNotification.setTextViewText(R.id.tv_name, "群組: $groupName")
@@ -137,21 +146,36 @@ class NotificationService : LifecycleService() {
 
     private fun showNotification(alertMessage: AlertMessage) {
         coroutineScope.launch {
-            val userName = firebaseDataRepository.getUser(alertMessage.userId!!).name
+            val user =
+                when (val result = firebaseDataRepository.getUser(alertMessage.userId ?: "")) {
+                    is Result.Success -> result.data
+                    else -> null
+                }
+            val userName = user?.name
 
             val alertNotification = RemoteViews(packageName, R.layout.altermessage_chat)
             when (alertMessage.result) {
                 4 -> {
-                    val measure = firebaseDataRepository.getMeasure(alertMessage.itemId!!)
-                    val measureLog = firebaseDataRepository.getMeasureLog(
-                        alertMessage.itemId,
+                    val measure = when (val result =
+                        firebaseDataRepository.getMeasure(alertMessage.itemId ?: "")) {
+                        is Result.Success -> result.data
+                        else -> null
+                    }
+                    val measureLog = when (val result = firebaseDataRepository.getMeasureLog(
+                        alertMessage.itemId ?: "",
                         alertMessage.logId ?: ""
-                    )
+                    )) {
+                        is Result.Success -> result.data
+                        else -> null
+                    }
 
                     alertNotification.setTextViewText(R.id.tv_name, "測量項目異常 - $userName")
                     alertNotification.setTextViewText(
                         R.id.tv_content,
-                        toNotificationTextForMeasureLog(measure, measureLog)
+                        toNotificationTextForMeasureLog(
+                            measure ?: Measure(),
+                            measureLog ?: MeasureLog()
+                        )
                     )
                 }
 
@@ -161,12 +185,16 @@ class NotificationService : LifecycleService() {
                 }
 
                 6 -> {
-                    val drugItem = firebaseDataRepository.getDrug(alertMessage.itemId!!)
+                    val drugItem =
+                        when (val result = firebaseDataRepository.getDrug(alertMessage.itemId!!)) {
+                            is Result.Success -> result.data
+                            else -> null
+                        }
                     alertNotification.setTextViewText(R.id.tv_name, "藥物快要用完了 - $userName")
                     alertNotification.setTextViewText(
                         R.id.tv_content,
-                        "剩餘服藥次數: ${drugItem.stock / drugItem.dose} 次" +
-                            "\n剩餘量: ${drugItem.stock} ${toUnit(drugItem.unit)} "
+                        "剩餘服藥次數: ${drugItem?.stock ?: 0F / (drugItem?.dose ?: 0F)} 次" +
+                                "\n剩餘量: ${drugItem?.stock} ${toUnit(drugItem?.unit)} "
                     )
                 }
             }
