@@ -28,11 +28,11 @@ class MainActivity : AppCompatActivity() {
         val factory =
             MainActivityViewModelFactory(PublicApplication.application.firebaseDataRepository)
         val viewModel = ViewModelProvider(this, factory).get(MainActivityViewModel::class.java)
-        val notificationIntent = Intent(this, NotificationService::class.java)
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
+        val notificationIntent = Intent(this, NotificationService::class.java)
         viewModel.isLogin.observe(this) {
             if (it) {
                 viewModel.startSetAlarmForTodoList()
@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
             navController.navigate(NavigationDirections.actionGlobalNotificationFragment(viewModel.memberList.toTypedArray()))
         }
 
-        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+        navController.addOnDestinationChangedListener { _, _, _ ->
             viewModel.getNavigationDestination(
                 when (navController.currentDestination?.id) {
                     R.id.groupFragment -> GroupFragment
@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
             this,
             0,
             intent,
-            PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
         val alarmManager = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager

@@ -2,7 +2,6 @@ package com.weiting.tohealth.homepage
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,14 +12,17 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Recycler
-import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.weiting.tohealth.*
+import com.weiting.tohealth.data.Care
 import com.weiting.tohealth.data.ItemType
+import com.weiting.tohealth.data.Measure
 import com.weiting.tohealth.data.UserManager
 import com.weiting.tohealth.databinding.FragmentHomeBinding
+import com.weiting.tohealth.homepage.homeutil.SnackBarCallBackForEvent
+import com.weiting.tohealth.homepage.homeutil.SnackBarCallBackForSkip
 import com.weiting.tohealth.util.RecyclerViewSwipe
 import java.lang.IndexOutOfBoundsException
 
@@ -47,201 +49,127 @@ class HomeFragment : Fragment() {
 
         // TODO Refactor 2nd
         val adapter = TodayItemAdapter()
+        val snackBarCallBackForSkip = SnackBarCallBackForSkip(viewModel)
+        val snackBarCallBackForEvent = SnackBarCallBackForEvent(viewModel)
+
         val swipeSet = object : RecyclerViewSwipe() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.position
+                val lastPosition = position - 1
+                val holderItem =
+                    viewModel.itemDataMediator.value?.get(position) ?: ItemDataType.Error
+                val rvTodolist = binding.rvHomeCardView
+
                 when (direction) {
+
                     // Skip
                     ItemTouchHelper.LEFT -> {
                         when (viewHolder.itemViewType) {
                             VIEW_TYPE_DRUG -> {
 
-                                viewModel.swipeToSkip(
-                                    SwipeData(
-                                        viewModel.itemDataMediator.value?.get(position)!!,
-                                        position
-                                    )
-                                )
+                                viewModel.swipeToSkip(SwipeData(holderItem, position))
 
                                 viewModel.itemDataMediator.value?.removeAt(position)
                                 adapter.notifyItemRemoved(position)
 
                                 // At this moment the list position has changed!
                                 if (isLastInTimePoint(position, adapter)) {
-                                    viewModel.removeTimeHeader(
-                                        SwipeData(
-                                            adapter.currentList[position - 1],
-                                            position - 1
-                                        )
-                                    )
-                                    viewModel.itemDataMediator.value?.removeAt(position - 1)
-                                    adapter.notifyItemRemoved(position - 1)
+                                    val timeHolder = adapter.currentList[lastPosition]
+
+                                    viewModel.removeTimeHeader(SwipeData(timeHolder, lastPosition))
+                                    viewModel.itemDataMediator.value?.removeAt(lastPosition)
+                                    adapter.notifyItemRemoved(lastPosition)
                                 }
+
                                 Snackbar.make(
-                                    binding.rvHomeCardView,
+                                    rvTodolist,
                                     getString(R.string.itemSkip_text),
                                     Snackbar.LENGTH_LONG
                                 )
-                                    .setAction(
-                                        getString(R.string.itemSwipe_undo)
-                                    ) {
+                                    .setAction(getString(R.string.itemSwipe_undo)) {
                                         viewModel.undoSwipeToSkip()
-                                        adapter.notifyItemRangeInserted(position - 1, 2)
+                                        adapter.notifyItemRangeInserted(lastPosition, 2)
                                     }
-                                    .addCallback(object :
-                                        BaseTransientBottomBar.BaseCallback<Snackbar>() {
-                                        override fun onDismissed(
-                                            transientBottomBar: Snackbar?,
-                                            event: Int
-                                        ) {
-                                            super.onDismissed(transientBottomBar, event)
-                                            if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
-                                                viewModel.postSkipLog()
-                                            }
-                                        }
-                                    })
+                                    .addCallback(snackBarCallBackForSkip)
                                     .show()
                             }
                             VIEW_TYPE_MEASURE -> {
 
-                                viewModel.swipeToSkip(
-                                    SwipeData(
-                                        adapter.currentList[position],
-                                        position
-                                    )
-                                )
+                                viewModel.swipeToSkip(SwipeData(holderItem, position))
 
                                 viewModel.itemDataMediator.value?.removeAt(position)
                                 adapter.notifyItemRemoved(position)
 
                                 if (isLastInTimePoint(position, adapter)) {
-                                    viewModel.removeTimeHeader(
-                                        SwipeData(
-                                            adapter.currentList[position - 1],
-                                            position - 1
-                                        )
-                                    )
-                                    viewModel.itemDataMediator.value?.removeAt(position - 1)
-                                    adapter.notifyItemRemoved(position - 1)
+                                    val timeHolder = adapter.currentList[lastPosition]
+                                    viewModel.removeTimeHeader(SwipeData(timeHolder, lastPosition))
+                                    viewModel.itemDataMediator.value?.removeAt(lastPosition)
+                                    adapter.notifyItemRemoved(lastPosition)
                                 }
 
                                 Snackbar.make(
-                                    binding.rvHomeCardView,
+                                    rvTodolist,
                                     getString(R.string.itemSkip_text),
                                     Snackbar.LENGTH_LONG
                                 )
-                                    .setAction(
-                                        getString(R.string.itemSwipe_undo)
-                                    ) {
+                                    .setAction(getString(R.string.itemSwipe_undo)) {
                                         viewModel.undoSwipeToSkip()
-                                        adapter.notifyItemRangeInserted(position - 1, 2)
+                                        adapter.notifyItemRangeInserted(lastPosition, 2)
                                     }
-                                    .addCallback(object :
-                                        BaseTransientBottomBar.BaseCallback<Snackbar>() {
-                                        override fun onDismissed(
-                                            transientBottomBar: Snackbar?,
-                                            event: Int
-                                        ) {
-                                            super.onDismissed(transientBottomBar, event)
-                                            if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
-                                                viewModel.postSkipLog()
-                                            }
-                                        }
-                                    }).show()
+                                    .addCallback(snackBarCallBackForSkip)
+                                    .show()
                             }
                             VIEW_TYPE_EVENT -> {
 
-                                viewModel.swipeToSkip(
-                                    SwipeData(
-                                        adapter.currentList[position],
-                                        position
-                                    )
-                                )
+                                viewModel.swipeToSkip(SwipeData(holderItem, position))
 
                                 viewModel.itemDataMediator.value?.removeAt(position)
                                 adapter.notifyItemRemoved(position)
 
                                 if (isLastInTimePoint(position, adapter)) {
-                                    viewModel.removeTimeHeader(
-                                        SwipeData(
-                                            adapter.currentList[position - 1],
-                                            position - 1
-                                        )
-                                    )
-                                    viewModel.itemDataMediator.value?.removeAt(position - 1)
-                                    adapter.notifyItemRemoved(position - 1)
+                                    val timeHolder = adapter.currentList[lastPosition]
+                                    viewModel.removeTimeHeader(SwipeData(timeHolder, lastPosition))
+                                    viewModel.itemDataMediator.value?.removeAt(lastPosition)
+                                    adapter.notifyItemRemoved(lastPosition)
                                 }
 
                                 Snackbar.make(
-                                    binding.rvHomeCardView,
+                                    rvTodolist,
                                     getString(R.string.itemSkip_text),
                                     Snackbar.LENGTH_LONG
                                 )
-                                    .setAction(
-                                        getString(R.string.itemSwipe_undo)
-                                    ) {
+                                    .setAction(getString(R.string.itemSwipe_undo)) {
                                         viewModel.undoSwipeToSkip()
-                                        adapter.notifyItemRangeInserted(position - 1, 2)
+                                        adapter.notifyItemRangeInserted(lastPosition, 2)
                                     }
-                                    .addCallback(object :
-                                        BaseTransientBottomBar.BaseCallback<Snackbar>() {
-                                        override fun onDismissed(
-                                            transientBottomBar: Snackbar?,
-                                            event: Int
-                                        ) {
-                                            super.onDismissed(transientBottomBar, event)
-                                            if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
-                                                viewModel.postSkipLog()
-                                            }
-                                        }
-                                    }).show()
+                                    .addCallback(snackBarCallBackForSkip)
+                                    .show()
                             }
                             VIEW_TYPE_CARE -> {
 
-                                viewModel.swipeToSkip(
-                                    SwipeData(
-                                        adapter.currentList[position],
-                                        position
-                                    )
-                                )
+                                viewModel.swipeToSkip(SwipeData(holderItem, position))
 
                                 viewModel.itemDataMediator.value?.removeAt(position)
                                 adapter.notifyItemRemoved(position)
 
                                 if (isLastInTimePoint(position, adapter)) {
-                                    viewModel.removeTimeHeader(
-                                        SwipeData(
-                                            adapter.currentList[position - 1],
-                                            position - 1
-                                        )
-                                    )
-                                    viewModel.itemDataMediator.value?.removeAt(position - 1)
-                                    adapter.notifyItemRemoved(position - 1)
+                                    val timeHolder = adapter.currentList[lastPosition]
+                                    viewModel.removeTimeHeader(SwipeData(timeHolder, lastPosition))
+                                    viewModel.itemDataMediator.value?.removeAt(lastPosition)
+                                    adapter.notifyItemRemoved(lastPosition)
                                 }
 
                                 Snackbar.make(
-                                    binding.rvHomeCardView,
+                                    rvTodolist,
                                     getString(R.string.itemSkip_text),
                                     Snackbar.LENGTH_LONG
                                 )
-                                    .setAction(
-                                        getString(R.string.itemSwipe_undo)
-                                    ) {
+                                    .setAction(getString(R.string.itemSwipe_undo)) {
                                         viewModel.undoSwipeToSkip()
-                                        adapter.notifyItemRangeInserted(position - 1, 2)
+                                        adapter.notifyItemRangeInserted(lastPosition, 2)
                                     }
-                                    .addCallback(object :
-                                        BaseTransientBottomBar.BaseCallback<Snackbar>() {
-                                        override fun onDismissed(
-                                            transientBottomBar: Snackbar?,
-                                            event: Int
-                                        ) {
-                                            super.onDismissed(transientBottomBar, event)
-                                            if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
-                                                viewModel.postSkipLog()
-                                            }
-                                        }
-                                    }).show()
+                                    .addCallback(snackBarCallBackForSkip)
+                                    .show()
                             }
                         }
                     }
@@ -251,61 +179,49 @@ class HomeFragment : Fragment() {
                         when (viewHolder.itemViewType) {
                             VIEW_TYPE_DRUG -> {
 
-                                viewModel.swipeToFinished(
-                                    SwipeData(
-                                        adapter.currentList[position],
-                                        position
-                                    )
-                                )
+                                viewModel.swipeToFinished(SwipeData(holderItem, position))
 
                                 viewModel.itemDataMediator.value?.removeAt(position)
                                 adapter.notifyItemRemoved(position)
 
                                 Snackbar.make(
-                                    binding.rvHomeCardView,
+                                    rvTodolist,
                                     getString(R.string.itemFinished_text),
                                     Snackbar.LENGTH_LONG
-                                ).setAction(
-                                    getString(R.string.itemSwipe_undo)
-                                ) {
-                                    viewModel.undoSwipeToLog(ItemType.DRUG)
-                                }.show()
+                                )
+                                    .setAction(getString(R.string.itemSwipe_undo)) {
+                                        viewModel.undoSwipeToLog(ItemType.DRUG)
+                                    }.show()
                             }
                             VIEW_TYPE_MEASURE -> {
+                                val measureType =
+                                    (adapter.currentList[position] as ItemDataType.MeasureType)
+
                                 findNavController().navigate(
                                     NavigationDirections.actionGlobalMeasureRecordFragment(
-                                        (adapter.currentList[position] as ItemDataType.MeasureType)
-                                            .measure.measureData!!,
-                                        (adapter.currentList[position] as ItemDataType.MeasureType)
-                                            .timeInt
+                                        measureType.measure.measureData ?: Measure(),
+                                        measureType.timeInt
                                     )
                                 )
                             }
                             VIEW_TYPE_EVENT -> {
 
-                                viewModel.swipeToFinished(
-                                    SwipeData(
-                                        adapter.currentList[position],
-                                        position
-                                    )
-                                )
+                                viewModel.swipeToFinished(SwipeData(holderItem, position))
 
                                 viewModel.itemDataMediator.value?.removeAt(position)
                                 adapter.notifyItemRemoved(position)
 
                                 if (isLastInTimePoint(position, adapter)) {
+                                    val timeHolder = adapter.currentList[lastPosition]
                                     viewModel.removeTimeHeaderOfFinished(
-                                        SwipeData(
-                                            adapter.currentList[position - 1],
-                                            position - 1
-                                        )
+                                        SwipeData(timeHolder, lastPosition)
                                     )
-                                    viewModel.itemDataMediator.value?.removeAt(position - 1)
-                                    adapter.notifyItemRemoved(position - 1)
+                                    viewModel.itemDataMediator.value?.removeAt(lastPosition)
+                                    adapter.notifyItemRemoved(lastPosition)
                                 }
 
                                 Snackbar.make(
-                                    binding.rvHomeCardView,
+                                    rvTodolist,
                                     getString(R.string.itemFinished_text),
                                     Snackbar.LENGTH_LONG
                                 )
@@ -313,32 +229,18 @@ class HomeFragment : Fragment() {
                                         getString(R.string.itemSwipe_undo)
                                     ) {
                                         viewModel.undoSwipeToLog(ItemType.EVENT)
-                                        adapter.notifyItemRangeInserted(position - 1, 2)
+                                        adapter.notifyItemRangeInserted(lastPosition, 2)
                                     }
-                                    .addCallback(object :
-                                        BaseTransientBottomBar.BaseCallback<Snackbar>() {
-                                        override fun onDismissed(
-                                            transientBottomBar: Snackbar?,
-                                            event: Int
-                                        ) {
-                                            super.onDismissed(transientBottomBar, event)
-                                            if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
-                                                viewModel.postFinishDrugAndActivityLog(ItemType.EVENT)
-                                            }
-                                        }
-                                    }).show()
+                                    .addCallback(snackBarCallBackForEvent)
+                                    .show()
                             }
                             VIEW_TYPE_CARE -> {
+                                val careType =
+                                    adapter.currentList[position] as ItemDataType.CareType
                                 findNavController().navigate(
                                     NavigationDirections.actionGlobalCareRecordFragment(
-                                        (
-                                                adapter.currentList[position] as
-                                                        ItemDataType.CareType
-                                                ).care.careData!!,
-                                        (
-                                                adapter.currentList[position] as
-                                                        ItemDataType.CareType
-                                                ).timeInt
+                                        careType.care.careData ?: Care(),
+                                        careType.timeInt
                                     )
                                 )
                             }
