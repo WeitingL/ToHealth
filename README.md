@@ -1,6 +1,6 @@
 ![GITHUB](https://github.com/WeitingL/ToHealth/blob/be2a0bacac42b41f662acc730799feeee77e5a08/readmesrc/toHealth_v2.png)
 
-<img src="https://github.com/WeitingL/ToHealth/blob/be2a0bacac42b41f662acc730799feeee77e5a08/readmesrc/google-play-badge.png" style="zoom: 40%;" />
+[![GITHUB](https://github.com/WeitingL/ToHealth/blob/be2a0bacac42b41f662acc730799feeee77e5a08/readmesrc/google-play-badge.png)](https://play.google.com/store/apps/details?id=com.weiting.tohealth)
 
 
 
@@ -49,7 +49,7 @@ Home page will  show the to-do list shows item daily tasks. Use your finger to s
 
   1. If the user swipe to finished the task or skip the task, this feature can undo the last action and restore the list.
 
-     ![](https://github.com/WeitingL/ToHealth/blob/be2a0bacac42b41f662acc730799feeee77e5a08\readmesrc\home_Swipe (1).png)
+     ![](https://github.com/WeitingL/ToHealth/blob/be2a0bacac42b41f662acc730799feeee77e5a08/readmesrc/home_Swipe%20(1).png)
 
      When user swipe the medication checked, the data will be store in temporary store list in viewmodel that provides the data for undo feature. If the data is the the last task at that time point, the header of time will be remove at the same time and store at the temporary store list. 
 
