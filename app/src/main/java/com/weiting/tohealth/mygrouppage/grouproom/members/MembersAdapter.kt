@@ -69,7 +69,7 @@ class MembersAdapter(
                             else -> onclickListener.onClick(member)
                         }
                     }else{
-                        onClickListener.onClick(member)
+                        onclickListener.onClick(member)
                     }
                 }
             }
