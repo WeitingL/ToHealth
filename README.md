@@ -1,6 +1,6 @@
-![GTIHUB](C:\Users\ss890\AndroidStudioProjects\Personal Project\ToHealth\readmesrc\toHealth_v2.png)
+![GITHUB](https://github.com/WeitingL/ToHealth/blob/be2a0bacac42b41f662acc730799feeee77e5a08/readmesrc/toHealth_v2.png)
 
-<img src="C:\Users\ss890\AndroidStudioProjects\Personal Project\ToHealth\readmesrc\google-play-badge.png" style="zoom: 40%;" />
+<img src="https://github.com/WeitingL/ToHealth/blob/be2a0bacac42b41f662acc730799feeee77e5a08/readmesrc/google-play-badge.png" style="zoom: 40%;" />
 
 
 
@@ -12,13 +12,13 @@ ToHealth is an app that can you to manage your health, including drug, fitness, 
 
 ## Home Page
 
-<img src="C:\Users\ss890\AndroidStudioProjects\Personal Project\ToHealth\readmesrc\home_page (1).png" style="zoom:50%;" />
+<img src="https://github.com/WeitingL/ToHealth/blob/be2a0bacac42b41f662acc730799feeee77e5a08\readmesrc\home_page (1).png" style="zoom:50%;" />
 
 Home page will  show the to-do list shows item daily tasks. Use your finger to swipe on the screen and you can skip the mission or finish them rapidly.
 
 - Arrange the to-do list by time point.
 
-  ​	<img src="C:\Users\ss890\AndroidStudioProjects\Personal Project\ToHealth\readmesrc\home_toke (1).png" style="zoom:33%;" />
+  ​	<img src="https://github.com/WeitingL/ToHealth/blob/be2a0bacac42b41f662acc730799feeee77e5a08\readmesrc\home_toke (1).png" style="zoom:33%;" />
 
   1. The Medication, Events , Measure and Emotion Record are all different data sources from Firebase Datastore.
 
@@ -39,17 +39,17 @@ Home page will  show the to-do list shows item daily tasks. Use your finger to s
 
   2. Arrangement the todoList by several filter, data transformer (to ItemDataType) , and rearranger in **MediatorLiveData**.
 
-     <img src="C:\Users\ss890\AndroidStudioProjects\Personal Project\ToHealth\readmesrc\home_arranger (1).png" style="zoom: 33%;" />
+     <img src="https://github.com/WeitingL/ToHealth/blob/be2a0bacac42b41f662acc730799feeee77e5a08\readmesrc\home_arranger (1).png" style="zoom: 33%;" />
 
   3. Calculate the all tasks and finished works during MediatorLiveData process and show it on progress bar.
 
-     <img src="C:\Users\ss890\AndroidStudioProjects\Personal Project\ToHealth\readmesrc\home_progress (1).png" style="zoom: 33%;" />
+     <img src="https://github.com/WeitingL/ToHealth/blob/be2a0bacac42b41f662acc730799feeee77e5a08\readmesrc\home_progress (1).png" style="zoom: 33%;" />
 
 - Undo the to-do list item after swiping in 2 sec.
 
   1. If the user swipe to finished the task or skip the task, this feature can undo the last action and restore the list.
 
-     ![](C:\Users\ss890\AndroidStudioProjects\Personal Project\ToHealth\readmesrc\home_Swipe (1).png)
+     ![](https://github.com/WeitingL/ToHealth/blob/be2a0bacac42b41f662acc730799feeee77e5a08\readmesrc\home_Swipe (1).png)
 
      When user swipe the medication checked, the data will be store in temporary store list in viewmodel that provides the data for undo feature. If the data is the the last task at that time point, the header of time will be remove at the same time and store at the temporary store list. 
 
@@ -59,11 +59,11 @@ Home page will  show the to-do list shows item daily tasks. Use your finger to s
 
 ## Group Page
 
-<img src="C:\Users\ss890\AndroidStudioProjects\Personal Project\ToHealth\readmesrc\group_page (1).png" style="zoom:50%;" />
+<img src="https://github.com/WeitingL/ToHealth/blob/be2a0bacac42b41f662acc730799feeee77e5a08\readmesrc\group_page (1).png" style="zoom:50%;" />
 
 Your all social group list will be showed here, and you can see who in this group and all note and reminder below the member list. Next to the group name, the QR code is provide to new member join the group by camera.
 
- ![](C:\Users\ss890\AndroidStudioProjects\Personal Project\ToHealth\readmesrc\grouproom_page (1).png)
+ ![](https://github.com/WeitingL/ToHealth/blob/be2a0bacac42b41f662acc730799feeee77e5a08\readmesrc\grouproom_page (1).png)
 
 When user click "more" buttom, there are three page here, including board, chatting room and member list. The member list can let user review the member's statistic data and all tasks the member executed. If the member privede the authority for this group, you can edit the memebers task. 
 
@@ -71,7 +71,7 @@ When user click "more" buttom, there are three page here, including board, chatt
 
 ## Statistic Page
 
-<img src="C:\Users\ss890\AndroidStudioProjects\Personal Project\ToHealth\readmesrc\statistic_page (1).png" style="zoom: 50%;" />
+<img src="https://github.com/WeitingL/ToHealth/blob/be2a0bacac42b41f662acc730799feeee77e5a08\readmesrc\statistic_page (1).png" style="zoom: 50%;" />
 
 Create the chart can be scrolled to show the task logs before and checkout the status, including finshed, unchecked and skipped. The measure data, like the blood pressure, blood oxigen, blood sugar and body temperature will show on the bar chart via **AnyChat**.
 
@@ -79,7 +79,7 @@ Create the chart can be scrolled to show the task logs before and checkout the s
 
 ## Managment Page
 
-<img src="C:\Users\ss890\AndroidStudioProjects\Personal Project\ToHealth\readmesrc\manage_page (1).png" style="zoom: 50%;" />
+<img src="https://github.com/WeitingL/ToHealth/blob/be2a0bacac42b41f662acc730799feeee77e5a08\readmesrc\manage_page (1).png" style="zoom: 50%;" />
 
 You can update the task or add the new task at this page. 
 
@@ -89,7 +89,7 @@ Here the task card will show the dose, execution time, start date, stock and sta
 
 ## Background Works
 
-<img src="C:\Users\ss890\AndroidStudioProjects\Personal Project\ToHealth\readmesrc\background (1).png" style="zoom:50%;" />
+<img src="https://github.com/WeitingL/ToHealth/blob/be2a0bacac42b41f662acc730799feeee77e5a08\readmesrc\background (1).png" style="zoom:50%;" />
 
 To monitor the database changes continusly in background within app activity is alive, the **Foreground** **Service** will create several listener to receive the changes of chat database and alart message.
 
