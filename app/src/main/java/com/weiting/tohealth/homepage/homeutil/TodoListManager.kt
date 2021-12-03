@@ -1,6 +1,7 @@
-package com.weiting.tohealth.homepage
+package com.weiting.tohealth.homepage.homeutil
 
 import com.weiting.tohealth.data.*
+import com.weiting.tohealth.homepage.ItemDataType
 
 class TodoListManager {
 

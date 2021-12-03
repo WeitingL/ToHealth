@@ -43,6 +43,7 @@ class TodayItemAdapter :
             is ItemDataType.MeasureType -> VIEW_TYPE_MEASURE
             is ItemDataType.EventType -> VIEW_TYPE_EVENT
             is ItemDataType.CareType -> VIEW_TYPE_CARE
+            else -> throw Exception("Get wrong view type ${getItem(position)}")
         }
     }
 
@@ -172,6 +173,4 @@ class TodayItemAdapter :
             }
         }
     }
-
-    // TODO Empty space need to add new things.
 }

@@ -47,7 +47,6 @@ class ManageDetailAdapter(val onClickListener: OnclickListener) :
         ): Boolean = oldItem == newItem
     }
 
-    // TODO Refactor 3rd
     inner class ItemsListViewHolder(private val binding: ManageRowItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ItemData) {

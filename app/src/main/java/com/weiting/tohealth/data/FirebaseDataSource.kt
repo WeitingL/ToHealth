@@ -461,7 +461,11 @@ object FirebaseDataSource : FirebaseSource {
 
         val database = application.database
 
-        database.collection(DRUGS).document(id).collection(DRUG_LOGS).document(drugLog.id!!)
+        if (drugLog.id.isNullOrEmpty()){
+            drugLog.id = database.collection(DRUGS).document(id).collection(DRUG_LOGS).document().id
+        }
+
+        database.collection(DRUGS).document(id).collection(DRUG_LOGS).document(drugLog.id?:"")
             .set(drugLog)
             .addOnSuccessListener {
                 Log.d("store success", "DocumentSnapshot added with ID: ${drugLog.id}")

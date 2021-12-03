@@ -1,4 +1,7 @@
-package com.weiting.tohealth.homepage
+package com.weiting.tohealth.homepage.homeutil
+
+import com.weiting.tohealth.homepage.ItemDataType
+import com.weiting.tohealth.homepage.SwipeData
 
 
 class SwipeCheckedListManager {
@@ -41,7 +44,7 @@ class SwipeCheckedListManager {
         return drugSwipeData.last()
     }
 
-    fun getEventSwipeData():SwipeData{
+    fun getEventSwipeData(): SwipeData {
         val data = eventSwipeData.first()
         eventSwipeData.removeFirst()
         eventTimeList.clear()

@@ -5,6 +5,10 @@ import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.weiting.tohealth.data.*
+import com.weiting.tohealth.homepage.homeutil.SwipeCheckedListManager
+import com.weiting.tohealth.homepage.homeutil.SwipeSkipListManager
+import com.weiting.tohealth.homepage.homeutil.TodoListLogCounter
+import com.weiting.tohealth.homepage.homeutil.TodoListManager
 import com.weiting.tohealth.util.ItemArranger
 import com.weiting.tohealth.util.AlterMessageGenerator
 import com.weiting.tohealth.util.Util
@@ -404,8 +408,16 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
             val skipData = swipeSkipListManager.skipList.first()
             when (skipData.itemDataType) {
                 is ItemDataType.DrugType -> {
+                    val drug = skipData.itemDataType.drug.drugData
+                    val logId =
+                        when (val result = firebaseDataRepository.getDrugLogId(drug?.id ?: "")){
+                            is Result.Success -> result.data
+                            else -> null
+                        }
                     firebaseDataRepository.postDrugLog(
-                        skipData.itemDataType.drug.drugData?.id!!, DrugLog(
+                        drug?.id!!,
+                        DrugLog(
+                            id = logId,
                             timeTag = skipData.itemDataType.timeInt,
                             result = 1,
                             createdTime = Timestamp.now()
@@ -433,7 +445,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
 
                 is ItemDataType.CareType -> {
                     firebaseDataRepository.postCareLog(
-                        skipData.itemDataType.care.careData?.id!!, CareLog(
+                        skipData.itemDataType.care.careData?.id ?: "", CareLog(
                             timeTag = skipData.itemDataType.timeInt,
                             result = 1,
                             createdTime = Timestamp.now()
@@ -443,7 +455,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
 
                 is ItemDataType.EventType -> {
                     firebaseDataRepository.postEventLog(
-                        skipData.itemDataType.event.eventData?.id!!, EventLog(
+                        skipData.itemDataType.event.eventData?.id ?: "", EventLog(
                             timeTag = skipData.itemDataType.timeInt,
                             result = 1,
                             createdTime = Timestamp.now()
@@ -555,7 +567,7 @@ class HomeViewModel(private val firebaseDataRepository: FirebaseRepository) : Vi
                             .itemDataType as ItemDataType.EventType
 
                     firebaseDataRepository.postEventLog(
-                        event.event.eventData?.id!!, EventLog(
+                        event.event.eventData?.id ?: "", EventLog(
                             timeTag = event.timeInt,
                             result = 0,
                             createdTime = Timestamp.now()
@@ -587,6 +599,7 @@ sealed class ItemDataType() {
     data class MeasureType(val measure: ItemData, val timeInt: Int) : ItemDataType()
     data class EventType(val event: ItemData, val timeInt: Int) : ItemDataType()
     data class CareType(val care: ItemData, val timeInt: Int) : ItemDataType()
+    object Error : ItemDataType()
 }
 
 data class SwipeData(

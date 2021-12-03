@@ -29,6 +29,8 @@ class NotificationService : LifecycleService() {
     private val memberListeningList = mutableListOf<String>()
     private val groupIdListeningList = mutableListOf<String>()
 
+    private val userId = Firebase.auth.currentUser?.uid?:""
+
     override fun onCreate() {
         super.onCreate()
 
@@ -59,14 +61,13 @@ class NotificationService : LifecycleService() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        firebaseDataRepository.getLiveUser(UserManager.UserInfo.id!!).observe(this) {
+        firebaseDataRepository.getLiveUser(userId).observe(this) {
             if (it.groupList.isNotEmpty()) {
-                it.groupList.forEach {
-                    if (it !in groupIdListeningList) {
-                        startListenChat(it)
+                it.groupList.forEach { groupId ->
+                    if (groupId !in groupIdListeningList) {
+                        startListenChat(groupId)
                     }
-
-                    startListenMembers(it)
+                    startListenMembers(groupId)
                 }
             }
         }
@@ -75,10 +76,10 @@ class NotificationService : LifecycleService() {
 
     private fun startListenMembers(groupId: String) {
         firebaseDataRepository.getLiveMembers(groupId).observe(this@NotificationService) {
-            it.forEach {
-                if (it.userId !in memberListeningList) {
-                    memberListeningList.add(it.userId ?: "")
-                    startListenAlertMessage(it.userId ?: "")
+            it.forEach { member ->
+                if (member.userId !in memberListeningList) {
+                    memberListeningList.add(member.userId ?: "")
+                    startListenAlertMessage(member.userId ?: "")
                 }
             }
         }
@@ -86,10 +87,10 @@ class NotificationService : LifecycleService() {
 
     private fun startListenChat(groupId: String) {
         firebaseDataRepository.getLiveChatMessagesForService(groupId).observe(this) {
-            it.forEach {
-                if (Firebase.auth.currentUser?.uid !in it.isReadList) {
-                    showLatestChat(it)
-                    firebaseDataRepository.postOnGetChatForService(it)
+            it.forEach { chat ->
+                if (Firebase.auth.currentUser?.uid !in chat.isReadList) {
+                    showLatestChat(chat)
+                    firebaseDataRepository.postOnGetChatForService(chat)
                 }
             }
         }
@@ -99,8 +100,8 @@ class NotificationService : LifecycleService() {
         firebaseDataRepository.getLiveAlertMessages(listOf(userId))
             .observe(this) {
 
-                val alertMessageList = it.filter {
-                    !it.alreadySend.contains(
+                val alertMessageList = it.filter { message ->
+                    !message.alreadySend.contains(
                         Firebase.auth.currentUser?.uid
                     )
                 }

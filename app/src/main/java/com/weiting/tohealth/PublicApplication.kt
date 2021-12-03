@@ -1,11 +1,9 @@
 package com.weiting.tohealth
 
 import android.app.Application
-import androidx.work.*
 import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.weiting.tohealth.data.FirebaseRepository
-import java.util.*
 import kotlin.properties.Delegates
 
 class PublicApplication : Application() {
@@ -13,7 +11,7 @@ class PublicApplication : Application() {
     lateinit var database: FirebaseFirestore
 
     val firebaseDataRepository: FirebaseRepository
-        get() = FirebaseLocator.provideRepository(this)
+        get() = FirebaseLocator.provideRepository()
 
     companion object {
         var application: PublicApplication by Delegates.notNull()
@@ -21,6 +19,7 @@ class PublicApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
         FirebaseApp.initializeApp(this)
         database = FirebaseFirestore.getInstance()
         application = this
