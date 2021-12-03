@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ![GTIHUB](C:\Users\ss890\AndroidStudioProjects\Personal Project\ToHealth\readmesrc\toHealth_v2.png)
 
 <img src="C:\Users\ss890\AndroidStudioProjects\Personal Project\ToHealth\readmesrc\google-play-badge.png" style="zoom: 40%;" />
@@ -119,11 +118,3 @@ Kotlin - 203-1.5.31-release-550-AS7717.8
 ## Contect
 
 ss890900@gmail.com
-
-
-
-=======
-![GITHUB](https://github.com/WeitingL/ToHealth/blob/8ddea9219697657635edb85e1b4571ebd5a28cd4/toHealth_v2%20.1.png "title image")
-
-# ToHealth
->>>>>>> 1502f93270f45f49186967fe8dbfeb7073e6ba88
