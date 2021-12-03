@@ -63,7 +63,7 @@ Home page will  show the to-do list shows item daily tasks. Use your finger to s
 
 Your all social group list will be showed here, and you can see who in this group and all note and reminder below the member list. Next to the group name, the QR code is provide to new member join the group by camera.
 
- ![](https://github.com/WeitingL/ToHealth/blob/be2a0bacac42b41f662acc730799feeee77e5a08\readmesrc\grouproom_page (1).png)
+ ![](https://github.com/WeitingL/ToHealth/blob/be2a0bacac42b41f662acc730799feeee77e5a08/readmesrc/grouproom_page%20(1).png)
 
 When user click "more" buttom, there are three page here, including board, chatting room and member list. The member list can let user review the member's statistic data and all tasks the member executed. If the member privede the authority for this group, you can edit the memebers task. 
 
