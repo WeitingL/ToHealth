@@ -18,8 +18,8 @@ android {
         applicationId "com.weiting.tohealth"
         minSdk 26
         targetSdk 31
-        versionCode 33
-        versionName "9.0"
+        versionCode 35
+        versionName "9.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -110,10 +110,6 @@ dependencies {
 
     //MPAndroidChart_outDate
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-
-    //WorkManager
-    implementation "androidx.work:work-runtime-ktx:2.7.1"
-    implementation 'androidx.work:work-multiprocess:2.7.1'
 
     //Crashlytics and Analytics libraries
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
