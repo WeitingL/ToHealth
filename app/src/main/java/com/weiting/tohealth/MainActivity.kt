@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -31,16 +32,8 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        val appUpdateManager = AppUpdateManagerFactory.create(this)
+        val appUpdateManager = AppUpdateManagerFactory.create(application)
 
-        val updateListener = InstallStateUpdatedListener { state ->
-            if (state.installStatus() == InstallStatus.DOWNLOADED) {
-                val bytesDownloaded = state.bytesDownloaded()
-                val totalDownloaded = state.totalBytesToDownload()
-            }
-        }
-
-        appUpdateManager.registerListener(updateListener)
         appUpdateManager.appUpdateInfo.addOnSuccessListener { updateInfo ->
 
             if (updateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE &&
@@ -52,7 +45,10 @@ class MainActivity : AppCompatActivity() {
                     this,
                     UPDATE_CODE
                 )
+
                 Toast.makeText(this, "更新開始", Toast.LENGTH_LONG).show()
+            }else{
+                Toast.makeText(this, "已是最新版本", Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -143,4 +139,7 @@ class MainActivity : AppCompatActivity() {
         val alarmManager = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent)
     }
+
+
+
 }
