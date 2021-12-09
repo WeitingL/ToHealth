@@ -257,24 +257,9 @@ class HomeFragment : Fragment() {
             viewModel.getAllCheckedTaskCount()
             if (it.isNotEmpty()) {
                 adapter.submitList(it)
-            }
-        }
-
-        viewModel.isAllCompleted.observe(viewLifecycleOwner) {
-            binding.apply {
-                when (it) {
-                    true -> {
-                        lavFinished.setAnimation(R.raw.sunny)
-                        lavFinished.visibility = View.VISIBLE
-                        tvFinishedSlogan.visibility = View.VISIBLE
-                        rvHomeCardView.visibility = View.GONE
-                    }
-                    false -> {
-                        lavFinished.visibility = View.GONE
-                        tvFinishedSlogan.visibility = View.GONE
-                        rvHomeCardView.visibility = View.VISIBLE
-                    }
-                }
+                setBackgroundInvisible(binding)
+            } else {
+                setBackgroundVisible(binding, viewModel)
             }
         }
 
@@ -288,6 +273,31 @@ class HomeFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun setBackgroundVisible(binding: FragmentHomeBinding, viewModel: HomeViewModel) {
+        binding.apply {
+            when {
+                viewModel.isTheNewbie.value == true -> {
+                    lavFinished.visibility = View.VISIBLE
+                    tvFinishedSlogan.visibility = View.VISIBLE
+                    rvHomeCardView.visibility = View.GONE
+                }
+                viewModel.isAllCompleted.value == true && viewModel.isTheNewbie.value == false -> {
+                    lavFinished.visibility = View.VISIBLE
+                    tvFinishedSlogan.visibility = View.VISIBLE
+                    rvHomeCardView.visibility = View.GONE
+                }
+            }
+        }
+    }
+
+    private fun setBackgroundInvisible(binding: FragmentHomeBinding) {
+        binding.apply {
+            lavFinished.visibility = View.GONE
+            tvFinishedSlogan.visibility = View.GONE
+            rvHomeCardView.visibility = View.VISIBLE
+        }
     }
 }
 

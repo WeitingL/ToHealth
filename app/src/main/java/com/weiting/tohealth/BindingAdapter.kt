@@ -155,3 +155,28 @@ fun bindNavigationDestination(
         OtherFragment -> View.VISIBLE
     }
 }
+
+@BindingAdapter("navigationDestination")
+fun bindNavigationDestination(
+    imageView: ImageView,
+    navigationDestination: NavigationDestination
+) {
+    imageView.visibility = when (navigationDestination) {
+        GroupFragment -> View.VISIBLE
+        LoginFragment -> View.VISIBLE
+        HomeFragment -> View.VISIBLE
+        FastAddFragment -> View.VISIBLE
+        MyGroupFragment -> View.VISIBLE
+        MyStatisticFragment -> View.VISIBLE
+        MyManageFragment -> View.VISIBLE
+        ItemEditFragment -> View.VISIBLE
+        ItemUpdateFragment -> View.VISIBLE
+        EditNoteAndReminderFragment -> View.VISIBLE
+        MeasureRecordFragment -> View.VISIBLE
+        CareRecordFragment -> View.VISIBLE
+        GroupMemberStatisticFragment -> View.VISIBLE
+        GroupMemberMenageFragment -> View.VISIBLE
+        NotificationFragment -> View.GONE
+        OtherFragment -> View.VISIBLE
+    }
+}
