@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        val appUpdateManager = AppUpdateManagerFactory.create(this)
+        val appUpdateManager = AppUpdateManagerFactory.create(application)
 
         val updateListener = InstallStateUpdatedListener { state ->
             if (state.installStatus() == InstallStatus.DOWNLOADED) {
@@ -52,7 +52,10 @@ class MainActivity : AppCompatActivity() {
                     this,
                     UPDATE_CODE
                 )
-                Toast.makeText(this, "更新開始", Toast.LENGTH_LONG).show()
+                Toast.makeText(application, "更新開始", Toast.LENGTH_LONG).show()
+            }else{
+                Toast.makeText(application, "為最新版本", Toast.LENGTH_LONG).show()
+                appUpdateManager.unregisterListener(updateListener)
             }
         }
     }
