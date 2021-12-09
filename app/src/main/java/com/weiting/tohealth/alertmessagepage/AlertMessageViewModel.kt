@@ -1,6 +1,5 @@
 package com.weiting.tohealth.alertmessagepage
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.weiting.tohealth.data.FirebaseRepository
 import com.weiting.tohealth.data.AlertMessage
@@ -108,8 +107,8 @@ class AlertMessageViewModel(
                 }
             }
             _alterMessageRecordList.value = recordList
+            _isLoading.value = false
         }
-        _isLoading.value = false
     }
 }
 
