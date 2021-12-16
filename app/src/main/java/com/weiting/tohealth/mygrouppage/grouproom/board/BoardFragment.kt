@@ -29,8 +29,9 @@ class BoardFragment : Fragment() {
         val adapter = BoardAdapter(viewModel)
 
         viewModel.boardLiveData.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+            
             if (it.isNotEmpty()) {
-                adapter.submitList(it)
                 binding.apply {
                     lavNote.visibility = View.GONE
                     tvNothingToShow.visibility = View.GONE
