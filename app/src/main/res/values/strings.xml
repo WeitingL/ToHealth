@@ -22,7 +22,7 @@
     <string name="MeasureItem">測量項目</string>
     <string name="CareItem">關懷項目</string>
     <string name="upDateSuccess">已成功更新!</string>
-    <string name="namingForGroup">幫你的群組取名子吧!</string>
+    <string name="namingForGroup">幫你的群組取名字吧!</string>
     <string name="checkTheGroupId">請檢查群組號碼輸入是否正確?</string>
     <string name="alreadyHere">你已經在這個群組了拉!</string>
     <string name="board">看板</string>
@@ -121,6 +121,10 @@
     <string name="userDenyEdit">使用者拒絕群組編輯</string>
     <string name="userDenyCheckout">使用者拒絕群組查看</string>
     <string name="something_wrong">There is something wrong.</string>
+    <string name="yourName">你的名字</string>
+    <string name="content">內容</string>
+    <string name="title">標題</string>
+    <string name="comfirm">確定</string>
 
     <string-array name="ItemType">
         <item>藥品</item>
