@@ -41,14 +41,17 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_group_memberList"
             android:layout_width="0dp"
-            android:layout_height="80dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/tv_enterGroup"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/tv_groupName"
             app:layout_constraintTop_toBottomOf="@+id/tv_groupCode"
+            app:layout_constraintVertical_bias="0.0"
             tools:listitem="@layout/mygroup_row_member" />
 
         <androidx.viewpager2.widget.ViewPager2
