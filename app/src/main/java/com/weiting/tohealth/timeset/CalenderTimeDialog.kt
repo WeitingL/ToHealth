@@ -30,7 +30,7 @@ class CalenderTimeDialog : DialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = DialogCalendertimeBinding.inflate(inflater, container, false)
-        binding.timePicker.setIs24HourView(true)
+        binding.timePicker.setIs24HourView(false)
         val editTimeType = CalenderTimeDialogArgs.fromBundle(requireArguments()).timeEditType
 
         // Control the picker needed.

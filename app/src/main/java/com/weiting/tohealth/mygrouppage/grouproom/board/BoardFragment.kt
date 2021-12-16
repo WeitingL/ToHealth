@@ -30,7 +30,7 @@ class BoardFragment : Fragment() {
 
         viewModel.boardLiveData.observe(viewLifecycleOwner) {
             adapter.submitList(it)
-            
+
             if (it.isNotEmpty()) {
                 binding.apply {
                     lavNote.visibility = View.GONE
