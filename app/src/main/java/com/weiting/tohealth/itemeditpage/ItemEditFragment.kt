@@ -279,56 +279,27 @@ class ItemEditFragment : Fragment() {
         return when (binding.spItemType.selectedItemPosition) {
             0 -> {
                 when {
-                    binding.tilDrugName.editText?.text.isNullOrEmpty() -> {
-                        false
-                    }
-                    binding.etvDrugDose.text.isNullOrEmpty() -> {
-                        false
-                    }
-                    binding.tvFirstDateSelected.text.isNullOrEmpty() -> {
-                        false
-                    }
-                    binding.rvTimeChose.adapter?.itemCount == 0 -> {
-                        false
-                    }
-                    binding.etvStock.text.isNullOrEmpty() -> {
-                        false
-                    }
-                    else -> {
-                        true
-                    }
+                    binding.tilDrugName.editText?.text.isNullOrEmpty() -> false
+                    binding.etvDrugDose.text.isNullOrEmpty() -> false
+                    binding.tvFirstDateSelected.text.isNullOrEmpty() -> false
+                    binding.etvStock.text.isNullOrEmpty() -> false
+                    else -> true
                 }
-            }
-
-            1 -> {
-                true
             }
 
             2 -> {
                 when {
-                    binding.tvFirstDateSelected.text.isNullOrEmpty() -> {
-                        false
-                    }
-                    binding.rvTimeChose.adapter?.itemCount == 0 -> {
-                        false
-                    }
-                    else -> {
-                        true
-                    }
+                    binding.tvFirstDateSelected.text.isNullOrEmpty() -> false
+                    binding.rvTimeChose.adapter?.itemCount == 0 -> false
+                    else -> true
                 }
             }
 
             3 -> {
                 when {
-                    binding.tvFirstDateSelected.text.isNullOrEmpty() -> {
-                        false
-                    }
-                    binding.rvTimeChose.adapter?.itemCount == 0 -> {
-                        false
-                    }
-                    else -> {
-                        true
-                    }
+                    binding.tvFirstDateSelected.text.isNullOrEmpty() -> false
+                    binding.rvTimeChose.adapter?.itemCount == 0 -> false
+                    else -> true
                 }
             }
             else -> true
